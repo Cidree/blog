@@ -1,5 +1,5 @@
 ---
-title: "Cidre"
+title: "Welcome to my blog"
 listing:
   contents: posts
   sort: "date desc"
