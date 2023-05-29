@@ -2,15 +2,13 @@ project:
   type: website
 
 website:
-  title: "Blog"
+  title: "Adrián Cidre"
   navbar:
     left: 
       - text: Home
         href: index.qmd
       - text: Projects
         href: projects.qmd
-      - text: Resume
-        href: resume.qmd
       - text: Courses
         href: courses.qmd
     right:
@@ -19,10 +17,23 @@ website:
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+  page-footer:
+    center: |
+      [Contact Adrián Cidre](mailto:adrian.cidre@gmail.com)
+    left: |
+      Made with [Quarto](https://quarto.org/)
+    right: |
+      [Github Code Repo](https://github.com/Cidree/cidre)
+    background: black
+    foreground: white
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: lux
+      dark: [lux, theme_dark_custom.scss]
     css: styles.css
+    code-link: true
+    code-block-border-left: true
 
 editor: visual
 

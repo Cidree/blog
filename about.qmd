@@ -1,5 +1,5 @@
 ---
-title: "Adrián Cidre"
+title: "About"
 image: figures/Foto_Snelska.jpg
 about:
   template: jolla
@@ -15,4 +15,10 @@ about:
       href: mailto:adrian.cidre@gmail.com
 ---
 
-I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for *Phytophthora cinnamomi* in the Mediterranean Basin. Furthermore, I am studying a Master\'s Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University. Lastly, as a personal challenge, I am studying at the National University of Distance Education (UNED) an advanced course in Applied Statistics, since the field of applied statistics, geostatistics and machine learning inspire me.
+I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for *Phytophthora cinnamomi* in the Mediterranean Basin. Furthermore, I am studying a Master's Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University. Lastly, as a personal challenge, I am studying at the National University of Distance Education (UNED) an advanced course in Applied Statistics, since the field of applied statistics, geostatistics and machine learning inspire me.
+
+# Curriculum Vitae
+
+<iframe width="800" height="800" src="figures/CV_AdrianCidre.pdf">
+
+</iframe>
