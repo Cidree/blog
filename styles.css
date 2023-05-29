@@ -1,0 +1,27 @@
+/* css styles */
+
+/* Top menus */
+.menu-text, .navbar-title {
+  color: white;
+  font-weight: bold;
+}
+
+.quarto-title {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+
+.quarto-title-banner{
+  background-color: #DEF5D9;
+}
+
+h1.title {
+  color: black;
+  font-weight: bold;
+  background-color: transparent;
+}
