@@ -1,5 +1,5 @@
 ---
-title: "Adrián Cidre"
+title: "Projects"
 listing:
   contents: posts
   sort: "date desc"

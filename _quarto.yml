@@ -4,6 +4,15 @@ project:
 website:
   title: "Blog"
   navbar:
+    left: 
+      - text: Home
+        href: index.qmd
+      - text: Projects
+        href: projects.qmd
+      - text: Resume
+        href: resume.qmd
+      - text: Courses
+        href: courses.qmd
     right:
       - about.qmd
       - icon: github

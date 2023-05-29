@@ -1,19 +1,18 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Adrián Cidre"
+image: figures/Foto_Snelska.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/
     - icon: github
       text: Github
-      href: https://github.com
-
+      href: https://github.com/Cidree
+    - icon: envelope-at
+      text: Contact me
+      href: mailto:adrian.cidre@gmail.com
 ---
 
-About this blog
+I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for *Phytophthora cinnamomi* in the Mediterranean Basin. Furthermore, I am studying a Master\'s Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University. Lastly, as a personal challenge, I am studying at the National University of Distance Education (UNED) an advanced course in Applied Statistics, since the field of applied statistics, geostatistics and machine learning inspire me.
