@@ -14,9 +14,11 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/Cidree
+      - icon: linkedin
+        href: https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/
+      - icon: envelope-at
+        href: mailto:adrian.cidre@gmail.com
   page-footer:
     center: |
       [Contact Adrián Cidre](mailto:adrian.cidre@gmail.com)
