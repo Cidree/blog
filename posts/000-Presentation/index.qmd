@@ -8,7 +8,7 @@ image: "image.jpg"
 
 > Introducing myself
 
-My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master\'s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).
+My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master's degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).
 
 Not only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.
 
