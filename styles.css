@@ -1,9 +1,20 @@
 /* css styles */
 
-/* Top menus */
+/* Navbar */
+.navbar {
+  padding: 0;
+}
+
 .menu-text, .navbar-title {
   color: white;
   font-weight: bold;
+}
+
+
+/* Text of the navbar: home, projects... */
+.menu-text:hover {
+  color: #BBF7AE;
+  font-size: 18px;
 }
 
 .quarto-title {
@@ -11,13 +22,15 @@
   justify-content: center;
 }
 
-.title {
+/*.title {
   text-align: center;
-}
+}*/
 
-
+/* Title (welcome to my blog) */
 .quarto-title-banner{
   background-color: #DEF5D9;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 h1.title {
@@ -25,3 +38,11 @@ h1.title {
   font-weight: bold;
   background-color: transparent;
 }
+
+/* Logo navbar */
+.navbar-logo {
+  max-height: 100px;
+}
+
+
+

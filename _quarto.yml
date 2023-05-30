@@ -2,9 +2,12 @@ project:
   type: website
 
 website:
-  title: "Adrián Cidre"
+  title: ""
+  site-url: "https://www.quarto.org"
   navbar:
-    left: 
+    logo: figures/logo.png
+    collapse-below: lg
+    left:
       - text: Home
         href: index.qmd
       - text: Projects
@@ -36,6 +39,6 @@ format:
     css: styles.css
     code-link: true
     code-block-border-left: true
-
+    linkcolor: '#ff0000'
 editor: visual
 
