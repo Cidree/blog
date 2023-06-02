@@ -23,23 +23,39 @@ body{
   background-color: #DEF5D9;
   background-image: linear-gradient(
         to right bottom,
-        rgba(187, 247, 174, 0.70), 
-        rgba(39, 180, 133, 0.70)),
+        rgba(187, 247, 174, 0.80), 
+        rgba(39, 180, 133, 0.80)),
         url("figures/forest.jpg");
   margin-top: 2em;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+  text-transform: uppercase;
 }
 
-.titulo {
+.homeTitle {
+  display: block;
+  white-space: nowrap;              /*Text in one line*/
   color: black;
-  font-size: 40px;
-  font-weight: bold;
-  background-color: transparent;
+  font-size: 30px;
+  font-weight: 700;
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 40%;                         /*40% down from top*/
+  left: 50%;                        /*50% from left*/
+  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+  letter-spacing: 10px;
+}
+
+.homeSubtitle {
+  display: block;
+  white-space: nowrap;              /*Text in one line*/
+  color: #0F1F0C;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  top: 50%;                         /*40% down from top*/
+  left: 50%;                        /*50% from left*/
+  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+  letter-spacing: 6px;
 }
 
 /* Navbar */

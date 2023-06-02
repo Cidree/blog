@@ -14,9 +14,11 @@ title-block-banner: true
 ---
 
 ::: header
-[Welcome to my blog]{.titulo}
 
-[Amazing]{.Otros}
+[Digitalized forest]{.homeTitle}
+
+[Bridging forest and R programming]{.homeSubtitle}
+
 :::
 
 # Introduction
