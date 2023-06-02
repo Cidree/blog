@@ -22,9 +22,9 @@ body{
   background-position: top;
   background-image: linear-gradient(
         to right bottom,
-        rgba(187, 247, 174, 0.60), 
-        rgba(39, 180, 133, 0.60)),
-        url("figures/forest2.jpg");
+        rgba(187, 247, 174, 0.80), 
+        rgba(39, 180, 133, 0.80)),
+        url("figures/forest.jpg");
   margin-top: 2em;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
@@ -37,15 +37,16 @@ body{
   top: 40%;                         /*40% down from top*/
   left: 50%;                        /*50% from left*/
   transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+  text-align: center;
 }
 
 /*Text of title and subtitle, and title and subtitle*/
 .homeText {
     color: #0C0F1F;
     text-transform: uppercase;
-    text-align: center;
     
     backface-visibility: hidden;    /* Avoid shaking of animations */
+    margin-bottom: 80px;
 }
 
 .homeTitle {
@@ -106,6 +107,47 @@ body{
     transform: translate(0);
   }
 }
+
+/* Buttons ------------------------------- */
+
+.btn:link,
+.btn:visited{
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+}
+
+.btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 50px 10px rgba(0,0,0,0.2);
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Navbar */

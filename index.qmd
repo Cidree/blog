@@ -22,6 +22,8 @@ title-block-banner: true
 [Bridging forest and R programming]{.homeSubtitle}
 
 </h1>
+
+<a href="#" class="btn btn-white">Discover my courses</a>
 :::
 :::
 
