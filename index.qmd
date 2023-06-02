@@ -1,14 +1,30 @@
 ---
-title: "Welcome to my blog"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-  feed: true
+title: ""
+# listing:
+# 
+#   contents: posts
+#   sort: "date desc"
+#   type: default
+#   categories: true
+#   sort-ui: false
+#   filter-ui: false
+#   feed: true
 page-layout: full
-image: figures/posit.png
 title-block-banner: true
 ---
+
+::: header
+[Welcome to my blog]{.titulo}
+
+[Amazing]{.Otros}
+:::
+
+# Introduction
+
+In this blog I will share contents of my life in general, and of my work more specifically. My focus currently is on:
+
+> -   R programming
+>
+> -   Forest pathology
+>
+> -   Forest modeling

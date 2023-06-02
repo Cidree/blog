@@ -1,5 +1,5 @@
 ---
-title: "Bio"
+title: "About"
 image: figures/Foto_Snelska.jpg
 about:
   template: jolla
