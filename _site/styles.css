@@ -20,43 +20,93 @@ body{
 .header {
   height: 400px;
   background-position: top;
-  background-color: #DEF5D9;
   background-image: linear-gradient(
         to right bottom,
-        rgba(187, 247, 174, 0.80), 
-        rgba(39, 180, 133, 0.80)),
-        url("figures/forest.jpg");
+        rgba(187, 247, 174, 0.60), 
+        rgba(39, 180, 133, 0.60)),
+        url("figures/forest2.jpg");
   margin-top: 2em;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-  text-transform: uppercase;
+
+}
+
+/*Text box of title and subtitle*/
+.text-box {
+  position: absolute;
+  top: 40%;                         /*40% down from top*/
+  left: 50%;                        /*50% from left*/
+  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+}
+
+/*Text of title and subtitle, and title and subtitle*/
+.homeText {
+    color: #0C0F1F;
+    text-transform: uppercase;
+    text-align: center;
+    
+    backface-visibility: hidden;    /* Avoid shaking of animations */
 }
 
 .homeTitle {
   display: block;
   white-space: nowrap;              /*Text in one line*/
-  color: black;
   font-size: 30px;
   font-weight: 700;
-  position: absolute;
-  top: 40%;                         /*40% down from top*/
-  left: 50%;                        /*50% from left*/
-  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
   letter-spacing: 10px;
+  
+  animation-name: titleAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
 }
 
 .homeSubtitle {
   display: block;
   white-space: nowrap;              /*Text in one line*/
-  color: #0F1F0C;
   font-size: 20px;
   font-weight: 400;
-  position: absolute;
-  top: 50%;                         /*40% down from top*/
-  left: 50%;                        /*50% from left*/
-  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
   letter-spacing: 6px;
+  
+  animation: subtitleAnimation 1s ease-out;
 }
+
+
+/* Animations */
+
+@keyframes titleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  
+  80% {
+    opacity: 0.8;
+    transform: translateX(10px);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes subtitleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  
+  80% {
+    opacity: 0.8;
+    transform: translateX(-10px);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
 
 /* Navbar */
 .navbar {

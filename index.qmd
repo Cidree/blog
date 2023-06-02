@@ -14,11 +14,15 @@ title-block-banner: true
 ---
 
 ::: header
+::: text-box
+<h1 class="homeText">
 
-[Digitalized forest]{.homeTitle}
+[R-FOREST]{.homeTitle}
 
 [Bridging forest and R programming]{.homeSubtitle}
 
+</h1>
+:::
 :::
 
 # Introduction
