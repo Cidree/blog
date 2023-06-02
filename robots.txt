@@ -1,1 +1,1 @@
-Sitemap: https://github.com/Cidree/cidre/sitemap.xml
+Sitemap: https://www.quarto.org/sitemap.xml

@@ -1,9 +1,62 @@
 /* css styles */
 
-/* Top menus */
+/* All elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body elements */
+body{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #777;
+    padding: 30px;
+}
+
+/* Title (welcome to my blog) */
+.header {
+  height: 400px;
+  background-position: top;
+  background-color: #DEF5D9;
+  background-image: linear-gradient(
+        to right bottom,
+        rgba(187, 247, 174, 0.70), 
+        rgba(39, 180, 133, 0.70)),
+        url("figures/forest.jpg");
+  margin-top: 2em;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+
+.titulo {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  background-color: transparent;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Navbar */
+.navbar {
+  padding: 0;
+}
+
 .menu-text, .navbar-title {
   color: white;
   font-weight: bold;
+}
+
+
+/* Text of the navbar: home, projects... */
+.menu-text:hover {
+  color: #BBF7AE;
+  font-size: 18px;
 }
 
 .quarto-title {
@@ -11,17 +64,15 @@
   justify-content: center;
 }
 
-.title {
+/*.title {
   text-align: center;
+}*/
+
+
+/* Logo navbar */
+.navbar-logo {
+  max-height: 100px;
 }
 
 
-.quarto-title-banner{
-  background-color: #DEF5D9;
-}
 
-h1.title {
-  color: black;
-  font-weight: bold;
-  background-color: transparent;
-}
