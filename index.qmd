@@ -14,16 +14,16 @@ title-block-banner: true
 ---
 
 ::: header
-::: text-box
-<h1 class="homeText">
+::: header__text-box
+<h1 class="heading-primary">
 
-[R-FOREST]{.homeTitle}
+[R-FOREST]{.heading-primary--main}
 
-[Bridging forest and R programming]{.homeSubtitle}
+[Bridging forest and R programming]{.heading-primary--sub}
 
 </h1>
 
-<a href="#" class="btn btn-white">Discover my courses</a>
+<a href="#" class="btn btn--white btn--animated">Discover my courses</a>
 :::
 :::
 
@@ -35,4 +35,6 @@ In this blog I will share contents of my life in general, and of my work more sp
 >
 > -   Forest pathology
 >
-> -   Forest modeling
+> -   Forest modelling
+>
+> -   Spatial Data Science
