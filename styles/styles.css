@@ -1,0 +1,239 @@
+/* css styles */
+
+/* All elements */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit; /*good practice to have box-sizing:border-box in body*/
+}
+
+html {
+  font-size: 62.5%; /*% of default size (16px ~ > 10px*/
+}
+
+/* Body elements */
+body{
+    font-weight: 400;
+    /*font-size: 16px;*/
+    line-height: 1.7;
+    color: #777;
+    padding: 3rem;
+    box-sizing: border-box;
+}
+
+/* Title (welcome to my blog) */
+.header {
+  height: 30rem;
+  background-position: top;
+  background-image: linear-gradient(
+        to right bottom,
+        rgba(187, 247, 174, 0.80), 
+        rgba(39, 180, 133, 0.80)),
+        url("figures/forest.jpg");
+  margin-top: 2em;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+
+}
+
+.header__logo-box {
+  position: absolute;
+  top: 4rem;
+  left: 4rem;
+}
+
+.header__logo {
+  height: 3.5rem;
+}
+
+/*Text box of title and subtitle*/
+.header__text-box {
+  position: absolute;
+  top: 40%;                         /*40% down from top*/
+  left: 50%;                        /*50% from left*/
+  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+  text-align: center;
+}
+
+/*Text of title and subtitle, and title and subtitle*/
+.heading-primary {
+    color: #0C0F1F;
+    text-transform: uppercase;
+    
+    backface-visibility: hidden;    /* Avoid shaking of animations */
+    margin-bottom: 8rem;
+}
+
+.heading-primary--main {
+  display: block;
+  white-space: nowrap;              /*Text in one line*/
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  
+  animation-name: titleAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+.heading-primary--sub {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.6rem;
+  
+  animation: subtitleAnimation 1s ease-out;
+}
+
+
+/* Animations */
+
+@keyframes titleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+  
+  80% {
+    opacity: 0.8;
+    transform: translateX(1rem);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes subtitleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+  
+  80% {
+    opacity: 0.8;
+    transform: translateX(-1rem);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes buttonAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/* Buttons ------------------------------- */
+
+.btn:link,
+.btn:visited{
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border-radius: 10rem;
+  transition: all .2s;
+  position: relative;
+  font-size: 1.2rem;
+}
+
+.btn:hover{
+  transform: translateY(-.3rem);
+  box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+}
+
+.btn:active {
+  transform: translateY(-.1rem);
+  box-shadow: 0 5rem 1rem rgba(0,0,0,0.2);
+}
+
+.btn--white {
+  background-color: #fff;
+  color: #777;
+}
+
+.btn:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+
+.btn--white:after {
+    background-color: white;
+}
+
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;             /* Makes it invisible ~ smoother*/
+}
+
+.btn--animated {
+  animation: buttonAnimation .5s ease-out .75s;
+  animation-fill-mode: backwards;   /*Apply styles up to 0% before animation starts*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navbar */
+.navbar {
+  padding: 0;
+}
+
+.menu-text, .navbar-title {
+  color: white;
+  font-weight: bold;
+}
+
+
+/* Text of the navbar: home, projects... */
+.menu-text:hover {
+  color: #BBF7AE;
+  font-size: 18px;
+}
+
+.quarto-title {
+  display: flex;
+  justify-content: center;
+}
+
+/*.title {
+  text-align: center;
+}*/
+
+
+/* Logo navbar */
+.navbar-logo {
+  max-height: 100px;
+}
+
+
+
