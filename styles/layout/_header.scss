@@ -1,0 +1,33 @@
+.header {
+    height: 30rem;
+    background-position: top;
+    background-image: linear-gradient(
+          to right bottom,
+          rgba($color-green-light, 0.80), 
+          rgba($color-green-dark, 0.80)),
+          url("../figures/forest.jpg");
+    margin-top: 2em;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+    
+    // logo-box
+    &__logo-box {
+      position: absolute;
+      top: 4rem;
+      left: 4rem;
+    }
+    
+    // logo
+    &__logo {
+      height: 3.5rem;
+    }
+    
+    // Text box of title and subtitle
+    &__text-box {
+      position: absolute;
+      top: 40%;                         /*40% down from top*/
+      left: 50%;                        /*50% from left*/
+      transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+      text-align: center;
+    }
+  }
