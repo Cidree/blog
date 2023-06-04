@@ -36,7 +36,7 @@ format:
     theme: 
       light: lux
       dark: [lux, theme_dark_custom.scss]
-    css: styles.css
+    css: styles/styles.css
     code-link: true
     code-block-border-left: true
     linkcolor: '#ff0000'
