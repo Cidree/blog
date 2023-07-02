@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Adrián Cidre</title>
+<link>https://www.quarto.org/projects.html</link>
+<atom:link href="https://www.quarto.org/projects.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.3.433</generator>
+<lastBuildDate>Mon, 29 May 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Presentation</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://www.quarto.org/posts/000-Presentation/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<blockquote class="blockquote">
+<p>Introducing myself</p>
+</blockquote>
+<p>My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master’s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).</p>
+<p>Not only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.</p>
+<p>Within the scope of my research, I specialize in data analysis, specifically as a data analyst. One of my primary responsibilities involves creating models of pests in Europe for the LIFE-PROJECT that I am currently engaged in. Using my skills in the R environment, I perform spatial data analysis and modeling, as well as remote sensing analysis.</p>
+<p>In addition to my academic pursuits and research, I am excited to use this blog as a platform to share my work, courses, and other fascinating topics that will engage and inform the public. By providing valuable insights into my field and showcasing the projects I am involved in, I aim to spark interest and foster a greater understanding of the importance of forestry, geomatics, and data analysis in sustainable forest management.</p>
+
+
+
+ ]]></description>
+  <category>personal</category>
+  <guid>https://www.quarto.org/posts/000-Presentation/index.html</guid>
+  <pubDate>Mon, 29 May 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://www.quarto.org/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>
