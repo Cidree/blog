@@ -1,6 +1,6 @@
 @import "abstracts/functions";
 @import "abstracts/mixins";
-@import "abstracts/abstracts";
+@import "abstracts/variables";
 
 @import "base/animations";
 @import "base/base";
@@ -10,40 +10,21 @@
 @import "components/button";
 
 @import "layout/header";
+@import "layout/navbar";
 
 
 @import "pages/home";
 
 
 
-/* Navbar */
-.navbar {
-  padding: 0;
-}
 
-.menu-text, .navbar-title {
-  color: $color-white;
-  font-weight: bold;
-}
 
 
 /* Text of the navbar: home, projects... */
-.menu-text:hover {
-  color: $color-green-light;
-  font-size: 18px;
-}
+
 
 .quarto-title {
   display: flex;
   justify-content: center;
 }
 
-/*.title {
-  text-align: center;
-}*/
-
-
-/* Logo navbar */
-.navbar-logo {
-  max-height: 100px;
-}

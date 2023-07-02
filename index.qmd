@@ -14,13 +14,6 @@ title-block-banner: true
 ---
 
 ::: header
-
-::: header__logo-box
-
-<img src="figures/logo.png" alt="Logo" class="header__logo">
-
-:::
-
 ::: header__text-box
 <h1 class="heading-primary">
 

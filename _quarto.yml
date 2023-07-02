@@ -2,19 +2,20 @@ project:
   type: website
 
 website:
-  title: ""
+  title: "Adrián Cidre"
   site-url: "https://www.quarto.org"
   navbar:
-    logo: figures/logo.png
+    #logo: figures/logo.png
+    background: "#2c3e50"
     collapse-below: lg
-    left:
+    right:
       - text: Home
         href: index.qmd
       - text: News
         href: projects.qmd
       - text: Courses
         href: courses.qmd
-    right:
+    #right:
       - about.qmd
       - icon: github
         href: https://github.com/Cidree

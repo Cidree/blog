@@ -6,21 +6,11 @@
           rgba($color-green-light, 0.80), 
           rgba($color-green-dark, 0.80)),
           url("../figures/forest.jpg");
+    background-size: cover;
+    background-position: top;
     margin-top: 2em;
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-    
-    // logo-box
-    &__logo-box {
-      position: absolute;
-      top: 4rem;
-      left: 4rem;
-    }
-    
-    // logo
-    &__logo {
-      height: 3.5rem;
-    }
     
     // Text box of title and subtitle
     &__text-box {

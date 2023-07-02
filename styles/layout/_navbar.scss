@@ -1,0 +1,38 @@
+
+// Navbar
+.navbar {
+  padding: 0;
+}
+
+
+.navbar-title {
+  color: $color-white;
+  font-weight: 900;
+}
+
+.menu-text{
+  color: $color-white;
+  font-weight: bold;
+  
+  &:hover {
+    color: $color-black;
+  }
+}
+
+// Nav
+.navbar-logo {
+  max-height: 100px;
+}
+
+.nav-link {
+  
+  transition: transform 0.4s;
+  
+  &:hover {
+    transform: translateY(0.5rem) scale(1.5);
+    background-color: $color-green-light;
+  }
+  
+}
+
+// Logos (.bi)
