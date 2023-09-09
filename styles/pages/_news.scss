@@ -10,3 +10,13 @@
 .quarto-grid-item .card-attribution.end {
     justify-content: center;
 }
+
+// Filter and order by buttons
+.listing-actions-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.quarto-listing-filter {
+  margin-left: unset;
+}

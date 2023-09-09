@@ -18,7 +18,7 @@ Bridging forests and technology
 
 </h1>
 
-<a href="courses.qmd" class="btn btn--white btn--animated">Discover my courses</a>
+<a href="courses.qmd" class="btn btn-primary btn--animated">Discover my courses</a>
 :::
 :::
 

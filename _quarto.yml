@@ -4,6 +4,7 @@ project:
 website:
   title: "Adrián Cidre"
   site-url: "https://www.quarto.org"
+  search: false
   navbar:
     #logo: figures/logo.png
     background: "#2D4156"
@@ -30,7 +31,7 @@ website:
       Made with [Quarto](https://quarto.org/)
     right: |
       [Github Code Repo](https://github.com/Cidree/cidre)
-    background: black
+    background: "#2D4156"
     foreground: white
 format:
   html:
@@ -41,5 +42,6 @@ format:
     code-link: true
     code-block-border-left: true
     linkcolor: '#ff0000'
+    fontsize: 100%
 editor: visual
 

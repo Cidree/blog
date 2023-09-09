@@ -1,1 +1,15 @@
-Coming soon...
+---
+title: ""
+---
+
+::: {.jumbotron .jumbotron-courses}
+<div>
+
+# Courses {.text-black .jumbotron-title}
+
+</div>
+
+::: jumbotron-text
+Learn data analysis and data science with me. In the future, I plan to offer more exciting courses
+:::
+:::

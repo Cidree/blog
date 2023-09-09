@@ -36,10 +36,10 @@
   box-sizing: inherit;
   /*good practice to have box-sizing:border-box in body*/ }
 
+/*
 html {
-  font-size: 62.5%;
-  /*% of default size (16px ~ > 10px*/ }
-
+  font-size: 62.5%; // % of default size (16px ~ > 10px
+}*/
 /* Body elements */
 body {
   box-sizing: border-box; }
@@ -52,6 +52,32 @@ body {
   padding: 3rem;
   text-align: justify; }
 
+/*
+.heading-primary {
+    color: $color-black;
+    text-transform: uppercase;
+    backface-visibility: hidden;    // Avoid shaking of animations 
+    margin-bottom: 8rem;
+    
+    &--main {
+      display: block;
+      white-space: nowrap;              //Text in one line
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 1rem;
+      animation: titleAnimation 1s ease-out;
+    }
+
+    &--sub {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.5rem;
+      animation: subtitleAnimation 1s ease-out;
+    }
+
+}
+*/
 .heading-primary {
   color: #0C0F1F;
   text-transform: uppercase;
@@ -62,7 +88,7 @@ body {
     display: block;
     white-space: nowrap;
     /*Text in one line*/
-    font-size: 3rem;
+    font-size: 5vw 5vh;
     font-weight: 700;
     letter-spacing: 1rem;
     animation: titleAnimation 1s ease-out; }
@@ -76,8 +102,8 @@ body {
 .btn:link, .btn:visited {
   text-transform: uppercase;
   text-decoration: none;
-  padding: 1.5rem 4rem;
-  display: inline-block;
+  padding: 1rem 2rem;
+  display: inline-table;
   border-radius: 10rem;
   transition: all .2s;
   position: relative;
@@ -94,12 +120,6 @@ body {
 .btn:active {
   transform: translateY(-0.1rem);
   box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2); }
-
-.btn--white {
-  background-color: white;
-  color: #777; }
-  .btn--white::after {
-    background-color: white; }
 
 .btn::after {
   content: "";
@@ -169,10 +189,50 @@ body {
   font-size: 400;
   color: white; }
 
+.jumbotron {
+  margin-top: 2rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  position: relative;
+  width: 100%; }
+  .jumbotron-title {
+    position: relative;
+    z-index: 1;
+    font-size: 3rem; }
+  .jumbotron-text {
+    z-index: 1;
+    color: #0C0F1F;
+    position: relative;
+    width: 50%; }
+  .jumbotron-courses {
+    height: 50vh;
+    width: 100%; }
+    .jumbotron-courses::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("../figures/jumbo.png");
+      background-size: cover;
+      opacity: 0.25;
+      z-index: 0; }
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
 
 .quarto-grid-item .card-attribution.end {
+  justify-content: center; }
+
+.listing-actions-group {
+  display: flex;
+  flex-wrap: wrap; }
+
+.quarto-listing-filter {
+  margin-left: unset; }
+
+.quarto-title .quarto-categories {
   justify-content: center; }
 
 .quarto-title {

@@ -26,5 +26,5 @@ listing:
   fields: [image, description, date, title, reading-time, categories]
   
 page-layout: full
-title-block-banner: false
+title-block-banner: true
 ---
