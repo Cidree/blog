@@ -2,7 +2,7 @@
 title: ""
 ---
 
-::: {.jumbotron .jumbotron-courses}
+::: {.jumbotron .jumbotron-courses .container .d-none .d-sm-block}
 <div>
 
 # Courses {.text-black .jumbotron-title}
@@ -10,6 +10,16 @@ title: ""
 </div>
 
 ::: jumbotron-text
+Learn data analysis and data science with me. In the future, I plan to offer more exciting courses
+:::
+:::
+
+::: {.row .d-block .d-sm-none}
+::: {.card .card-courses}
+<img class = "img-fluid rounded mx-auto d-block" src = "figures/jumbo.png">
+
+### Courses
+
 Learn data analysis and data science with me. In the future, I plan to offer more exciting courses
 :::
 :::

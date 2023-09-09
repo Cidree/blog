@@ -219,6 +219,14 @@ body {
       opacity: 0.25;
       z-index: 0; }
 
+.card-courses {
+  text-align: center;
+  padding: 1rem; }
+  .card-courses h3 {
+    font-size: 1rem; }
+  .card-courses p {
+    font-size: 0.8rem; }
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
 
