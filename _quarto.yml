@@ -6,7 +6,7 @@ website:
   site-url: "https://www.quarto.org"
   navbar:
     #logo: figures/logo.png
-    background: "#2c3e50"
+    background: "#2D4156"
     collapse-below: lg
     right:
       - text: Home
@@ -15,7 +15,6 @@ website:
         href: projects.qmd
       - text: Courses
         href: courses.qmd
-    #right:
       - about.qmd
       - icon: github
         href: https://github.com/Cidree
@@ -23,6 +22,7 @@ website:
         href: https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/
       - icon: envelope-at
         href: mailto:adrian.cidre@gmail.com
+        
   page-footer:
     center: |
       [Contact Adrián Cidre](mailto:adrian.cidre@gmail.com)

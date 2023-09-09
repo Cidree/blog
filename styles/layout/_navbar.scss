@@ -24,15 +24,28 @@
   max-height: 100px;
 }
 
+
+/* Transition on hover
 .nav-link {
   
-  transition: transform 0.4s;
+  transition: transform 0.2s;
   
   &:hover {
-    transform: translateY(0.5rem) scale(1.5);
-    background-color: $color-green-light;
+    transform: translateY(0.1rem) scale(1.1);
+    background-color: $color-lightblue;
+  }
+  
+}*/
+
+// Logos (.bi)
+nav .nav-link i, nav .dropdown-item i {
+  font-size: 400;
+  color: darkgreen;
+  background-color: yellow;
+  
+  &:hover {
+    color: red;
+    background-color: orangered;
   }
   
 }
-
-// Logos (.bi)

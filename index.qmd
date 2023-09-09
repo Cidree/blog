@@ -1,17 +1,14 @@
 ---
 title: ""
-# listing:
-# 
-#   contents: posts
-#   sort: "date desc"
-#   type: default
-#   categories: true
-#   sort-ui: false
-#   filter-ui: false
-#   feed: true
 page-layout: full
 title-block-banner: true
 ---
+
+```{r styles}
+#| include: false
+library(sass)
+write(sass(sass_file("styles/main.scss")), file = "styles/styles.css")
+```
 
 ::: header
 ::: header__text-box
@@ -19,7 +16,7 @@ title-block-banner: true
 
 [R-FOREST]{.heading-primary--main}
 
-[Bridging forest and R programming]{.heading-primary--sub}
+[Bridging forests and]{.heading-primary--sub} technology
 
 </h1>
 
@@ -38,3 +35,5 @@ In this blog I will share contents of my life in general, and of my work more sp
 > -   Forest modelling
 >
 > -   Spatial Data Science
+>
+> -   Teaching

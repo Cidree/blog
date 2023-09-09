@@ -1,32 +1,43 @@
 @keyframes titleAnimation {
   0% {
     opacity: 0;
-    transform: translateX(-10rem); }
+    transform: translateX(-10rem);
+  }
   80% {
     opacity: 0.8;
-    transform: translateX(1rem); }
+    transform: translateX(1rem);
+  }
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 @keyframes subtitleAnimation {
   0% {
     opacity: 0;
-    transform: translateX(10rem); }
+    transform: translateX(10rem);
+  }
   80% {
     opacity: 0.8;
-    transform: translateX(-1rem); }
+    transform: translateX(-1rem);
+  }
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 @keyframes buttonAnimation {
   0% {
     opacity: 0;
-    transform: translateY(3rem); }
+    transform: translateY(3rem);
+  }
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 *,
 *::before,
@@ -34,43 +45,52 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-  /*good practice to have box-sizing:border-box in body*/ }
+  /*good practice to have box-sizing:border-box in body*/
+}
 
 html {
   font-size: 62.5%;
-  /*% of default size (16px ~ > 10px*/ }
+  /*% of default size (16px ~ > 10px*/
+}
 
 /* Body elements */
 body {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 body {
   font-weight: 400;
   /*font-size: 16px;*/
   line-height: 1.7;
   color: #777;
-  padding: 3rem; }
+  padding: 3rem;
+}
 
 .heading-primary {
   color: #0C0F1F;
   text-transform: uppercase;
   backface-visibility: hidden;
   /* Avoid shaking of animations */
-  margin-bottom: 8rem; }
-  .heading-primary--main {
-    display: block;
-    white-space: nowrap;
-    /*Text in one line*/
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: 1rem;
-    animation: titleAnimation 1s ease-out; }
-  .heading-primary--sub {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 0.6rem;
-    animation: subtitleAnimation 1s ease-out; }
+  margin-bottom: 8rem;
+}
+
+.heading-primary--main {
+  display: block;
+  white-space: nowrap;
+  /*Text in one line*/
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  animation: titleAnimation 1s ease-out;
+}
+
+.heading-primary--sub {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.6rem;
+  animation: subtitleAnimation 1s ease-out;
+}
 
 .btn:link, .btn:visited {
   text-transform: uppercase;
@@ -80,25 +100,33 @@ body {
   border-radius: 10rem;
   transition: all .2s;
   position: relative;
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+}
 
 .btn:hover {
   transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(245, 245, 245, 0.2); }
-  .btn:hover::after {
-    transform: scaleX(1.4) scaleY(1.6);
-    opacity: 0;
-    /* Makes it invisible ~ smoother*/ }
+  box-shadow: 0 1rem 2rem rgba(245, 245, 245, 0.2);
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+  /* Makes it invisible ~ smoother*/
+}
 
 .btn:active {
   transform: translateY(-0.1rem);
-  box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2); }
+  box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2);
+}
 
 .btn--white {
   background-color: white;
-  color: #777; }
-  .btn--white::after {
-    background-color: white; }
+  color: #777;
+}
+
+.btn--white::after {
+  background-color: white;
+}
 
 .btn::after {
   content: "";
@@ -110,12 +138,14 @@ body {
   top: 0;
   left: 0;
   z-index: -1;
-  transition: all .4s; }
+  transition: all .4s;
+}
 
 .btn--animated {
   animation: buttonAnimation .5s ease-out .75s;
   animation-fill-mode: backwards;
-  /*Apply styles up to 0% before animation starts*/ }
+  /*Apply styles up to 0% before animation starts*/
+}
 
 .header {
   height: 30rem;
@@ -125,40 +155,53 @@ body {
   background-position: top;
   margin-top: 2em;
   position: relative;
-  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%); }
-  .header__text-box {
-    position: absolute;
-    top: 40%;
-    /*40% down from top*/
-    left: 50%;
-    /*50% from left*/
-    transform: translate(-50%, -50%);
-    /*top and left are counted in middle of text*/
-    text-align: center; }
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+
+.header__text-box {
+  position: absolute;
+  top: 40%;
+  /*40% down from top*/
+  left: 50%;
+  /*50% from left*/
+  transform: translate(-50%, -50%);
+  /*top and left are counted in middle of text*/
+  text-align: center;
+}
 
 .navbar {
-  padding: 0; }
+  padding: 0;
+}
 
 .navbar-title {
   color: white;
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .menu-text {
   color: white;
-  font-weight: bold; }
-  .menu-text:hover {
-    color: #0C0F1F; }
+  font-weight: bold;
+}
+
+.menu-text:hover {
+  color: #0C0F1F;
+}
 
 .navbar-logo {
-  max-height: 100px; }
+  max-height: 100px;
+}
 
 .nav-link {
-  transition: transform 0.4s; }
-  .nav-link:hover {
-    transform: translateY(0.5rem) scale(1.5);
-    background-color: #C5F8C9; }
+  transition: transform 0.4s;
+}
 
-/* Text of the navbar: home, projects... */
+.nav-link:hover {
+  transform: translateY(0.5rem) scale(1.1);
+  background-color: #A3D1D5;
+}
+
 .quarto-title {
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+}
+
