@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.quarto.org/projects.html</loc>
-    <lastmod>2023-07-02T19:10:14.146Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.quarto.org/index.html</loc>
-    <lastmod>2023-07-02T19:10:13.326Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.quarto.org/resume.html</loc>
-    <lastmod>2023-07-02T19:10:12.574Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.quarto.org/courses.html</loc>
-    <lastmod>2023-07-02T19:10:10.510Z</lastmod>
+    <lastmod>2023-09-09T10:53:38.192Z</lastmod>
   </url>
   <url>
     <loc>https://www.quarto.org/posts/000-Presentation/index.html</loc>
-    <lastmod>2023-07-02T19:10:12.970Z</lastmod>
+    <lastmod>2023-09-09T10:53:37.552Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.quarto.org/projects.html</loc>
+    <lastmod>2023-09-09T10:53:35.172Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.quarto.org/index.html</loc>
+    <lastmod>2023-09-09T10:53:37.196Z</lastmod>
   </url>
   <url>
     <loc>https://www.quarto.org/about.html</loc>
-    <lastmod>2023-07-02T19:10:13.706Z</lastmod>
+    <lastmod>2023-09-09T10:53:37.896Z</lastmod>
   </url>
 </urlset>

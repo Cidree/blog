@@ -9,7 +9,7 @@
 <link>https://www.quarto.org/projects.html</link>
 <atom:link href="https://www.quarto.org/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.3.433</generator>
+<generator>quarto-1.3.450</generator>
 <lastBuildDate>Mon, 29 May 2023 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Presentation</title>
@@ -21,7 +21,7 @@
 
 
 <blockquote class="blockquote">
-<p>Introducing myself</p>
+<h1 id="introducing-myself">Introducing myself</h1>
 </blockquote>
 <p>My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master’s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).</p>
 <p>Not only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.</p>
