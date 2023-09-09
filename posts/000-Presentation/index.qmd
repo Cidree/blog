@@ -6,7 +6,7 @@ categories: [personal]
 image: "image.jpg"
 ---
 
-> Introducing myself
+> # Introducing myself
 
 My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master's degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).
 

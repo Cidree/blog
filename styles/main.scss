@@ -8,13 +8,12 @@
 @import "base/utilities";
 
 @import "components/button";
-
-@import "layout/header";
-@import "layout/navbar";
-
+@import "components/header";
+@import "components/navbar";
 
 @import "pages/home";
-
+@import "pages/news";
+@import "pages/courses";
 
 
 
@@ -24,7 +23,15 @@
 
 
 .quarto-title {
-  display: flex;
-  justify-content: center;
+  display: block;
+  text-align: center;
 }
 
+.quarto-title-banner {
+  
+  margin-top: 1rem;
+  
+  & h1.title {
+    color: $color-white;
+  }
+}

@@ -1,0 +1,12 @@
+
+// CARDS ----------------------------------------------
+
+// Description Text
+.quarto-grid-item.card-center .listing-description {
+  text-align: center;
+}
+
+// Center Date section (only when date available)
+.quarto-grid-item .card-attribution.end {
+    justify-content: center;
+}

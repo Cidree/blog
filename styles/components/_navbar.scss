@@ -1,0 +1,63 @@
+
+// Navbar
+.navbar {
+  padding: 0;
+}
+
+// Title (Adrian Cidre)
+.navbar-title {
+  color: $color-white;
+  font-weight: 900;
+}
+
+// Text of the nav links
+.menu-text{
+  color: $color-white;
+  font-weight: bold;
+}
+
+// Navbar logo
+.navbar-logo {
+  max-height: 100px;
+}
+
+
+// Transition on hover
+.nav-link {
+  
+  transition: transform 0.2s;
+  text-align: center;
+  
+  
+  // Active nav
+  &.active, &:focus {
+    
+    background-color: $color-lightblue;
+    
+    & .menu-text {
+      color: $color-darkblue;
+      font-weight: 900;
+    }
+    
+  }
+  
+  // Navlink on hover
+  &:hover {
+    transform: translateY(0.1rem) scale(1.1);
+    background-color: $color-lightblue;
+    
+    & .menu-text, .bi {
+      color: $color-darkblue;
+      
+    }
+    
+  }
+  
+}
+
+// Navbar icons (github, linkedin..)
+.navbar-nav .bi {
+  font-size: 400;
+  color: $color-white;
+  
+}

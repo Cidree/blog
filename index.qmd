@@ -4,35 +4,35 @@ page-layout: full
 title-block-banner: true
 ---
 
-```{r styles}
-#| include: false
-library(sass)
-write(sass(sass_file("styles/main.scss")), file = "styles/styles.css")
-```
-
 ::: header
 ::: header__text-box
 <h1 class="heading-primary">
 
-[R-FOREST]{.heading-primary--main}
+::: heading-primary--main
+R-FOREST
+:::
 
-[Bridging forests and]{.heading-primary--sub} technology
+::: heading-primary--sub
+Bridging forests and technology
+:::
 
 </h1>
 
-<a href="#" class="btn btn--white btn--animated">Discover my courses</a>
+<a href="courses.qmd" class="btn btn--white btn--animated">Discover my courses</a>
 :::
 :::
 
 # Introduction
 
-In this blog I will share contents of my life in general, and of my work more specifically. My focus currently is on:
+In this blog I will share contents of my life, my work, and also I will create teaching content. My specialities are the following:
 
 > -   R programming
 >
 > -   Forest pathology
 >
 > -   Forest modelling
+>
+> -   Remote Sensing
 >
 > -   Spatial Data Science
 >
