@@ -4,7 +4,7 @@
   "description": "My blog",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "node-sass styles/main.scss styles/styles.css -w"
+    "compile:sass": "node-sass 00_styles/main.scss 00_styles/styles.css -w"
   },
   "author": "Adrian Cidre",
   "license": "ISC",

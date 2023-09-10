@@ -4,6 +4,10 @@ execute:
   echo: false
 ---
 
+```{r functions}
+source("03_scripts/00_courses.R")
+```
+
 ::: {.column-screen .jumbotron .jumbotron-courses .container .d-none .d-sm-block}
 <div>
 
@@ -18,7 +22,7 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 
 ::: {.row .d-block .d-sm-none}
 ::: {.card .card-courses}
-<img src="figures/jumbo.png" class="img-fluid rounded mx-auto d-block"/>
+![](01_figures/jumbo.png){.img-fluid .rounded .mx-auto .d-block}
 
 ### Courses
 
@@ -26,42 +30,17 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 :::
 :::
 
-```{r course_card}
-library(shiny)
-
-course_card <- function(file, course_title, mode, date, time, language) {
-  
-  div(
-    class = "card card-course text-center p-1",
-    img(class = "img-circle card-img-top", src = file),
-    div(
-      class = "card-body",
-      h5(course_title, class = "card-course-title"),
-      p(mode, class = "card-course-mode"),
-      tags$ul(
-        class = "list-group list-group-flush",
-        tags$li(class = "list-group-item", icon("calendar-days"), date),
-        tags$li(class = "list-group-item", icon("clock"), time),
-        tags$li(class = "list-group-item", icon("language"), language)
-      ),
-      a(class = "btn btn-success btn-sm", href = "#", "Learn more")
-   )
- )
-  
-}
-
-```
-
 ::: {.container .grid .mt-5}
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "figures/00_course_figures/02_analisis_datos.png",
+  file         = "01_figures/00_course_figures/02_analisis_datos.png",
   course_title = "Introducción a Análisis y Visualización de Datos en R [2023]",
   mode         = "Online",
   date         = "Available Anytime",
   time         = "20 hours",
-  language     = "Spanish"
+  language     = "Spanish",
+  href         = "02_courses/01_data_analysis_es.qmd"
 )
 ```
 :::
@@ -69,12 +48,13 @@ course_card(
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "figures/00_course_figures/01_quarto.png",
+  file         = "01_figures/00_course_figures/01_quarto.png",
   course_title = "Quarto - diseño de documentos profesionales en RStudio",
   mode         = "Online",
   date         = "Available Anytime",
   time         = "10 hours",
-  language     = "Spanish"
+  language     = "Spanish",
+  href         = "02_courses/00_quarto_es.qmd"
 )
 ```
 :::

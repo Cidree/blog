@@ -1,0 +1,19 @@
+
+.course-banner {
+  background-color: $color-lightblue;
+  padding-top: 1rem;
+  
+
+  &--icon {
+    color: $color-darkblue;
+    padding-top: 2rem;
+  }
+  
+  &--text {
+    color: $color-black;
+  }
+  
+  &--image {
+    max-width: 100%;
+  }
+}

@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: figures/Foto_Snelska.jpg
+image: 01_figures/Foto_Snelska.jpg
 about:
   template: jolla
   links:
@@ -21,6 +21,6 @@ For over two years, I have been using the programming language R in a daily basi
 
 ## Curriculum Vitae
 
-<iframe width="800" height="800" src="figures/CV_AdrianCidre.pdf">
+<iframe width="800" height="800" src="01_figures/CV_AdrianCidre.pdf">
 
 </iframe>
