@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.193">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>Adrián Cidre -</title>
+<title>Adrián Cidre - Introducción a Análisis y Visualización de Datos en R [2023]</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,22 +19,20 @@ ul.task-list li input[type="checkbox"] {
 }
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -50,20 +45,16 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="00_styles/styles.css">
+}</script><link href="../site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet">
+<link href="../site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../00_styles/styles.css">
 </head>
-
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Adrián Cidre</span>
     </a>
   </div>
@@ -72,20 +63,20 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+<li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html" rel="" target="">
+    <a class="nav-link" href="../projects.html" rel="" target="">
  <span class="menu-text">News</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./courses.html" rel="" target="">
+    <a class="nav-link" href="../courses.html" rel="" target="">
  <span class="menu-text">Courses</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -104,63 +95,62 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introducción a Análisis y Visualización de Datos en R [2023]</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="course-banner">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div class="grid text-center" style="vertical-align: bottom">
+<div class="g-col-3">
+<i class="fas fa-money-bill-1-wave fa-2xl course-banner--icon" role="presentation" aria-label="money-bill-1-wave icon"></i>
+<p class="course-banner--text">13 €</p>
+</div>
+<div class="g-col-3">
+<i class="fas fa-chalkboard-user fa-2xl course-banner--icon" role="presentation" aria-label="chalkboard-user icon"></i>
+<p class="course-banner--text">Online</p>
+</div>
+<div class="g-col-3">
+<i class="far fa-clock fa-2xl course-banner--icon" role="presentation" aria-label="clock icon"></i>
+<p class="course-banner--text">20 horas</p>
+</div>
+<div class="g-col-3">
+<i class="far fa-calendar-days fa-2xl course-banner--icon" role="presentation" aria-label="calendar-days icon"></i>
+<p class="course-banner--text">Siempre Disponible</p>
+</div>
+</div>
+<img src="../01_figures/00_course_figures/02_analisis_datos.png" class="course-banner--image">
+</div>
+</div>
+</div>
+</div>
 
 
 
-<div class="header container">
-<div class="header__text-box">
-<h1 class="heading-primary">
-<div class="heading-primary--main heading-primary--main--big d-none d-sm-block">
-<p>R-FOREST</p>
-</div>
-<div class="heading-primary--main heading-primary--main--small d-block d-sm-none">
-<p>R-FOREST</p>
-</div>
-<div class="heading-primary--sub heading-primary--sub--big d-none d-sm-block">
-<p>Bridging forests and technology</p>
-</div>
-<div class="heading-primary--sub heading-primary--sub--small d-block d-sm-none">
-<p>Bridging forests and technology</p>
-</div>
-</h1>
-<p><a href="./courses.html" class="btn btn-primary btn-primary--big btn--animated d-none d-sm-block">Discover my courses</a></p>
-<p><a href="./courses.html" class="btn btn-primary btn-primary--small btn--animated d-block d-sm-none">Discover my courses</a></p>
-</div>
-</div>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>In this blog I will share contents of my life, my work, and also I will create teaching content. My specialities are the following:</p>
-<blockquote class="blockquote">
-<ul>
-<li><p>R programming</p></li>
-<li><p>Forest pathology</p></li>
-<li><p>Wildfires</p></li>
-<li><p>Forest modelling</p></li>
-<li><p>Remote Sensing</p></li>
-<li><p>Spatial Data Science</p></li>
-<li><p>Teaching</p></li>
-</ul>
-</blockquote>
-
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -601,8 +591,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p>Made with <a href="https://quarto.org/">Quarto</a></p>
 </div>   
@@ -614,8 +603,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
