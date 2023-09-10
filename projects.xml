@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Adrián Cidre</title>
-<link>https://www.quarto.org/projects.html</link>
-<atom:link href="https://www.quarto.org/projects.xml" rel="self" type="application/rss+xml"/>
+<link>https://cidree.github.io/cidre/projects.html</link>
+<atom:link href="https://cidree.github.io/cidre/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.193</generator>
 <lastBuildDate>Sun, 28 May 2023 22:00:00 GMT</lastBuildDate>
 <item>
   <title>Presentation</title>
   <dc:creator>Adrián Cidre</dc:creator>
-  <link>https://www.quarto.org/posts/000-Presentation/index.html</link>
+  <link>https://cidree.github.io/cidre/posts/000-Presentation/index.html</link>
   <description><![CDATA[ 
 
 
@@ -32,9 +32,9 @@
 
  ]]></description>
   <category>personal</category>
-  <guid>https://www.quarto.org/posts/000-Presentation/index.html</guid>
+  <guid>https://cidree.github.io/cidre/posts/000-Presentation/index.html</guid>
   <pubDate>Sun, 28 May 2023 22:00:00 GMT</pubDate>
-  <media:content url="https://www.quarto.org/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://cidree.github.io/cidre/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.quarto.org/projects.html</loc>
+    <loc>https://cidree.github.io/cidre/projects.html</loc>
     <lastmod>2023-09-09T13:25:22.222Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/index.html</loc>
+    <loc>https://cidree.github.io/cidre/index.html</loc>
     <lastmod>2023-09-10T13:36:44.590Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/about.html</loc>
+    <loc>https://cidree.github.io/cidre/about.html</loc>
     <lastmod>2023-09-10T13:25:41.875Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/02_courses/00_quarto_es.html</loc>
+    <loc>https://cidree.github.io/cidre/02_courses/00_quarto_es.html</loc>
     <lastmod>2023-09-10T14:32:13.599Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/02_courses/01_data_analysis_es.html</loc>
+    <loc>https://cidree.github.io/cidre/02_courses/01_data_analysis_es.html</loc>
     <lastmod>2023-09-10T14:31:50.416Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/courses.html</loc>
+    <loc>https://cidree.github.io/cidre/courses.html</loc>
     <lastmod>2023-09-10T14:32:06.194Z</lastmod>
   </url>
   <url>
-    <loc>https://www.quarto.org/posts/000-Presentation/index.html</loc>
+    <loc>https://cidree.github.io/cidre/posts/000-Presentation/index.html</loc>
     <lastmod>2023-09-09T10:40:50.302Z</lastmod>
   </url>
 </urlset>
