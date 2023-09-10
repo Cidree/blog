@@ -6,55 +6,49 @@ body{
     padding: 3rem;
     text-align: justify;
 }
-/*
+
 .heading-primary {
+  
     color: $color-black;
     text-transform: uppercase;
     backface-visibility: hidden;    // Avoid shaking of animations 
     margin-bottom: 8rem;
     
     &--main {
+      
       display: block;
       white-space: nowrap;              //Text in one line
-      font-size: 3rem;
       font-weight: 700;
-      letter-spacing: 1rem;
       animation: titleAnimation 1s ease-out;
+      
+      &--big {
+        font-size: 3rem;
+        letter-spacing: 1rem;
+      }
+      
+      &--small {
+        font-size: 1.2rem;
+      }
+
     }
 
     &--sub {
+      
       display: block;
-      font-size: 1.2rem;
       font-weight: 400;
-      letter-spacing: 0.5rem;
       animation: subtitleAnimation 1s ease-out;
+      
+       &--big {
+        font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      }
+      
+      &--small {
+        font-size: 0.7rem;
+      }
+
     }
 
 }
-*/
 
-.heading-primary {
-    color: $color-black;
-    text-transform: uppercase;
-    backface-visibility: hidden;    /* Avoid shaking of animations */
-    margin-bottom: 8rem;
-    
-    
-    &--main {
-      display: block;
-      white-space: nowrap;              /*Text in one line*/
-      font-size: 5vw 5vh;
-      font-weight: 700;
-      letter-spacing: 1rem;
-      animation: titleAnimation 1s ease-out;
-    }
 
-    &--sub {
-      display: block;
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.5rem;
-      animation: subtitleAnimation 1s ease-out;
-    }
-
-}

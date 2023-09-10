@@ -15,3 +15,17 @@
   }
   
 }
+
+// Course cards
+.card-course {
+  
+  &-title {
+    color: $color-darkblue;
+    font-weight: bold;
+  }
+  
+  &-mode {
+    background-color: $color-gray-light;
+  }
+  
+}

@@ -52,54 +52,32 @@ body {
   padding: 3rem;
   text-align: justify; }
 
-/*
-.heading-primary {
-    color: $color-black;
-    text-transform: uppercase;
-    backface-visibility: hidden;    // Avoid shaking of animations 
-    margin-bottom: 8rem;
-    
-    &--main {
-      display: block;
-      white-space: nowrap;              //Text in one line
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: 1rem;
-      animation: titleAnimation 1s ease-out;
-    }
-
-    &--sub {
-      display: block;
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.5rem;
-      animation: subtitleAnimation 1s ease-out;
-    }
-
-}
-*/
 .heading-primary {
   color: #0C0F1F;
   text-transform: uppercase;
   backface-visibility: hidden;
-  /* Avoid shaking of animations */
   margin-bottom: 8rem; }
   .heading-primary--main {
     display: block;
     white-space: nowrap;
-    /*Text in one line*/
-    font-size: 5vw 5vh;
     font-weight: 700;
-    letter-spacing: 1rem;
     animation: titleAnimation 1s ease-out; }
+    .heading-primary--main--big {
+      font-size: 3rem;
+      letter-spacing: 1rem; }
+    .heading-primary--main--small {
+      font-size: 1.2rem; }
   .heading-primary--sub {
     display: block;
-    font-size: 1.2rem;
     font-weight: 400;
-    letter-spacing: 0.5rem;
     animation: subtitleAnimation 1s ease-out; }
+    .heading-primary--sub--big {
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem; }
+    .heading-primary--sub--small {
+      font-size: 0.7rem; }
 
-.btn:link, .btn:visited {
+.btn-primary--big:link, .btn-primary--big:visited {
   text-transform: uppercase;
   text-decoration: none;
   padding: 1rem 2rem;
@@ -108,35 +86,40 @@ body {
   transition: all .2s;
   position: relative;
   font-size: 1.2rem; }
+  .btn-primary--big:link:hover, .btn-primary--big:visited:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba(245, 245, 245, 0.2); }
+    .btn-primary--big:link:hover::after, .btn-primary--big:visited:hover::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0; }
+  .btn-primary--big:link:active, .btn-primary--big:visited:active {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2); }
+  .btn-primary--big:link::after, .btn-primary--big:visited::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s; }
+  .btn-primary--big:link--animated, .btn-primary--big:visited--animated {
+    animation: buttonAnimation .5s ease-out .75s;
+    animation-fill-mode: backwards;
+    /*Apply styles up to 0% before animation starts*/ }
 
-.btn:hover {
-  transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(245, 245, 245, 0.2); }
-  .btn:hover::after {
-    transform: scaleX(1.4) scaleY(1.6);
-    opacity: 0;
-    /* Makes it invisible ~ smoother*/ }
-
-.btn:active {
-  transform: translateY(-0.1rem);
-  box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2); }
-
-.btn::after {
-  content: "";
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  border-radius: 10rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: all .4s; }
-
-.btn--animated {
-  animation: buttonAnimation .5s ease-out .75s;
-  animation-fill-mode: backwards;
-  /*Apply styles up to 0% before animation starts*/ }
+.btn-primary--small:link, .btn-primary--small:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-table;
+  border-radius: 1rem;
+  transition: all .2s;
+  position: relative;
+  font-size: 0.7rem;
+  padding: 0.2rem; }
 
 .header {
   height: 30rem;
@@ -226,6 +209,13 @@ body {
     font-size: 1rem; }
   .card-courses p {
     font-size: 0.8rem; }
+
+.card-course-title {
+  color: #2D4156;
+  font-weight: bold; }
+
+.card-course-mode {
+  background-color: #F5F5F5; }
 
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }

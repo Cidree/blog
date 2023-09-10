@@ -8,17 +8,27 @@ title-block-banner: true
 ::: header__text-box
 <h1 class="heading-primary">
 
-::: heading-primary--main
+::: {.heading-primary--main .heading-primary--main--big .d-none .d-sm-block}
 R-FOREST
 :::
 
-::: heading-primary--sub
+::: {.heading-primary--main .heading-primary--main--small .d-block .d-sm-none}
+R-FOREST
+:::
+
+::: {.heading-primary--sub .heading-primary--sub--big .d-none .d-sm-block}
+Bridging forests and technology
+:::
+
+::: {.heading-primary--sub .heading-primary--sub--small .d-block .d-sm-none}
 Bridging forests and technology
 :::
 
 </h1>
 
-<a href="courses.qmd" class="btn btn-primary btn--animated">Discover my courses</a>
+<a href="courses.qmd" class="btn btn-primary btn-primary--big btn--animated d-none d-sm-block">Discover my courses</a>
+
+<a href="courses.qmd" class="btn btn-primary btn-primary--small btn--animated d-block d-sm-none">Discover my courses</a>
 :::
 :::
 
@@ -29,6 +39,8 @@ In this blog I will share contents of my life, my work, and also I will create t
 > -   R programming
 >
 > -   Forest pathology
+>
+> -   Wildfires
 >
 > -   Forest modelling
 >
