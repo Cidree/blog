@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Adrián Cidre"
-  site-url: "https://www.quarto.org"
+  site-url: "https://cidree.github.io/cidre/"
   search: false
   navbar:
     #logo: figures/logo.png
