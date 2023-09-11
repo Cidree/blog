@@ -21,3 +21,84 @@ course_banner(
 ```
 :::
 
+::: course-description
+::: course-description--title
+## Descripción
+:::
+
+::: course-description--text
+Bienvenidos a este curso de introducción a R.
+
+Este curso está indicado para personas de nivel principiante e intermedio, y para aquellos usuarios que quieran aprender a utilizar R con las herramientas más actuales.
+
+En este curso aprenderéis a utilizar el lenguaje de programación R utilizando datos reales. Esto es algo crucial, ya que el uso de datos reales os ayudará a ver como vamos afrontando los problemas que van apareciendo a lo largo del ciclo del análisis de datos.
+
+En este curso aprenderéis a programar en R programando. En los más de 100 vídeos de este curso, apenas 10 vídeos serán clases teóricas para explicar ciertos conceptos que lo merecen, mientras que el resto serán vídeos de código. Aprenderéis técnicas que se utilizan en 2023, con las últimas actualizaciones de los paquetes utilizados.
+:::
+:::
+
+::: course-description
+::: course-description--title
+## Requisitos previos
+:::
+
+::: course-description--text
+No se necesitan requisitos previos.
+:::
+:::
+
+::: {.course-curriculum .column-screen}
+::: course-description--title
+## Contenidos del Curso
+:::
+
+```{r}
+# Introducción --------------------------------------------------------------------
+course_block(
+  section_name = "BLOQUE 1: Introducción",
+  id_accordion = "acc_daes_01",
+  id_heading   = "head_daes_01",
+  id_collapse  = "col_daes_01",
+  strong("Sección 00 - Introducción al curso"),
+  tags$ul(
+    tags$li("Introducción al curso"),
+    tags$li("Configuración del entorno"),
+    tags$li("Material del curso")
+  )
+)
+
+# Comenzado ----------------------------------------------------------------------
+course_block(
+  section_name = "BLOQUE 2: Comenzando",
+  id_accordion = "acc_daes_02",
+  id_heading   = "head_daes_02",
+  id_collapse  = "col_daes_02",
+  strong("Sección 01 - Comenzando"),
+  tags$ul(
+    tags$li("Interfaz de RStudio"),
+    tags$li("Instalar y leer paquetes"),
+    tags$li("Tipos de dato y estructuras de datos"),
+    tags$li("Indexar con base R"),
+    tags$li("Ficheros"),
+    tags$li("Leer y exportar formatos básicos")
+  )
+)
+# Tidyverse --------------------------------------------------------------------
+course_block(
+  section_name = "BLOQUE 3: Manipulación de datos",
+  id_accordion = "acc_daes_03",
+  id_heading   = "head_daes_03",
+  id_collapse  = "col_daes_03",
+  strong("Sección 02A - Datos de trabajo"),
+  
+  strong("Sección 02B - Manipulación de datos con dplyr y tidyr"),
+  
+  strong("Sección 02C - Manipulación de strings"),
+  
+  strong("Sección 02D - Manipulación de variables categóricas"),
+  
+  strong("Sección 02E - Fechas con lubridate"),
+  
+)
+```
+:::

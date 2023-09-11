@@ -1,0 +1,46 @@
+
+// Course description
+.course-description {
+  
+  margin-top: 2rem;
+  
+  &--title {
+    text-align: center;
+  }
+  
+  &--text {
+    color: $color-darkblue;
+  }
+  
+}
+
+// Course contents
+.course-curriculum {
+  margin-top: 2rem;
+ // background-color: $color-gray-light;
+}
+
+// Accordion
+.accordion-item {
+  background-color: $color-gray-light;
+}
+.accordion-button,
+.accordion-button:focus,
+.accordion-button:not(.collapsed) {
+  background-color: $color-darkblue;
+  font-size: 1.5rem;
+  color: $color-white;
+}
+
+.accordion-collapse--course {
+  background-color: $color-gray-light;
+  color: $color-darkblue;
+}
+
+.accordion-header {
+  margin-top: 0;
+  max-width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}

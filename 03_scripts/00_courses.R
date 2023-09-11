@@ -55,3 +55,40 @@ course_banner <- function(price, mode, time, date, img_file) {
   
   )
 }
+
+## Course block ---------------------------------------------------------
+course_block <- function(section_name, id_accordion, id_heading, id_collapse, ...) {
+  
+  div(
+    class = "accordion",
+    id = id_accordion,
+    div(
+      class = "accordion-item",
+      h2(
+        class = "accordion-header text-center",
+        id = id_heading,
+        tags$button(
+          class = "accordion-button accordion-header--course",
+          type = "button",
+          `data-bs-toggle` = "collapse",
+          `data-bs-target` = stringr::str_glue("#{id_collapse}"),
+          `aria-expanded` = "true",
+          `aria-controls` = id_collapse,
+          section_name
+        )
+      ),
+      tags$div(
+        id = id_collapse,
+        class = "accordion-collapse collapse accordion-collapse--course",
+        `aria-labelledby` = id_heading,
+        `data-bs-parent` = stringr::str_glue("#{id_accordion}"),
+        tags$div(
+          class = "accordion-body",
+          ...
+        )
+      )
+    )
+  )
+  
+  
+}
