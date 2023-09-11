@@ -228,6 +228,37 @@ body {
   .course-banner--image {
     max-width: 100%; }
 
+.course-description {
+  margin-top: 2rem; }
+  .course-description--title {
+    text-align: center; }
+  .course-description--text {
+    color: #2D4156; }
+
+.course-curriculum {
+  margin-top: 2rem; }
+
+.accordion-item {
+  background-color: #F5F5F5; }
+
+.accordion-button,
+.accordion-button:focus,
+.accordion-button:not(.collapsed) {
+  background-color: #2D4156;
+  font-size: 1.5rem;
+  color: white; }
+
+.accordion-collapse--course {
+  background-color: #F5F5F5;
+  color: #2D4156; }
+
+.accordion-header {
+  margin-top: 0;
+  max-width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%); }
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
 
