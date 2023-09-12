@@ -228,6 +228,19 @@ body {
   .course-banner--image {
     max-width: 100%; }
 
+.course-link {
+  margin-top: 2rem; }
+  .course-link--button {
+    align-content: center;
+    display: flex;
+    max-width: 60%;
+    margin: auto;
+    justify-content: center;
+    background-color: #FAA6A6;
+    color: #2D4156;
+    font-size: 1.5rem;
+    padding: 1.5rem; }
+
 .course-description {
   margin-top: 2rem; }
   .course-description--title {
@@ -246,7 +259,8 @@ body {
 .accordion-button:not(.collapsed) {
   background-color: #2D4156;
   font-size: 1.5rem;
-  color: white; }
+  color: white;
+  border-radius: 1rem; }
 
 .accordion-collapse--course {
   background-color: #F5F5F5;
@@ -258,6 +272,12 @@ body {
   position: relative;
   left: 50%;
   transform: translate(-50%); }
+
+.accordion-body {
+  max-width: 60%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); }
 
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
