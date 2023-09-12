@@ -21,6 +21,14 @@ course_banner(
 ```
 :::
 
+::: course-link
+```{r}
+a(class = "text-center btn btn-success course-link--button",
+  href = "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=8631464F84A88E393D9E", 
+  "Apuntarse al Curso")
+```
+:::
+
 ::: course-description
 ::: course-description--title
 ## Descripción
@@ -55,7 +63,7 @@ No se necesitan requisitos previos.
 ```{r}
 # Introducción --------------------------------------------------------------------
 course_block(
-  section_name = "BLOQUE 1: Introducción",
+  section_name = "Introducción",
   id_accordion = "acc_daes_01",
   id_heading   = "head_daes_01",
   id_collapse  = "col_daes_01",
@@ -69,7 +77,7 @@ course_block(
 
 # Comenzado ----------------------------------------------------------------------
 course_block(
-  section_name = "BLOQUE 2: Comenzando",
+  section_name = "SECCIÓN 1: Comenzando",
   id_accordion = "acc_daes_02",
   id_heading   = "head_daes_02",
   id_collapse  = "col_daes_02",
@@ -85,19 +93,121 @@ course_block(
 )
 # Tidyverse --------------------------------------------------------------------
 course_block(
-  section_name = "BLOQUE 3: Manipulación de datos",
+  section_name = "SECCIÓN 2: Manipulación de datos",
   id_accordion = "acc_daes_03",
   id_heading   = "head_daes_03",
   id_collapse  = "col_daes_03",
   strong("Sección 02A - Datos de trabajo"),
+  tags$ul(
+    tags$li("Datos de trabajo")
+  ),
   
   strong("Sección 02B - Manipulación de datos con dplyr y tidyr"),
+  tags$ul(
+    tags$li("Manipulación de datos básico (select, filter, mutate ...)"),
+    tags$li("Uso de los paquetes dplyr y tidyr"),
+    tags$li("Uso de verbos predicado"),
+    tags$li("Transformación de datos"),
+    tags$li("Uniones (left join, right join, ...)"),
+    tags$li("Funciones CASE WHEN"),
+    tags$li("Formato largo y formato ancho"),
+    tags$li("Manipulación de datos avanzado")
+  ),
   
   strong("Sección 02C - Manipulación de strings"),
+  tags$ul(
+    tags$li("Manipulación de datos de tipo cadena de texto"),
+    tags$li("Uso del paquete stringr"),
+    tags$li("Corrección de errores y preparación de datos"),
+    tags$li("Funciones vectorizadas"),
+    tags$li("Detección de casos"),
+    tags$li("Separar/unir columnas con tidyr"),
+  ),
   
   strong("Sección 02D - Manipulación de variables categóricas"),
+  tags$ul(
+    tags$li("Manipulación de datos de tipo categórico"),
+    tags$li("Uso del paquete forcats"),
+    tags$li("Definición de factor"),
+    tags$li("Modificación de valores de factores"),
+    tags$li("Reordenar factores"),
+    tags$li("Valores ausentes"),
+  ),
   
   strong("Sección 02E - Fechas con lubridate"),
+  tags$ul(
+    tags$li("Manipulación de datos de tipo fecha"),
+    tags$li("Uso del paquete lubridate"),
+    tags$li("Componentes de una fecha"),
+    tags$li("Análisis de fechas")
+  ),
+  
+)
+
+# Visualización --------------------------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 3: Visualización con ggplot2",
+  id_accordion = "acc_daes_04",
+  id_heading   = "head_daes_04",
+  id_collapse  = "col_daes_04",
+  
+  strong("Sección 03 - Visualización con ggplot2"),
+  tags$ul(
+    tags$li("Gramática de gráficos"),
+    tags$li("Estructura de gráficos"),
+    tags$li("Gráficos múltiples"),
+    tags$li("Geometrías: histogramas, líneas, boxplot, ..."),
+    tags$li("Extensiones de ggplot2")
+  ),
+  
+  
+)
+
+# Programacion funcional ----------------------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 4: Programación funcional",
+  id_accordion = "acc_daes_05",
+  id_heading   = "head_daes_05",
+  id_collapse  = "col_daes_05",
+  
+  strong("Sección 04A - Funciones"),
+  tags$ul(
+    tags$li("Crear funciones simples y avanzadas"),
+    tags$li("Tipos de argumentos: nombrados y no nombrados"),
+    tags$li("Exportar funciones")
+  ),
+  
+  strong("Sección 04B - purrr"),
+  tags$ul(
+    tags$li("Uso del paquete purrr"),
+    tags$li("Iteraciones con funciones map"),
+    tags$li("Funciones map vs for loop"),
+    tags$li("Funciones anónimas"),
+    tags$li("Funciones de reducción")
+  ),
+  
+  strong("Sección 04C - Funciones avanzadas"),
+  tags$ul(
+    tags$li("Función que genera un heatmap dinámico"),
+    tags$li("Función para correlation funnel")
+  ),
+  
+  
+)
+
+# Quarto --------------------------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 5: Compartir",
+  id_accordion = "acc_daes_05",
+  id_heading   = "head_daes_05",
+  id_collapse  = "col_daes_05",
+  
+  strong("Sección 05 - Compartir con Quarto"),
+  tags$ul(
+    tags$li("Introducción a Quarto"),
+    tags$li("Generación de un reporte con las funciones previas")
+  )
+  
   
 )
 ```

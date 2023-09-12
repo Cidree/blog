@@ -20,3 +20,96 @@ course_banner(
 )
 ```
 :::
+
+::: course-link
+```{r}
+a(class = "text-center btn btn-success course-link--button",
+  href = "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=8631464F84A88E393D9E", 
+  "Apuntarse al Curso")
+```
+:::
+
+::: course-description
+::: course-description--title
+## Descripción
+:::
+
+::: course-description--text
+Bienvenidos al curso de Quarto. En este curso, aprenderemos a utilizar la herramienta innovadora llamada Quarto dentro de RStudio para generar documentos profesionales en formatos como PDF y HTML.
+
+Quarto es una poderosa plataforma que combina la flexibilidad y la facilidad de uso de RMarkdown con la capacidad de crear documentos dinámicos y personalizados. Con Quarto, podrás aprovechar al máximo el lenguaje de programación R y todas sus capacidades estadísticas y gráficas para producir documentos de alta calidad.
+
+A lo largo de este curso, exploraremos las distintas características de Quarto y aprenderemos a generar informes, informes de investigación, y mucho más. Descubriremos cómo combinar texto, código, gráficos y resultados en un solo documento, permitiéndote comunicar tus resultados de manera clara y efectiva.
+
+Además, aprenderemos a personalizar nuestros documentos utilizando plantillas, estilos y opciones de formato para adaptarlos a nuestras necesidades y preferencias. Quarto también nos brinda la posibilidad de colaborar con otros usuarios, facilitando así el trabajo en equipo y la revisión conjunta de documentos, por lo que veremos también una introducción a GitHub, además de la posibilidad de crear una página web a través de este.
+
+Ya seas un científico de datos, un estudiante, un investigador o simplemente alguien interesado en presentar información de manera efectiva, este curso de Quarto te proporcionará las habilidades necesarias para crear documentos profesionales con RStudio.
+:::
+:::
+
+::: course-description
+::: course-description--title
+## Requisitos previos
+:::
+
+::: course-description--text
+Se requiere un nivel básico de programación en R, aunque para sacarle mayor provecho se recomienda nivel intermedio.
+:::
+:::
+
+::: {.course-curriculum .column-screen}
+::: course-description--title
+## Contenidos del Curso
+:::
+
+```{r}
+# Introducción --------------------------------------------------------------------
+course_block(
+  section_name = "Introducción",
+  id_accordion = "acc_qes_01",
+  id_heading   = "head_qes_01",
+  id_collapse  = "col_qes_01",
+  
+  strong("Sección 00 - Introducción al curso"),
+  tags$ul(
+    tags$li("Introducción al curso"),
+    tags$li("Configuración del entorno"),
+    tags$li("Primeros pasos en Quarto"),
+    tags$li("Material del curso")
+  )
+)
+
+# Conceptos básicos de Markdown --------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 01 - Conceptos básicos de Markdown",
+  id_accordion = "acc_qes_02",
+  id_heading   = "head_qes_02",
+  id_collapse  = "col_qes_02",
+  
+  strong("Sección 1 - Conceptos básicos de Markdown"),
+  tags$ul(
+    tags$li("Introducción al lenguaje Markdown"),
+    tags$li("Uso del editor visual"),
+    tags$li("Sintaxis Markdown"),
+    tags$li("Introducir ecuaciones mediante LaTeX")
+  )
+)
+
+# YAML  --------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 02 - YAML Y opciones de código",
+  id_accordion = "acc_qes_02",
+  id_heading   = "head_qes_02",
+  id_collapse  = "col_qes_02",
+  
+  strong("Sección 2 - YAML Y opciones de código"),
+  tags$ul(
+    tags$li("Introducción al lenguaje Markdown"),
+    tags$li("Uso del editor visual"),
+    tags$li("Sintaxis Markdown"),
+    tags$li("Introducir ecuaciones mediante LaTeX")
+  )
+)
+
+```
+:::
