@@ -1,1 +1,1 @@
-Sitemap: https://cidree.github.io/cidre/sitemap.xml
+Sitemap: https://cidree.github.io/blog/sitemap.xml
