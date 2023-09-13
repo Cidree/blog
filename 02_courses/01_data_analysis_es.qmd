@@ -157,6 +157,7 @@ course_block(
     tags$li("Gramática de gráficos"),
     tags$li("Estructura de gráficos"),
     tags$li("Gráficos múltiples"),
+    tags$li("Gráficos interactivos"),
     tags$li("Geometrías: histogramas, líneas, boxplot, ..."),
     tags$li("Extensiones de ggplot2")
   ),
@@ -212,4 +213,44 @@ course_block(
   
 )
 ```
+:::
+
+::: course-description
+::: course-description--title
+## Resultados del Curso
+:::
+
+::: course-description--text
+-   Principios básicos de programación en R
+
+-   Tipos de dato y estructuras de datos en R
+
+-   Manipular ficheros desde R
+
+-   Organización del directorio de trabajo y de los scripts
+
+-   Aprender a utilizar los paquetes de R más importantes (dplyr, ggplot2, tidyr, fs, ...)
+
+-   Manejar datos de tipo cadena de texto con stringr
+
+-   Introducción a expresiones regulares
+
+-   Manejar datos de tipo categórico con forcats
+
+-   Generar gráficos a través de ggplot2
+
+-   Generar gráficos interactivos
+
+-   Entender la gramática de gráficos
+
+-   Utilizar extensiones de ggplot2
+
+-   Generar y exportar funciones
+
+-   Programación funcional con purrr
+
+-   Iteraciones
+
+-   Compartir resultados a través de Quarto
+:::
 :::

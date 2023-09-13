@@ -166,3 +166,25 @@ course_block(
 
 ```
 :::
+
+::: course-description
+::: course-description--title
+## Resultados del Curso
+:::
+
+::: course-description--text
+-   Utilizar Quarto a través del editor visual
+
+-   Crear documentos PDF y HTML a través de RStudio
+
+-   Conceptos básicos y avanzados del lenguaje Markdown
+
+-   Aspectos básicos de los lenguajes CSS, HTML y LaTeX
+
+-   Generar documentos con imágenes, tablas, bibliografía, referencias cruzadas...
+
+-   Compartir resultados a través de Quarto Pub y GitHub
+
+-   Aprender a utilizar Git y GitHub
+:::
+:::
