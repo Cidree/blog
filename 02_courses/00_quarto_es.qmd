@@ -24,7 +24,8 @@ course_banner(
 ::: course-link
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
-  href = "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=8631464F84A88E393D9E", 
+  target = "_blank",
+  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=086D570EC935DF6A2E12", 
   "Apuntarse al Curso")
 ```
 :::
@@ -70,7 +71,7 @@ course_block(
   id_heading   = "head_qes_01",
   id_collapse  = "col_qes_01",
   
-  strong("Sección 00 - Introducción al curso"),
+  strong("Sección 1 - Introducción al curso"),
   tags$ul(
     tags$li("Introducción al curso"),
     tags$li("Configuración del entorno"),
@@ -81,12 +82,12 @@ course_block(
 
 # Conceptos básicos de Markdown --------------------------------------------------
 course_block(
-  section_name = "SECCIÓN 01 - Conceptos básicos de Markdown",
+  section_name = "SECCIÓN 02 - Conceptos básicos de Markdown",
   id_accordion = "acc_qes_02",
   id_heading   = "head_qes_02",
   id_collapse  = "col_qes_02",
   
-  strong("Sección 1 - Conceptos básicos de Markdown"),
+  strong("Sección 2 - Conceptos básicos de Markdown"),
   tags$ul(
     tags$li("Introducción al lenguaje Markdown"),
     tags$li("Uso del editor visual"),
@@ -97,17 +98,69 @@ course_block(
 
 # YAML  --------------------------------------------------
 course_block(
-  section_name = "SECCIÓN 02 - YAML Y opciones de código",
-  id_accordion = "acc_qes_02",
-  id_heading   = "head_qes_02",
-  id_collapse  = "col_qes_02",
+  section_name = "SECCIÓN 03 - YAML Y opciones de código",
+  id_accordion = "acc_qes_03",
+  id_heading   = "head_qes_03",
+  id_collapse  = "col_qes_03",
   
-  strong("Sección 2 - YAML Y opciones de código"),
+  strong("Sección 3 - YAML Y opciones de código"),
   tags$ul(
-    tags$li("Introducción al lenguaje Markdown"),
-    tags$li("Uso del editor visual"),
-    tags$li("Sintaxis Markdown"),
-    tags$li("Introducir ecuaciones mediante LaTeX")
+    tags$li("Introducción a YAML"),
+    tags$li("Diseño del documento"),
+    tags$li("Opciones de código"),
+    tags$li("Plantillas"),
+    tags$li("Opciones de figuras y tablas"),
+    tags$li("Bibliografía y referencias cruzadas")
+  )
+)
+
+# Markdown Avanzado  ---------------------------------------
+course_block(
+  section_name = "SECCIÓN 04 - Markdown Avanzado",
+  id_accordion = "acc_qes_04",
+  id_heading   = "head_qes_04",
+  id_collapse  = "col_qes_04",
+  
+  strong("Sección 4 - Markdown Avanzado"),
+  tags$ul(
+    tags$li("Notas al pie"),
+    tags$li("Uso de shortcode"),
+    tags$li("Crear diagramas a través de Mermaid"),
+    tags$li("Introducción a HTML y CSS"),
+    tags$li("Selectores HTML"),
+    tags$li("Uso del inspector de Google")
+  )
+)
+
+# Portadas y LaTeX ---------------------------------------
+course_block(
+  section_name = "SECCIÓN 05 - Portadas y LaTeX",
+  id_accordion = "acc_qes_05",
+  id_heading   = "head_qes_05",
+  id_collapse  = "col_qes_05",
+  
+  strong("Sección 5 - Portadas y LaTeX"),
+  tags$ul(
+    tags$li("Generar portadas"),
+    tags$li("Uso básico del lenguaje LaTeX"),
+    tags$li("Extensiones de Quarto para portadas")
+  )
+)
+
+# Compartir --------------------------------------------
+course_block(
+  section_name = "SECCIÓN 06 - Compartir",
+  id_accordion = "acc_qes_06",
+  id_heading   = "head_qes_06",
+  id_collapse  = "col_qes_06",
+  
+  strong("Sección 6 - Compartir"),
+  tags$ul(
+    tags$li("Plataformas para compartir"),
+    tags$li("Quarto Pub"),
+    tags$li("Introducción a Git y GitHub"),
+    tags$li("Uso básico de Git desde la línea de comandos"),
+    tags$li("Compartir con GitHub pages")
   )
 )
 

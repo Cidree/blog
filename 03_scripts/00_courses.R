@@ -16,7 +16,7 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
         tags$li(class = "list-group-item", icon("clock"), time),
         tags$li(class = "list-group-item", icon("language"), language)
       ),
-      a(class = "btn btn-success btn-sm", href = href, "Learn more")
+      a(class = "btn btn-success btn-sm card-course-btn", href = href, "Learn more")
     )
   )
   
@@ -31,7 +31,7 @@ course_banner <- function(price, mode, time, date, img_file) {
       style = "vertical-align: bottom",
       div(
         class = "g-col-3",
-        icon("money-bill-1-wave", class = "fa-2xl course-banner--icon"),
+        icon("money-bill-1", class = "fa-2xl course-banner--icon"),
         p(price, class = "course-banner--text")
       ),
       div(

@@ -24,6 +24,7 @@ course_banner(
 ::: course-link
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
+  target = "_blank",
   href = "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=8631464F84A88E393D9E", 
   "Apuntarse al Curso")
 ```
@@ -198,9 +199,9 @@ course_block(
 # Quarto --------------------------------------------------------------------
 course_block(
   section_name = "SECCIÓN 5: Compartir",
-  id_accordion = "acc_daes_05",
-  id_heading   = "head_daes_05",
-  id_collapse  = "col_daes_05",
+  id_accordion = "acc_daes_06",
+  id_heading   = "head_daes_06",
+  id_collapse  = "col_daes_06",
   
   strong("Sección 05 - Compartir con Quarto"),
   tags$ul(

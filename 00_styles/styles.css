@@ -217,6 +217,10 @@ body {
 .card-course-mode {
   background-color: #F5F5F5; }
 
+.card-course-btn {
+  background-color: #2D4156;
+  font-size: 1rem; }
+
 .course-banner {
   background-color: #A3D1D5;
   padding-top: 1rem; }
