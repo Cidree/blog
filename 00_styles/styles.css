@@ -222,8 +222,7 @@ body {
   font-size: 1rem; }
 
 .course-banner {
-  background-color: #A3D1D5;
-  padding-top: 1rem; }
+  background-color: #A3D1D5; }
   .course-banner--icon {
     color: #2D4156;
     padding-top: 2rem; }
@@ -256,7 +255,8 @@ body {
   margin-top: 2rem; }
 
 .accordion-item {
-  background-color: #F5F5F5; }
+  background-color: #A3D1D5;
+  border: 0; }
 
 .accordion-button,
 .accordion-button:focus,
@@ -282,6 +282,10 @@ body {
   position: relative;
   left: 50%;
   transform: translateX(-50%); }
+  .accordion-body strong {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-decoration: underline; }
 
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }

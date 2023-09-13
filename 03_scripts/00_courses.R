@@ -26,6 +26,7 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
 course_banner <- function(price, mode, time, date, img_file) {
   
   div(
+    img(src = img_file, class = "course-banner--image"),
     div(
       class = "grid text-center",
       style = "vertical-align: bottom",
@@ -49,9 +50,9 @@ course_banner <- function(price, mode, time, date, img_file) {
         icon("calendar-days", class = "fa-2xl course-banner--icon"),
         p(date, class = "course-banner--text")
       )
-    ),
+    )
     
-    img(src = img_file, class = "course-banner--image")
+    
   
   )
 }

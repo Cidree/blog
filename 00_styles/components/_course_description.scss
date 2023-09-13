@@ -40,8 +40,10 @@
 
 // Accordion
 .accordion-item {
-  background-color: $color-gray-light;
+  background-color: $color-lightblue;
+  border: 0;
 }
+
 .accordion-button,
 .accordion-button:focus,
 .accordion-button:not(.collapsed) {
@@ -69,4 +71,11 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  
+  & strong {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+  
 }
