@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Adrián Cidre"
-  site-url: "https://cidree.github.io/cidre/"
+  site-url: "https://cidree.github.io/blog/"
   search: false
   navbar:
     #logo: figures/logo.png
