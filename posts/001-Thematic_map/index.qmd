@@ -17,6 +17,12 @@ In this exercise, we will create two choropleth maps using `ggplot2`:
 
 -   Map of men/women ratio in Spain by municipality
 
+## Watch the video
+
+{{< video https://www.youtube.com/watch?v=dkSVGK272wc >}}
+
+## Load packages
+
 We will use the following packages:
 
 ```{r packages}
@@ -42,6 +48,8 @@ remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
 First, I use `pacman` to load all the packages. Then, I use the `tidyverse` as the core package for data manipulation and visualization. The package `sf` will be used to treat the vectorial data. The package `mapSpain` provide functions to download the administrative boundaries of Spain (click [here](https://ropenspain.github.io/mapSpain/) for further information). The `rnaturalearth` is a package that will provide us with the world map. However, for using the high resolution map we need also to install `rnturalearthhires` from GitHub. Finally, I will use the `RColorBrewer` package for colour palettes, and the `ggspatial` to add the map scale and north arrow. So, let's dive into the exercise!
+
+## Prepare the data
 
 The first step, is to download the world countries map using the `ne_countries()` function. This will return the map we see in @fig-world.
 

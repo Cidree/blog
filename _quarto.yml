@@ -30,7 +30,7 @@ website:
     left: |
       Made with [Quarto](https://quarto.org/)
     right: |
-      [Github Code Repo](https://github.com/Cidree/cidre)
+      [Github Code Repo](https://github.com/Cidree/blog)
     background: "#2D4156"
     foreground: white
 format:
