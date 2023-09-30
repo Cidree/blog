@@ -36,7 +36,7 @@ Bridging forests and technology
 
 # Introduction
 
-In this blog I will share contents of my life, my work, and also I will create teaching content. My specialities are the following:
+In this blog I will share contents of my life, my work, and also I will create teaching content. Here, I share my experiences and knowledge in diverse subjects, focusing on:
 
 > -   R programming
 >
