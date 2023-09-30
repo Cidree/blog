@@ -10,14 +10,21 @@
 <atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.193</generator>
-<lastBuildDate>Thu, 28 Sep 2023 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 29 Sep 2023 22:00:00 GMT</lastBuildDate>
 <item>
-  <title>Thematic map</title>
+  <title>Choropleth map</title>
   <dc:creator>Adrián Cidre</dc:creator>
   <link>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
-<h1 id="thematic-maps-with-ggplot2">Thematic maps with ggplot2</h1>
+<h1 id="choropleth-maps-with-ggplot2">
+<strong>Choropleth</strong> maps with ggplot2</h1>
 </blockquote>
+<p>In this exercise, we will create two choropleth maps using <code>ggplot2</code>:</p>
+<ul>
+<li><p>Map of Spanish population by municipality</p></li>
+<li><p>Map of men/women ratio in Spain by municipality</p></li>
+</ul>
+<p>We will use the following packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -89,6 +96,8 @@ font-style: inherit;">"ropensci/rnaturalearthhires"</span><span class="op" style
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
+<p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
+<p>The first step, is to download the world countries map using the <code>ne_countries()</code> function. This will return the map we see in Figure&nbsp;1.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -114,8 +123,34 @@ background-color: null;
 font-style: inherit;">"sf"</span></span>
 <span><span class="op" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">world_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"region_un"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, main <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"World Map"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-world" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: World map</figcaption></figure>
 </div>
+</div>
+</div>
+<p>Next, we can get the Spanish population by municipality in 2019 using the <code>mapSpain</code> package:</p>
 <div class="cell">
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -151,6 +186,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 6   02  Albacete  006  Alcadozo    654   363   291</code></pre>
 </div>
 </div>
+<p>This is a data frame with the data we want to plot. However, we need to assign this data to a spatial object with the municipalities. We can get the <code>sf</code> object using the function <code>esp_get_munic</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -198,6 +234,13 @@ Geodetic CRS:  ETRS89
 373 POLYGON ((-2.15335 37.54576...</code></pre>
 </div>
 </div>
+<p>We see that the data frame <code>spain_pop_tbl</code> and the sf <code>spain_sf</code> share 3 variables:</p>
+<ul>
+<li><p>cpro: province code</p></li>
+<li><p>cmun: municipality code</p></li>
+<li><p>name: name of the municipality</p></li>
+</ul>
+<p>The next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:</p>
 <div class="cell">
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -234,37 +277,16 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
+<p>Note that here I did not include the variable <code>name</code> for joining the dataset. There are two reasons:</p>
+<ol type="1">
+<li>The name and cmun variables express exactly the same.</li>
+<li>The variable name have some misspellings between datasets creating some NA values.</li>
+</ol>
+<p>Once this is clarified, we can begin with the maps.</p>
+<section id="spanish-population" class="level2"><h2 class="anchored" data-anchor-id="spanish-population">Spanish population</h2>
+<p>We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Ratio men-women</span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ratio_mw <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">men</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">women</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Define the breaks (bin edges) based on percentiles</span></span>
 <span><span class="va" style="color: #111111;
@@ -275,13 +297,15 @@ font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">spain_pop_sf</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">pob19</span>, probs <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pob19</span>, </span>
+<span>  probs <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -297,7 +321,8 @@ font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.1</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span>
 <span></span>
@@ -374,7 +399,7 @@ font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span> </span>
 <span>  <span class="fu" style="color: #4758AB;
@@ -403,8 +428,34 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span>  <span class="op" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pop_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "(0,100]"        "(100,200]"      "(200,300]"      "(300,500]"     
+[5] "(500,900]"      "(900,1700]"     "(1700,3500]"    "(3500,9200]"   
+[9] "(9200,3266200]"</code></pre>
 </div>
+</div>
+<p>With the previous code we create the new variable called <code>pop_bin</code> which consists in a total of 9 bins representing similar amount of municipalities. Finally, we can represent it graphically with the next code:</p>
 <div class="cell">
 <div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -670,11 +721,87 @@ font-style: inherit;">"true"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div id="fig-population" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Population in Spain by Municipality (2019)</figcaption></figure>
 </div>
 </div>
+</div>
+<p>We see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated.</p>
+</section><section id="ratio-menwomen" class="level2"><h2 class="anchored" data-anchor-id="ratio-menwomen">Ratio Men/Women</h2>
+<p>I will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:</p>
 <div class="cell">
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ratio men-women</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>ratio_mw <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">men</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">women</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.3415  1.0003  1.0690     Inf  1.2067     Inf </code></pre>
+</div>
+</div>
+<p>We can see in the summary before that the values between the minimum and the <img src="https://latex.codecogs.com/png.latex?3%5E%7Brd%7D"> quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e.&nbsp;division by zero). We can see also the boxplot:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-boxpl2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Distribution of Men/Women ratio by municipallity</figcaption></figure>
+</div>
+</div>
+</div>
+<p>This tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (&lt;1), and areas with higher men proportion (&gt;1). Therefore, I apply the same approach creating bins:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Define the breaks (bin edges) based on percentiles</span></span>
 <span><span class="va" style="color: #111111;
@@ -685,13 +812,15 @@ font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">ratio_mw</span>, probs <span class="op" style="color: #5E5E5E;
+font-style: inherit;">ratio_mw</span>, </span>
+<span>  probs <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -707,7 +836,8 @@ font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.1</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span>
 <span></span>
@@ -772,10 +902,38 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span>  <span class="op" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Print bins</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "(0.34,0.96]" "(0.96,0.99]" "(0.99,1.01]" "(1.01,1.04]" "(1.04,1.07]"
+ [6] "(1.07,1.11]" "(1.11,1.17]" "(1.17,1.26]" "(1.26,1.44]" "(1.44,Inf]" </code></pre>
 </div>
+</div>
+<p>With this code, a total of 10 bins are generated with the ranges showed above. So let’s proceed to the visualization:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Plot the population</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -1039,18 +1197,21 @@ font-style: inherit;">"true"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div id="fig-sex-ratio" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)</figcaption></figure>
 </div>
 </div>
+</div>
+<p>Curiously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women.</p>
 
 
-
- ]]></description>
+</section> ]]></description>
   <category>R</category>
   <category>spatial</category>
   <category>ggplot2</category>
   <guid>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</guid>
-  <pubDate>Thu, 28 Sep 2023 22:00:00 GMT</pubDate>
+  <pubDate>Fri, 29 Sep 2023 22:00:00 GMT</pubDate>
   <media:content url="https://cidree.github.io/blog/posts/001-Thematic_map/image.png" medium="image" type="image/png" height="89" width="144"/>
 </item>
 <item>
