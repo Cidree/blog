@@ -81,7 +81,7 @@ We see that the data frame `spain_pop_tbl` and the sf `spain_sf` share 3 variabl
 
 -   cmun: municipality code
 
--   name: nome of the municipality
+-   name: name of the municipality
 
 The next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:
 
@@ -184,7 +184,10 @@ This tells us that a visualization of the continuous distribution will barely di
 
 ```{r bins_ratio}
 # Define the breaks (bin edges) based on percentiles
-breaks <- quantile(spain_pop_ready_sf$ratio_mw, probs = seq(0, 1, by = 0.1))
+breaks <- quantile(
+  spain_pop_ready_sf$ratio_mw, 
+  probs = seq(0, 1, by = 0.1)
+)
 
 # Round to hundred, and keep unique values
 breaks <- round(breaks, 2) %>% unique()
