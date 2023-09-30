@@ -1,16 +1,23 @@
 ---
-title: "Thematic map"
-author: "Adrián Cidre"
+title: "Choropleth map"
 date: "2023-09-30"
 categories: [R, spatial, ggplot2]
 image: "image.png"
-
+highlight-style: zenburn
 # Execution 
 execute: 
   warning: false
 ---
 
-> # Thematic maps with ggplot2
+> # **Choropleth** maps with ggplot2
+
+In this exercise, we will create two choropleth maps using `ggplot2`:
+
+-   Map of Spanish population by municipality
+
+-   Map of men/women ratio in Spain by municipality
+
+We will use the following packages:
 
 ```{r packages}
 # install.packages("pacman")
@@ -34,13 +41,23 @@ p_load(
 remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
+First, I use `pacman` to load all the packages. Then, I use the `tidyverse` as the core package for data manipulation and visualization. The package `sf` will be used to treat the vectorial data. The package `mapSpain` provide functions to download the administrative boundaries of Spain (click [here](https://ropenspain.github.io/mapSpain/) for further information). The `rnaturalearth` is a package that will provide us with the world map. However, for using the high resolution map we need also to install `rnturalearthhires` from GitHub. Finally, I will use the `RColorBrewer` package for colour palettes, and the `ggspatial` to add the map scale and north arrow. So, let's dive into the exercise!
+
+The first step, is to download the world countries map using the `ne_countries()` function. This will return the map we see in @fig-world.
+
 ```{r get_world}
+#| label: fig-world
+#| fig-cap: "World map"
+
 # World countries
 world_sf <- ne_countries(
   scale       = 10,
   returnclass = "sf"
 )
+plot(world_sf["region_un"], main = "World Map")
 ```
+
+Next, we can get the Spanish population by municipality in 2019 using the `mapSpain` package:
 
 ```{r get_population}
 # Get Spanish population by municipality in 2019
@@ -49,12 +66,24 @@ spain_pop_tbl <- mapSpain::pobmun19
 head(spain_pop_tbl)
 ```
 
+This is a data frame with the data we want to plot. However, we need to assign this data to a spatial object with the municipalities. We can get the `sf` object using the function `esp_get_munic`:
+
 ```{r get_spain}
 # Get Spain boundaries by municipality
 spain_sf <- esp_get_munic()
 
 head(spain_sf)
 ```
+
+We see that the data frame `spain_pop_tbl` and the sf `spain_sf` share 3 variables:
+
+-   cpro: province code
+
+-   cmun: municipality code
+
+-   name: nome of the municipality
+
+The next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:
 
 ```{r plot_spain}
 # Join population to sf object
@@ -65,28 +94,43 @@ spain_pop_sf <- right_join(
 )
 ```
 
-```{r}
-# Ratio men-women
-spain_pop_ready_sf <- spain_pop_sf %>% 
-  mutate(ratio_mw = men/women)
-```
+Note that here I did not include the variable `name` for joining the dataset. There are two reasons:
+
+1.  The name and cmun variables express exactly the same.
+2.  The variable name have some misspellings between datasets creating some NA values.
+
+Once this is clarified, we can begin with the maps.
+
+## Spanish population
+
+We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:
 
 ```{r binning}
 # Define the breaks (bin edges) based on percentiles
-breaks <- quantile(spain_pop_ready_sf$pob19, probs = seq(0, 1, by = 0.1))
+breaks <- quantile(
+  spain_pop_sf$pob19, 
+  probs = seq(0, 1, by = 0.1)
+)
 
 # Round to hundred, and keep unique values
 breaks <- round(breaks, -2) %>% unique()
 breaks[length(breaks)] <- breaks[length(breaks)] + 100
 
 # Create bins
-spain_pop_ready_sf <- spain_pop_ready_sf %>% 
+spain_pop_ready_sf <- spain_pop_sf %>% 
   mutate(
     pop_bin = cut(pob19, breaks = breaks, dig.lab = 10)
   )
+
+print(levels(spain_pop_ready_sf$pop_bin))
 ```
 
+With the previous code we create the new variable called `pop_bin` which consists in a total of 9 bins representing similar amount of municipalities. Finally, we can represent it graphically with the next code:
+
 ```{r}
+#| label: fig-population
+#| fig-cap: "Population in Spain by Municipality (2019)"
+#| fig-width: 8
 # Plot the population
 ggplot(spain_pop_ready_sf) + 
   ## Geometries
@@ -114,7 +158,31 @@ ggplot(spain_pop_ready_sf) +
   annotation_north_arrow(location = "tr", which_north = "true")
 ```
 
+We see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated.
+
+## Ratio Men/Women
+
+I will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:
+
+```{r calc_ratio}
+# Ratio men-women
+spain_pop_ready_sf <- spain_pop_sf %>% 
+  mutate(ratio_mw = men/women)
+
+summary(spain_pop_ready_sf$ratio_mw)
+```
+
+We can see in the summary before that the values between the minimum and the $3^{rd}$ quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e. division by zero). We can see also the boxplot:
+
 ```{r}
+#| label: fig-boxpl2
+#| fig-cap: "Distribution of Men/Women ratio by municipallity"
+boxplot(spain_pop_ready_sf$ratio_mw)
+```
+
+This tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (\<1), and areas with higher men proportion (\>1). Therefore, I apply the same approach creating bins:
+
+```{r bins_ratio}
 # Define the breaks (bin edges) based on percentiles
 breaks <- quantile(spain_pop_ready_sf$ratio_mw, probs = seq(0, 1, by = 0.1))
 
@@ -126,9 +194,16 @@ spain_pop_ready_sf <- spain_pop_ready_sf %>%
   mutate(
     ratio_bin = cut(ratio_mw, breaks = breaks)
   )
+
+## Print bins
+print(levels(spain_pop_ready_sf$ratio_bin))
 ```
 
+With this code, a total of 10 bins are generated with the ranges showed above. So let's proceed to the visualization:
+
 ```{r}
+#| label: fig-sex-ratio
+#| fig-cap: "Sex ratio in Spain by Municipality in 2019 (ratio men/women)"
 # Plot the population
 ggplot(spain_pop_ready_sf) + 
   ## Geometries
@@ -155,3 +230,5 @@ ggplot(spain_pop_ready_sf) +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", which_north = "true")
 ```
+
+Curiously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women.

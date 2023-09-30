@@ -4,3 +4,15 @@
   justify-content: center;
 }
 
+// Code
+pre.sourceCode {
+  border-radius: 3px;
+  padding: 0.5em;
+  overflow: auto;
+  border: 0.1rem solid $color-white;
+}
+
+pre {
+  background-color: $color-lightblue-2;
+  border: 1px solid;
+}

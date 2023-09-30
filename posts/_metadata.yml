@@ -7,4 +7,14 @@ freeze: true
 # Enable banner style title blocks
 title-block-banner: true
 
-# Add reading time
+# Author
+author: "Adrián Cidre"
+
+# Code options
+highlight-style: zenburn
+backgroundcolor: "#FFFFF4"
+
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments

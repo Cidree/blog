@@ -3,6 +3,11 @@ title: "Introducción a Análisis y Visualización de Datos en R [2023]"
 title-block-banner: true
 execute: 
   echo: false
+
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
 ---
 
 ```{r}
