@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cidree.github.io/blog/projects.html</loc>
-    <lastmod>2023-09-09T13:25:22.222Z</lastmod>
+    <loc>https://cidree.github.io/blog/resume.html</loc>
+    <lastmod>2023-05-29T19:44:21.091Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</loc>
+    <lastmod>2023-09-30T10:27:31.166Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/index.html</loc>
-    <lastmod>2023-09-10T13:36:44.590Z</lastmod>
+    <lastmod>2023-09-29T13:22:31.857Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/about.html</loc>
@@ -27,5 +31,9 @@
   <url>
     <loc>https://cidree.github.io/blog/posts/000-Presentation/index.html</loc>
     <lastmod>2023-09-09T10:40:50.302Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/projects.html</loc>
+    <lastmod>2023-09-09T13:25:22.222Z</lastmod>
   </url>
 </urlset>
