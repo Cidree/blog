@@ -180,6 +180,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Map of Spanish population by municipality</p></li>
 <li><p>Map of men/women ratio in Spain by municipality</p></li>
 </ul>
+<section id="watch-the-video" class="level2"><h2 class="anchored" data-anchor-id="watch-the-video">Watch the video</h2>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/dkSVGK272wc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section><section id="load-packages" class="level2"><h2 class="anchored" data-anchor-id="load-packages">Load packages</h2>
 <p>We will use the following packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pacman")</span></span>
@@ -203,6 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/rnaturalearthhires"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
+</section><section id="prepare-the-data" class="level2"><h2 class="anchored" data-anchor-id="prepare-the-data">Prepare the data</h2>
 <p>The first step, is to download the world countries map using the <code>ne_countries()</code> function. This will return the map we see in <a href="#fig-world">Figure&nbsp;1</a>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># World countries</span></span>
@@ -283,7 +287,7 @@ Geodetic CRS:  ETRS89
 <li>The variable name have some misspellings between datasets creating some NA values.</li>
 </ol>
 <p>Once this is clarified, we can begin with the maps.</p>
-<section id="spanish-population" class="level2"><h2 class="anchored" data-anchor-id="spanish-population">Spanish population</h2>
+</section><section id="spanish-population" class="level2"><h2 class="anchored" data-anchor-id="spanish-population">Spanish population</h2>
 <p>We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Define the breaks (bin edges) based on percentiles</span></span>
