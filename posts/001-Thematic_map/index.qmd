@@ -3,7 +3,6 @@ title: "Choropleth map"
 date: "2023-09-30"
 categories: [R, spatial, ggplot2]
 image: "image.png"
-highlight-style: zenburn
 # Execution 
 execute: 
   warning: false
