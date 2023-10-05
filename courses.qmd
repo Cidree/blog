@@ -35,7 +35,21 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 ```{r}
 course_card(
   file         = "01_figures/00_course_figures/02_analisis_datos.png",
-  course_title = "Introducción a Análisis y Visualización de Datos en R [2023]",
+  course_title = "Introduction to Spatial Data Analysis with R",
+  mode         = "Online",
+  date         = "Upcoming...",
+  time         = "",
+  language     = "English",
+  href         = ""
+)
+```
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{r}
+course_card(
+  file         = "01_figures/00_course_figures/02_analisis_datos.png",
+  course_title = "INTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]",
   mode         = "Online",
   date         = "Available Anytime",
   time         = "20 hours",

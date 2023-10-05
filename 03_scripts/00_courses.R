@@ -19,7 +19,6 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
       a(class = "btn btn-success btn-sm card-course-btn", href = href, "Learn more")
     )
   )
-  
 }
 
 ## Course banner -----------------------------------------------------------
