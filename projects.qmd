@@ -28,3 +28,8 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
+```{r}
+#| echo: false
+library(rmarkdown)
+```
