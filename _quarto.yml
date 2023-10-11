@@ -1,6 +1,9 @@
 project:
   type: website
 
+execute: 
+  freeze: auto
+
 website:
   title: "Adrián Cidre"
   site-url: "https://cidree.github.io/blog/"
