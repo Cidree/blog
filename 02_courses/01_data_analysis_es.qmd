@@ -11,7 +11,6 @@ comments:
 ---
 
 ```{r}
-library(rmarkdown)
 source("../03_scripts/00_courses.R")
 ```
 
