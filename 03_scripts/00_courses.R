@@ -1,5 +1,4 @@
 library(shiny)
-install.packages("rmarkdown")
 
 ## Card for courses.qmd -------------------------------------------------
 course_card <- function(file, course_title, mode, date, time, language, href) {
