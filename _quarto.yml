@@ -17,8 +17,8 @@ website:
         href: index.qmd
       - text: News
         href: projects.qmd
-      - text: Courses
-        href: courses.qmd
+      # - text: Courses
+      #   href: courses.qmd
       - about.qmd
       - icon: github
         href: https://github.com/Cidree
