@@ -1,0 +1,162 @@
+---
+title: "rpostgis is back"
+date: "2023-10-18"
+categories: [R, spatial, packages, databases]
+image: "image_small.png"
+# Execution 
+execute: 
+  warning: false
+  eval: false
+---
+
+> # **rpostgis package**
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: center
+#| out-height: 30%
+#| out-width: 30%
+knitr::include_graphics("image.png")
+```
+
+## History
+
+The `rpostgis` package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years ([check this issue](https://r-spatial.org/r/2022/04/12/evolution.html)), including the retirement of the packages `rgeos`, `rgdal`, and `maptools`. These packages as well and `sp` and `raster` are being replaced by the packages `sf` (for vectorial operation), `terra` (for both raster and vectorial data), and `stars` (datacubes).
+
+These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including `rpostgis`. The authors of the package noted that they lacked time to continue the maintenance of the package, and that's where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October $15^{th}$ the package was published in CRAN.
+
+## Package updates
+
+The package updates haven't been published in the website of the package ([rpostgis](https://mablab.org/rpostgis/)). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:
+
+-   Functions `pg*` migrated to packages `sf`/`terra`. Therefore, the inputs/outputs of these functions will be `sf` objects, `SpatVector` and `SpatRaster` objects by default. However, to maintain compatibility with recent versions, a new argument `returnclass` have been added to the `pg*` family of functions.
+
+-   `pgGetRast` and `pgWriteRast` include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument `progress = FALSE`.
+
+-   The extension `postgis_raster` can be installed using the function `pgPostGIS()` using the new argument `raster = TRUE`.
+
+-   The function `pgInsert` has been deprecated in favour of the function `pgWriteGeom` to keep naming consistency with other functions of the package.
+
+## Package notes
+
+As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:
+
+```{r}
+remotes::install_github("mablab/rpostgis")
+```
+
+You can also install the development version, which might be unstable:
+
+```{r}
+remotes::install_github("mablab/rpostgis", ref = "dev")
+```
+
+::: callout-caution
+Note that you need to have installed the package `remotes`
+:::
+
+## Write/Read vectorial data
+
+The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function `rpostgis::pgPostGIS()`. First of all, we need to connect to our PostgreSQL server using the `RPostgres` or the `RPostgreSQL` drivers. A basic connection with a local database could be achieved as follows:
+
+```{r}
+conn <- RPostgres::dbConnect(
+  drv      = RPostgres::Postgres(),
+  host     = "localhost",
+  dbname   = "my_database",
+  port     = 5432,
+  user     = "adrian_cidre",
+  password = "awesomepassword"
+)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+conn <- RPostgres::dbConnect(
+  drv      = RPostgres::Postgres(),
+  host     = "localhost",
+  dbname   = "my_database",
+  port     = 5432,
+  user     = "postgres",
+  password = keyring::key_get("postgres", "postgres")
+)
+```
+
+We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:
+
+```{r}
+#| eval: true
+#| message: false
+library(rpostgis)
+pgPostGIS(conn)
+```
+
+First, let's create fictional data:
+
+```{r}
+#| eval: true
+# Load necessary packages
+library(sf)
+library(tidyverse)
+
+# Create fictional tibble
+pts_tbl <- tibble(
+  x = seq(-8.3, -7.3, length.out = 50),
+  y = seq(42.4, 43, length.out = 50),
+  z = rnorm(50)
+)
+
+# Convert to sf
+pts_sf <- st_as_sf(pts_tbl, coords = c("x", "y"), crs = 4326)
+```
+
+So basically, I created a `sf` object with `POINT` geometry. Now let's imagine this is awesome data we want to save in our PostGIS database. We can use the function `pgWriteGeom(conn, name, data.obj)`. These are the three arguments that you **always** must specify:
+
+```{r}
+#| eval: true
+pgWriteGeom(
+  conn     = conn,
+  name     = c("public", "awesome_points"),
+  data.obj = pts_sf
+)
+```
+
+We are exporting to our connection the data object **pts_sf**, to the **public schema**, and setting its name to **awesome_points**. The function returns **TRUE** when the transfer was successful. If we don't trust it, we can use the next function to list all the vectorial data in our database:
+
+```{r}
+#| eval: true
+pgListGeom(conn)
+```
+
+Excellent! Now let's imagine that after some time we want to get back to this file. How can we get it back into R? So, that's pretty easy! We can use the `pgGetGeom(conn, name)` as easy as this:
+
+```{r}
+#| eval: true
+# Get the points
+awesome_pts_sf <- pgGetGeom(
+  conn = conn,
+  name = "awesome_points"
+)
+
+# Check it
+head(awesome_pts_sf)
+```
+
+We have our object back into R! You may have noticed that I used `name = "awesome_points"` instead of `name = c("public", "awesome_points")`. This is because when we do not specify the schema, by default, the function will use the **public schema** both for reading and writing.
+
+## Conclusion
+
+So you have seen the basic and most typical use of the `rpostgis` package for vectorial data. In future posts, I will share an example reading/writting raster data.
+
+If you liked the package and this tutorial, please feel free to share it with your colleagues.
+
+::: callout-warning
+Oh my God! And do not forget to close your connection!!!
+
+```{r}
+#| eval: true
+dbDisconnect(conn)
+```
+:::

@@ -15,7 +15,7 @@ website:
     right:
       - text: Home
         href: index.qmd
-      - text: News
+      - text: Posts
         href: projects.qmd
       # - text: Courses
       #   href: courses.qmd
