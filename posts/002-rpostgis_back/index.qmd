@@ -28,7 +28,7 @@ These changes in the geospatial ecosystem affected many other packages depending
 
 ## Package updates
 
-The package updates haven't been published in the website of the package ([rpostgis](https://mablab.org/rpostgis/)). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:
+The package updates haven't been published in the website of the package ([rpostgis](https://mablab.org/rpostgis/)). This is because I am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:
 
 -   Functions `pg*` migrated to packages `sf`/`terra`. Therefore, the inputs/outputs of these functions will be `sf` objects, `SpatVector` and `SpatRaster` objects by default. However, to maintain compatibility with recent versions, a new argument `returnclass` have been added to the `pg*` family of functions.
 
@@ -84,7 +84,7 @@ conn <- RPostgres::dbConnect(
 )
 ```
 
-We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:
+We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the connection into the function, it will install PostGIS automatically but not other extensions:
 
 ```{r}
 #| eval: true
