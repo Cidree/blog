@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cidree.github.io/blog/resume.html</loc>
-    <lastmod>2023-10-11T11:54:08.032Z</lastmod>
+    <lastmod>2023-10-20T13:53:41.667Z</lastmod>
   </url>
   <url>
-    <loc>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</loc>
-    <lastmod>2023-10-11T11:54:05.441Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/index.html</loc>
-    <lastmod>2023-10-11T11:53:59.284Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/about.html</loc>
-    <lastmod>2023-10-11T11:53:56.641Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/02_courses/00_quarto_es.html</loc>
-    <lastmod>2023-10-11T11:53:53.680Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/02_courses/01_data_analysis_es.html</loc>
-    <lastmod>2023-10-11T11:53:56.039Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/courses.html</loc>
-    <lastmod>2023-10-11T11:53:58.680Z</lastmod>
+    <loc>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</loc>
+    <lastmod>2023-10-20T13:53:36.767Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/posts/000-Presentation/index.html</loc>
-    <lastmod>2023-10-11T11:54:00.948Z</lastmod>
+    <lastmod>2023-10-20T13:53:03.435Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/courses.html</loc>
+    <lastmod>2023-10-20T13:53:00.813Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/02_courses/01_data_analysis_es.html</loc>
+    <lastmod>2023-10-20T13:52:57.838Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/02_courses/00_quarto_es.html</loc>
+    <lastmod>2023-10-20T13:52:54.973Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/about.html</loc>
+    <lastmod>2023-10-20T13:52:58.515Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/index.html</loc>
+    <lastmod>2023-10-20T13:53:01.568Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</loc>
+    <lastmod>2023-10-20T13:53:09.470Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/projects.html</loc>
-    <lastmod>2023-10-11T11:54:07.460Z</lastmod>
+    <lastmod>2023-10-20T13:53:41.008Z</lastmod>
   </url>
 </urlset>

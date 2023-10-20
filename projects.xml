@@ -10,7 +10,433 @@
 <atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Fri, 29 Sep 2023 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 17 Oct 2023 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>rpostgis is back</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<h1 id="rpostgis-package"><strong>rpostgis package</strong></h1>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/002-rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="history" class="level2"><h2 class="anchored" data-anchor-id="history">History</h2>
+<p>The <code>rpostgis</code> package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (<a href="https://r-spatial.org/r/2022/04/12/evolution.html">check this issue</a>), including the retirement of the packages <code>rgeos</code>, <code>rgdal</code>, and <code>maptools</code>. These packages as well and <code>sp</code> and <code>raster</code> are being replaced by the packages <code>sf</code> (for vectorial operation), <code>terra</code> (for both raster and vectorial data), and <code>stars</code> (datacubes).</p>
+<p>These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including <code>rpostgis</code>. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October <img src="https://latex.codecogs.com/png.latex?15%5E%7Bth%7D"> the package was published in CRAN.</p>
+</section><section id="package-updates" class="level2"><h2 class="anchored" data-anchor-id="package-updates">Package updates</h2>
+<p>The package updates haven’t been published in the website of the package (<a href="https://mablab.org/rpostgis/">rpostgis</a>). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:</p>
+<ul>
+<li><p>Functions <code>pg*</code> migrated to packages <code>sf</code>/<code>terra</code>. Therefore, the inputs/outputs of these functions will be <code>sf</code> objects, <code>SpatVector</code> and <code>SpatRaster</code> objects by default. However, to maintain compatibility with recent versions, a new argument <code>returnclass</code> have been added to the <code>pg*</code> family of functions.</p></li>
+<li><p><code>pgGetRast</code> and <code>pgWriteRast</code> include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument <code>progress = FALSE</code>.</p></li>
+<li><p>The extension <code>postgis_raster</code> can be installed using the function <code><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">pgPostGIS()</a></code> using the new argument <code>raster = TRUE</code>.</p></li>
+<li><p>The function <code>pgInsert</code> has been deprecated in favour of the function <code>pgWriteGeom</code> to keep naming consistency with other functions of the package.</p></li>
+</ul></section><section id="package-notes" class="level2"><h2 class="anchored" data-anchor-id="package-notes">Package notes</h2>
+<p>As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">remotes</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mablab/rpostgis"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>You can also install the development version, which might be unstable:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">remotes</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mablab/rpostgis"</span>, ref <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dev"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that you need to have installed the package <code>remotes</code></p>
+</div>
+</div>
+</section><section id="writeread-vectorial-data" class="level2"><h2 class="anchored" data-anchor-id="writeread-vectorial-data">Write/Read vectorial data</h2>
+<p>The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function <code><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">rpostgis::pgPostGIS()</a></code>. First of all, we need to connect to our PostgreSQL server using the <code>RPostgres</code> or the <code>RPostgreSQL</code> drivers. A basic connection with a local database could be achieved as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">RPostgres</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dbConnect</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  drv      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">RPostgres</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rpostgres.r-dbi.org/reference/Postgres.html">Postgres</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  host     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"localhost"</span>,</span>
+<span>  dbname   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_database"</span>,</span>
+<span>  port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5432</span>,</span>
+<span>  user     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adrian_cidre"</span>,</span>
+<span>  password <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesomepassword"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://mablab.org/rpostgis/">rpostgis</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">pgPostGIS</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>First, let’s create fictional data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load necessary packages</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create fictional tibble</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.3</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.3</span>, length.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">43</span>, length.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert to sf</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_tbl</span>, coords <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, crs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4326</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>So basically, I created a <code>sf</code> object with <code>POINT</code> geometry. Now let’s imagine this is awesome data we want to save in our PostGIS database. We can use the function <code>pgWriteGeom(conn, name, data.obj)</code>. These are the three arguments that you <strong>always</strong> must specify:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgWriteGeom.html">pgWriteGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  conn     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span>,</span>
+<span>  name     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesome_points"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  data.obj <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_sf</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>We are exporting to our connection the data object <strong>pts_sf</strong>, to the <strong>public schema</strong>, and setting its name to <strong>awesome_points</strong>. The function returns <strong>TRUE</strong> when the transfer was successful. If we don’t trust it, we can use the next function to list all the vectorial data in our database:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgListGeom.html">pgListGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  schema_name     table_name geom_column geometry_type     type
+1      public awesome_points        geom         POINT GEOMETRY</code></pre>
+</div>
+</div>
+<p>Excellent! Now let’s imagine that after some time we want to get back to this file. How can we get it back into R? So, that’s pretty easy! We can use the <code>pgGetGeom(conn, name)</code> as easy as this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get the points</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">awesome_pts_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgGetGeom.html">pgGetGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  conn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span>,</span>
+<span>  name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesome_points"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check it</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">awesome_pts_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -8.3 ymin: 42.4 xmax: -8.197959 ymax: 42.46122
+Geodetic CRS:  +proj=longlat +datum=WGS84 +no_defs 
+           z                       geom
+1  0.1817181          POINT (-8.3 42.4)
+2  0.1760245 POINT (-8.279592 42.41224)
+3 -0.4406823 POINT (-8.259184 42.42449)
+4 -1.8539099 POINT (-8.238776 42.43673)
+5  1.8827414 POINT (-8.218367 42.44898)
+6  0.1964005 POINT (-8.197959 42.46122)</code></pre>
+</div>
+</div>
+<p>We have our object back into R! You may have noticed that I used <code>name = "awesome_points"</code> instead of <code>name = c("public", "awesome_points")</code>. This is because when we do not specify the schema, by default, the function will use the <strong>public schema</strong> both for reading and writing.</p>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>So you have seen the basic and most typical use of the <code>rpostgis</code> package for vectorial data. In future posts, I will share an example reading/writting raster data.</p>
+<p>If you liked the package and this tutorial, please feel free to share it with your colleagues.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Oh my God! And do not forget to close your connection!!!</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+</section> ]]></description>
+  <category>R</category>
+  <category>spatial</category>
+  <category>packages</category>
+  <category>databases</category>
+  <guid>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</guid>
+  <pubDate>Tue, 17 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/002-rpostgis_back/image_small.png" medium="image" type="image/png" height="164" width="144"/>
+</item>
 <item>
   <title>Choropleth map</title>
   <dc:creator>Adrián Cidre</dc:creator>
