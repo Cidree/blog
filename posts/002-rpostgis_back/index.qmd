@@ -1,6 +1,6 @@
 ---
 title: "rpostgis is back"
-date: "2023-10-18"
+date: "2023-10-20"
 categories: [R, spatial, packages, databases]
 image: "image_small.png"
 # Execution 
