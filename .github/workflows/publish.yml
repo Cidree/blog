@@ -30,6 +30,7 @@ jobs:
             any::rmarkdown
             any::downlit
             any::xml2
+            any::shiny
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
