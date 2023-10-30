@@ -6,7 +6,7 @@ execute:
 
 website:
   title: "Adrián Cidre"
-  site-url: "https://cidree.github.io/blog/"
+  site-url: "adrian-cidre.com"
   search: false
   navbar:
     #logo: figures/logo.png
