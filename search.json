@@ -1,143 +1,10 @@
 [
   {
-    "objectID": "posts/002-rpostgis_back/index.html#history",
-    "href": "posts/002-rpostgis_back/index.html#history",
-    "title": "rpostgis is back",
-    "section": "History",
-    "text": "History\nThe rpostgis package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (check this issue), including the retirement of the packages rgeos, rgdal, and maptools. These packages as well and sp and raster are being replaced by the packages sf (for vectorial operation), terra (for both raster and vectorial data), and stars (datacubes).\nThese changes in the geospatial ecosystem affected many other packages depending on the retired packages, including rpostgis. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October \\(15^{th}\\) the package was published in CRAN."
-  },
-  {
-    "objectID": "posts/002-rpostgis_back/index.html#package-updates",
-    "href": "posts/002-rpostgis_back/index.html#package-updates",
-    "title": "rpostgis is back",
-    "section": "Package updates",
-    "text": "Package updates\nThe package updates haven’t been published in the website of the package (rpostgis). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:\n\nFunctions pg* migrated to packages sf/terra. Therefore, the inputs/outputs of these functions will be sf objects, SpatVector and SpatRaster objects by default. However, to maintain compatibility with recent versions, a new argument returnclass have been added to the pg* family of functions.\npgGetRast and pgWriteRast include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument progress = FALSE.\nThe extension postgis_raster can be installed using the function pgPostGIS() using the new argument raster = TRUE.\nThe function pgInsert has been deprecated in favour of the function pgWriteGeom to keep naming consistency with other functions of the package."
-  },
-  {
-    "objectID": "posts/002-rpostgis_back/index.html#package-notes",
-    "href": "posts/002-rpostgis_back/index.html#package-notes",
-    "title": "rpostgis is back",
-    "section": "Package notes",
-    "text": "Package notes\nAs many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:\n\nremotes::install_github(\"mablab/rpostgis\")\n\nYou can also install the development version, which might be unstable:\n\nremotes::install_github(\"mablab/rpostgis\", ref = \"dev\")\n\n\n\n\n\n\n\nCaution\n\n\n\nNote that you need to have installed the package remotes"
-  },
-  {
-    "objectID": "posts/002-rpostgis_back/index.html#writeread-vectorial-data",
-    "href": "posts/002-rpostgis_back/index.html#writeread-vectorial-data",
-    "title": "rpostgis is back",
-    "section": "Write/Read vectorial data",
-    "text": "Write/Read vectorial data\nThe package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function rpostgis::pgPostGIS(). First of all, we need to connect to our PostgreSQL server using the RPostgres or the RPostgreSQL drivers. A basic connection with a local database could be achieved as follows:\n\nconn &lt;- RPostgres::dbConnect(\n  drv      = RPostgres::Postgres(),\n  host     = \"localhost\",\n  dbname   = \"my_database\",\n  port     = 5432,\n  user     = \"adrian_cidre\",\n  password = \"awesomepassword\"\n)\n\nWe can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:\n\nlibrary(rpostgis)\npgPostGIS(conn)\n\n[1] TRUE\n\n\nFirst, let’s create fictional data:\n\n# Load necessary packages\nlibrary(sf)\nlibrary(tidyverse)\n\n# Create fictional tibble\npts_tbl &lt;- tibble(\n  x = seq(-8.3, -7.3, length.out = 50),\n  y = seq(42.4, 43, length.out = 50),\n  z = rnorm(50)\n)\n\n# Convert to sf\npts_sf &lt;- st_as_sf(pts_tbl, coords = c(\"x\", \"y\"), crs = 4326)\n\nSo basically, I created a sf object with POINT geometry. Now let’s imagine this is awesome data we want to save in our PostGIS database. We can use the function pgWriteGeom(conn, name, data.obj). These are the three arguments that you always must specify:\n\npgWriteGeom(\n  conn     = conn,\n  name     = c(\"public\", \"awesome_points\"),\n  data.obj = pts_sf\n)\n\n[1] TRUE\n\n\nWe are exporting to our connection the data object pts_sf, to the public schema, and setting its name to awesome_points. The function returns TRUE when the transfer was successful. If we don’t trust it, we can use the next function to list all the vectorial data in our database:\n\npgListGeom(conn)\n\n  schema_name     table_name geom_column geometry_type     type\n1      public awesome_points        geom         POINT GEOMETRY\n\n\nExcellent! Now let’s imagine that after some time we want to get back to this file. How can we get it back into R? So, that’s pretty easy! We can use the pgGetGeom(conn, name) as easy as this:\n\n# Get the points\nawesome_pts_sf &lt;- pgGetGeom(\n  conn = conn,\n  name = \"awesome_points\"\n)\n\n# Check it\nhead(awesome_pts_sf)\n\nSimple feature collection with 6 features and 1 field\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: -8.3 ymin: 42.4 xmax: -8.197959 ymax: 42.46122\nGeodetic CRS:  +proj=longlat +datum=WGS84 +no_defs \n           z                       geom\n1  0.1817181          POINT (-8.3 42.4)\n2  0.1760245 POINT (-8.279592 42.41224)\n3 -0.4406823 POINT (-8.259184 42.42449)\n4 -1.8539099 POINT (-8.238776 42.43673)\n5  1.8827414 POINT (-8.218367 42.44898)\n6  0.1964005 POINT (-8.197959 42.46122)\n\n\nWe have our object back into R! You may have noticed that I used name = \"awesome_points\" instead of name = c(\"public\", \"awesome_points\"). This is because when we do not specify the schema, by default, the function will use the public schema both for reading and writing."
-  },
-  {
-    "objectID": "posts/002-rpostgis_back/index.html#conclusion",
-    "href": "posts/002-rpostgis_back/index.html#conclusion",
-    "title": "rpostgis is back",
-    "section": "Conclusion",
-    "text": "Conclusion\nSo you have seen the basic and most typical use of the rpostgis package for vectorial data. In future posts, I will share an example reading/writting raster data.\nIf you liked the package and this tutorial, please feel free to share it with your colleagues.\n\n\n\n\n\n\nWarning\n\n\n\nOh my God! And do not forget to close your connection!!!\n\ndbDisconnect(conn)"
-  },
-  {
     "objectID": "posts/000-Presentation/index.html",
     "href": "posts/000-Presentation/index.html",
     "title": "Presentation",
     "section": "",
     "text": "Introducing myself\n\nMy name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master’s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).\nNot only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.\nWithin the scope of my research, I specialize in data analysis, specifically as a data analyst. One of my primary responsibilities involves creating models of pests in Europe for the LIFE-PROJECT that I am currently engaged in. Using my skills in the R environment, I perform spatial data analysis and modeling, as well as remote sensing analysis.\nIn addition to my academic pursuits and research, I am excited to use this blog as a platform to share my work, courses, and other fascinating topics that will engage and inform the public. By providing valuable insights into my field and showcasing the projects I am involved in, I aim to spark interest and foster a greater understanding of the importance of forestry, geomatics, and data analysis in sustainable forest management."
-  },
-  {
-    "objectID": "courses.html",
-    "href": "courses.html",
-    "title": "Courses",
-    "section": "",
-    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n20 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n10 hours\n\n\n\nSpanish\n\n\nLearn more"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html",
-    "href": "02_courses/01_data_analysis_es.html",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "",
-    "text": "13 €\n\n\n\nOnline\n\n\n\n20 horas\n\n\n\nSiempre Disponible"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#descripción",
-    "href": "02_courses/01_data_analysis_es.html#descripción",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Descripción",
-    "text": "Descripción"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#requisitos-previos",
-    "href": "02_courses/01_data_analysis_es.html#requisitos-previos",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Requisitos previos",
-    "text": "Requisitos previos"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
-    "href": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Contenidos del Curso",
-    "text": "Contenidos del Curso"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#resultados-del-curso",
-    "href": "02_courses/01_data_analysis_es.html#resultados-del-curso",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Resultados del Curso",
-    "text": "Resultados del Curso"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html",
-    "href": "02_courses/00_quarto_es.html",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "",
-    "text": "13 €\n\n\n\nOnline\n\n\n\n10 horas\n\n\n\nSiempre Disponible"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#descripción",
-    "href": "02_courses/00_quarto_es.html#descripción",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Descripción",
-    "text": "Descripción"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
-    "href": "02_courses/00_quarto_es.html#requisitos-previos",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Requisitos previos",
-    "text": "Requisitos previos"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Contenidos del Curso",
-    "text": "Contenidos del Curso"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Resultados del Curso",
-    "text": "Resultados del Curso"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for Phytophthora cinnamomi in the Mediterranean Basin. Furthermore, I am finishing my Master’s Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University.\nFor over two years, I have been using the programming language R in a daily basis. I try to inspire others to use it, since I believe its potential is unknown by most. I mostly work doing data and spatial data analysis, statistics, modelling, remote sensing, and development of web applications. All of this applied to my field of knowledge which is forestry. Over the time, I honed my skills with R, web development languages (HTML & CSS), deployment tools (Shiny, EC2, Git, Docker), and I try to learn something new every day."
-  },
-  {
-    "objectID": "about.html#curriculum-vitae",
-    "href": "about.html#curriculum-vitae",
-    "title": "About",
-    "section": "Curriculum Vitae",
-    "text": "Curriculum Vitae"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "\n\nR-FOREST\n\n\nR-FOREST\n\n\nBridging forests and technology\n\n\nBridging forests and technology\n\n",
-    "section": "",
-    "text": "R-FOREST\n\n\nR-FOREST\n\n\nBridging forests and technology\n\n\nBridging forests and technology\n\n\nDiscover my courses\nDiscover my courses\n\n\n\nIntroduction\nIn this blog I will share contents of my life, my work, and also I will create teaching content. Here, I share my experiences and knowledge in diverse subjects, focusing on:\n\n\nR programming\nStatistics\nForest pathology\nWildfires\nForest modelling\nRemote Sensing\nSpatial Data Science\nTeaching"
   },
   {
     "objectID": "posts/001-Thematic_map/index.html",
@@ -182,10 +49,143 @@
     "text": "Ratio Men/Women\nI will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:\n\n# Ratio men-women\nspain_pop_ready_sf &lt;- spain_pop_sf %&gt;% \n  mutate(ratio_mw = men/women)\n\nsummary(spain_pop_ready_sf$ratio_mw)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.3415  1.0003  1.0690     Inf  1.2067     Inf \n\n\nWe can see in the summary before that the values between the minimum and the \\(3^{rd}\\) quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e. division by zero). We can see also the boxplot:\n\nboxplot(spain_pop_ready_sf$ratio_mw)\n\n\n\nFigure 3: Distribution of Men/Women ratio by municipallity\n\n\n\nThis tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (&lt;1), and areas with higher men proportion (&gt;1). Therefore, I apply the same approach creating bins:\n\n# Define the breaks (bin edges) based on percentiles\nbreaks &lt;- quantile(\n  spain_pop_ready_sf$ratio_mw, \n  probs = seq(0, 1, by = 0.1)\n)\n\n# Round to hundred, and keep unique values\nbreaks &lt;- round(breaks, 2) %&gt;% unique()\n\n# Create bins\nspain_pop_ready_sf &lt;- spain_pop_ready_sf %&gt;% \n  mutate(\n    ratio_bin = cut(ratio_mw, breaks = breaks)\n  )\n\n## Print bins\nprint(levels(spain_pop_ready_sf$ratio_bin))\n\n [1] \"(0.34,0.96]\" \"(0.96,0.99]\" \"(0.99,1.01]\" \"(1.01,1.04]\" \"(1.04,1.07]\"\n [6] \"(1.07,1.11]\" \"(1.11,1.17]\" \"(1.17,1.26]\" \"(1.26,1.44]\" \"(1.44,Inf]\" \n\n\nWith this code, a total of 10 bins are generated with the ranges showed above. So let’s proceed to the visualization:\n\n# Plot the population\nggplot(spain_pop_ready_sf) + \n  ## Geometries\n  geom_sf(data = world_sf, fill = \"grey90\", color = \"black\") +\n  geom_sf(aes(fill = ratio_bin), color = NA) +\n  ## Scales\n  scale_fill_brewer(palette = \"RdBu\", na.translate = FALSE, direction = -1) +\n  ## Labels\n  labs(\n    title   = \"Men/Women ratio\",\n    fill    = \"Ratio\",\n    caption = \"Author: Adrián Cidre González\"\n  ) +\n  ## Coordinates\n  coord_sf(xlim = st_bbox(spain_pop_ready_sf)[c(1,3)],\n           ylim = st_bbox(spain_pop_ready_sf)[c(2,4)]) +\n  ## Theme\n  theme_bw() +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 16, face = \"bold\"),\n    legend.background = element_rect(color = \"black\")\n  ) +\n  ## Ggspatial\n  annotation_scale(location = \"br\") +\n  annotation_north_arrow(location = \"tr\", which_north = \"true\")\n\n\n\nFigure 4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)\n\n\n\nCuriously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women."
   },
   {
+    "objectID": "02_courses/01_data_analysis_es.html",
+    "href": "02_courses/01_data_analysis_es.html",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n20 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#descripción",
+    "href": "02_courses/01_data_analysis_es.html#descripción",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#requisitos-previos",
+    "href": "02_courses/01_data_analysis_es.html#requisitos-previos",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
+    "href": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#resultados-del-curso",
+    "href": "02_courses/01_data_analysis_es.html#resultados-del-curso",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
     "objectID": "projects.html",
     "href": "projects.html",
     "title": "Posts",
     "section": "",
-    "text": "Order By\nDefault\n\n          Title\n        \n\n          Date - Oldest\n        \n\n          Date - Newest\n        \n\n    \n      \n      \n\n\n\n\n\n\n\n\n\n\nrpostgis is back\n\n\n5 min\n\n\n\nR\n\n\nspatial\n\n\npackages\n\n\ndatabases\n\n\n\n\n\n\n\nOct 20, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoropleth map\n\n\n6 min\n\n\n\nR\n\n\nspatial\n\n\nggplot2\n\n\n\n\n\n\n\nSep 30, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\nPresentation\n\n\n2 min\n\n\n\npersonal\n\n\n\n\n\n\n\nMay 29, 2023\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nrpostgis is back\n\n\n5 min\n\n\n\nR\n\n\nspatial\n\n\npackages\n\n\ndatabases\n\n\n\n\n\n\n\nOct 20, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoropleth map\n\n\n6 min\n\n\n\nR\n\n\nspatial\n\n\nggplot2\n\n\n\n\n\n\n\nSep 30, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPresentation\n\n\n2 min\n\n\n\npersonal\n\n\n\n\n\n\n\nMay 29, 2023\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for Phytophthora cinnamomi in the Mediterranean Basin. Furthermore, I am finishing my Master’s Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University.\nFor over two years, I have been using the programming language R in a daily basis. I try to inspire others to use it, since I believe its potential is unknown by most. I mostly work doing data and spatial data analysis, statistics, modelling, remote sensing, and development of web applications. All of this applied to my field of knowledge which is forestry. Over the time, I honed my skills with R, web development languages (HTML & CSS), deployment tools (Shiny, EC2, Git, Docker), and I try to learn something new every day."
+  },
+  {
+    "objectID": "about.html#curriculum-vitae",
+    "href": "about.html#curriculum-vitae",
+    "title": "About",
+    "section": "Curriculum Vitae",
+    "text": "Curriculum Vitae"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "\n\nR-FOREST\n\n\nR-FOREST\n\n\nBridging forests and technology\n\n\nBridging forests and technology\n\n",
+    "section": "",
+    "text": "R-FOREST\n\n\nR-FOREST\n\n\nBridging forests and technology\n\n\nBridging forests and technology\n\n\nDiscover my courses\nDiscover my courses\n\n\n\nIntroduction\nIn this blog I will share contents of my life, my work, and also I will create teaching content. Here, I share my experiences and knowledge in diverse subjects, focusing on:\n\n\nR programming\nStatistics\nForest pathology\nWildfires\nForest modelling\nRemote Sensing\nSpatial Data Science\nTeaching"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html",
+    "href": "02_courses/00_quarto_es.html",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n10 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#descripción",
+    "href": "02_courses/00_quarto_es.html#descripción",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
+    "href": "02_courses/00_quarto_es.html#requisitos-previos",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
+    "objectID": "courses.html",
+    "href": "courses.html",
+    "title": "Courses",
+    "section": "",
+    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n20 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n10 hours\n\n\n\nSpanish\n\n\nLearn more"
+  },
+  {
+    "objectID": "posts/002-rpostgis_back/index.html#history",
+    "href": "posts/002-rpostgis_back/index.html#history",
+    "title": "rpostgis is back",
+    "section": "History",
+    "text": "History\nThe rpostgis package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (check this issue), including the retirement of the packages rgeos, rgdal, and maptools. These packages as well and sp and raster are being replaced by the packages sf (for vectorial operation), terra (for both raster and vectorial data), and stars (datacubes).\nThese changes in the geospatial ecosystem affected many other packages depending on the retired packages, including rpostgis. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October \\(15^{th}\\) the package was published in CRAN."
+  },
+  {
+    "objectID": "posts/002-rpostgis_back/index.html#package-updates",
+    "href": "posts/002-rpostgis_back/index.html#package-updates",
+    "title": "rpostgis is back",
+    "section": "Package updates",
+    "text": "Package updates\nThe package updates haven’t been published in the website of the package (rpostgis). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:\n\nFunctions pg* migrated to packages sf/terra. Therefore, the inputs/outputs of these functions will be sf objects, SpatVector and SpatRaster objects by default. However, to maintain compatibility with recent versions, a new argument returnclass have been added to the pg* family of functions.\npgGetRast and pgWriteRast include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument progress = FALSE.\nThe extension postgis_raster can be installed using the function pgPostGIS() using the new argument raster = TRUE.\nThe function pgInsert has been deprecated in favour of the function pgWriteGeom to keep naming consistency with other functions of the package."
+  },
+  {
+    "objectID": "posts/002-rpostgis_back/index.html#package-notes",
+    "href": "posts/002-rpostgis_back/index.html#package-notes",
+    "title": "rpostgis is back",
+    "section": "Package notes",
+    "text": "Package notes\nAs many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:\n\nremotes::install_github(\"mablab/rpostgis\")\n\nYou can also install the development version, which might be unstable:\n\nremotes::install_github(\"mablab/rpostgis\", ref = \"dev\")\n\n\n\n\n\n\n\nCaution\n\n\n\nNote that you need to have installed the package remotes"
+  },
+  {
+    "objectID": "posts/002-rpostgis_back/index.html#writeread-vectorial-data",
+    "href": "posts/002-rpostgis_back/index.html#writeread-vectorial-data",
+    "title": "rpostgis is back",
+    "section": "Write/Read vectorial data",
+    "text": "Write/Read vectorial data\nThe package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function rpostgis::pgPostGIS(). First of all, we need to connect to our PostgreSQL server using the RPostgres or the RPostgreSQL drivers. A basic connection with a local database could be achieved as follows:\n\nconn &lt;- RPostgres::dbConnect(\n  drv      = RPostgres::Postgres(),\n  host     = \"localhost\",\n  dbname   = \"my_database\",\n  port     = 5432,\n  user     = \"adrian_cidre\",\n  password = \"awesomepassword\"\n)\n\nWe can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:\n\nlibrary(rpostgis)\npgPostGIS(conn)\n\n[1] TRUE\n\n\nFirst, let’s create fictional data:\n\n# Load necessary packages\nlibrary(sf)\nlibrary(tidyverse)\n\n# Create fictional tibble\npts_tbl &lt;- tibble(\n  x = seq(-8.3, -7.3, length.out = 50),\n  y = seq(42.4, 43, length.out = 50),\n  z = rnorm(50)\n)\n\n# Convert to sf\npts_sf &lt;- st_as_sf(pts_tbl, coords = c(\"x\", \"y\"), crs = 4326)\n\nSo basically, I created a sf object with POINT geometry. Now let’s imagine this is awesome data we want to save in our PostGIS database. We can use the function pgWriteGeom(conn, name, data.obj). These are the three arguments that you always must specify:\n\npgWriteGeom(\n  conn     = conn,\n  name     = c(\"public\", \"awesome_points\"),\n  data.obj = pts_sf\n)\n\n[1] TRUE\n\n\nWe are exporting to our connection the data object pts_sf, to the public schema, and setting its name to awesome_points. The function returns TRUE when the transfer was successful. If we don’t trust it, we can use the next function to list all the vectorial data in our database:\n\npgListGeom(conn)\n\n  schema_name     table_name geom_column geometry_type     type\n1      public awesome_points        geom         POINT GEOMETRY\n\n\nExcellent! Now let’s imagine that after some time we want to get back to this file. How can we get it back into R? So, that’s pretty easy! We can use the pgGetGeom(conn, name) as easy as this:\n\n# Get the points\nawesome_pts_sf &lt;- pgGetGeom(\n  conn = conn,\n  name = \"awesome_points\"\n)\n\n# Check it\nhead(awesome_pts_sf)\n\nSimple feature collection with 6 features and 1 field\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: -8.3 ymin: 42.4 xmax: -8.197959 ymax: 42.46122\nGeodetic CRS:  +proj=longlat +datum=WGS84 +no_defs \n           z                       geom\n1  0.1817181          POINT (-8.3 42.4)\n2  0.1760245 POINT (-8.279592 42.41224)\n3 -0.4406823 POINT (-8.259184 42.42449)\n4 -1.8539099 POINT (-8.238776 42.43673)\n5  1.8827414 POINT (-8.218367 42.44898)\n6  0.1964005 POINT (-8.197959 42.46122)\n\n\nWe have our object back into R! You may have noticed that I used name = \"awesome_points\" instead of name = c(\"public\", \"awesome_points\"). This is because when we do not specify the schema, by default, the function will use the public schema both for reading and writing."
+  },
+  {
+    "objectID": "posts/002-rpostgis_back/index.html#conclusion",
+    "href": "posts/002-rpostgis_back/index.html#conclusion",
+    "title": "rpostgis is back",
+    "section": "Conclusion",
+    "text": "Conclusion\nSo you have seen the basic and most typical use of the rpostgis package for vectorial data. In future posts, I will share an example reading/writting raster data.\nIf you liked the package and this tutorial, please feel free to share it with your colleagues.\n\n\n\n\n\n\nWarning\n\n\n\nOh my God! And do not forget to close your connection!!!\n\ndbDisconnect(conn)"
   }
 ]
