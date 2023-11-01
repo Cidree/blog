@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pacman")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span><span class="fu">p_load</span><span class="op">(</span></span>
 <span>  <span class="co">## Core</span></span>
 <span>  <span class="va">tidyverse</span>,</span>
 <span>  </span>
@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># High resolution world map</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/rnaturalearthhires"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ropensci/rnaturalearthhires"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
 </section><section id="prepare-the-data" class="level2"><h2 class="anchored" data-anchor-id="prepare-the-data">Prepare the data</h2>
@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Next, we can get the Spanish population by municipality in 2019 using the <code>mapSpain</code> package:</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get Spanish population by municipality in 2019</span></span>
-<span><span class="va">spain_pop_tbl</span> <span class="op">&lt;-</span> <span class="fu">mapSpain</span><span class="fu">::</span><span class="va"><a href="https://ropenspain.github.io/mapSpain/reference/pobmun19.html">pobmun19</a></span></span>
+<span><span class="va">spain_pop_tbl</span> <span class="op">&lt;-</span> <span class="fu">mapSpain</span><span class="fu">::</span><span class="va">pobmun19</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">spain_pop_tbl</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
