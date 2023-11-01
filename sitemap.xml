@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>adrian-cidre.com/posts/000-Presentation/index.html</loc>
-    <lastmod>2023-11-01T10:25:57.010Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/posts/001-Thematic_map/index.html</loc>
-    <lastmod>2023-11-01T10:25:53.538Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/02_courses/01_data_analysis_es.html</loc>
-    <lastmod>2023-11-01T10:25:46.634Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/projects.html</loc>
-    <lastmod>2023-11-01T10:25:40.713Z</lastmod>
-  </url>
-  <url>
     <loc>adrian-cidre.com/resume.html</loc>
-    <lastmod>2023-11-01T10:25:39.305Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/about.html</loc>
-    <lastmod>2023-11-01T10:25:35.973Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/index.html</loc>
-    <lastmod>2023-11-01T10:25:39.741Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/02_courses/00_quarto_es.html</loc>
-    <lastmod>2023-11-01T10:25:43.669Z</lastmod>
-  </url>
-  <url>
-    <loc>adrian-cidre.com/courses.html</loc>
-    <lastmod>2023-11-01T10:25:49.422Z</lastmod>
+    <lastmod>2023-11-01T10:36:23.762Z</lastmod>
   </url>
   <url>
     <loc>adrian-cidre.com/posts/002-rpostgis_back/index.html</loc>
-    <lastmod>2023-11-01T10:25:56.530Z</lastmod>
+    <lastmod>2023-11-01T10:36:21.523Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/posts/000-Presentation/index.html</loc>
+    <lastmod>2023-11-01T10:36:06.010Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/courses.html</loc>
+    <lastmod>2023-11-01T10:36:03.422Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/02_courses/01_data_analysis_es.html</loc>
+    <lastmod>2023-11-01T10:36:00.931Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/02_courses/00_quarto_es.html</loc>
+    <lastmod>2023-11-01T10:35:57.316Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/about.html</loc>
+    <lastmod>2023-11-01T10:36:01.506Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/index.html</loc>
+    <lastmod>2023-11-01T10:36:03.880Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/posts/001-Thematic_map/index.html</loc>
+    <lastmod>2023-11-01T10:36:10.963Z</lastmod>
+  </url>
+  <url>
+    <loc>adrian-cidre.com/projects.html</loc>
+    <lastmod>2023-11-01T10:36:23.298Z</lastmod>
   </url>
 </urlset>
