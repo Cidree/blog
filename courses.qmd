@@ -34,7 +34,21 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "01_figures/00_course_figures/02_analisis_datos.png",
+  file         = "01_figures/00_course_figures/03_intro_spatial_data.png",
+  course_title = "Introducción a Análisis de Datos Espaciales en R",
+  mode         = "Online",
+  date         = "Upcoming...",
+  time         = "",
+  language     = "Spanish",
+  href         = ""
+)
+```
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{r}
+course_card(
+  file         = "01_figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introduction to Spatial Data Analysis with R",
   mode         = "Online",
   date         = "Upcoming...",
