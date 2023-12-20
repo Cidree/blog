@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Adrián Cidre</title>
-<link>cidree.github.io/blog/projects.html</link>
-<atom:link href="cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
+<link>https://cidree.github.io/blog/projects.html</link>
+<atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.450</generator>
 <lastBuildDate>Fri, 17 Nov 2023 23:00:00 GMT</lastBuildDate>
 <item>
   <title>Spanish Wildfires by CCAA during 2006-2015</title>
   <dc:creator>Adrián Cidre</dc:creator>
-  <link>cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</link>
+  <link>https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
 <h1 id="spanish-wildfires-by-autonomous-communities">Spanish Wildfires by Autonomous Communities</h1>
 </blockquote>
@@ -629,7 +629,7 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with <code>head</code>. Then, we have a bar plot with the label that we previously created. The <code>expand_limits</code> function expands the axis so the label of Galicia can be seen properly. Next, the <code>annotate</code> functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases <em>rect</em> and <em>text</em>). The rest of the arguments are just formatting. Isn’t it cool? That’s why I love <code>ggplot2</code> ❤️.</p>
@@ -1106,7 +1106,7 @@ font-style: inherit;">"bottom"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="analysing-the-results-1" class="level3"><h3 class="anchored" data-anchor-id="analysing-the-results-1">Analysing the results</h3>
@@ -1118,21 +1118,21 @@ font-style: inherit;">)</span></span></code></pre></div>
   <category>forestry</category>
   <category>wildfires</category>
   <category>ggplot2</category>
-  <guid>cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</guid>
+  <guid>https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</guid>
   <pubDate>Fri, 17 Nov 2023 23:00:00 GMT</pubDate>
-  <media:content url="cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/image.png" medium="image" type="image/png" height="71" width="144"/>
+  <media:content url="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/image.png" medium="image" type="image/png" height="71" width="144"/>
 </item>
 <item>
   <title>rpostgis is back</title>
   <dc:creator>Adrián Cidre</dc:creator>
-  <link>cidree.github.io/blog/posts/002-rpostgis_back/index.html</link>
+  <link>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
 <h1 id="rpostgis-package"><strong>rpostgis package</strong></h1>
 </blockquote>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="cidree.github.io/blog/posts/002-rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/002-rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1544,14 +1544,14 @@ font-style: inherit;">)</span></span></code></pre></div>
   <category>spatial</category>
   <category>packages</category>
   <category>databases</category>
-  <guid>cidree.github.io/blog/posts/002-rpostgis_back/index.html</guid>
+  <guid>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</guid>
   <pubDate>Thu, 19 Oct 2023 22:00:00 GMT</pubDate>
-  <media:content url="cidree.github.io/blog/posts/002-rpostgis_back/image_small.png" medium="image" type="image/png" height="164" width="144"/>
+  <media:content url="https://cidree.github.io/blog/posts/002-rpostgis_back/image_small.png" medium="image" type="image/png" height="164" width="144"/>
 </item>
 <item>
   <title>Choropleth map</title>
   <dc:creator>Adrián Cidre</dc:creator>
-  <link>cidree.github.io/blog/posts/001-Thematic_map/index.html</link>
+  <link>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
 <h1 id="choropleth-maps-with-ggplot2">
 <strong>Choropleth</strong> maps with ggplot2</h1>
@@ -1686,7 +1686,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-world" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;1: World map</figcaption></figure>
 </div>
 </div>
@@ -2263,7 +2263,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-population" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Population in Spain by Municipality (2019)</figcaption></figure>
 </div>
 </div>
@@ -2335,7 +2335,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-boxpl2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Distribution of Men/Women ratio by municipallity</figcaption></figure>
 </div>
 </div>
@@ -2739,7 +2739,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-sex-ratio" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)</figcaption></figure>
 </div>
 </div>
@@ -2751,14 +2751,14 @@ font-style: inherit;">)</span></span></code></pre></div>
   <category>R</category>
   <category>spatial</category>
   <category>ggplot2</category>
-  <guid>cidree.github.io/blog/posts/001-Thematic_map/index.html</guid>
+  <guid>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</guid>
   <pubDate>Fri, 29 Sep 2023 22:00:00 GMT</pubDate>
-  <media:content url="cidree.github.io/blog/posts/001-Thematic_map/image.png" medium="image" type="image/png" height="89" width="144"/>
+  <media:content url="https://cidree.github.io/blog/posts/001-Thematic_map/image.png" medium="image" type="image/png" height="89" width="144"/>
 </item>
 <item>
   <title>Presentation</title>
   <dc:creator>Adrián Cidre</dc:creator>
-  <link>cidree.github.io/blog/posts/000-Presentation/index.html</link>
+  <link>https://cidree.github.io/blog/posts/000-Presentation/index.html</link>
   <description><![CDATA[ 
 
 
@@ -2776,9 +2776,9 @@ font-style: inherit;">)</span></span></code></pre></div>
 
  ]]></description>
   <category>personal</category>
-  <guid>cidree.github.io/blog/posts/000-Presentation/index.html</guid>
+  <guid>https://cidree.github.io/blog/posts/000-Presentation/index.html</guid>
   <pubDate>Sun, 28 May 2023 22:00:00 GMT</pubDate>
-  <media:content url="cidree.github.io/blog/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://cidree.github.io/blog/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
