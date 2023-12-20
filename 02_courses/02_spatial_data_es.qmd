@@ -1,0 +1,282 @@
+---
+title: "Introducción a Análisis de Datos Espaciales en R"
+title-block-banner: true
+execute: 
+  echo: false
+
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
+---
+
+```{r}
+source("../03_scripts/00_courses.R")
+```
+
+::: course-banner
+```{r}
+course_banner(
+  price    = "13 €",
+  mode     = "Online",
+  time     = "20 horas",
+  date     = "Siempre Disponible",
+  img_file = "../01_figures/00_course_figures/03_intro_spatial_data.png"
+)
+```
+:::
+
+::: course-link
+```{r}
+a(class = "text-center btn btn-success course-link--button",
+  target = "_blank",
+  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=216E6447CB8C6F6C1F00",
+  "Apuntarse al Curso")
+```
+:::
+
+::: course-description
+::: course-description--title
+## Introducción del curso
+:::
+
+{{< video 00_opening_datos_espaciales.mp4 >}}
+:::
+
+::: course-description
+::: course-description--title
+## Descripción
+:::
+
+::: course-description--text
+¡Bienvenido a mi curso de Análisis de Datos Espaciales en R!
+
+Este curso está diseñado para personas de nivel principiante e intermedio que desean aprender todo lo necesario sobre el análisis de datos espaciales utilizando el lenguaje de programación R. Nos enfocaremos en los paquetes más actuales y prácticas para trabajar con datos espaciales reales. En total utilizaremos 27 paquetes de R distintos, por lo que será un curso intenso, pero muy completo.
+
+Aquí abajo tienes un ejemplo de lo que aprenderás a realizar en este curso:
+:::
+:::
+
+```{=html}
+<iframe src="../01_figures/01_html/poblacion_spain.html" width="800" height="600"></iframe>
+```
+::: course-description
+::: course-description--title
+## Requisitos previos
+:::
+
+::: course-description--text
+-   Conocimientos básicos de R
+
+-   Estar familiarizado con funciones del tidyverse, incluyendo gráficos básicos con ggplot2 y pipeline (ver curso [introducción a análisis y visualización de datos en R](https://adrian-cidre.com/02_courses/01_data_analysis_es.html))
+:::
+:::
+
+::: {.course-curriculum .column-screen}
+::: course-description--title
+## Contenidos del Curso
+:::
+
+```{r}
+# Introducción --------------------------------------------------------------------
+course_block(
+  section_name = "Introducción",
+  id_accordion = "acc_qes_01",
+  id_heading   = "head_qes_01",
+  id_collapse  = "col_qes_01",
+  
+  strong("Introducción al curso"),
+  tags$ul(
+    tags$li("Introducción al curso"),
+    tags$li("Configuración del entorno"),
+    tags$li("Material del curso")
+  )
+)
+
+# 01. Introduccion datos espaciales ---------------------------
+course_block(
+  section_name = "SECCIÓN 01 - Introducción a Datos Espaciales",
+  id_accordion = "acc_qes_02",
+  id_heading   = "head_qes_02",
+  id_collapse  = "col_qes_02",
+  
+  ## Teoría
+  strong("Teoría"),
+  tags$ul(
+    tags$li("Datos espaciales vs Datos no espaciales"),
+    tags$li("Geometrías en datos vectoriales"),
+    tags$li("Simple features"),
+    tags$li("Formatos comunes"),
+    tags$li("QUIZ 1")
+  ),
+  
+  ## Práctica
+  strong("Práctica"),
+  tags$ul(
+    tags$li("Descarga de datos espaciales"),
+    tags$li("Análisis exploratorio de datos"),
+    tags$li("Importar/Exportar datos espaciales"),
+    tags$li("Propiedades de datos vectoriales")
+  ),
+  
+  ## Challenge
+  strong("Challenge 01")
+)
+
+# 02. CRS  --------------------------------------------------
+course_block(
+  section_name = "SECCIÓN 02 - Sistemas de Referencia de Coordenadas",
+  id_accordion = "acc_qes_03",
+  id_heading   = "head_qes_03",
+  id_collapse  = "col_qes_03",
+  
+  ## Teoría
+  strong("Teoría"),
+  tags$ul(
+    tags$li("Importancia de los CRS"),
+    tags$li("CRS, coordenadas, georreferenciación"),
+    tags$li("CRS geográficos vs CRS proyectados"),
+    tags$li("Proyecciones"),
+    tags$li("Códigos EPSG, proj4, WKT ..."),
+    tags$li("QUIZ 2")
+  ),
+  
+  ## Práctica
+  strong("Práctica"),
+  tags$ul(
+    tags$li("Explorar CRS"),
+    tags$li("Transformación de CRS"),
+    tags$li("Asignación de CRS"),
+    tags$li("Transformaciones al vuelo"),
+    tags$li("Primer mapa web")
+  ),
+  
+  ## Challenge
+  strong("Challenge 02")
+)
+
+# 03. Operaciones con geometrías  ---------------------------------------
+course_block(
+  section_name = "SECCIÓN 03 - Operaciones con geometrías",
+  id_accordion = "acc_qes_04",
+  id_heading   = "head_qes_04",
+  id_collapse  = "col_qes_04",
+  
+  ## Teoría
+  strong("Teoría"),
+  tags$ul(
+    tags$li("Predicados espaciales"),
+    tags$li("Medidas de geometrías"),
+    tags$li("Transformaciones unarias"),
+    tags$li("Transformaciones binarias"),
+    tags$li("Otras operaciones"),
+    tags$li("QUIZ 3")
+  ),
+  
+  ## Práctica
+  strong("Práctica"),
+  tags$ul(
+    tags$li("Funciones predicado para contar elementos"),
+    tags$li("Filtros espaciales"),
+    tags$li("Uniones espaciales"),
+    tags$li("Mediciones espaciales"),
+    tags$li("Transformaciones (centroide, buffer ...)"),
+    tags$li("Descargar mapa de España desde R")
+  ),
+  
+  ## Challenge
+  strong("Challenge 03")
+)
+
+# 04. Datos raster ---------------------------------------
+course_block(
+  section_name = "SECCIÓN 04 - Datos Raster",
+  id_accordion = "acc_qes_05",
+  id_heading   = "head_qes_05",
+  id_collapse  = "col_qes_05",
+  
+  ## Teoría
+  strong("Teoría"),
+  tags$ul(
+    tags$li("Definición de datos raster"),
+    tags$li("Tipos de resolución"),
+    tags$li("Introducción a la teledetección"),
+    tags$li("Operaciones comunes"),
+    tags$li("Cálculo de índices de vegetación (NDVI, SAVI)"),
+    tags$li("QUIZ 4")
+  ),
+  
+  ## Práctica
+  strong("Práctica"),
+  tags$ul(
+    tags$li("Exploración de datos raster"),
+    tags$li("Descargar Modelo Digital de Elevaciones (DEM)"),
+    tags$li("Raster derivados del DEM"),
+    tags$li("Operaciones comunes (cortar, reclasificar ...)"),
+    tags$li("Operaciones aritméticas con raster"),
+    tags$li("Cálculo de índices de vegetación (NDVI, SAVI)"),
+    tags$li("Generar composiciones RGB y falso color")
+  ),
+  
+  ## Challenge
+  strong("Challenge 04")
+)
+
+# 05. Mapas  --------------------------------------------
+course_block(
+  section_name = "SECCIÓN 05 - Mapas con ggplot2",
+  id_accordion = "acc_qes_06",
+  id_heading   = "head_qes_06",
+  id_collapse  = "col_qes_06",
+  
+  strong("Mapas"),
+  tags$ul(
+    tags$li("Población de España por municipios"),
+    tags$li("Oso pardo en Picos de Europa I"),
+    tags$li("Oso pardo en Picos de Europa II"),
+    tags$li("Ríos de Galicia"),
+    tags$li("Oso andino en Perú"),
+    tags$li("Severidad de incendio de Tenerife (2023)")
+  )
+)
+
+# 06. Mapas web -----------------------------------------
+course_block(
+  section_name = "SECCIÓN 06 - Mapas Web con mapview",
+  id_accordion = "acc_qes_07",
+  id_heading   = "head_qes_07",
+  id_collapse  = "col_qes_07",
+  
+  strong("Mapas Web"),
+  tags$ul(
+    tags$li("Población de España por municipios"),
+    tags$li("Oso pardo en Picos de Europa"),
+    tags$li("Ríos de Galicia"),
+    tags$li("Oso andino en Perú"),
+    tags$li("Severidad de incendio de Tenerife (sincronizado)"),
+    tags$li("Severidad de incendio de Tenerife (side by side)")
+  )
+)
+
+```
+:::
+
+::: course-description
+::: course-description--title
+## Resultados del Curso
+:::
+
+::: course-description--text
+-   Analizar datos vectoriales y datos raster
+
+-   Descarga de datos espaciales en R
+
+-   Operaciones comunes sobre datos vectoriales y sobre datos raster
+
+-   Georreferenciar datos
+
+-   Transformaciones de CRS
+
+-   Generar mapas y mapas web asombrosos
+:::
+:::
