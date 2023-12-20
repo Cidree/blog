@@ -40,7 +40,7 @@ a(class = "text-center btn btn-success course-link--button",
 ## Introducción del curso
 :::
 
-{{< video 00_opening_datos_espaciales.mp4 >}}
+{{< video https://www.youtube.com/watch?v=bB67ycZE4kE >}}
 :::
 
 ::: course-description
