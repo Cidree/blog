@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Adrián Cidre - Introducción a Análisis de Datos Espaciales en R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="../site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../00_styles/styles.css">
+</head>
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Adrián Cidre</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../courses.html" rel="" target="">
+ <span class="menu-text">Courses</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Cidree" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:adrian.cidre@gmail.com" rel="" target=""><i class="bi bi-envelope-at" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introducción a Análisis de Datos Espaciales en R</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><div class="course-banner">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<img src="../01_figures/00_course_figures/03_intro_spatial_data.png" class="course-banner--image"><div class="grid text-center" style="vertical-align: bottom">
+<div class="g-col-3">
+<i class="far fa-money-bill-1 fa-2xl course-banner--icon" role="presentation" aria-label="money-bill-1 icon"></i>
+<p class="course-banner--text">13 €</p>
+</div>
+<div class="g-col-3">
+<i class="fas fa-chalkboard-user fa-2xl course-banner--icon" role="presentation" aria-label="chalkboard-user icon"></i>
+<p class="course-banner--text">Online</p>
+</div>
+<div class="g-col-3">
+<i class="far fa-clock fa-2xl course-banner--icon" role="presentation" aria-label="clock icon"></i>
+<p class="course-banner--text">20 horas</p>
+</div>
+<div class="g-col-3">
+<i class="far fa-calendar-days fa-2xl course-banner--icon" role="presentation" aria-label="calendar-days icon"></i>
+<p class="course-banner--text">Siempre Disponible</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="course-link">
+<div class="cell">
+<div class="cell-output-display">
+<a class="text-center btn btn-success course-link--button" target="_blank" href="https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=216E6447CB8C6F6C1F00">Apuntarse al Curso</a>
+</div>
+</div>
+</div>
+<div class="course-description">
+<section id="introducción-del-curso" class="level2 course-description--title"><h2 class="anchored" data-anchor-id="introducción-del-curso">Introducción del curso</h2>
+</section><div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="00_opening_datos_espaciales.mp4"></video></div>
+</div>
+<div class="course-description">
+<section id="descripción" class="level2 course-description--title"><h2 class="anchored" data-anchor-id="descripción">Descripción</h2>
+</section><div class="course-description--text">
+<p>¡Bienvenido a mi curso de Análisis de Datos Espaciales en R!</p>
+<p>Este curso está diseñado para personas de nivel principiante e intermedio que desean aprender todo lo necesario sobre el análisis de datos espaciales utilizando el lenguaje de programación R. Nos enfocaremos en los paquetes más actuales y prácticas para trabajar con datos espaciales reales. En total utilizaremos 27 paquetes de R distintos, por lo que será un curso intenso, pero muy completo.</p>
+<p>Aquí abajo tienes un ejemplo de lo que aprenderás a realizar en este curso:</p>
+</div>
+</div>
+<iframe src="../01_figures/01_html/poblacion_spain.html" width="800" height="600"></iframe>
+<div class="course-description">
+<section id="requisitos-previos" class="level2 course-description--title"><h2 class="anchored" data-anchor-id="requisitos-previos">Requisitos previos</h2>
+</section><div class="course-description--text">
+<ul>
+<li><p>Conocimientos básicos de R</p></li>
+<li><p>Estar familiarizado con funciones del tidyverse, incluyendo gráficos básicos con ggplot2 y pipeline (ver curso <a href="https://adrian-cidre.com/02_courses/01_data_analysis_es.html">introducción a análisis y visualización de datos en R</a>)</p></li>
+</ul>
+</div>
+</div>
+<div class="course-curriculum column-screen">
+<section id="contenidos-del-curso" class="level2 course-description--title"><h2 class="anchored" data-anchor-id="contenidos-del-curso">Contenidos del Curso</h2>
+</section><div class="cell">
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_01">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_01">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_01" aria-expanded="true" aria-controls="col_qes_01">Introducción</button>
+</h2>
+<div id="col_qes_01" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_01" data-bs-parent="#acc_qes_01">
+<div class="accordion-body">
+<strong>Introducción al curso</strong>
+<ul>
+<li>Introducción al curso</li>
+<li>Configuración del entorno</li>
+<li>Material del curso</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_02">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_02">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_02" aria-expanded="true" aria-controls="col_qes_02">SECCIÓN 01 - Introducción a Datos Espaciales</button>
+</h2>
+<div id="col_qes_02" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_02" data-bs-parent="#acc_qes_02">
+<div class="accordion-body">
+<strong>Teoría</strong>
+<ul>
+<li>Datos espaciales vs Datos no espaciales</li>
+<li>Geometrías en datos vectoriales</li>
+<li>Simple features</li>
+<li>Formatos comunes</li>
+<li>QUIZ 1</li>
+</ul>
+<strong>Práctica</strong>
+<ul>
+<li>Descarga de datos espaciales</li>
+<li>Análisis exploratorio de datos</li>
+<li>Importar/Exportar datos espaciales</li>
+<li>Propiedades de datos vectoriales</li>
+</ul>
+<strong>Challenge 01</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_03">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_03">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_03" aria-expanded="true" aria-controls="col_qes_03">SECCIÓN 02 - Sistemas de Referencia de Coordenadas</button>
+</h2>
+<div id="col_qes_03" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_03" data-bs-parent="#acc_qes_03">
+<div class="accordion-body">
+<strong>Teoría</strong>
+<ul>
+<li>Importancia de los CRS</li>
+<li>CRS, coordenadas, georreferenciación</li>
+<li>CRS geográficos vs CRS proyectados</li>
+<li>Proyecciones</li>
+<li>Códigos EPSG, proj4, WKT ...</li>
+<li>QUIZ 2</li>
+</ul>
+<strong>Práctica</strong>
+<ul>
+<li>Explorar CRS</li>
+<li>Transformación de CRS</li>
+<li>Asignación de CRS</li>
+<li>Transformaciones al vuelo</li>
+<li>Primer mapa web</li>
+</ul>
+<strong>Challenge 02</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_04">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_04">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_04" aria-expanded="true" aria-controls="col_qes_04">SECCIÓN 03 - Operaciones con geometrías</button>
+</h2>
+<div id="col_qes_04" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_04" data-bs-parent="#acc_qes_04">
+<div class="accordion-body">
+<strong>Teoría</strong>
+<ul>
+<li>Predicados espaciales</li>
+<li>Medidas de geometrías</li>
+<li>Transformaciones unarias</li>
+<li>Transformaciones binarias</li>
+<li>Otras operaciones</li>
+<li>QUIZ 3</li>
+</ul>
+<strong>Práctica</strong>
+<ul>
+<li>Funciones predicado para contar elementos</li>
+<li>Filtros espaciales</li>
+<li>Uniones espaciales</li>
+<li>Mediciones espaciales</li>
+<li>Transformaciones (centroide, buffer ...)</li>
+<li>Descargar mapa de España desde R</li>
+</ul>
+<strong>Challenge 03</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_05">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_05">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_05" aria-expanded="true" aria-controls="col_qes_05">SECCIÓN 04 - Datos Raster</button>
+</h2>
+<div id="col_qes_05" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_05" data-bs-parent="#acc_qes_05">
+<div class="accordion-body">
+<strong>Teoría</strong>
+<ul>
+<li>Definición de datos raster</li>
+<li>Tipos de resolución</li>
+<li>Introducción a la teledetección</li>
+<li>Operaciones comunes</li>
+<li>Cálculo de índices de vegetación (NDVI, SAVI)</li>
+<li>QUIZ 4</li>
+</ul>
+<strong>Práctica</strong>
+<ul>
+<li>Exploración de datos raster</li>
+<li>Descargar Modelo Digital de Elevaciones (DEM)</li>
+<li>Raster derivados del DEM</li>
+<li>Operaciones comunes (cortar, reclasificar ...)</li>
+<li>Operaciones aritméticas con raster</li>
+<li>Cálculo de índices de vegetación (NDVI, SAVI)</li>
+<li>Generar composiciones RGB y falso color</li>
+</ul>
+<strong>Challenge 04</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_06">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_06">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_06" aria-expanded="true" aria-controls="col_qes_06">SECCIÓN 05 - Mapas con ggplot2</button>
+</h2>
+<div id="col_qes_06" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_06" data-bs-parent="#acc_qes_06">
+<div class="accordion-body">
+<strong>Mapas</strong>
+<ul>
+<li>Población de España por municipios</li>
+<li>Oso pardo en Picos de Europa I</li>
+<li>Oso pardo en Picos de Europa II</li>
+<li>Ríos de Galicia</li>
+<li>Oso andino en Perú</li>
+<li>Severidad de incendio de Tenerife (2023)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="accordion" id="acc_qes_07">
+<div class="accordion-item">
+<h2 class="accordion-header text-center anchored" id="head_qes_07">
+<button class="accordion-button accordion-header--course" type="button" data-bs-toggle="collapse" data-bs-target="#col_qes_07" aria-expanded="true" aria-controls="col_qes_07">SECCIÓN 06 - Mapas Web con mapview</button>
+</h2>
+<div id="col_qes_07" class="accordion-collapse collapse accordion-collapse--course" aria-labelledby="head_qes_07" data-bs-parent="#acc_qes_07">
+<div class="accordion-body">
+<strong>Mapas Web</strong>
+<ul>
+<li>Población de España por municipios</li>
+<li>Oso pardo en Picos de Europa</li>
+<li>Ríos de Galicia</li>
+<li>Oso andino en Perú</li>
+<li>Severidad de incendio de Tenerife (sincronizado)</li>
+<li>Severidad de incendio de Tenerife (side by side)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="course-description">
+<section id="resultados-del-curso" class="level2 course-description--title"><h2 class="anchored" data-anchor-id="resultados-del-curso">Resultados del Curso</h2>
+</section><div class="course-description--text">
+<ul>
+<li><p>Analizar datos vectoriales y datos raster</p></li>
+<li><p>Descarga de datos espaciales en R</p></li>
+<li><p>Operaciones comunes sobre datos vectoriales y sobre datos raster</p></li>
+<li><p>Georreferenciar datos</p></li>
+<li><p>Transformaciones de CRS</p></li>
+<li><p>Generar mapas y mapas web asombrosos</p></li>
+</ul>
+</div>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="Cidree/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Made with <a href="https://quarto.org/">Quarto</a></div>   
+    <div class="nav-footer-center"><a href="mailto:adrian.cidre@gmail.com">Contact Adrián Cidre</a></div>
+    <div class="nav-footer-right"><a href="https://github.com/Cidree/blog">Github Code Repo</a></div>
+  </div>
+</footer><script>videojs(video_shortcode_videojs_video1);</script>
+
+
+</body></html>

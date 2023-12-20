@@ -1145,7 +1145,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <ul>
 <li><p>Functions <code>pg*</code> migrated to packages <code>sf</code>/<code>terra</code>. Therefore, the inputs/outputs of these functions will be <code>sf</code> objects, <code>SpatVector</code> and <code>SpatRaster</code> objects by default. However, to maintain compatibility with recent versions, a new argument <code>returnclass</code> have been added to the <code>pg*</code> family of functions.</p></li>
 <li><p><code>pgGetRast</code> and <code>pgWriteRast</code> include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument <code>progress = FALSE</code>.</p></li>
-<li><p>The extension <code>postgis_raster</code> can be installed using the function <code><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">pgPostGIS()</a></code> using the new argument <code>raster = TRUE</code>.</p></li>
+<li><p>The extension <code>postgis_raster</code> can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS()</a></code> using the new argument <code>raster = TRUE</code>.</p></li>
 <li><p>The function <code>pgInsert</code> has been deprecated in favour of the function <code>pgWriteGeom</code> to keep naming consistency with other functions of the package.</p></li>
 </ul></section><section id="package-notes" class="level2"><h2 class="anchored" data-anchor-id="package-notes">Package notes</h2>
 <p>As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:</p>
@@ -1198,7 +1198,7 @@ Caution
 </div>
 </div>
 </section><section id="writeread-vectorial-data" class="level2"><h2 class="anchored" data-anchor-id="writeread-vectorial-data">Write/Read vectorial data</h2>
-<p>The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function <code><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">rpostgis::pgPostGIS()</a></code>. First of all, we need to connect to our PostgreSQL server using the <code>RPostgres</code> or the <code>RPostgreSQL</code> drivers. A basic connection with a local database could be achieved as follows:</p>
+<p>The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">rpostgis::pgPostGIS()</a></code>. First of all, we need to connect to our PostgreSQL server using the <code>RPostgres</code> or the <code>RPostgreSQL</code> drivers. A basic connection with a local database could be achieved as follows:</p>
 <div class="cell">
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -1268,7 +1268,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgPostGIS.html">pgPostGIS</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
@@ -1405,7 +1405,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgWriteGeom.html">pgWriteGeom</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgWriteGeom.html">pgWriteGeom</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span></span>
 <span>  conn     <span class="op" style="color: #5E5E5E;
@@ -1442,7 +1442,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgListGeom.html">pgListGeom</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgListGeom.html">pgListGeom</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
@@ -1465,7 +1465,7 @@ font-style: inherit;">awesome_pts_sf</span> <span class="op" style="color: #5E5E
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://mablab.org/rpostgis/reference/pgGetGeom.html">pgGetGeom</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgGetGeom.html">pgGetGeom</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span></span>
 <span>  conn <span class="op" style="color: #5E5E5E;

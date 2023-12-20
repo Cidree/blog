@@ -98,41 +98,6 @@
     "text": "Curriculum Vitae"
   },
   {
-    "objectID": "02_courses/00_quarto_es.html",
-    "href": "02_courses/00_quarto_es.html",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "",
-    "text": "13 €\n\n\n\nOnline\n\n\n\n10 horas\n\n\n\nSiempre Disponible"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#descripción",
-    "href": "02_courses/00_quarto_es.html#descripción",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Descripción",
-    "text": "Descripción"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
-    "href": "02_courses/00_quarto_es.html#requisitos-previos",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Requisitos previos",
-    "text": "Requisitos previos"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Contenidos del Curso",
-    "text": "Contenidos del Curso"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Resultados del Curso",
-    "text": "Resultados del Curso"
-  },
-  {
     "objectID": "02_courses/01_data_analysis_es.html",
     "href": "02_courses/01_data_analysis_es.html",
     "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
@@ -168,11 +133,88 @@
     "text": "Resultados del Curso"
   },
   {
+    "objectID": "02_courses/00_quarto_es.html",
+    "href": "02_courses/00_quarto_es.html",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n10 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#descripción",
+    "href": "02_courses/00_quarto_es.html#descripción",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
+    "href": "02_courses/00_quarto_es.html#requisitos-previos",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html",
+    "href": "02_courses/02_spatial_data_es.html",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n20 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html#introducción-del-curso",
+    "href": "02_courses/02_spatial_data_es.html#introducción-del-curso",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Introducción del curso",
+    "text": "Introducción del curso"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html#descripción",
+    "href": "02_courses/02_spatial_data_es.html#descripción",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html#requisitos-previos",
+    "href": "02_courses/02_spatial_data_es.html#requisitos-previos",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html#contenidos-del-curso",
+    "href": "02_courses/02_spatial_data_es.html#contenidos-del-curso",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/02_spatial_data_es.html#resultados-del-curso",
+    "href": "02_courses/02_spatial_data_es.html#resultados-del-curso",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
     "objectID": "courses.html",
     "href": "courses.html",
     "title": "Courses",
     "section": "",
-    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroducción a Análisis de Datos Espaciales en R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n20 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n10 hours\n\n\n\nSpanish\n\n\nLearn more"
+    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroducción a Análisis de Datos Espaciales en R\nOnline\n\n\n\nAvailable Anytime\n\n\n\n20 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n20 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n10 hours\n\n\n\nSpanish\n\n\nLearn more"
   },
   {
     "objectID": "posts/000-Presentation/index.html",
