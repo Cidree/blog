@@ -263,7 +263,7 @@ course_block(
 
 ::: course-description
 ::: course-description--title
-Qué incluye el curso
+## Qué incluye el curso
 :::
 
 ::: course-description--text
