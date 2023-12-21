@@ -263,6 +263,24 @@ course_block(
 
 ::: course-description
 ::: course-description--title
+Qué incluye el curso
+:::
+
+::: course-description--text
+-   150 lecciones
+
+-   15 horas de vídeo
+
+-   Todo el material del curso
+
+-   Clases teóricas, prácticas, cuestionarios y ejercicios propuestos
+
+-   Bibliografía adicional
+:::
+:::
+
+::: course-description
+::: course-description--title
 ## Resultados del Curso
 :::
 
