@@ -1,6 +1,10 @@
 
 .card {
   
+  &-img-top {
+    border-radius: $img-radius;
+  }
+  
   &-courses {
     text-align: center;
     padding: 1rem;
@@ -17,14 +21,17 @@
 }
 
 
-
 // Course cards
 .card-course {
+  
+  border: 1px solid $color-darkblue;
+  border-radius: $img-radius;
   
   &-title {
     color: $color-darkblue;
     font-weight: bold;
     height: 5rem;
+
   }
   
   &-mode {

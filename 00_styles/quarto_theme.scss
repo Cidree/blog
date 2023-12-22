@@ -1,3 +1,6 @@
+/*-- scss:defaults --*/
+
+/*-- Define colors --*/
 $color-white: white;
 $color-green-light: #C5F8C9;
 $color-green-dark: #63B22F;
@@ -9,4 +12,8 @@ $color-lightblue: #A3D1D5;
 $color-lightblue-2: #DBEBEA;
 $color-lightred: #FAA6A6;
 
-$img-radius: .3rem;
+/*-- scss:uses --*/
+
+// Code blocks
+$code-bg: #A3D1D5;
+$code-color: #2D4156;

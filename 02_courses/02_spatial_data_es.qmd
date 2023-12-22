@@ -19,7 +19,7 @@ source("../03_scripts/00_courses.R")
 course_banner(
   price    = "13 €",
   mode     = "Online",
-  time     = "20 horas",
+  time     = "30 horas",
   date     = "Siempre Disponible",
   img_file = "../01_figures/00_course_figures/03_intro_spatial_data.png"
 )

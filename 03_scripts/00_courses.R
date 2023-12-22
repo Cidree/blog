@@ -36,7 +36,7 @@ course_banner <- function(price, mode, time, date, img_file) {
       ),
       div(
         class = "g-col-3",
-        icon("chalkboard-user", class = "fa-2xl course-banner--icon"),
+        icon("education",lib = "glyphicon", class = "fa-2xl course-banner--icon"),
         p(mode, class = "course-banner--text")
       ),
       div(

@@ -209,6 +209,9 @@ body {
       opacity: 0.25;
       z-index: 0; }
 
+.card-img-top {
+  border-radius: 0.3rem; }
+
 .card-courses {
   text-align: center;
   padding: 1rem; }
@@ -217,17 +220,18 @@ body {
   .card-courses p {
     font-size: 0.8rem; }
 
-.card-course-title {
-  color: #2D4156;
-  font-weight: bold;
-  height: 5rem; }
-
-.card-course-mode {
-  background-color: #F5F5F5; }
-
-.card-course-btn {
-  background-color: #2D4156;
-  font-size: 1rem; }
+.card-course {
+  border: 1px solid #2D4156;
+  border-radius: 0.3rem; }
+  .card-course-title {
+    color: #2D4156;
+    font-weight: bold;
+    height: 5rem; }
+  .card-course-mode {
+    background-color: #F5F5F5; }
+  .card-course-btn {
+    background-color: #2D4156;
+    font-size: 1rem; }
 
 .course-banner {
   background-color: #A3D1D5; }
@@ -311,15 +315,19 @@ body {
 .quarto-title .quarto-categories {
   justify-content: center; }
 
-pre.sourceCode {
+div.sourceCode {
+  padding: .3rem; }
+
+.sourceCode {
   border-radius: 3px;
   padding: 0.5em;
   overflow: auto;
-  border: 0.1rem solid white; }
+  border: 0.2rem solid white; }
 
 pre {
   background-color: #DBEBEA;
-  border: 1px solid; }
+  border: 1px solid;
+  font-weight: 400; }
 
 .quarto-title {
   display: block;
