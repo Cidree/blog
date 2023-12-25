@@ -31,6 +31,11 @@
     color: $color-darkblue;
     font-weight: bold;
     height: 5rem;
+    background-color: $color-lightblue;
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    border-radius: $img-radius;
 
   }
   

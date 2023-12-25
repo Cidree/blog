@@ -1,0 +1,2784 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Adrián Cidre</title>
+<link>https://cidree.github.io/blog/projects.html</link>
+<atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Fri, 17 Nov 2023 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Spanish Wildfires by CCAA during 2006-2015</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<h1 id="spanish-wildfires-by-autonomous-communities">Spanish Wildfires by Autonomous Communities</h1>
+</blockquote>
+<section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this post, we will explore the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and <code>ggplot2</code>.</p>
+<p>The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this <a href="https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html">link</a>.</p>
+<p>I will use the data for the decade 2005-2015, which is the latest available database for this purpose.</p>
+</section><section id="loading-packages" class="level2"><h2 class="anchored" data-anchor-id="loading-packages">Loading packages</h2>
+<p>First, we will load some packages:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Core</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tidyverse</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">readxl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stringi</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Vectorial data manipulation</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sf</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Download data</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mapSpain</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Visualization</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">RColorBrewer</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Here, I will use the <code>tidyverse</code> as usual for data analysis and visualization, the package <code>readxl</code> since the data is in <em>Excel</em> format, and <code>stringi</code> for some string manipulation. Then, the package <code>sf</code> for vectorial data manipulation, <code>mapSpain</code> to download the map of Spain by any NUTS level. Finally, I will use <code>RColorBrewer</code> for colour palettes.</p>
+</section><section id="data-exploration" class="level2"><h2 class="anchored" data-anchor-id="data-exploration">Data exploration</h2>
+<p>Once the packages are loaded, we can load the data. Note that the data is on the <img src="https://latex.codecogs.com/png.latex?3%5E%7Brd%7D"> sheet of the <em>Excel</em> file. The variables are in Spanish, so I will change some names to English so we can all understand what’s going on.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Load the data</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_excel</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wildfires_2006_2015.xlsx"</span>, sheet <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Set new names</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>municipality <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">NOMBRE</span>, ccaa <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">COM_N_INE</span>, small_fires <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conatos</span>, wildfires <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">incendios</span>, </span>
+<span>         total_wildires <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">TOTAL_INCENDIOS</span>, woodland_area <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ARBOLADO</span>, </span>
+<span>         treeless_area <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">NOARBOLADO</span>, total_area <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">TOTAL</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Overview of the data</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glimpse</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_tbl</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 4,376
+Columns: 8
+$ municipality   &lt;chr&gt; "A Arnoia", "A Baña", "A Bola", "A Cañiza", "A Capela",…
+$ ccaa           &lt;chr&gt; "Galicia", "Galicia", "Galicia", "Galicia", "Galicia", …
+$ small_fires    &lt;dbl&gt; 27, 66, 74, 330, 12, 149, 156, 75, 33, 426, 30, 58, 86,…
+$ wildfires      &lt;dbl&gt; 3, 37, 12, 81, 6, 24, 54, 47, 4, 273, 3, 62, 28, 16, 28…
+$ total_wildires &lt;dbl&gt; 30, 103, 86, 411, 18, 173, 210, 122, 37, 699, 33, 120, …
+$ woodland_area  &lt;dbl&gt; 30, 615, 16, 978, 394, 18, 262, 600, 8, 803, 30, 364, 6…
+$ treeless_area  &lt;dbl&gt; 8, 82, 61, 1260, 165, 104, 791, 641, 17, 3395, 6, 1558,…
+$ total_area     &lt;dbl&gt; 38, 697, 77, 2238, 559, 122, 1053, 1241, 25, 4198, 36, …</code></pre>
+</div>
+</div>
+<p>So we can see that there is data about the number of wildfires, and the area burned. This week we will study the number of wildfires and the next week we will have a look to the area burned and their relationship.</p>
+<p>There are a total of 4,376 observations, where each observation stands for a single municipality (therefore, the column municipality can be thought as the ID). Then, we have the Autonomous Community (<em>ccaa</em>) to which the municipality belongs, the number of fires, and the burned area. To those who are not familiarized with the concept of “<em>conato</em>”, which I translated as small fire, this is:</p>
+<blockquote class="blockquote">
+<p><strong>Conato</strong>: wildfires where the total burned area is less than 1 hectare. This definition applies to the data here; however, in some Autonomous Communities the definition may be different. For instance, in Galicia they consider that less than 0.5 hectares must be woodland area, otherwise, it is categorized as normal wildfire.</p>
+</blockquote>
+<p>There is also another category called <em>Grandes Incendios Forestales</em> (Large Forest Fires), which are those that burn more than 500 hectares. However, they did not consider this category in the data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are interested, the first two sheets of the Excel file contain some metadata and information about the variables.</p>
+</div>
+</div>
+</section><section id="analysing-the-number-of-wildfires" class="level2"><h2 class="anchored" data-anchor-id="analysing-the-number-of-wildfires">Analysing the number of wildfires</h2>
+<p>Let’s do some data wrangling! Since we will analyse the wildfires by Autonomous Community, we need to summarise our data using the <em>ccaa</em> variable. So this can be easily done as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">group_by</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ccaa</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summarise</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    total_wildfires <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ungroup</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_tbl</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 2
+   ccaa                       total_wildfires
+   &lt;chr&gt;                                &lt;dbl&gt;
+ 1 Andalucia                             7519
+ 2 Aragon                                3055
+ 3 Canarias                               954
+ 4 Cantabria                             6257
+ 5 Castilla y Leon                      16421
+ 6 Castilla-La Mancha                    6725
+ 7 Cataluña                              3751
+ 8 Comunidad Foral de Navarra            4577
+ 9 Comunidad de Madrid                   2657
+10 Comunitat Valenciana                  3349
+11 Extremadura                           8148
+12 Galicia                              37870
+13 Illes Balears                         1031
+14 La Rioja                               634
+15 Pais Vasco                             913
+16 Principado de Asturias               16979
+17 Region de Murcia                      1157</code></pre>
+</div>
+</div>
+<p>Cool. This starts to look pretty good, but we need to apply some formatting. First, we can order the Autonomous Communities by descending order of the total wildfires, and create a label with the percentages format.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_total_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    ccaa       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fct_reorder</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ccaa</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    label_perc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scales</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://scales.r-lib.org/reference/percent_format.html">percent</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>                                 accuracy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.01</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">arrange</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">desc</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_total_tbl</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 3
+   ccaa                       total_wildfires label_perc
+   &lt;fct&gt;                                &lt;dbl&gt; &lt;chr&gt;     
+ 1 Galicia                              37870 31.04%    
+ 2 Principado de Asturias               16979 13.92%    
+ 3 Castilla y Leon                      16421 13.46%    
+ 4 Extremadura                           8148 6.68%     
+ 5 Andalucia                             7519 6.16%     
+ 6 Castilla-La Mancha                    6725 5.51%     
+ 7 Cantabria                             6257 5.13%     
+ 8 Comunidad Foral de Navarra            4577 3.75%     
+ 9 Cataluña                              3751 3.07%     
+10 Comunitat Valenciana                  3349 2.75%     
+11 Aragon                                3055 2.50%     
+12 Comunidad de Madrid                   2657 2.18%     
+13 Region de Murcia                      1157 0.95%     
+14 Illes Balears                         1031 0.85%     
+15 Canarias                               954 0.78%     
+16 Pais Vasco                             913 0.75%     
+17 La Rioja                               634 0.52%     </code></pre>
+</div>
+</div>
+<p>Now this looks much better! With the function <code><a href="https://scales.r-lib.org/reference/percent_format.html">scales::percent</a></code> we can do the trick to create a character column with the percentage of wildfires over the total, and with the argument <code>accuracy</code> we specify the decimals. The <code>fct_reorder</code> function is used to order the levels of the Autonomous Communities (which is necessary for visualize in this order).</p>
+<p>Now that we have the data ready, we can create a cool visualization to explore the data better:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_total_tbl</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ccaa</span>, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_col</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_label</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>label <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">label_perc</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_flip</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand_limits</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40000</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>,</span>
+<span>       y        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Total Wildfires"</span>,</span>
+<span>       title    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Wildfires by Autonomous Community (2006-2015)"</span>,</span>
+<span>       subtitle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Top 10 Autonomous Communities in Spain"</span>,</span>
+<span>       caption  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Author: Adrián Cidre González"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>, xmin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.5</span>, xmax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.5</span>, ymin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, ymax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">41000</span>,</span>
+<span>    fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"indianred4"</span>, lwd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>,</span>
+<span>    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30000</span>, </span>
+<span>    label <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The northwest of Spain \nsuffers the 58% of \nthe wildfires"</span>,</span>
+<span>    color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"indianred4"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>plot.title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        plot.subtitle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with <code>head</code>. Then, we have a bar plot with the label that we previously created. The <code>expand_limits</code> function expands the axis so the label of Galicia can be seen properly. Next, the <code>annotate</code> functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases <em>rect</em> and <em>text</em>). The rest of the arguments are just formatting. Isn’t it cool? That’s why I love <code>ggplot2</code> ❤️.</p>
+<section id="analysing-the-results" class="level3"><h3 class="anchored" data-anchor-id="analysing-the-results">Analysing the results</h3>
+<p>There is an Autonomous Community were the number of fires are extremely high, Galicia. Almost one third of the Spanish burned area during the decade 2006-2015 was in this region, which in fact only occupies 5.8% of the territory of Spain. Next, we have Asturias with almost 14% of the total burned area, and occupying the 2.1% of the territory. To finish the top-3, we have Castilla and León where a similar area to Asturias was burned. However, Castilla and Leon is the biggest Autonomous Community of Spain representing the 18.6% of the territory. These numbers are alarming, and more when we look at the spatial location of these areas. The top-3 areas, representing the 58% of the burned area, are all located in the North-Western area of Spain.</p>
+</section></section><section id="analysing-the-spatial-distribution" class="level2"><h2 class="anchored" data-anchor-id="analysing-the-spatial-distribution">Analysing the spatial distribution</h2>
+<p>To analyse the spatial distribution we need to get the vectorial data of the Autonomous Communities of Spain. One way is to use the package <code>mapSpain</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">esp_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">esp_get_ccaa</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">iso2.ccaa.name.es</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Melilla"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ceuta"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>With that code I am eliminating Ceuta and Melilla, because they are not included in the wildfires dataset. The next step is to join the <code>esp_ccaa_sf</code> and <code>wildfires_ccaa_total_tbl</code>; however, there’s an issue:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">esp_ccaa_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Andalucía"                  "Aragón"                    
+ [3] "Principado de Asturias"     "Illes Balears"             
+ [5] "Canarias"                   "Cantabria"                 
+ [7] "Castilla y León"            "Castilla-La Mancha"        
+ [9] "Cataluña"                   "Comunidad Valenciana"      
+[11] "Extremadura"                "Galicia"                   
+[13] "Comunidad de Madrid"        "Región de Murcia"          
+[15] "Comunidad Foral de Navarra" "País Vasco"                
+[17] "La Rioja"                  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_total_tbl</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ccaa</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Galicia                    Principado de Asturias    
+ [3] Castilla y Leon            Extremadura               
+ [5] Andalucia                  Castilla-La Mancha        
+ [7] Cantabria                  Comunidad Foral de Navarra
+ [9] Cataluña                   Comunitat Valenciana      
+[11] Aragon                     Comunidad de Madrid       
+[13] Region de Murcia           Illes Balears             
+[15] Canarias                   Pais Vasco                
+[17] La Rioja                  
+17 Levels: La Rioja Pais Vasco Canarias Illes Balears ... Galicia</code></pre>
+</div>
+</div>
+<p>Do you see it? The names are different, so that might be a problem when we try to join them. In the wildfires dataset, they didn’t use acute accent (e.g.&nbsp;á). We could manually change it, but the package <code>stringi</code> allows us to this more efficiently:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">esp_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>nuts2.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stri_trans_general</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Latin-ASCII"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pull</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Andalucia"                  "Aragon"                    
+ [3] "Principado de Asturias"     "Illes Balears"             
+ [5] "Canarias"                   "Cantabria"                 
+ [7] "Castilla y Leon"            "Castilla-La Mancha"        
+ [9] "Cataluna"                   "Comunidad Valenciana"      
+[11] "Extremadura"                "Galicia"                   
+[13] "Comunidad de Madrid"        "Region de Murcia"          
+[15] "Comunidad Foral de Navarra" "Pais Vasco"                
+[17] "La Rioja"                  </code></pre>
+</div>
+</div>
+<p>That’s a first approach, but now we need to manually change Calatuna to Cataluña, and also Comunidad Valenciana, which was previously already different. So all the changes will be achieved as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">##</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">esp_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>nuts2.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stri_trans_general</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Latin-ASCII"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>nuts2.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Comunidad Valenciana"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Comunitat Valenciana"</span>,</span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Cataluna"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Cataluña"</span>,</span>
+<span>    .default <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inner_join</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_total_tbl</span>,</span>
+<span>    by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">join_by</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ccaa</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nuts2.name</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 17 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -13.21924 ymin: 34.70209 xmax: 4.320511 ymax: 43.78793
+Geodetic CRS:  ETRS89
+First 10 features:
+               nuts2.name total_wildfires                       geometry
+1               Andalucia            7519 MULTIPOLYGON (((-4.268895 3...
+2                  Aragon            3055 POLYGON ((-0.724501 42.9201...
+3  Principado de Asturias           16979 MULTIPOLYGON (((-4.512301 4...
+4           Illes Balears            1031 MULTIPOLYGON (((3.176714 39...
+5                Canarias             954 MULTIPOLYGON (((-11.18653 3...
+6               Cantabria            6257 MULTIPOLYGON (((-3.153338 4...
+7         Castilla y Leon           16421 MULTIPOLYGON (((-4.737023 4...
+8      Castilla-La Mancha            6725 MULTIPOLYGON (((-2.05169 41...
+9                Cataluña            3751 MULTIPOLYGON (((0.858215 42...
+10   Comunitat Valenciana            3349 MULTIPOLYGON (((0.17079 40....</code></pre>
+</div>
+</div>
+<p>There, the <code>inner_join</code> function uses now the both columns to create a new table which the data together.</p>
+<p>Up to this point, we can improve the visualization by creating some breaks:</p>
+<div class="cell">
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    total_wildfires <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span>, </span>
+<span>      breaks  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40000</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>      dig.lab <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>By doing this, we split the continuous variable of number of wildfires in a discrete variable divided into bins. That can improve some visualizations when the values are very different, and specially to catch outliers.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wildfires_ccaa_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">total_wildfires</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_brewer</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>palette <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"RdYlGn"</span>, direction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    title    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Wildfires by CCAA"</span>,</span>
+<span>    subtitle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Period: 2006-2015"</span>,</span>
+<span>    fill     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Wildfires"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_bw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>plot.title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        plot.subtitle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        legend.position <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="analysing-the-results-1" class="level3"><h3 class="anchored" data-anchor-id="analysing-the-results-1">Analysing the results</h3>
+<p>We can now confirm that the North-Western area of Spain suffers a significantly higher number of wildfires (&gt;10.000) in comparison to other areas. In contrast, the Eastern area suffers a lesser number of fires, with the Vask Country and La Rioja as the Autonomous Communities which suffered the smallest number of wildfires during the period 2006-2015.</p>
+
+
+</section></section> ]]></description>
+  <category>R</category>
+  <category>forestry</category>
+  <category>wildfires</category>
+  <category>ggplot2</category>
+  <guid>https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/index.html</guid>
+  <pubDate>Fri, 17 Nov 2023 23:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/003-Wildfires_ccaa_spain/image.png" medium="image" type="image/png" height="71" width="144"/>
+</item>
+<item>
+  <title>rpostgis is back</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<h1 id="rpostgis-package"><strong>rpostgis package</strong></h1>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/002-rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="history" class="level2"><h2 class="anchored" data-anchor-id="history">History</h2>
+<p>The <code>rpostgis</code> package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (<a href="https://r-spatial.org/r/2022/04/12/evolution.html">check this issue</a>), including the retirement of the packages <code>rgeos</code>, <code>rgdal</code>, and <code>maptools</code>. These packages as well and <code>sp</code> and <code>raster</code> are being replaced by the packages <code>sf</code> (for vectorial operation), <code>terra</code> (for both raster and vectorial data), and <code>stars</code> (datacubes).</p>
+<p>These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including <code>rpostgis</code>. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October <img src="https://latex.codecogs.com/png.latex?15%5E%7Bth%7D"> the package was published in CRAN.</p>
+</section><section id="package-updates" class="level2"><h2 class="anchored" data-anchor-id="package-updates">Package updates</h2>
+<p>The package updates haven’t been published in the website of the package (<a href="https://mablab.org/rpostgis/">rpostgis</a>). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:</p>
+<ul>
+<li><p>Functions <code>pg*</code> migrated to packages <code>sf</code>/<code>terra</code>. Therefore, the inputs/outputs of these functions will be <code>sf</code> objects, <code>SpatVector</code> and <code>SpatRaster</code> objects by default. However, to maintain compatibility with recent versions, a new argument <code>returnclass</code> have been added to the <code>pg*</code> family of functions.</p></li>
+<li><p><code>pgGetRast</code> and <code>pgWriteRast</code> include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument <code>progress = FALSE</code>.</p></li>
+<li><p>The extension <code>postgis_raster</code> can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS()</a></code> using the new argument <code>raster = TRUE</code>.</p></li>
+<li><p>The function <code>pgInsert</code> has been deprecated in favour of the function <code>pgWriteGeom</code> to keep naming consistency with other functions of the package.</p></li>
+</ul></section><section id="package-notes" class="level2"><h2 class="anchored" data-anchor-id="package-notes">Package notes</h2>
+<p>As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">remotes</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mablab/rpostgis"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>You can also install the development version, which might be unstable:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">remotes</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mablab/rpostgis"</span>, ref <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dev"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that you need to have installed the package <code>remotes</code></p>
+</div>
+</div>
+</section><section id="writeread-vectorial-data" class="level2"><h2 class="anchored" data-anchor-id="writeread-vectorial-data">Write/Read vectorial data</h2>
+<p>The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">rpostgis::pgPostGIS()</a></code>. First of all, we need to connect to our PostgreSQL server using the <code>RPostgres</code> or the <code>RPostgreSQL</code> drivers. A basic connection with a local database could be achieved as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">RPostgres</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dbConnect</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  drv      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">RPostgres</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rpostgres.r-dbi.org/reference/Postgres.html">Postgres</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  host     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"localhost"</span>,</span>
+<span>  dbname   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_database"</span>,</span>
+<span>  port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5432</span>,</span>
+<span>  user     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adrian_cidre"</span>,</span>
+<span>  password <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesomepassword"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/">rpostgis</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>First, let’s create fictional data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load necessary packages</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create fictional tibble</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.3</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.3</span>, length.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">43</span>, length.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert to sf</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_tbl</span>, coords <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, crs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4326</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>So basically, I created a <code>sf</code> object with <code>POINT</code> geometry. Now let’s imagine this is awesome data we want to save in our PostGIS database. We can use the function <code>pgWriteGeom(conn, name, data.obj)</code>. These are the three arguments that you <strong>always</strong> must specify:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgWriteGeom.html">pgWriteGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  conn     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span>,</span>
+<span>  name     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesome_points"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  data.obj <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pts_sf</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>We are exporting to our connection the data object <strong>pts_sf</strong>, to the <strong>public schema</strong>, and setting its name to <strong>awesome_points</strong>. The function returns <strong>TRUE</strong> when the transfer was successful. If we don’t trust it, we can use the next function to list all the vectorial data in our database:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgListGeom.html">pgListGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  schema_name     table_name geom_column geometry_type     type
+1      public awesome_points        geom         POINT GEOMETRY</code></pre>
+</div>
+</div>
+<p>Excellent! Now let’s imagine that after some time we want to get back to this file. How can we get it back into R? So, that’s pretty easy! We can use the <code>pgGetGeom(conn, name)</code> as easy as this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get the points</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">awesome_pts_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgGetGeom.html">pgGetGeom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  conn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span>,</span>
+<span>  name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"awesome_points"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check it</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">awesome_pts_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -8.3 ymin: 42.4 xmax: -8.197959 ymax: 42.46122
+Geodetic CRS:  +proj=longlat +datum=WGS84 +no_defs 
+           z                       geom
+1  0.1817181          POINT (-8.3 42.4)
+2  0.1760245 POINT (-8.279592 42.41224)
+3 -0.4406823 POINT (-8.259184 42.42449)
+4 -1.8539099 POINT (-8.238776 42.43673)
+5  1.8827414 POINT (-8.218367 42.44898)
+6  0.1964005 POINT (-8.197959 42.46122)</code></pre>
+</div>
+</div>
+<p>We have our object back into R! You may have noticed that I used <code>name = "awesome_points"</code> instead of <code>name = c("public", "awesome_points")</code>. This is because when we do not specify the schema, by default, the function will use the <strong>public schema</strong> both for reading and writing.</p>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>So you have seen the basic and most typical use of the <code>rpostgis</code> package for vectorial data. In future posts, I will share an example reading/writting raster data.</p>
+<p>If you liked the package and this tutorial, please feel free to share it with your colleagues.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Oh my God! And do not forget to close your connection!!!</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conn</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+</section> ]]></description>
+  <category>R</category>
+  <category>spatial</category>
+  <category>packages</category>
+  <category>databases</category>
+  <guid>https://cidree.github.io/blog/posts/002-rpostgis_back/index.html</guid>
+  <pubDate>Thu, 19 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/002-rpostgis_back/image_small.png" medium="image" type="image/png" height="164" width="144"/>
+</item>
+<item>
+  <title>Choropleth map</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<h1 id="choropleth-maps-with-ggplot2">
+<strong>Choropleth</strong> maps with ggplot2</h1>
+</blockquote>
+<p>In this exercise, we will create two choropleth maps using <code>ggplot2</code>:</p>
+<ul>
+<li><p>Map of Spanish population by municipality</p></li>
+<li><p>Map of men/women ratio in Spain by municipality</p></li>
+</ul>
+<section id="watch-the-video" class="level2"><h2 class="anchored" data-anchor-id="watch-the-video">Watch the video</h2>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/dkSVGK272wc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section><section id="load-packages" class="level2"><h2 class="anchored" data-anchor-id="load-packages">Load packages</h2>
+<p>We will use the following packages:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("pacman")</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Core</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tidyverse</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Spatial data manipulation</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sf</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Download data</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mapSpain</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">rnaturalearth</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Visualization</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">RColorBrewer</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ggspatial</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># High resolution world map</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">remotes</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ropensci/rnaturalearthhires"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
+</section><section id="prepare-the-data" class="level2"><h2 class="anchored" data-anchor-id="prepare-the-data">Prepare the data</h2>
+<p>The first step, is to download the world countries map using the <code>ne_countries()</code> function. This will return the map we see in Figure&nbsp;1.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># World countries</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">world_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ne_countries</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  scale       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span>  returnclass <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sf"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">world_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"region_un"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, main <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"World Map"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-world" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: World map</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Next, we can get the Spanish population by municipality in 2019 using the <code>mapSpain</code> package:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get Spanish population by municipality in 2019</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_tbl</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mapSpain</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://ropenspain.github.io/mapSpain/reference/pobmun19.html">pobmun19</a></span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_tbl</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  cpro provincia cmun      name  pob19   men women
+1   02  Albacete  001 Abengibre    790   379   411
+2   02  Albacete  002    Alatoz    519   291   228
+3   02  Albacete  003  Albacete 173329 84687 88642
+4   02  Albacete  004  Albatana    692   356   336
+5   02  Albacete  005   Alborea    658   337   321
+6   02  Albacete  006  Alcadozo    654   363   291</code></pre>
+</div>
+</div>
+<p>This is a data frame with the data we want to plot. However, we need to assign this data to a spatial object with the municipalities. We can get the <code>sf</code> object using the function <code>esp_get_munic</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get Spain boundaries by municipality</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">esp_get_munic</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -3.14019 ymin: 36.73845 xmax: -2.05701 ymax: 37.54576
+Geodetic CRS:  ETRS89
+    codauto ine.ccaa.name cpro ine.prov.name cmun      name LAU_CODE
+382      01     Andalucía   04       Almería  001      Abla    04001
+379      01     Andalucía   04       Almería  002  Abrucena    04002
+374      01     Andalucía   04       Almería  003      Adra    04003
+375      01     Andalucía   04       Almería  004 Albánchez    04004
+358      01     Andalucía   04       Almería  005 Alboloduy    04005
+373      01     Andalucía   04       Almería  006     Albox    04006
+                          geometry
+382 POLYGON ((-2.77744 37.23836...
+379 POLYGON ((-2.88984 37.09213...
+374 POLYGON ((-2.93161 36.75079...
+375 POLYGON ((-2.13138 37.29959...
+358 POLYGON ((-2.70077 37.09674...
+373 POLYGON ((-2.15335 37.54576...</code></pre>
+</div>
+</div>
+<p>We see that the data frame <code>spain_pop_tbl</code> and the sf <code>spain_sf</code> share 3 variables:</p>
+<ul>
+<li><p>cpro: province code</p></li>
+<li><p>cmun: municipality code</p></li>
+<li><p>name: name of the municipality</p></li>
+</ul>
+<p>The next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Join population to sf object</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">right_join</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_sf</span>,</span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_tbl</span>,</span>
+<span>  by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">join_by</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cpro</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cmun</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Note that here I did not include the variable <code>name</code> for joining the dataset. There are two reasons:</p>
+<ol type="1">
+<li>The name and cmun variables express exactly the same.</li>
+<li>The variable name have some misspellings between datasets creating some NA values.</li>
+</ol>
+<p>Once this is clarified, we can begin with the maps.</p>
+</section><section id="spanish-population" class="level2"><h2 class="anchored" data-anchor-id="spanish-population">Spanish population</h2>
+<p>We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define the breaks (bin edges) based on percentiles</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pob19</span>, </span>
+<span>  probs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Round to hundred, and keep unique values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create bins</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    pop_bin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pob19</span>, breaks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span>, dig.lab <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pop_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "(0,100]"        "(100,200]"      "(200,300]"      "(300,500]"     
+[5] "(500,900]"      "(900,1700]"     "(1700,3500]"    "(3500,9200]"   
+[9] "(9200,3266200]"</code></pre>
+</div>
+</div>
+<p>With the previous code we create the new variable called <code>pop_bin</code> which consists in a total of 9 bins representing similar amount of municipalities. Finally, we can represent it graphically with the next code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the population</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Geometries</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">world_sf</span>, fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey90"</span>, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pop_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Scales</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_brewer</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>palette <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"RdBu"</span>, na.translate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, direction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Labels</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    title   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Spanish Population by Municipality"</span>,</span>
+<span>    fill    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Population"</span>,</span>
+<span>    caption <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Author: Adrián Cidre González"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Coordinates</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>xlim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>,</span>
+<span>           ylim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Theme</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_bw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    plot.title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, face <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    legend.background <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_rect</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Ggspatial</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotation_scale</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>location <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"br"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotation_north_arrow</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>location <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tr"</span>, which_north <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-population" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Population in Spain by Municipality (2019)</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated.</p>
+</section><section id="ratio-menwomen" class="level2"><h2 class="anchored" data-anchor-id="ratio-menwomen">Ratio Men/Women</h2>
+<p>I will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ratio men-women</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>ratio_mw <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">men</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">women</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.3415  1.0003  1.0690     Inf  1.2067     Inf </code></pre>
+</div>
+</div>
+<p>We can see in the summary before that the values between the minimum and the <img src="https://latex.codecogs.com/png.latex?3%5E%7Brd%7D"> quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e.&nbsp;division by zero). We can see also the boxplot:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-boxpl2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Distribution of Men/Women ratio by municipallity</figcaption></figure>
+</div>
+</div>
+</div>
+<p>This tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (&lt;1), and areas with higher men proportion (&gt;1). Therefore, I apply the same approach creating bins:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define the breaks (bin edges) based on percentiles</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span>, </span>
+<span>  probs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Round to hundred, and keep unique values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create bins</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    ratio_bin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_mw</span>, breaks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">breaks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Print bins</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "(0.34,0.96]" "(0.96,0.99]" "(0.99,1.01]" "(1.01,1.04]" "(1.04,1.07]"
+ [6] "(1.07,1.11]" "(1.11,1.17]" "(1.17,1.26]" "(1.26,1.44]" "(1.44,Inf]" </code></pre>
+</div>
+</div>
+<p>With this code, a total of 10 bins are generated with the ranges showed above. So let’s proceed to the visualization:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the population</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Geometries</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">world_sf</span>, fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey90"</span>, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fill <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ratio_bin</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Scales</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_brewer</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>palette <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"RdBu"</span>, na.translate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, direction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Labels</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    title   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Men/Women ratio"</span>,</span>
+<span>    fill    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ratio"</span>,</span>
+<span>    caption <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Author: Adrián Cidre González"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Coordinates</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>xlim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>,</span>
+<span>           ylim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">spain_pop_ready_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Theme</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_bw</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    plot.title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>hjust <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, face <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    legend.background <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_rect</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Ggspatial</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotation_scale</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>location <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"br"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotation_north_arrow</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>location <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tr"</span>, which_north <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-sex-ratio" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001-Thematic_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Curiously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women.</p>
+
+
+</section> ]]></description>
+  <category>R</category>
+  <category>spatial</category>
+  <category>ggplot2</category>
+  <guid>https://cidree.github.io/blog/posts/001-Thematic_map/index.html</guid>
+  <pubDate>Fri, 29 Sep 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/001-Thematic_map/image.png" medium="image" type="image/png" height="89" width="144"/>
+</item>
+<item>
+  <title>Presentation</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/000-Presentation/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<blockquote class="blockquote">
+<h1 id="introducing-myself">Introducing myself</h1>
+</blockquote>
+<p>My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master’s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).</p>
+<p>Not only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.</p>
+<p>Within the scope of my research, I specialize in data analysis, specifically as a data analyst. One of my primary responsibilities involves creating models of pests in Europe for the LIFE-PROJECT that I am currently engaged in. Using my skills in the R environment, I perform spatial data analysis and modeling, as well as remote sensing analysis.</p>
+<p>In addition to my academic pursuits and research, I am excited to use this blog as a platform to share my work, courses, and other fascinating topics that will engage and inform the public. By providing valuable insights into my field and showcasing the projects I am involved in, I aim to spark interest and foster a greater understanding of the importance of forestry, geomatics, and data analysis in sustainable forest management.</p>
+
+
+
+ ]]></description>
+  <category>personal</category>
+  <guid>https://cidree.github.io/blog/posts/000-Presentation/index.html</guid>
+  <pubDate>Sun, 28 May 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/000-Presentation/image.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>
