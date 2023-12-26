@@ -38,7 +38,7 @@ course_card(
   course_title = "Introducción a Análisis de Datos Espaciales en R",
   mode         = "Online",
   date         = "Available Anytime",
-  time         = "20 hours",
+  time         = "30 hours",
   language     = "Spanish",
   href         = "02_courses/02_spatial_data_es.qmd"
 )
@@ -66,7 +66,7 @@ course_card(
   course_title = "INTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]",
   mode         = "Online",
   date         = "Available Anytime",
-  time         = "20 hours",
+  time         = "30 hours",
   language     = "Spanish",
   href         = "02_courses/01_data_analysis_es.qmd"
 )
@@ -80,7 +80,7 @@ course_card(
   course_title = "Quarto - diseño de documentos profesionales en RStudio",
   mode         = "Online",
   date         = "Available Anytime",
-  time         = "10 hours",
+  time         = "15 hours",
   language     = "Spanish",
   href         = "02_courses/00_quarto_es.qmd"
 )

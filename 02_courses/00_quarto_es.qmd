@@ -30,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=216E6447CB8C6F6C1F00",
+  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=FA108A8260FF7C838F01",
   "Apuntarse al Curso")
 ```
 :::
