@@ -2,7 +2,7 @@
 
 # freeze computational output
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
-freeze: true
+freeze: false
 
 # Enable banner style title blocks
 title-block-banner: true
@@ -12,6 +12,7 @@ author: "Adrián Cidre"
 
 # Code options
 backgroundcolor: "#FFFFF4"
+code-link: true
 
 # Comments section
 comments: 

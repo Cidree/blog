@@ -84,6 +84,11 @@ body {
 .figure-caption {
   text-align: center; }
 
+h2:not(#toc-title) {
+  border-left: 1rem solid #252525;
+  border-bottom: 0.2rem solid #252525;
+  padding-left: 1rem; }
+
 .btn-primary--big:link, .btn-primary--big:visited {
   text-transform: uppercase;
   text-decoration: none;
@@ -320,19 +325,22 @@ body {
 .quarto-title .quarto-categories {
   justify-content: center; }
 
+div.sourceCode,
+pre > code.sourceCode {
+  background-color: #252525 !important;
+  border: 0px; }
+
 div.sourceCode {
   padding: .3rem; }
 
 .sourceCode {
   border-radius: 3px;
   padding: 0.5em;
-  overflow: auto;
-  border: 0.2rem solid white; }
+  overflow: auto; }
 
-pre {
-  background-color: #DBEBEA;
-  border: 1px solid;
-  font-weight: 400; }
+.cell-output.cell-output-stdout {
+  background-color: #DBEBEA !important;
+  border: 2px solid #777; }
 
 .quarto-title {
   display: block;

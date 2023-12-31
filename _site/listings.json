@@ -2,10 +2,11 @@
   {
     "listing": "/projects.html",
     "items": [
-      "/posts/003-Wildfires_ccaa_spain/index.html",
-      "/posts/002-rpostgis_back/index.html",
-      "/posts/001-Thematic_map/index.html",
-      "/posts/000-Presentation/index.html"
+      "/posts/004_burned_area_muni_spain/index.html",
+      "/posts/003_wildfires_ccaa_spain/index.html",
+      "/posts/002_rpostgis_back/index.html",
+      "/posts/001_population_spain_map/index.html",
+      "/posts/000_presentation/index.html"
     ]
   }
 ]

@@ -5,6 +5,12 @@
 }
 
 // Code
+div.sourceCode,
+pre>code.sourceCode {
+    background-color: $color-gray-dark-2 !important;
+    border: 0px;
+}
+
 div.sourceCode {
   padding: .3rem;
 }
@@ -13,11 +19,9 @@ div.sourceCode {
   border-radius: 3px;
   padding: 0.5em;
   overflow: auto;
-  border: 0.2rem solid $color-white;
 }
 
-pre {
-  background-color: $color-lightblue-2;
-  border: 1px solid;
-  font-weight: 400;
+.cell-output.cell-output-stdout {
+    background-color: $color-lightblue-2 !important;
+    border: 2px solid $color-gray-dark;
 }

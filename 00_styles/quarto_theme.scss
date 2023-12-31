@@ -1,6 +1,5 @@
 /*-- scss:defaults --*/
-
-/*-- Define colors --*/
+/*-- scss:defaults --*/
 $color-white: white;
 $color-green-light: #C5F8C9;
 $color-green-dark: #63B22F;
@@ -11,9 +10,12 @@ $color-darkblue: #2D4156;
 $color-lightblue: #A3D1D5;
 $color-lightblue-2: #DBEBEA;
 $color-lightred: #FAA6A6;
+$color-orange: #F05C28;
 
-/*-- scss:uses --*/
-
-// Code blocks
+/*-- scss:variables --*/
+// Inline code
 $code-bg: #A3D1D5;
 $code-color: #2D4156;
+// Code blocks
+$code-block-border-left: $color-orange;
+$code-block-border-left-size: 6px;

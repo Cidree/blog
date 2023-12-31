@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>rpostgis</code> package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (<a href="https://r-spatial.org/r/2022/04/12/evolution.html">check this issue</a>), including the retirement of the packages <code>rgeos</code>, <code>rgdal</code>, and <code>maptools</code>. These packages as well and <code>sp</code> and <code>raster</code> are being replaced by the packages <code>sf</code> (for vectorial operation), <code>terra</code> (for both raster and vectorial data), and <code>stars</code> (datacubes).</p>
 <p>These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including <code>rpostgis</code>. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October <span class="math inline">\(15^{th}\)</span> the package was published in CRAN.</p>
 </section><section id="package-updates" class="level2"><h2 class="anchored" data-anchor-id="package-updates">Package updates</h2>
-<p>The package updates haven’t been published in the website of the package (<a href="https://mablab.org/rpostgis/">rpostgis</a>). This is because we am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:</p>
+<p>The package updates haven’t been published in the website of the package (<a href="https://mablab.org/rpostgis/">rpostgis</a>). This is because I am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:</p>
 <ul>
 <li><p>Functions <code>pg*</code> migrated to packages <code>sf</code>/<code>terra</code>. Therefore, the inputs/outputs of these functions will be <code>sf</code> objects, <code>SpatVector</code> and <code>SpatRaster</code> objects by default. However, to maintain compatibility with recent versions, a new argument <code>returnclass</code> have been added to the <code>pg*</code> family of functions.</p></li>
 <li><p><code>pgGetRast</code> and <code>pgWriteRast</code> include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument <code>progress = FALSE</code>.</p></li>
@@ -227,7 +227,7 @@ Caution
 <span>  password <span class="op">=</span> <span class="st">"awesomepassword"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the into the function, it will install PostGIS automatically but not other extensions:</p>
+<p>We can then check if the connection was successful, and install the necessary extensions (remember also to load the package). If we just set the connection into the function, it will install PostGIS automatically but not other extensions:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cidree.github.io/rpostgis/">rpostgis</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -287,12 +287,12 @@ Dimension:     XY
 Bounding box:  xmin: -8.3 ymin: 42.4 xmax: -8.197959 ymax: 42.46122
 Geodetic CRS:  +proj=longlat +datum=WGS84 +no_defs 
            z                       geom
-1  0.1817181          POINT (-8.3 42.4)
-2  0.1760245 POINT (-8.279592 42.41224)
-3 -0.4406823 POINT (-8.259184 42.42449)
-4 -1.8539099 POINT (-8.238776 42.43673)
-5  1.8827414 POINT (-8.218367 42.44898)
-6  0.1964005 POINT (-8.197959 42.46122)</code></pre>
+1  0.7221525          POINT (-8.3 42.4)
+2  0.1632879 POINT (-8.279592 42.41224)
+3  0.1407527 POINT (-8.259184 42.42449)
+4  0.2588633 POINT (-8.238776 42.43673)
+5 -0.7882349 POINT (-8.218367 42.44898)
+6  0.9670772 POINT (-8.197959 42.46122)</code></pre>
 </div>
 </div>
 <p>We have our object back into R! You may have noticed that I used <code>name = "awesome_points"</code> instead of <code>name = c("public", "awesome_points")</code>. This is because when we do not specify the schema, by default, the function will use the <strong>public schema</strong> both for reading and writing.</p>

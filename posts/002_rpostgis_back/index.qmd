@@ -78,7 +78,7 @@ conn <- RPostgres::dbConnect(
   drv      = RPostgres::Postgres(),
   host     = "localhost",
   dbname   = "my_database",
-  port     = 5432,
+  port     = 5433,
   user     = "postgres",
   password = keyring::key_get("postgres", "postgres")
 )
