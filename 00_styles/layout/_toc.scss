@@ -1,0 +1,28 @@
+
+.toc-active {
+  background-color: $color-gray-light;
+  color: $color-gray-dark-2;
+  position: relative;
+  top: 8rem;
+  font-family: system-ui;
+  text-align: left;
+  
+  & ul li .nav-link {
+    background-color: $color-gray-light;
+    text-align: left;
+      
+    &.active,
+    &:hover {
+      font-weight: 900;
+      font-size: .8rem;
+      background-color: $color-gray-light;
+    }
+    
+  }
+}
+
+#toc-title {
+  text-align: center;
+  color: $color-gray-dark-2;
+  font-size: 1.2rem;
+}

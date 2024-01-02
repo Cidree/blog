@@ -14,6 +14,18 @@ author: "Adrián Cidre"
 backgroundcolor: "#FFFFF4"
 code-link: true
 
+# Layout
+number-sections: true
+toc: true
+toc-title: "Contents"
+toc-depth: 3
+toc-location: right
+grid: 
+  sidebar-width: 200px
+  body-width: 800px
+  margin-width: 300px
+  gutter-width: 2rem
+
 # Comments section
 comments: 
   utterances: 

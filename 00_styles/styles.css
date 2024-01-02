@@ -309,6 +309,26 @@ h2:not(#toc-title) {
     text-transform: uppercase;
     text-decoration: underline; }
 
+.toc-active {
+  background-color: #F5F5F5;
+  color: #252525;
+  position: relative;
+  top: 8rem;
+  font-family: system-ui;
+  text-align: left; }
+  .toc-active ul li .nav-link {
+    background-color: #F5F5F5;
+    text-align: left; }
+    .toc-active ul li .nav-link.active, .toc-active ul li .nav-link:hover {
+      font-weight: 900;
+      font-size: .9rem;
+      background-color: #F5F5F5; }
+
+#toc-title {
+  text-align: center;
+  color: #252525;
+  font-size: 1.2rem; }
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
 

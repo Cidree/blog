@@ -16,9 +16,11 @@
   <dc:creator>Adrián Cidre</dc:creator>
   <link>https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
-<h1 id="spanish-burned-area-during-2006-2015-by-municipality">Spanish Burned Area during 2006-2015 by Municipality</h1>
+<h1 id="spanish-burned-area-during-2006-2015-by-municipality" data-number="1">
+<span class="header-section-number">1</span> Spanish Burned Area during 2006-2015 by Municipality</h1>
 </blockquote>
-<section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1.1</span> Introduction</h2>
 <p>In this post, we will explore the distribution of the burned area in Spain by municipality creating a 3D visualization using the awesome package <code>rayshader</code> 😎.</p>
 <p>Honestly, I am not fan of 3D plots in general, because they are usually horrible and deceiving when trying to communicate something. However, with <code>rayshader</code> we can create spikes maps which can somehow look great and communicating the message properly.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -36,7 +38,8 @@ Important
 </div>
 <p>The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this <a href="https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html">url</a>.</p>
 <p>I will use the data for the decade 2006-2015, which is the latest available data for this purpose.</p>
-</section><section id="loading-packages" class="level2"><h2 class="anchored" data-anchor-id="loading-packages">Loading packages</h2>
+</section><section id="loading-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="loading-packages">
+<span class="header-section-number">1.2</span> Loading packages</h2>
 <p>As usually, we will start loading all the necessary packages by using the <code>pacman</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
@@ -88,7 +91,8 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>We will use the <code>tidyverse</code> for data wrangling and visualization, the <code>readxl</code> package for reading our data in <em>Excel</em> format, the <code>sf</code> package for vectorial data manipulation, the package <code>mapSpain</code> for downloading some convenient spatial data, and finally <code>rayshader</code> for creating 3D visualizations.</p>
-</section><section id="load-the-data" class="level2"><h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
+</section><section id="load-the-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="load-the-data">
+<span class="header-section-number">1.3</span> Load the data</h2>
 <p>The data is the same I used in the <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, but this time we will work with the municipalities instead of autonomous communities, and with burned area instead number of wildfires. Nevertheless, the first step will be to load the data, and fix the table names so we can all understand what’s going on with this dataset:</p>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -175,7 +179,8 @@ $ total_area    &lt;dbl&gt; 38, 697, 77, 2238, 559, 122, 1053, 1241, 25, 4198, 3
 </div>
 </div>
 <p>I selected a total of 5 columns: the first two columns corresponds to the name and ID of the municipalities, and the remaining columns refer to the burned area (woodland, treeless, and total burned area).</p>
-</section><section id="prepare-data" class="level2"><h2 class="anchored" data-anchor-id="prepare-data">Prepare data</h2>
+</section><section id="prepare-data" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="prepare-data">
+<span class="header-section-number">1.4</span> Prepare data</h2>
 <p>The data preparation is not very demanding to be honest. We have to download the map of Spain by municipalities, and for doing so, we have the convenient function <code>esp_get_munic()</code> from the <code>mapSpain</code> package:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -355,7 +360,8 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
-</section><section id="d-visualization" class="level2"><h2 class="anchored" data-anchor-id="d-visualization">2D visualization</h2>
+</section><section id="d-visualization" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="d-visualization">
+<span class="header-section-number">1.5</span> 2D visualization</h2>
 <p>In this post we will learn how to turn a basic <code>ggplot2</code> plot into a basic 3D visualization using <code>rayshader</code>. Therefore, the first step is to create a <code>ggplot2</code> object:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -643,7 +649,8 @@ font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 </div>
 </div>
 </div>
-</section><section id="d-visualization-1" class="level2"><h2 class="anchored" data-anchor-id="d-visualization-1">3D Visualization</h2>
+</section><section id="d-visualization-1" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="d-visualization-1">
+<span class="header-section-number">1.6</span> 3D Visualization</h2>
 <p>Once we have this visualization, we can use the <code><a href="https://www.rayshader.com/reference/plot_gg.html">rayshader::plot_gg</a></code> function. This function has many arguments to control the appearance of our map. In this tutorial I will show you the basic ones:</p>
 <ul>
 <li><p>Multicore = TRUE: it will use multiple cores to compute the shadow matrix. This is computationally demanding, so this can improve the performance.</p></li>
@@ -780,13 +787,16 @@ font-style: inherit;">)</span></span></code></pre></div>
   <dc:creator>Adrián Cidre</dc:creator>
   <link>https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
-<h1 id="spanish-wildfires-by-autonomous-communities">Spanish Wildfires by Autonomous Communities</h1>
+<h1 id="spanish-wildfires-by-autonomous-communities" data-number="1">
+<span class="header-section-number">1</span> Spanish Wildfires by Autonomous Communities</h1>
 </blockquote>
-<section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1.1</span> Introduction</h2>
 <p>In this post, we will explore the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and <code>ggplot2</code>.</p>
 <p>The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this <a href="https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html">link</a>.</p>
 <p>I will use the data for the decade 2005-2015, which is the latest available database for this purpose.</p>
-</section><section id="loading-packages" class="level2"><h2 class="anchored" data-anchor-id="loading-packages">Loading packages</h2>
+</section><section id="loading-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="loading-packages">
+<span class="header-section-number">1.2</span> Loading packages</h2>
 <p>First, we will load some packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
@@ -840,7 +850,8 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Here, I will use the <code>tidyverse</code> as usual for data analysis and visualization, the package <code>readxl</code> since the data is in <em>Excel</em> format, and <code>stringi</code> for some string manipulation. Then, the package <code>sf</code> for vectorial data manipulation, <code>mapSpain</code> to download the map of Spain by any NUTS level. Finally, I will use <code>RColorBrewer</code> for colour palettes.</p>
-</section><section id="data-exploration" class="level2"><h2 class="anchored" data-anchor-id="data-exploration">Data exploration</h2>
+</section><section id="data-exploration" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="data-exploration">
+<span class="header-section-number">1.3</span> Data exploration</h2>
 <p>Once the packages are loaded, we can load the data. Note that the data is on the <img src="https://latex.codecogs.com/png.latex?3%5E%7Brd%7D"> sheet of the <em>Excel</em> file. The variables are in Spanish, so I will change some names to English so we can all understand what’s going on.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -962,7 +973,8 @@ Note
 <p>If you are interested, the first two sheets of the Excel file contain some metadata and information about the variables.</p>
 </div>
 </div>
-</section><section id="analysing-the-number-of-wildfires" class="level2"><h2 class="anchored" data-anchor-id="analysing-the-number-of-wildfires">Analysing the number of wildfires</h2>
+</section><section id="analysing-the-number-of-wildfires" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="analysing-the-number-of-wildfires">
+<span class="header-section-number">1.4</span> Analysing the number of wildfires</h2>
 <p>Let’s do some data wrangling! Since we will analyse the wildfires by Autonomous Community, we need to summarise our data using the <em>ccaa</em> variable. So this can be easily done as follows:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -1397,9 +1409,11 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 <p>Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with <code>head</code>. Then, we have a bar plot with the label that we previously created. The <code>expand_limits</code> function expands the axis so the label of Galicia can be seen properly. Next, the <code>annotate</code> functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases <em>rect</em> and <em>text</em>). The rest of the arguments are just formatting. Isn’t it cool? That’s why I love <code>ggplot2</code> ❤️.</p>
-<section id="analysing-the-results" class="level3"><h3 class="anchored" data-anchor-id="analysing-the-results">Analysing the results</h3>
+<section id="analysing-the-results" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="analysing-the-results">
+<span class="header-section-number">1.4.1</span> Analysing the results</h3>
 <p>There is an Autonomous Community were the number of fires are extremely high, Galicia. Almost one third of the Spanish burned area during the decade 2006-2015 was in this region, which in fact only occupies 5.8% of the territory of Spain. Next, we have Asturias with almost 14% of the total burned area, and occupying the 2.1% of the territory. To finish the top-3, we have Castilla and León where a similar area to Asturias was burned. However, Castilla and Leon is the biggest Autonomous Community of Spain representing the 18.6% of the territory. These numbers are alarming, and more when we look at the spatial location of these areas. The top-3 areas, representing the 58% of the burned area, are all located in the North-Western area of Spain.</p>
-</section></section><section id="analysing-the-spatial-distribution" class="level2"><h2 class="anchored" data-anchor-id="analysing-the-spatial-distribution">Analysing the spatial distribution</h2>
+</section></section><section id="analysing-the-spatial-distribution" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="analysing-the-spatial-distribution">
+<span class="header-section-number">1.5</span> Analysing the spatial distribution</h2>
 <p>To analyse the spatial distribution we need to get the vectorial data of the Autonomous Communities of Spain. One way is to use the package <code>mapSpain</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -1873,7 +1887,8 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p><img src="https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="analysing-the-results-1" class="level3"><h3 class="anchored" data-anchor-id="analysing-the-results-1">Analysing the results</h3>
+<section id="analysing-the-results-1" class="level3" data-number="1.5.1"><h3 data-number="1.5.1" class="anchored" data-anchor-id="analysing-the-results-1">
+<span class="header-section-number">1.5.1</span> Analysing the results</h3>
 <p>We can now confirm that the North-Western area of Spain suffers a significantly higher number of wildfires (&gt;10.000) in comparison to other areas. In contrast, the Eastern area suffers a lesser number of fires, with the Vask Country and La Rioja as the Autonomous Communities which suffered the smallest number of wildfires during the period 2006-2015.</p>
 
 
@@ -1891,7 +1906,9 @@ font-style: inherit;">)</span></span></code></pre></div>
   <dc:creator>Adrián Cidre</dc:creator>
   <link>https://cidree.github.io/blog/posts/002_rpostgis_back/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
-<h1 id="rpostgis-package"><strong>rpostgis package</strong></h1>
+<h1 id="rpostgis-package" data-number="1">
+<span class="header-section-number">1</span> <strong>rpostgis package</strong>
+</h1>
 </blockquote>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -1901,17 +1918,20 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<section id="history" class="level2"><h2 class="anchored" data-anchor-id="history">History</h2>
+<section id="history" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="history">
+<span class="header-section-number">1.1</span> History</h2>
 <p>The <code>rpostgis</code> package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years (<a href="https://r-spatial.org/r/2022/04/12/evolution.html">check this issue</a>), including the retirement of the packages <code>rgeos</code>, <code>rgdal</code>, and <code>maptools</code>. These packages as well and <code>sp</code> and <code>raster</code> are being replaced by the packages <code>sf</code> (for vectorial operation), <code>terra</code> (for both raster and vectorial data), and <code>stars</code> (datacubes).</p>
 <p>These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including <code>rpostgis</code>. The authors of the package noted that they lacked time to continue the maintenance of the package, and that’s where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October <img src="https://latex.codecogs.com/png.latex?15%5E%7Bth%7D"> the package was published in CRAN.</p>
-</section><section id="package-updates" class="level2"><h2 class="anchored" data-anchor-id="package-updates">Package updates</h2>
+</section><section id="package-updates" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="package-updates">
+<span class="header-section-number">1.2</span> Package updates</h2>
 <p>The package updates haven’t been published in the website of the package (<a href="https://mablab.org/rpostgis/">rpostgis</a>). This is because I am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:</p>
 <ul>
 <li><p>Functions <code>pg*</code> migrated to packages <code>sf</code>/<code>terra</code>. Therefore, the inputs/outputs of these functions will be <code>sf</code> objects, <code>SpatVector</code> and <code>SpatRaster</code> objects by default. However, to maintain compatibility with recent versions, a new argument <code>returnclass</code> have been added to the <code>pg*</code> family of functions.</p></li>
 <li><p><code>pgGetRast</code> and <code>pgWriteRast</code> include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument <code>progress = FALSE</code>.</p></li>
 <li><p>The extension <code>postgis_raster</code> can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">pgPostGIS()</a></code> using the new argument <code>raster = TRUE</code>.</p></li>
 <li><p>The function <code>pgInsert</code> has been deprecated in favour of the function <code>pgWriteGeom</code> to keep naming consistency with other functions of the package.</p></li>
-</ul></section><section id="package-notes" class="level2"><h2 class="anchored" data-anchor-id="package-notes">Package notes</h2>
+</ul></section><section id="package-notes" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="package-notes">
+<span class="header-section-number">1.3</span> Package notes</h2>
 <p>As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
@@ -1961,7 +1981,8 @@ Caution
 <p>Note that you need to have installed the package <code>remotes</code></p>
 </div>
 </div>
-</section><section id="writeread-vectorial-data" class="level2"><h2 class="anchored" data-anchor-id="writeread-vectorial-data">Write/Read vectorial data</h2>
+</section><section id="writeread-vectorial-data" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="writeread-vectorial-data">
+<span class="header-section-number">1.4</span> Write/Read vectorial data</h2>
 <p>The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function <code><a href="https://cidree.github.io/rpostgis/reference/index.html/pgPostGIS.html">rpostgis::pgPostGIS()</a></code>. First of all, we need to connect to our PostgreSQL server using the <code>RPostgres</code> or the <code>RPostgreSQL</code> drivers. A basic connection with a local database could be achieved as follows:</p>
 <div class="cell">
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -2274,7 +2295,8 @@ Geodetic CRS:  +proj=longlat +datum=WGS84 +no_defs
 </div>
 </div>
 <p>We have our object back into R! You may have noticed that I used <code>name = "awesome_points"</code> instead of <code>name = c("public", "awesome_points")</code>. This is because when we do not specify the schema, by default, the function will use the <strong>public schema</strong> both for reading and writing.</p>
-</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section><section id="conclusion" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">1.5</span> Conclusion</h2>
 <p>So you have seen the basic and most typical use of the <code>rpostgis</code> package for vectorial data. In future posts, I will share an example reading/writting raster data.</p>
 <p>If you liked the package and this tutorial, please feel free to share it with your colleagues.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -2317,17 +2339,19 @@ font-style: inherit;">)</span></span></code></pre></div>
   <dc:creator>Adrián Cidre</dc:creator>
   <link>https://cidree.github.io/blog/posts/001_population_spain_map/index.html</link>
   <description><![CDATA[ <blockquote class="blockquote">
-<h1 id="choropleth-maps-with-ggplot2">
-<strong>Choropleth</strong> maps with ggplot2</h1>
+<h1 id="choropleth-maps-with-ggplot2" data-number="1">
+<span class="header-section-number">1</span> <strong>Choropleth</strong> maps with ggplot2</h1>
 </blockquote>
 <p>In this exercise, we will create two choropleth maps using <code>ggplot2</code>:</p>
 <ul>
 <li><p>Map of Spanish population by municipality</p></li>
 <li><p>Map of men/women ratio in Spain by municipality</p></li>
 </ul>
-<section id="watch-the-video" class="level2"><h2 class="anchored" data-anchor-id="watch-the-video">Watch the video</h2>
+<section id="watch-the-video" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="watch-the-video">
+<span class="header-section-number">1.1</span> Watch the video</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/dkSVGK272wc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</section><section id="load-packages" class="level2"><h2 class="anchored" data-anchor-id="load-packages">Load packages</h2>
+</section><section id="load-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="load-packages">
+<span class="header-section-number">1.2</span> Load packages</h2>
 <p>We will use the following packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -2401,7 +2425,8 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
-</section><section id="prepare-the-data" class="level2"><h2 class="anchored" data-anchor-id="prepare-the-data">Prepare the data</h2>
+</section><section id="prepare-the-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="prepare-the-data">
+<span class="header-section-number">1.3</span> Prepare the data</h2>
 <p>The first step, is to download the world countries map using the <code>ne_countries()</code> function. This will return the map we see in Figure&nbsp;1.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -2588,7 +2613,8 @@ font-style: inherit;">)</span></span></code></pre></div>
 <li>The variable name have some misspellings between datasets creating some NA values.</li>
 </ol>
 <p>Once this is clarified, we can begin with the maps.</p>
-</section><section id="spanish-population" class="level2"><h2 class="anchored" data-anchor-id="spanish-population">Spanish population</h2>
+</section><section id="spanish-population" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="spanish-population">
+<span class="header-section-number">1.4</span> Spanish population</h2>
 <p>We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -3033,7 +3059,8 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 <p>We see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated.</p>
-</section><section id="ratio-menwomen" class="level2"><h2 class="anchored" data-anchor-id="ratio-menwomen">Ratio Men/Women</h2>
+</section><section id="ratio-menwomen" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="ratio-menwomen">
+<span class="header-section-number">1.5</span> Ratio Men/Women</h2>
 <p>I will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:</p>
 <div class="cell">
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
@@ -3529,7 +3556,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 
 
 <blockquote class="blockquote">
-<h1 id="introducing-myself">Introducing myself</h1>
+<h1 id="introducing-myself" data-number="1"><span class="header-section-number">1</span> Introducing myself</h1>
 </blockquote>
 <p>My name is Adrián Cidre González, and I hold a degree in Forestry Engineering from the University of Santiago de Compostela. Currently, I am pursuing my master’s degree in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba (Spain).</p>
 <p>Not only am I a dedicated student, but I am also actively involved in practical research. I am currently working as a research assistant in the LIFE-FAGESOS project at the University of Córdoba. This project allows me to contribute to cutting-edge work related to forest management, protection and sustainability.</p>
