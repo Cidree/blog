@@ -9,8 +9,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-> # Spanish Burned Area during 2006-2015 by Municipality
-
 ## Introduction
 
 In this post, we will explore the distribution of the burned area in Spain by municipality creating a 3D visualization using the awesome package `rayshader` 😎.

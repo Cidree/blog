@@ -36,11 +36,12 @@ website:
       [Github Code Repo](https://github.com/Cidree/blog)
     background: "#2D4156"
     foreground: white
+  google-analytics: "G-J58431JK0F"
+  cookie-consent: true
 format:
   html:
     theme: 
       light: [lux, 00_styles/quarto_theme.scss]
-      dark: [lux, theme_dark_custom.scss]
     css: 00_styles/styles.css
     code-link: true
     code-block-border-left: true

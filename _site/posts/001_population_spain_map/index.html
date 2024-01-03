@@ -170,31 +170,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-<li><a href="#watch-the-video" id="toc-watch-the-video" class="nav-link active" data-scroll-target="#watch-the-video"><span class="header-section-number">1.1</span> Watch the video</a></li>
-  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages"><span class="header-section-number">1.2</span> Load packages</a></li>
-  <li><a href="#prepare-the-data" id="toc-prepare-the-data" class="nav-link" data-scroll-target="#prepare-the-data"><span class="header-section-number">1.3</span> Prepare the data</a></li>
-  <li><a href="#spanish-population" id="toc-spanish-population" class="nav-link" data-scroll-target="#spanish-population"><span class="header-section-number">1.4</span> Spanish population</a></li>
-  <li><a href="#ratio-menwomen" id="toc-ratio-menwomen" class="nav-link" data-scroll-target="#ratio-menwomen"><span class="header-section-number">1.5</span> Ratio Men/Women</a></li>
+<li><a href="#watch-the-video" id="toc-watch-the-video" class="nav-link active" data-scroll-target="#watch-the-video"><span class="header-section-number">2.1</span> Watch the video</a></li>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages"><span class="header-section-number">2.2</span> Load packages</a></li>
+  <li><a href="#prepare-the-data" id="toc-prepare-the-data" class="nav-link" data-scroll-target="#prepare-the-data"><span class="header-section-number">2.3</span> Prepare the data</a></li>
+  <li><a href="#spanish-population" id="toc-spanish-population" class="nav-link" data-scroll-target="#spanish-population"><span class="header-section-number">2.4</span> Spanish population</a></li>
+  <li><a href="#ratio-menwomen" id="toc-ratio-menwomen" class="nav-link" data-scroll-target="#ratio-menwomen"><span class="header-section-number">2.5</span> Ratio Men/Women</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><blockquote class="blockquote">
-<h1 id="choropleth-maps-with-ggplot2" data-number="1">
-<span class="header-section-number">1</span> <strong>Choropleth</strong> maps with ggplot2</h1>
+<h1 id="choropleth-maps-with-ggplot2" data-number="2">
+<span class="header-section-number">2</span> <strong>Choropleth</strong> maps with ggplot2</h1>
 </blockquote>
 <p>In this exercise, we will create two choropleth maps using <code>ggplot2</code>:</p>
 <ul>
 <li><p>Map of Spanish population by municipality</p></li>
 <li><p>Map of men/women ratio in Spain by municipality</p></li>
 </ul>
-<section id="watch-the-video" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="watch-the-video">
-<span class="header-section-number">1.1</span> Watch the video</h2>
+<section id="watch-the-video" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="watch-the-video">
+<span class="header-section-number">2.1</span> Watch the video</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/dkSVGK272wc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</section><section id="load-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="load-packages">
-<span class="header-section-number">1.2</span> Load packages</h2>
+</section><section id="load-packages" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="load-packages">
+<span class="header-section-number">2.2</span> Load packages</h2>
 <p>We will use the following packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pacman")</span></span>
@@ -218,8 +218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/rnaturalearthhires"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, I use <code>pacman</code> to load all the packages. Then, I use the <code>tidyverse</code> as the core package for data manipulation and visualization. The package <code>sf</code> will be used to treat the vectorial data. The package <code>mapSpain</code> provide functions to download the administrative boundaries of Spain (click <a href="https://ropenspain.github.io/mapSpain/">here</a> for further information). The <code>rnaturalearth</code> is a package that will provide us with the world map. However, for using the high resolution map we need also to install <code>rnturalearthhires</code> from GitHub. Finally, I will use the <code>RColorBrewer</code> package for colour palettes, and the <code>ggspatial</code> to add the map scale and north arrow. So, let’s dive into the exercise!</p>
-</section><section id="prepare-the-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="prepare-the-data">
-<span class="header-section-number">1.3</span> Prepare the data</h2>
+</section><section id="prepare-the-data" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="prepare-the-data">
+<span class="header-section-number">2.3</span> Prepare the data</h2>
 <p>The first step, is to download the world countries map using the <code>ne_countries()</code> function. This will return the map we see in <a href="#fig-world">Figure&nbsp;1</a>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># World countries</span></span>
@@ -300,8 +300,8 @@ Geodetic CRS:  ETRS89
 <li>The variable name have some misspellings between datasets creating some NA values.</li>
 </ol>
 <p>Once this is clarified, we can begin with the maps.</p>
-</section><section id="spanish-population" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="spanish-population">
-<span class="header-section-number">1.4</span> Spanish population</h2>
+</section><section id="spanish-population" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="spanish-population">
+<span class="header-section-number">2.4</span> Spanish population</h2>
 <p>We could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Define the breaks (bin edges) based on percentiles</span></span>
@@ -362,8 +362,8 @@ Geodetic CRS:  ETRS89
 </div>
 </div>
 <p>We see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated.</p>
-</section><section id="ratio-menwomen" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="ratio-menwomen">
-<span class="header-section-number">1.5</span> Ratio Men/Women</h2>
+</section><section id="ratio-menwomen" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="ratio-menwomen">
+<span class="header-section-number">2.5</span> Ratio Men/Women</h2>
 <p>I will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ratio men-women</span></span>

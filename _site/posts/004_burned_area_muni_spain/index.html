@@ -172,24 +172,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
-  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="header-section-number">1.2</span> Loading packages</a></li>
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="header-section-number">1.3</span> Load the data</a></li>
-  <li><a href="#prepare-data" id="toc-prepare-data" class="nav-link" data-scroll-target="#prepare-data"><span class="header-section-number">1.4</span> Prepare data</a></li>
-  <li><a href="#d-visualization" id="toc-d-visualization" class="nav-link" data-scroll-target="#d-visualization"><span class="header-section-number">1.5</span> 2D visualization</a></li>
-  <li><a href="#d-visualization-1" id="toc-d-visualization-1" class="nav-link" data-scroll-target="#d-visualization-1"><span class="header-section-number">1.6</span> 3D Visualization</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="header-section-number">2</span> Loading packages</a></li>
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="header-section-number">3</span> Load the data</a></li>
+  <li><a href="#prepare-data" id="toc-prepare-data" class="nav-link" data-scroll-target="#prepare-data"><span class="header-section-number">4</span> Prepare data</a></li>
+  <li><a href="#d-visualization" id="toc-d-visualization" class="nav-link" data-scroll-target="#d-visualization"><span class="header-section-number">5</span> 2D visualization</a></li>
+  <li><a href="#d-visualization-1" id="toc-d-visualization-1" class="nav-link" data-scroll-target="#d-visualization-1"><span class="header-section-number">6</span> 3D Visualization</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><blockquote class="blockquote">
-<h1 id="spanish-burned-area-during-2006-2015-by-municipality" data-number="1">
-<span class="header-section-number">1</span> Spanish Burned Area during 2006-2015 by Municipality</h1>
-</blockquote>
-<section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
-<span class="header-section-number">1.1</span> Introduction</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1</span> Introduction</h2>
 <p>In this post, we will explore the distribution of the burned area in Spain by municipality creating a 3D visualization using the awesome package <code>rayshader</code> 😎.</p>
 <p>Honestly, I am not fan of 3D plots in general, because they are usually horrible and deceiving when trying to communicate something. However, with <code>rayshader</code> we can create spikes maps which can somehow look great and communicating the message properly.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -207,8 +203,8 @@ Important
 </div>
 <p>The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this <a href="https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html">url</a>.</p>
 <p>I will use the data for the decade 2006-2015, which is the latest available data for this purpose.</p>
-</section><section id="loading-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="loading-packages">
-<span class="header-section-number">1.2</span> Loading packages</h2>
+</section><section id="loading-packages" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="loading-packages">
+<span class="header-section-number">2</span> Loading packages</h2>
 <p>As usually, we will start loading all the necessary packages by using the <code>pacman</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
@@ -228,8 +224,8 @@ Important
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will use the <code>tidyverse</code> for data wrangling and visualization, the <code>readxl</code> package for reading our data in <em>Excel</em> format, the <code>sf</code> package for vectorial data manipulation, the package <code>mapSpain</code> for downloading some convenient spatial data, and finally <code>rayshader</code> for creating 3D visualizations.</p>
-</section><section id="load-the-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="load-the-data">
-<span class="header-section-number">1.3</span> Load the data</h2>
+</section><section id="load-the-data" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="load-the-data">
+<span class="header-section-number">3</span> Load the data</h2>
 <p>The data is the same I used in the <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, but this time we will work with the municipalities instead of autonomous communities, and with burned area instead number of wildfires. Nevertheless, the first step will be to load the data, and fix the table names so we can all understand what’s going on with this dataset:</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Load data</span></span>
@@ -254,8 +250,8 @@ $ total_area    &lt;dbl&gt; 38, 697, 77, 2238, 559, 122, 1053, 1241, 25, 4198, 3
 </div>
 </div>
 <p>I selected a total of 5 columns: the first two columns corresponds to the name and ID of the municipalities, and the remaining columns refer to the burned area (woodland, treeless, and total burned area).</p>
-</section><section id="prepare-data" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="prepare-data">
-<span class="header-section-number">1.4</span> Prepare data</h2>
+</section><section id="prepare-data" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="prepare-data">
+<span class="header-section-number">4</span> Prepare data</h2>
 <p>The data preparation is not very demanding to be honest. We have to download the map of Spain by municipalities, and for doing so, we have the convenient function <code>esp_get_munic()</code> from the <code>mapSpain</code> package:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Get data</span></span>
@@ -303,8 +299,8 @@ Geodetic CRS:  ETRS89
 <span>    total_area <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">total_area</span><span class="op">)</span>, <span class="fl">0</span>, <span class="va">total_area</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="d-visualization" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="d-visualization">
-<span class="header-section-number">1.5</span> 2D visualization</h2>
+</section><section id="d-visualization" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="d-visualization">
+<span class="header-section-number">5</span> 2D visualization</h2>
 <p>In this post we will learn how to turn a basic <code>ggplot2</code> plot into a basic 3D visualization using <code>rayshader</code>. Therefore, the first step is to create a <code>ggplot2</code> object:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Create ggplot2 object</span></span>
@@ -350,8 +346,8 @@ Geodetic CRS:  ETRS89
 </div>
 </div>
 </div>
-</section><section id="d-visualization-1" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="d-visualization-1">
-<span class="header-section-number">1.6</span> 3D Visualization</h2>
+</section><section id="d-visualization-1" class="level2" data-number="6"><h2 data-number="6" class="anchored" data-anchor-id="d-visualization-1">
+<span class="header-section-number">6</span> 3D Visualization</h2>
 <p>Once we have this visualization, we can use the <code><a href="https://www.rayshader.com/reference/plot_gg.html">rayshader::plot_gg</a></code> function. This function has many arguments to control the appearance of our map. In this tutorial I will show you the basic ones:</p>
 <ul>
 <li><p>Multicore = TRUE: it will use multiple cores to compute the shadow matrix. This is computationally demanding, so this can improve the performance.</p></li>

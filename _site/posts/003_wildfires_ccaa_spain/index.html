@@ -171,38 +171,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
-  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="header-section-number">1.2</span> Loading packages</a></li>
-  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration"><span class="header-section-number">1.3</span> Data exploration</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="header-section-number">2.2</span> Loading packages</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration"><span class="header-section-number">2.3</span> Data exploration</a></li>
   <li>
-<a href="#analysing-the-number-of-wildfires" id="toc-analysing-the-number-of-wildfires" class="nav-link" data-scroll-target="#analysing-the-number-of-wildfires"><span class="header-section-number">1.4</span> Analysing the number of wildfires</a>
+<a href="#analysing-the-number-of-wildfires" id="toc-analysing-the-number-of-wildfires" class="nav-link" data-scroll-target="#analysing-the-number-of-wildfires"><span class="header-section-number">2.4</span> Analysing the number of wildfires</a>
   <ul class="collapse">
-<li><a href="#analysing-the-results" id="toc-analysing-the-results" class="nav-link" data-scroll-target="#analysing-the-results"><span class="header-section-number">1.4.1</span> Analysing the results</a></li>
+<li><a href="#analysing-the-results" id="toc-analysing-the-results" class="nav-link" data-scroll-target="#analysing-the-results"><span class="header-section-number">2.4.1</span> Analysing the results</a></li>
   </ul>
 </li>
   <li>
-<a href="#analysing-the-spatial-distribution" id="toc-analysing-the-spatial-distribution" class="nav-link" data-scroll-target="#analysing-the-spatial-distribution"><span class="header-section-number">1.5</span> Analysing the spatial distribution</a>
+<a href="#analysing-the-spatial-distribution" id="toc-analysing-the-spatial-distribution" class="nav-link" data-scroll-target="#analysing-the-spatial-distribution"><span class="header-section-number">2.5</span> Analysing the spatial distribution</a>
   <ul class="collapse">
-<li><a href="#analysing-the-results-1" id="toc-analysing-the-results-1" class="nav-link" data-scroll-target="#analysing-the-results-1"><span class="header-section-number">1.5.1</span> Analysing the results</a></li>
+<li><a href="#analysing-the-results-1" id="toc-analysing-the-results-1" class="nav-link" data-scroll-target="#analysing-the-results-1"><span class="header-section-number">2.5.1</span> Analysing the results</a></li>
   </ul>
 </li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><blockquote class="blockquote">
-<h1 id="spanish-wildfires-by-autonomous-communities" data-number="1">
-<span class="header-section-number">1</span> Spanish Wildfires by Autonomous Communities</h1>
+<h1 id="spanish-wildfires-by-autonomous-communities" data-number="2">
+<span class="header-section-number">2</span> Spanish Wildfires by Autonomous Communities</h1>
 </blockquote>
-<section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
-<span class="header-section-number">1.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">2.1</span> Introduction</h2>
 <p>In this post, we will explore the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and <code>ggplot2</code>.</p>
 <p>The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this <a href="https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html">link</a>.</p>
 <p>I will use the data for the decade 2005-2015, which is the latest available database for this purpose.</p>
-</section><section id="loading-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="loading-packages">
-<span class="header-section-number">1.2</span> Loading packages</h2>
+</section><section id="loading-packages" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="loading-packages">
+<span class="header-section-number">2.2</span> Loading packages</h2>
 <p>First, we will load some packages:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
@@ -222,8 +222,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here, I will use the <code>tidyverse</code> as usual for data analysis and visualization, the package <code>readxl</code> since the data is in <em>Excel</em> format, and <code>stringi</code> for some string manipulation. Then, the package <code>sf</code> for vectorial data manipulation, <code>mapSpain</code> to download the map of Spain by any NUTS level. Finally, I will use <code>RColorBrewer</code> for colour palettes.</p>
-</section><section id="data-exploration" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="data-exploration">
-<span class="header-section-number">1.3</span> Data exploration</h2>
+</section><section id="data-exploration" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="data-exploration">
+<span class="header-section-number">2.3</span> Data exploration</h2>
 <p>Once the packages are loaded, we can load the data. Note that the data is on the <span class="math inline">\(3^{rd}\)</span> sheet of the <em>Excel</em> file. The variables are in Spanish, so I will change some names to English so we can all understand what’s going on.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Load the data</span></span>
@@ -269,8 +269,8 @@ Note
 <p>If you are interested, the first two sheets of the Excel file contain some metadata and information about the variables.</p>
 </div>
 </div>
-</section><section id="analysing-the-number-of-wildfires" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="analysing-the-number-of-wildfires">
-<span class="header-section-number">1.4</span> Analysing the number of wildfires</h2>
+</section><section id="analysing-the-number-of-wildfires" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="analysing-the-number-of-wildfires">
+<span class="header-section-number">2.4</span> Analysing the number of wildfires</h2>
 <p>Let’s do some data wrangling! Since we will analyse the wildfires by Autonomous Community, we need to summarise our data using the <em>ccaa</em> variable. So this can be easily done as follows:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">wildfires_ccaa_tbl</span> <span class="op">&lt;-</span> <span class="va">wildfires_tbl</span> <span class="op">%&gt;%</span> </span>
@@ -371,11 +371,11 @@ Note
 </div>
 </div>
 <p>Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with <code>head</code>. Then, we have a bar plot with the label that we previously created. The <code>expand_limits</code> function expands the axis so the label of Galicia can be seen properly. Next, the <code>annotate</code> functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases <em>rect</em> and <em>text</em>). The rest of the arguments are just formatting. Isn’t it cool? That’s why I love <code>ggplot2</code> ❤️.</p>
-<section id="analysing-the-results" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="analysing-the-results">
-<span class="header-section-number">1.4.1</span> Analysing the results</h3>
+<section id="analysing-the-results" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="analysing-the-results">
+<span class="header-section-number">2.4.1</span> Analysing the results</h3>
 <p>There is an Autonomous Community were the number of fires are extremely high, Galicia. Almost one third of the Spanish burned area during the decade 2006-2015 was in this region, which in fact only occupies 5.8% of the territory of Spain. Next, we have Asturias with almost 14% of the total burned area, and occupying the 2.1% of the territory. To finish the top-3, we have Castilla and León where a similar area to Asturias was burned. However, Castilla and Leon is the biggest Autonomous Community of Spain representing the 18.6% of the territory. These numbers are alarming, and more when we look at the spatial location of these areas. The top-3 areas, representing the 58% of the burned area, are all located in the North-Western area of Spain.</p>
-</section></section><section id="analysing-the-spatial-distribution" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="analysing-the-spatial-distribution">
-<span class="header-section-number">1.5</span> Analysing the spatial distribution</h2>
+</section></section><section id="analysing-the-spatial-distribution" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="analysing-the-spatial-distribution">
+<span class="header-section-number">2.5</span> Analysing the spatial distribution</h2>
 <p>To analyse the spatial distribution we need to get the vectorial data of the Autonomous Communities of Spain. One way is to use the package <code>mapSpain</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">esp_ccaa_sf</span> <span class="op">&lt;-</span> <span class="fu">esp_get_ccaa</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
@@ -495,8 +495,8 @@ First 10 features:
 <p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="analysing-the-results-1" class="level3" data-number="1.5.1"><h3 data-number="1.5.1" class="anchored" data-anchor-id="analysing-the-results-1">
-<span class="header-section-number">1.5.1</span> Analysing the results</h3>
+<section id="analysing-the-results-1" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="analysing-the-results-1">
+<span class="header-section-number">2.5.1</span> Analysing the results</h3>
 <p>We can now confirm that the North-Western area of Spain suffers a significantly higher number of wildfires (&gt;10.000) in comparison to other areas. In contrast, the Eastern area suffers a lesser number of fires, with the Vask Country and La Rioja as the Autonomous Communities which suffered the smallest number of wildfires during the period 2006-2015.</p>
 
 
