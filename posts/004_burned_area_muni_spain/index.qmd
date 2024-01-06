@@ -169,9 +169,9 @@ Once we have this visualization, we can use the `rayshader::plot_gg` function. T
 
 -   Zoom: amount of zoom to the plot.
 
--   Phi ($\phi$): horizontal angle (@fig-angles).
+-   Phi ($\phi$): azimuth angle (@fig-angles).
 
--   Theta ($\theta$): vertical angle (@fig-angles).
+-   Theta ($\theta$): rotation around z-axis (@fig-angles).
 
 ![Phi and theta angles](angles.png){#fig-angles fig-align="center"}
 
@@ -188,7 +188,7 @@ plot_gg(
   shadow_intensity = .6,
   sunangle         = 315,
   offset_edges     = FALSE,
-  windowsize       = c(1400, 866),
+  windowsize       = c(600, 600),
   zoom             = .5, 
   phi              = 35, 
   theta            = -30

@@ -84,7 +84,7 @@ body {
 .figure-caption {
   text-align: center; }
 
-h2:not(#toc-title) {
+h2:not(#toc-title):not(.accordion-header) {
   border-left: 1rem solid #252525;
   border-bottom: 0.2rem solid #252525;
   padding-left: 1rem; }

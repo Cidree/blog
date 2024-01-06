@@ -36,8 +36,14 @@ website:
       [Github Code Repo](https://github.com/Cidree/blog)
     background: "#2D4156"
     foreground: white
-  google-analytics: "G-J58431JK0F"
-  cookie-consent: true
+  
+  google-analytics:
+    tracking-id: "G-J58431JK0F"
+    anonymize-ip: true
+  cookie-consent:
+    style: interstitial
+    palette: light
+
 format:
   html:
     theme: 

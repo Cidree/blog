@@ -657,8 +657,8 @@ font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <li><p>Offset edges: when TRUE, adds some space between polygons.</p></li>
 <li><p>Window size: the size of the RGL device (preview window) when executing the function.</p></li>
 <li><p>Zoom: amount of zoom to the plot.</p></li>
-<li><p>Phi (<img src="https://latex.codecogs.com/png.latex?%5Cphi">): horizontal angle (Figure&nbsp;2).</p></li>
-<li><p>Theta (<img src="https://latex.codecogs.com/png.latex?%5Ctheta">): vertical angle (Figure&nbsp;2).</p></li>
+<li><p>Phi (<img src="https://latex.codecogs.com/png.latex?%5Cphi">): azimuth angle (Figure&nbsp;2).</p></li>
+<li><p>Theta (<img src="https://latex.codecogs.com/png.latex?%5Ctheta">): rotation around z-axis (Figure&nbsp;2).</p></li>
 </ul>
 <div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid figure-img"></p>
@@ -717,9 +717,9 @@ font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span 
 background-color: null;
 font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1400</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">600</span>, <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">866</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">600</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span>,</span>
 <span>  zoom             <span class="op" style="color: #5E5E5E;

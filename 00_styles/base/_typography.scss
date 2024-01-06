@@ -60,7 +60,7 @@ body{
 }
 
 // Titles border
-h2:not(#toc-title){
+h2:not(#toc-title):not(.accordion-header){
     border-left: 1rem solid $color-gray-dark-2;
     border-bottom: .2rem solid $color-gray-dark-2;
     padding-left: 1rem;
