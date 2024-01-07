@@ -781,7 +781,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>The result appear in a RGL device and looks like Figure&nbsp;1. Nothing amazing so far. This is just an interactive device where we can explore our plot.</p>
 <div id="fig-pop-plot" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="figs/01_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Result of plot_3d"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/01_render.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="figs/01_render.png" class="lightbox" title="Result of plot_3d" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/01_render.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: Result of plot_3d</figcaption></figure>
 </div>
 </section><section id="render-camera" class="level3" data-number="5.2"><h3 data-number="5.2" class="anchored" data-anchor-id="render-camera">
@@ -814,7 +814,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>After playing for a while with the values I decided to keep these values as my final choice, which correspond to the Figure&nbsp;2.</p>
 <div id="fig-pop-camera" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="figs/02_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Result of render_camera"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/02_render.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="figs/02_render.png" class="lightbox" title="Result of render_camera" data-gallery="quarto-lightbox-gallery-3"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/02_render.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Result of render_camera</figcaption></figure>
 </div>
 </section><section id="render-in-high-quality" class="level3" data-number="5.3"><h3 data-number="5.3" class="anchored" data-anchor-id="render-in-high-quality">
@@ -979,12 +979,12 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>The resulting image (using a size of 6,000 and zscale of 20) is shown in Figure&nbsp;3.</p>
 <div id="fig-spikes-map" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="figs/norway_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Spikes population map of Norway"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_crop.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="figs/norway_crop.png" class="lightbox" title="Spikes population map of Norway" data-gallery="quarto-lightbox-gallery-4"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_crop.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Spikes population map of Norway</figcaption></figure>
 </div>
 <p>We can see that most of the population of Norway in the half south of the country, specially in Viken region. We can also add some labels to the map, so we get the final result in Figure&nbsp;4.</p>
 <div id="fig-spikes-map-labelled" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="figs/norway_complete.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Population spikes map of Norway with labels of some important cities"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_complete.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="figs/norway_complete.png" class="lightbox" title="Population spikes map of Norway with labels of some important cities" data-gallery="quarto-lightbox-gallery-5"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_complete.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Population spikes map of Norway with labels of some important cities</figcaption></figure>
 </div>
 
@@ -995,7 +995,7 @@ font-style: inherit;">)</span></span></code></pre></div>
   <category>spatial</category>
   <guid>https://cidree.github.io/blog/posts/005_population_spikes_norway/index.html</guid>
   <pubDate>Sat, 06 Jan 2024 23:00:00 GMT</pubDate>
-  <media:content url="https://cidree.github.io/blog/posts/005_population_spikes_norway/image.png" medium="image" type="image/png"/>
+  <media:content url="https://cidree.github.io/blog/posts/005_population_spikes_norway/image.png" medium="image" type="image/png" height="116" width="144"/>
 </item>
 <item>
   <title>Spanish Burned Area during 2006-2015 by Municipality</title>
@@ -1626,7 +1626,7 @@ background-color: null;
 font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-vis2d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Distribution of total burned area in Spain by Municipality during the period 2006-2015"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" title="Distribution of total burned area in Spain by Municipality during the period 2006-2015" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: Distribution of total burned area in Spain by Municipality during the period 2006-2015</figcaption></figure>
 </div>
 </div>
@@ -1647,7 +1647,7 @@ font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <li><p>Theta (<img src="https://latex.codecogs.com/png.latex?%5Ctheta">): rotation around z-axis (Figure&nbsp;2).</p></li>
 </ul>
 <div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="angles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Phi and theta angles"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="angles.png" class="lightbox" title="Phi and theta angles" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Phi and theta angles</figcaption></figure>
 </div>
 <p>With all these parameters set, we can execute the function <code>plot_gg()</code> which will open a new window to visualize the rendered plot:</p>
@@ -1749,7 +1749,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>The result can be seen in Figure&nbsp;3. As we saw in my <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.</p>
 <div id="fig-vis3d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><a href="wildfires_ha_muni.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area."><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="wildfires_ha_muni.png" class="lightbox" title="Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area." data-gallery="quarto-lightbox-gallery-3"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area.</figcaption></figure>
 </div>
 
