@@ -68,7 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -248,7 +251,7 @@ cookieconsent.run({
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">world_sf</span><span class="op">[</span><span class="st">"region_un"</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"World Map"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-world" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-world-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="World map"><img src="index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: World map</figcaption></figure>
 </div>
 </div>
@@ -374,7 +377,7 @@ Geodetic CRS:  ETRS89
 <span>  <span class="fu">annotation_north_arrow</span><span class="op">(</span>location <span class="op">=</span> <span class="st">"tr"</span>, which_north <span class="op">=</span> <span class="st">"true"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-population" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Population in Spain by Municipality (2019)"><img src="index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Population in Spain by Municipality (2019)</figcaption></figure>
 </div>
 </div>
@@ -399,7 +402,7 @@ Geodetic CRS:  ETRS89
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">spain_pop_ready_sf</span><span class="op">$</span><span class="va">ratio_mw</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-boxpl2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-boxpl2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Distribution of Men/Women ratio by municipallity"><img src="index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Distribution of Men/Women ratio by municipallity</figcaption></figure>
 </div>
 </div>
@@ -457,7 +460,7 @@ Geodetic CRS:  ETRS89
 <span>  <span class="fu">annotation_north_arrow</span><span class="op">(</span>location <span class="op">=</span> <span class="st">"tr"</span>, which_north <span class="op">=</span> <span class="st">"true"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-sex-ratio" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-sex-ratio-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Sex ratio in Spain by Municipality in 2019 (ratio men/women)"><img src="index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)</figcaption></figure>
 </div>
 </div>
@@ -705,7 +708,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center"><a href="mailto:adrian.cidre@gmail.com">Contact Adrián Cidre</a><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right"><a href="https://github.com/Cidree/blog">Github Code Repo</a></div>
   </div>
-</footer>
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":true,"descPosition":"bottom","closeEffect":"zoom"});</script>
 
 
 </body></html>

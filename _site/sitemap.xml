@@ -2,54 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cidree.github.io/blog/resume.html</loc>
-    <lastmod>2024-01-06T09:59:58.543Z</lastmod>
+    <lastmod>2024-01-07T20:17:28.304Z</lastmod>
   </url>
   <url>
-    <loc>https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index.html</loc>
-    <lastmod>2024-01-06T10:04:54.326Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/posts/002_rpostgis_back/index.html</loc>
-    <lastmod>2024-01-06T09:59:29.916Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/posts/000_presentation/index.html</loc>
-    <lastmod>2024-01-06T09:58:29.547Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/courses.html</loc>
-    <lastmod>2024-01-06T10:06:10.040Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/02_courses/02_spatial_data_es.html</loc>
-    <lastmod>2024-01-06T10:08:19.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/02_courses/00_quarto_es.html</loc>
-    <lastmod>2024-01-06T09:58:16.996Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/02_courses/01_data_analysis_es.html</loc>
-    <lastmod>2024-01-06T10:04:31.818Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/about.html</loc>
-    <lastmod>2024-01-06T10:00:23.484Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/index.html</loc>
-    <lastmod>2024-01-06T10:08:17.102Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cidree.github.io/blog/posts/001_population_spain_map/index.html</loc>
-    <lastmod>2024-01-06T09:59:11.645Z</lastmod>
+    <loc>https://cidree.github.io/blog/posts/005_population_spikes_norway/index.html</loc>
+    <lastmod>2024-01-07T20:17:25.416Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index.html</loc>
-    <lastmod>2024-01-06T09:59:40.416Z</lastmod>
+    <lastmod>2024-01-07T20:16:54.973Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/001_population_spain_map/index.html</loc>
+    <lastmod>2024-01-07T20:16:41.857Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/index.html</loc>
+    <lastmod>2024-01-07T20:16:35.685Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/about.html</loc>
+    <lastmod>2024-01-07T20:16:33.450Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/02_courses/01_data_analysis_es.html</loc>
+    <lastmod>2024-01-07T20:16:30.666Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/02_courses/00_quarto_es.html</loc>
+    <lastmod>2024-01-07T20:16:26.345Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/02_courses/02_spatial_data_es.html</loc>
+    <lastmod>2024-01-07T20:16:32.818Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/courses.html</loc>
+    <lastmod>2024-01-07T20:16:35.239Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/000_presentation/index.html</loc>
+    <lastmod>2024-01-07T20:16:36.989Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/002_rpostgis_back/index.html</loc>
+    <lastmod>2024-01-07T20:16:51.446Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index.html</loc>
+    <lastmod>2024-01-07T20:16:58.212Z</lastmod>
   </url>
   <url>
     <loc>https://cidree.github.io/blog/projects.html</loc>
-    <lastmod>2024-01-06T10:04:48.114Z</lastmod>
+    <lastmod>2024-01-07T20:17:54.021Z</lastmod>
   </url>
 </urlset>

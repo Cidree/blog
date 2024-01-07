@@ -10,7 +10,993 @@
 <atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sat, 30 Dec 2023 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 06 Jan 2024 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>3D Population Spikes Map - Norway</title>
+  <dc:creator>Adrián Cidre</dc:creator>
+  <link>https://cidree.github.io/blog/posts/005_population_spikes_norway/index.html</link>
+  <description><![CDATA[ <section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1</span> Introduction</h2>
+<p>In this post, we will create an amazing spikes population map for the country of Noway using the awesome <code>rayshader</code> R package.</p>
+<p>I will use data from the <a href="https://www.kontur.io/">Kontur database</a>, which has a <a href="https://www.kontur.io/portfolio/population-dataset/">population density dataset</a> where the world population is represented by H3 hexagons with a spatial resolution of 400 meters.</p>
+</section><section id="loading-packages" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="loading-packages">
+<span class="header-section-number">2</span> Loading packages</h2>
+<p>If you followed me in other posts or did any of my <a href="https://adrian-cidre.com/courses">courses</a>, you will notice that I always use the <code>pacman</code> package to load the rest of the packages. This is because the <code>p_load</code> function will install any missing packages, and then load them into our R session.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Core</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tidyverse</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Donwload data</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">httr</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R.utils</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Spatial data</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sf</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stars</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">terra</span>,</span>
+<span>  </span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Visualization</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">rayshader</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">colorspace</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MetBrewer</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="load-the-data" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="load-the-data">
+<span class="header-section-number">3</span> Load the data</h2>
+<p>The data can be directly downloaded from the <a href="https://data.humdata.org/organization/kontur">Kontur website</a>, or we can also copy the url for the country and download it into R directly.</p>
+<p>First I create a function that will download the data using <code><a href="https://httr.r-lib.org/reference/GET.html">httr::GET()</a></code>, then it will unzip the <em>gz</em> file with <code><a href="https://henrikbengtsson.github.io/R.utils/reference/compressFile.html">R.utils::gunzip()</a></code>, and finally it will return the file path without the <em>gz</em> extension.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">get_data_httr</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Get url</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">httr</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/GET.html">GET</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>,</span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write_disk</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Unzip the gz file</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">R.utils</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://henrikbengtsson.github.io/R.utils/reference/compressFile.html">gunzip</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span>, remove <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Get the file path</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".gz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<p>Then, we apply the funtion by providing the url to the compressed file, and also the file name with the <em>gz</em> extension:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Url</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://geodata-eu-central-1-kontur-public.s3.amazonaws.com/kontur_datasets/kontur_population_NO_20231101.gpkg.gz"</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## File name</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"norway-population.gpkg.gz"</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Get file path</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_path</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">get_data_httr</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Once we downloaded the data, we can read it into R and project it to the Lambert Azimuthal Equal-Area (LAEA) projection:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file_path</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_transform</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"EPSG:3035"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_sf</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 186254 features and 2 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 3629718 ymin: 3876026 xmax: 5132823 ymax: 6391949
+Projected CRS: ETRS89-extended / LAEA Europe
+# A tibble: 186,254 × 3
+   h3              population                                               geom
+ * &lt;chr&gt;                &lt;dbl&gt;                                      &lt;POLYGON [m]&gt;
+ 1 8809abd9b5fffff          2 ((4045387 4292797, 4044957 4292776, 4044823 42923…
+ 2 8809abd9a7fffff          1 ((4044985 4291569, 4044555 4291547, 4044421 42911…
+ 3 8809abcf67fffff         66 ((4054799 4300908, 4054370 4300887, 4054237 43004…
+ 4 8809abcf63fffff          1 ((4054637 4301704, 4054208 4301684, 4054075 43012…
+ 5 8809abcf2dfffff          2 ((4055524 4300541, 4055095 4300520, 4054961 43001…
+ 6 8809abcf2bfffff          6 ((4055924 4301767, 4055495 4301746, 4055362 43013…
+ 7 8809abcf29fffff          6 ((4055362 4301337, 4054933 4301317, 4054799 43009…
+ 8 8809abcf27fffff          5 ((4056811 4300603, 4056382 4300583, 4056248 43001…
+ 9 8809abcf25fffff          2 ((4056248 4300174, 4055819 4300153, 4055686 42997…
+10 8809abcf21fffff          7 ((4056086 4300970, 4055657 4300950, 4055524 43005…
+# ℹ 186,244 more rows</code></pre>
+</div>
+</div>
+<p>The data contains the <em>h3</em> column which is the ID of the h3 hexagon, and the total <em>population</em> within the hexagon.</p>
+</section><section id="prepare-the-data" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="prepare-the-data">
+<span class="header-section-number">4</span> Prepare the data</h2>
+<p>Once we have the population file loaded into R, we need to convert it into a raster. This is because when working with <code>rayshader</code> we need to work with a matrix, and in essence, a raster is a matrix of values.</p>
+<p>Therefore, to create the hexagons into a raster, first we need to know the dimensions that we want for our raster. The next function will do the work. First, we get the height and width of the bounding box of our population data. Then we create the ratio variables storing the highest one as 1, and the lowest one as the ratio with the highest:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create function to get width and height</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">get_raster_size</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Get height and width in CRS units</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Get the ratio between height and width</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height_ratio</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width_ratio</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width_ratio</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height_ratio</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    width  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width_ratio</span>, </span>
+<span>    height <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height_ratio</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get height and width for my data</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hw_ratio</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">get_raster_size</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_bbox</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_sf</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Prin it</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hw_ratio</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$width
+[1] 0.597437
+
+$height
+[1] 1</code></pre>
+</div>
+</div>
+<p>There we see that Norway’s width is about 60% of its height. The next step is to choose the size of the highest dimension (in this case the height). For this example, I chose a size of 2,000 of height which corresponds to 1,194 in width. To clarify, this will determine the number of pixels, and therefore, the spatial resolution. We can then use the <code><a href="https://r-spatial.github.io/stars/reference/st_rasterize.html">stars::st_rasterize()</a></code> function to convert our population file into a raster with the specified size.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">size</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6000</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_stars</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_sf</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_rasterize</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    nx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">size</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hw_ratio</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">width</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    ny <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">size</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hw_ratio</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">height</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When testing I recommend you to use smaller values of size (e.g.&nbsp;1,000) than when creating the final map (e.g.&nbsp;&gt;5,000)</p>
+</div>
+</div>
+<p>The last step before starting to work with <code>rayshader</code> is to convert the <code>stars</code> object into a matrix. We have the convenient <code>raster_to_matrix()</code> function, but it expects a <code>SpatRaster</code> or <code>RasterLayer</code> as input, so I converted it into a <code>SpatRaster</code> prior to converting it into a matrix:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_matrix</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_stars</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rast</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">raster_to_matrix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="d-visualization" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="d-visualization">
+<span class="header-section-number">5</span> 3D Visualization</h2>
+<p>We can finally create our amazing visualization! Let’s define a colour palette first. I will use one that is already in the <code>MetBrewer</code> package:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Define palette</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pal</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">met.brewer</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OKeeffe2"</span>, n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuous"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Define texture</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_texture</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pal</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Visualize it</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">swatchplot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_texture</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To create a 3D visualization with <code>rayshader</code>, the process involves three key steps:</p>
+<ul>
+<li><p>Create a base 3D plot (moderate time-consuming)</p></li>
+<li><p>Readjust some parameters (fast)</p></li>
+<li><p>Render our final image with high quality (very time consuming)</p></li>
+</ul>
+<section id="base-3d-plot" class="level3" data-number="5.1"><h3 data-number="5.1" class="anchored" data-anchor-id="base-3d-plot">
+<span class="header-section-number">5.1</span> Base 3D plot</h3>
+<p>The first image that we will create takes about 3 minutes to render in my laptop with size = 6000. We will use two functions:</p>
+<ul>
+<li><p><code>height_shade()</code>: it calculates a colour for each pixel of the raster by using the texture that we defined previously.</p></li>
+<li>
+<p><code>plot_3d()</code>: uses the result of the <code>height_shade()</code> function to display a 3D map in a RGL window. The most important arguments are:</p>
+<ul>
+<li><p>Zscale: probably the most important. It’s the ratio between the x and y spacing and the z axis. A lower number will create taller spikes, and it’s dependent of the resolution (the size we specified to create the raster).</p></li>
+<li><p>Phi: the azimuth angle in degrees (can be tweaked later).</p></li>
+<li><p>Theta: rotation around the z-axis in degrees (can be tweaked later).</p></li>
+<li><p>Zoom: the zoom factor from 0 to 1 (can be tweaked later).</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_matrix</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">height_shade</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>texture <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_texture</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot_3d</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    heightmap       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_matrix</span>,</span>
+<span>    solid           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, </span>
+<span>    soliddepth      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,      </span>
+<span>    zscale          <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>,</span>
+<span>    shadowdepth     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,      </span>
+<span>    shadow_darkness <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.95</span>,    </span>
+<span>    windowsize      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    zoom            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.6</span>,   </span>
+<span>    phi             <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>,    </span>
+<span>    theta           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>,   </span>
+<span>    background      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>The result appear in a RGL device and looks like Figure&nbsp;1. Nothing amazing so far. This is just an interactive device where we can explore our plot.</p>
+<div id="fig-pop-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><a href="figs/01_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Result of plot_3d"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/01_render.png" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Result of plot_3d</figcaption></figure>
+</div>
+</section><section id="render-camera" class="level3" data-number="5.2"><h3 data-number="5.2" class="anchored" data-anchor-id="render-camera">
+<span class="header-section-number">5.2</span> Render camera</h3>
+<p>When we have our plot rendered, we can play with the zoom, theta and phi angles by using the <code>render_camera</code> function. This is very convenient because we don’t have to render the plot again, and it will be very fast:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">render_camera</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  zoom  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>,</span>
+<span>  theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span>  phi   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>After playing for a while with the values I decided to keep these values as my final choice, which correspond to the Figure&nbsp;2.</p>
+<div id="fig-pop-camera" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><a href="figs/02_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Result of render_camera"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/02_render.png" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Result of render_camera</figcaption></figure>
+</div>
+</section><section id="render-in-high-quality" class="level3" data-number="5.3"><h3 data-number="5.3" class="anchored" data-anchor-id="render-in-high-quality">
+<span class="header-section-number">5.3</span> Render in high quality</h3>
+<p>When we have our RGL device with our desired map, we can render it to a high quality image.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is very computational expensive, and depending on the specifications of your machine this process may fail for higher resolutions</p>
+</div>
+</div>
+<p>Note that for a size of 2,000 it takes around 5 minutes to run in my computer. However, with a size of 6,000 it takes over 30 minutes. Here I use the function <code>render_quality()</code> with the following arguments:</p>
+<ul>
+<li><p>Preview: whether or not to preview how the object is rendered (it gives a hint of the remaining time to finish).</p></li>
+<li><p>Lightdirection: angle(s) of direction from where the sun is lightening our map.</p></li>
+<li><p>Lightaltitude: angle(s) of altitude of the sun from the horizontal surface.</p></li>
+<li><p>Lightintensity: intensity of the light(s).</p></li>
+<li><p>Lightcolour: colour of the light(s).</p></li>
+<li><p>Interactive: whether the scene will be interactive.</p></li>
+<li><p>Width and height: defines the resolution of the resulting image.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rayshader</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://www.rayshader.com/reference/render_highquality.html">render_highquality</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  filename       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"norway_spikes_map.png"</span>,</span>
+<span>  preview        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>,</span>
+<span>  light          <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>,</span>
+<span>  lightdirection <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">240</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">320</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  lightaltitude  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, </span>
+<span>  lightintensity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  lightcolor     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lighten</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">pal</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.75</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  interactive    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>,</span>
+<span>  width          <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_stars</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, </span>
+<span>  height         <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">population_stars</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>The resulting image (using a size of 6,000 and zscale of 20) is shown in Figure&nbsp;3.</p>
+<div id="fig-spikes-map" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><a href="figs/norway_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Spikes population map of Norway"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_crop.png" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Spikes population map of Norway</figcaption></figure>
+</div>
+<p>We can see that most of the population of Norway in the half south of the country, specially in Viken region. We can also add some labels to the map, so we get the final result in Figure&nbsp;4.</p>
+<div id="fig-spikes-map-labelled" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><a href="figs/norway_complete.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Population spikes map of Norway with labels of some important cities"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_complete.png" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Population spikes map of Norway with labels of some important cities</figcaption></figure>
+</div>
+
+
+</section></section> ]]></description>
+  <category>R</category>
+  <category>rayshader</category>
+  <category>spatial</category>
+  <guid>https://cidree.github.io/blog/posts/005_population_spikes_norway/index.html</guid>
+  <pubDate>Sat, 06 Jan 2024 23:00:00 GMT</pubDate>
+  <media:content url="https://cidree.github.io/blog/posts/005_population_spikes_norway/image.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Spanish Burned Area during 2006-2015 by Municipality</title>
   <dc:creator>Adrián Cidre</dc:creator>
@@ -640,7 +1626,7 @@ background-color: null;
 font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-vis2d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Distribution of total burned area in Spain by Municipality during the period 2006-2015"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: Distribution of total burned area in Spain by Municipality during the period 2006-2015</figcaption></figure>
 </div>
 </div>
@@ -661,7 +1647,7 @@ font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <li><p>Theta (<img src="https://latex.codecogs.com/png.latex?%5Ctheta">): rotation around z-axis (Figure&nbsp;2).</p></li>
 </ul>
 <div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="angles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Phi and theta angles"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Phi and theta angles</figcaption></figure>
 </div>
 <p>With all these parameters set, we can execute the function <code>plot_gg()</code> which will open a new window to visualize the rendered plot:</p>
@@ -763,7 +1749,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>The result can be seen in Figure&nbsp;3. As we saw in my <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.</p>
 <div id="fig-vis3d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="wildfires_ha_muni.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area."><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area.</figcaption></figure>
 </div>
 
@@ -1401,7 +2387,10 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with <code>head</code>. Then, we have a bar plot with the label that we previously created. The <code>expand_limits</code> function expands the axis so the label of Galicia can be seen properly. Next, the <code>annotate</code> functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases <em>rect</em> and <em>text</em>). The rest of the arguments are just formatting. Isn’t it cool? That’s why I love <code>ggplot2</code> ❤️.</p>
@@ -1880,7 +2869,10 @@ font-style: inherit;">"bottom"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/003_wildfires_ccaa_spain/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="analysing-the-results-1" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="analysing-the-results-1">
@@ -1909,7 +2901,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/002_rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></p>
+<figure class="figure"><p><a href="image.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/002_rpostgis_back/image.png" style="width:30.0%;height:30.0%" class="figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -2471,7 +3463,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-world" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-world-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="World map"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: World map</figcaption></figure>
 </div>
 </div>
@@ -3049,7 +4041,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-population" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Population in Spain by Municipality (2019)"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Population in Spain by Municipality (2019)</figcaption></figure>
 </div>
 </div>
@@ -3122,7 +4114,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-boxpl2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-boxpl2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Distribution of Men/Women ratio by municipallity"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Distribution of Men/Women ratio by municipallity</figcaption></figure>
 </div>
 </div>
@@ -3526,7 +4518,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-sex-ratio" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-sex-ratio-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Sex ratio in Spain by Municipality in 2019 (ratio men/women)"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)</figcaption></figure>
 </div>
 </div>

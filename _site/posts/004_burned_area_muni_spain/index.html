@@ -68,7 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -359,7 +362,7 @@ Geodetic CRS:  ETRS89
 <span><span class="va">esp_mun_wildfires_gg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-vis2d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Distribution of total burned area in Spain by Municipality during the period 2006-2015"><img src="index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;1: Distribution of total burned area in Spain by Municipality during the period 2006-2015</figcaption></figure>
 </div>
 </div>
@@ -380,7 +383,7 @@ Geodetic CRS:  ETRS89
 <li><p>Theta (<span class="math inline">\(\theta\)</span>): rotation around z-axis (<a href="#fig-angles">Figure&nbsp;2</a>).</p></li>
 </ul>
 <div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="angles.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="angles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Phi and theta angles"><img src="angles.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Phi and theta angles</figcaption></figure>
 </div>
 <p>With all these parameters set, we can execute the function <code>plot_gg()</code> which will open a new window to visualize the rendered plot:</p>
@@ -406,7 +409,7 @@ Geodetic CRS:  ETRS89
 </div>
 <p>The result can be seen in <a href="#fig-vis3d">Figure&nbsp;3</a>. As we saw in my <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.</p>
 <div id="fig-vis3d" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="wildfires_ha_muni.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="wildfires_ha_muni.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area."><img src="wildfires_ha_muni.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area.</figcaption></figure>
 </div>
 
@@ -651,7 +654,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center"><a href="mailto:adrian.cidre@gmail.com">Contact Adrián Cidre</a><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right"><a href="https://github.com/Cidree/blog">Github Code Repo</a></div>
   </div>
-</footer>
+</footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":true,"descPosition":"bottom","selector":".lightbox"});</script>
 
 
 </body></html>

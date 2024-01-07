@@ -2,7 +2,7 @@
 
 # freeze computational output
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
-freeze: false
+freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
@@ -31,3 +31,8 @@ grid:
 comments: 
   utterances: 
     repo:  Cidree/blogComments
+
+# Filters
+filters: 
+  - lightbox
+lightbox: auto
