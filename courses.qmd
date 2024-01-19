@@ -51,10 +51,10 @@ course_card(
   file         = "01_figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introduction to Spatial Data Analysis with R",
   mode         = "Online",
-  date         = "Upcoming...",
-  time         = "",
+  date         = "Available Anytime",
+  time         = "30 hours",
   language     = "English",
-  href         = ""
+  href         = "02_courses/03_spatial_data_en.qmd"
 )
 ```
 :::

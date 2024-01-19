@@ -1,0 +1,302 @@
+---
+title: "Introducción a Análisis de Datos Espaciales en R"
+title-block-banner: true
+execute: 
+  echo: false
+
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
+---
+
+```{r}
+source("../03_scripts/00_courses.R")
+```
+
+::: course-banner
+```{r}
+course_banner(
+  price    = "13 €",
+  mode     = "Online",
+  time     = "30 hours",
+  date     = "Available Anytime",
+  img_file = "../01_figures/00_course_figures/03_intro_spatial_data.png"
+)
+```
+:::
+
+::: course-link
+```{r}
+a(class = "text-center btn btn-success course-link--button",
+  target = "_blank",
+  href = "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=E519DBA154370760A8E6",
+  "Enroll to the course")
+```
+:::
+
+::: course-description
+::: course-description--title
+## Introduction to the Course
+:::
+:::
+
+{{< video https://www.youtube.com/watch?v=FSE_VnJuTFw >}}
+
+::: course-description
+::: course-description--title
+## Description
+:::
+
+::: course-description--text
+Welcome to my Spatial Data Analysis course in R!
+
+This course is designed for beginners and intermediate-level individuals who want to learn everything necessary about spatial data analysis using the R programming language. We will focus on the most current packages and practices for working with real spatial data. In total, we will use 27 different R packages, making it an intense but very comprehensive course.
+
+Here below is an example of what you will learn to perform in this course:
+:::
+:::
+
+```{=html}
+<iframe src="../01_figures/01_html/population_spain.html" width="800" height="600"></iframe>
+```
+::: course-description
+::: course-description--title
+## Prerequisites
+:::
+
+::: course-description--text
+-   Basic knowledge of R
+
+-   To be familiar with tidyverse functions, including basic graphics with ggplot2 and pipelines
+:::
+:::
+
+::: {.course-curriculum .column-screen}
+::: course-description--title
+## Course Contents
+:::
+
+```{r}
+# Introducción --------------------------------------------------------------------
+course_block(
+  section_name = "Introduction",
+  id_accordion = "acc_qes_01",
+  id_heading   = "head_qes_01",
+  id_collapse  = "col_qes_01",
+  
+  strong("Introduction to the course"),
+  tags$ul(
+    tags$li("Introduction to the course"),
+    tags$li("Environment set-up"),
+    tags$li("Course materials")
+  )
+)
+
+# 01. Introduccion datos espaciales ---------------------------
+course_block(
+  section_name = "SECTION 01 - Introduction to Spatial Data",
+  id_accordion = "acc_qes_02",
+  id_heading   = "head_qes_02",
+  id_collapse  = "col_qes_02",
+  
+  ## Theory
+  strong("Theory"),
+  tags$ul(
+    tags$li("Spatial data vs Non-spatial data"),
+    tags$li("Geometries in vector data"),
+    tags$li("Simple features"),
+    tags$li("Common formats"),
+    tags$li("QUIZ 1")
+  ),
+  
+  ## Practice
+  strong("Practice"),
+  tags$ul(
+    tags$li("Download spatial data"),
+    tags$li("Exploratory data analysis"),
+    tags$li("Import/Export spatial data"),
+    tags$li("Properties of vector data")
+  ),
+  
+  ## Challenge
+  strong("Challenge 01")
+)
+
+# 02. CRS  --------------------------------------------------
+course_block(
+  section_name = "SECTION 02 - Coordinate Reference Systems",
+  id_accordion = "acc_qes_03",
+  id_heading   = "head_qes_03",
+  id_collapse  = "col_qes_03",
+  
+  ## Theory
+  strong("Theory"),
+  tags$ul(
+    tags$li("Importance of CRS"),
+    tags$li("CRS, coordinates, georeferencing"),
+    tags$li("Geographic CRS vs Projected CRS"),
+    tags$li("Projections"),
+    tags$li("EPSG codes, proj4, WKT ..."),
+    tags$li("QUIZ 2")
+  ),
+  
+  ## Practice
+  strong("Practice"),
+  tags$ul(
+    tags$li("Explore CRS"),
+    tags$li("CRS transformation"),
+    tags$li("Assigning CRS"),
+    tags$li("On-the-fly transformations"),
+    tags$li("First web map")
+  ),
+  
+  ## Challenge
+  strong("Challenge 02")
+)
+
+# 03. Geometric Operations ---------------------------------------
+course_block(
+  section_name = "SECTION 03 - Geometric Operations",
+  id_accordion = "acc_qes_04",
+  id_heading   = "head_qes_04",
+  id_collapse  = "col_qes_04",
+  
+  ## Theory
+  strong("Theory"),
+  tags$ul(
+    tags$li("Spatial predicates"),
+    tags$li("Geometry measures"),
+    tags$li("Unary transformations"),
+    tags$li("Binary transformations"),
+    tags$li("Other operations"),
+    tags$li("QUIZ 3")
+  ),
+  
+  ## Practice
+  strong("Practice"),
+  tags$ul(
+    tags$li("Predicate functions for counting elements"),
+    tags$li("Spatial filters"),
+    tags$li("Spatial joins"),
+    tags$li("Spatial measurements"),
+    tags$li("Transformations (centroid, buffer ...)"),
+    tags$li("Download map of Spain from R")
+  ),
+  
+  ## Challenge
+  strong("Challenge 03")
+)
+
+# 04. Raster Data ---------------------------------------
+course_block(
+  section_name = "SECTION 04 - Raster Data",
+  id_accordion = "acc_qes_05",
+  id_heading   = "head_qes_05",
+  id_collapse  = "col_qes_05",
+  
+  ## Theory
+  strong("Theory"),
+  tags$ul(
+    tags$li("Definition of raster data"),
+    tags$li("Types of resolution"),
+    tags$li("Introduction to remote sensing"),
+    tags$li("Common operations"),
+    tags$li("Calculation of vegetation indices (NDVI, SAVI)"),
+    tags$li("QUIZ 4")
+  ),
+  
+  ## Practice
+  strong("Practice"),
+  tags$ul(
+    tags$li("Explore raster data"),
+    tags$li("Download Digital Elevation Model (DEM)"),
+    tags$li("Raster derivatives from DEM"),
+    tags$li("Common operations (cutting, reclassifying ...)"),
+    tags$li("Arithmetic operations with raster"),
+    tags$li("Calculation of vegetation indices (NDVI, SAVI)"),
+    tags$li("Generate RGB and false-color compositions")
+  ),
+  
+  ## Challenge
+  strong("Challenge 04")
+)
+
+# 05. Maps  --------------------------------------------
+course_block(
+  section_name = "SECTION 05 - Maps with ggplot2",
+  id_accordion = "acc_qes_06",
+  id_heading   = "head_qes_06",
+  id_collapse  = "col_qes_06",
+  
+  strong("Maps"),
+  tags$ul(
+    tags$li("Population of Spain by municipalities"),
+    tags$li("Brown bear in Picos de Europa I"),
+    tags$li("Brown bear in Picos de Europa II"),
+    tags$li("Rivers of Galicia"),
+    tags$li("Andean bear in Peru"),
+    tags$li("Severity of fire in Tenerife (2023)")
+  )
+)
+
+# 06. Web Maps -----------------------------------------
+course_block(
+  section_name = "SECTION 06 - Web Maps with mapview",
+  id_accordion = "acc_qes_07",
+  id_heading   = "head_qes_07",
+  id_collapse  = "col_qes_07",
+  
+  strong("Web Maps"),
+  tags$ul(
+    tags$li("Population of Spain by municipalities"),
+    tags$li("Brown bear in Picos de Europa"),
+    tags$li("Rivers of Galicia"),
+    tags$li("Andean bear in Peru"),
+    tags$li("Severity of fire in Tenerife (synchronized)"),
+    tags$li("Severity of fire in Tenerife (side by side)")
+  )
+)
+
+```
+:::
+
+::: course-description
+::: course-description--title
+## What's inside the course
+:::
+
+::: course-description--text
+-   150 lessons
+
+-   15 hours of video
+
+-   All the course materials
+
+-   Theoretical classes, practical sessions, quizzes, and proposed exercises
+
+-   Additional bibliography
+
+-   Fast answer to any student's question
+:::
+:::
+
+::: course-description
+::: course-description--title
+## Course Results
+:::
+
+::: course-description--text
+-   Analyzing vector data and raster data
+
+-   Downloading spatial data in R
+
+-   Common operations on vector data and raster data
+
+-   Georeferencing data
+
+-   CRS transformations
+
+-   Creating stunning maps and web maps
+:::
+:::

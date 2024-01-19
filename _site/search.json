@@ -39,7 +39,7 @@
     "href": "posts/005_population_spikes_norway/index.html#d-visualization",
     "title": "3D Population Spikes Map - Norway",
     "section": "\n5 3D Visualization",
-    "text": "5 3D Visualization\nWe can finally create our amazing visualization! Let’s define a colour palette first. I will use one that is already in the MetBrewer package:\n\n## Define palette\npal &lt;- met.brewer(\"OKeeffe2\", n = 10, \"continuous\")\n## Define texture\npopulation_texture &lt;- colorRampPalette(\n  colors = pal\n)(256)\n## Visualize it\nswatchplot(population_texture)\n\n\n\n\n\n\n\nTo create a 3D visualization with rayshader, the process involves three key steps:\n\nCreate a base 3D plot (moderate time-consuming)\nReadjust some parameters (fast)\nRender our final image with high quality (very time consuming)\n\n\n5.1 Base 3D plot\nThe first image that we will create takes about 3 minutes to render in my laptop with size = 6000. We will use two functions:\n\nheight_shade(): it calculates a colour for each pixel of the raster by using the texture that we defined previously.\n\nplot_3d(): uses the result of the height_shade() function to display a 3D map in a RGL window. The most important arguments are:\n\nZscale: probably the most important. It’s the ratio between the x and y spacing and the z axis. A lower number will create taller spikes, and it’s dependent of the resolution (the size we specified to create the raster).\nPhi: the azimuth angle in degrees (can be tweaked later).\nTheta: rotation around the z-axis in degrees (can be tweaked later).\nZoom: the zoom factor from 0 to 1 (can be tweaked later).\n\n\n\n\npopulation_matrix %&gt;% \n  height_shade(texture = population_texture) %&gt;% \n  plot_3d(\n    heightmap       = population_matrix,\n    solid           = FALSE, \n    soliddepth      = 0,      \n    zscale          = 50,\n    shadowdepth     = 0,      \n    shadow_darkness = .95,    \n    windowsize      = c(600, 600),\n    zoom            = .6,   \n    phi             = 50,    \n    theta           = 30,   \n    background      = \"white\"\n  )\n\nThe result appear in a RGL device and looks like Figure 1. Nothing amazing so far. This is just an interactive device where we can explore our plot.\n\n\nFigure 1: Result of plot_3d\n\n\n5.2 Render camera\nWhen we have our plot rendered, we can play with the zoom, theta and phi angles by using the render_camera function. This is very convenient because we don’t have to render the plot again, and it will be very fast:\n\nrender_camera(\n  zoom  = 0.35,\n  theta = 10,\n  phi   = 15\n)\n\nAfter playing for a while with the values I decided to keep these values as my final choice, which correspond to the Figure 2.\n\n\nFigure 2: Result of render_camera\n\n\n5.3 Render in high quality\nWhen we have our RGL device with our desired map, we can render it to a high quality image.\n\n\n\n\n\n\nNote\n\n\n\nThis is very computational expensive, and depending on the specifications of your machine this process may fail for higher resolutions\n\n\nNote that for a size of 2,000 it takes around 5 minutes to run in my computer. However, with a size of 6,000 it takes over 30 minutes. Here I use the function render_quality() with the following arguments:\n\nPreview: whether or not to preview how the object is rendered (it gives a hint of the remaining time to finish).\nLightdirection: angle(s) of direction from where the sun is lightening our map.\nLightaltitude: angle(s) of altitude of the sun from the horizontal surface.\nLightintensity: intensity of the light(s).\nLightcolour: colour of the light(s).\nInteractive: whether the scene will be interactive.\nWidth and height: defines the resolution of the resulting image.\n\n\nrayshader::render_highquality(\n  filename       = \"norway_spikes_map.png\",\n  preview        = TRUE,\n  light          = TRUE,\n  lightdirection = c(240, 320),\n  lightaltitude  = c(20, 80), \n  lightintensity = c(600, 100),\n  lightcolor     = c(lighten(pal[7], 0.75), \"white\"),\n  interactive    = FALSE,\n  width          = dim(population_stars)[1], \n  height         = dim(population_stars)[2]\n)\n\nThe resulting image (using a size of 6,000 and zscale of 20) is shown in Figure 3.\n\n\nFigure 3: Spikes population map of Norway\n\nWe can see that most of the population of Norway in the half south of the country, specially in Viken region. We can also add some labels to the map, so we get the final result in Figure 4.\n\n\nFigure 4: Population spikes map of Norway with labels of some important cities"
+    "text": "5 3D Visualization\nWe can finally create our amazing visualization! Let’s define a colour palette first. I will use one that is already in the MetBrewer package:\n\n## Define palette\npal &lt;- met.brewer(\"OKeeffe2\", n = 10, \"continuous\")\n## Define texture\npopulation_texture &lt;- colorRampPalette(\n  colors = pal\n)(256)\n## Visualize it\nswatchplot(population_texture)\n\n\n\n\n\n\n\nTo create a 3D visualization with rayshader, the process involves three key steps:\n\nCreate a base 3D plot (moderate time-consuming)\nReadjust some parameters (fast)\nRender our final image with high quality (very time consuming)\n\n\n5.1 Base 3D plot\nThe first image that we will create takes about 3 minutes to render in my laptop with size = 6000. We will use two functions:\n\nheight_shade(): it calculates a colour for each pixel of the raster by using the texture that we defined previously.\n\nplot_3d(): uses the result of the height_shade() function to display a 3D map in a RGL window. The most important arguments are:\n\nZscale: probably the most important. It’s the ratio between the x and y spacing and the z axis. A lower number will create taller spikes, and it’s dependent of the resolution (the size we specified to create the raster).\nPhi: the azimuth angle in degrees (can be tweaked later).\nTheta: rotation around the z-axis in degrees (can be tweaked later).\nZoom: the zoom factor from 0 to 1 (can be tweaked later).\n\n\n\n\npopulation_matrix %&gt;% \n  height_shade(texture = population_texture) %&gt;% \n  plot_3d(\n    heightmap       = population_matrix,\n    solid           = FALSE, \n    soliddepth      = 0,      \n    zscale          = 50,\n    shadowdepth     = 0,      \n    shadow_darkness = .95,    \n    windowsize      = c(600, 600),\n    zoom            = .6,   \n    phi             = 50,    \n    theta           = 30,   \n    background      = \"white\"\n  )\n\nThe result appear in a RGL device and looks like Figure 1. Nothing amazing so far. This is just an interactive device where we can explore our plot.\n\n\n\n\n\nFigure 1: Result of plot_3d\n\n\n\n5.2 Render camera\nWhen we have our plot rendered, we can play with the zoom, theta and phi angles by using the render_camera function. This is very convenient because we don’t have to render the plot again, and it will be very fast:\n\nrender_camera(\n  zoom  = 0.35,\n  theta = 10,\n  phi   = 15\n)\n\nAfter playing for a while with the values I decided to keep these values as my final choice, which correspond to the Figure 2.\n\n\n\n\n\nFigure 2: Result of render_camera\n\n\n\n5.3 Render in high quality\nWhen we have our RGL device with our desired map, we can render it to a high quality image.\n\n\n\n\n\n\nNote\n\n\n\nThis is very computational expensive, and depending on the specifications of your machine this process may fail for higher resolutions\n\n\nNote that for a size of 2,000 it takes around 5 minutes to run in my computer. However, with a size of 6,000 it takes over 30 minutes. Here I use the function render_quality() with the following arguments:\n\nPreview: whether or not to preview how the object is rendered (it gives a hint of the remaining time to finish).\nLightdirection: angle(s) of direction from where the sun is lightening our map.\nLightaltitude: angle(s) of altitude of the sun from the horizontal surface.\nLightintensity: intensity of the light(s).\nLightcolour: colour of the light(s).\nInteractive: whether the scene will be interactive.\nWidth and height: defines the resolution of the resulting image.\n\n\nrayshader::render_highquality(\n  filename       = \"norway_spikes_map.png\",\n  preview        = TRUE,\n  light          = TRUE,\n  lightdirection = c(240, 320),\n  lightaltitude  = c(20, 80), \n  lightintensity = c(600, 100),\n  lightcolor     = c(lighten(pal[7], 0.75), \"white\"),\n  interactive    = FALSE,\n  width          = dim(population_stars)[1], \n  height         = dim(population_stars)[2]\n)\n\nThe resulting image (using a size of 6,000 and zscale of 20) is shown in Figure 3.\n\n\n\n\n\nFigure 3: Spikes population map of Norway\n\n\nWe can see that most of the population of Norway in the half south of the country, specially in Viken region. We can also add some labels to the map, so we get the final result in Figure 4.\n\n\n\n\n\nFigure 4: Population spikes map of Norway with labels of some important cities\n\n\n\n\n\nFigure 1: Result of plot_3d\nFigure 2: Result of render_camera\nFigure 3: Spikes population map of Norway\nFigure 4: Population spikes map of Norway with labels of some important cities"
   },
   {
     "objectID": "posts/003_wildfires_ccaa_spain/index.html#introduction",
@@ -102,21 +102,21 @@
     "href": "posts/001_population_spain_map/index.html#prepare-the-data",
     "title": "Choropleth map",
     "section": "\n2.3 Prepare the data",
-    "text": "2.3 Prepare the data\nThe first step, is to download the world countries map using the ne_countries() function. This will return the map we see in Figure 1.\n\n# World countries\nworld_sf &lt;- ne_countries(\n  scale       = 10,\n  returnclass = \"sf\"\n)\nplot(world_sf[\"region_un\"], main = \"World Map\")\n\n\n\nFigure 1: World map\n\n\n\nNext, we can get the Spanish population by municipality in 2019 using the mapSpain package:\n\n# Get Spanish population by municipality in 2019\nspain_pop_tbl &lt;- mapSpain::pobmun19\n\nhead(spain_pop_tbl)\n\n  cpro provincia cmun      name  pob19   men women\n1   02  Albacete  001 Abengibre    790   379   411\n2   02  Albacete  002    Alatoz    519   291   228\n3   02  Albacete  003  Albacete 173329 84687 88642\n4   02  Albacete  004  Albatana    692   356   336\n5   02  Albacete  005   Alborea    658   337   321\n6   02  Albacete  006  Alcadozo    654   363   291\n\n\nThis is a data frame with the data we want to plot. However, we need to assign this data to a spatial object with the municipalities. We can get the sf object using the function esp_get_munic:\n\n# Get Spain boundaries by municipality\nspain_sf &lt;- esp_get_munic()\n\nhead(spain_sf)\n\nSimple feature collection with 6 features and 7 fields\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: -3.14019 ymin: 36.73845 xmax: -2.05701 ymax: 37.54576\nGeodetic CRS:  ETRS89\n    codauto ine.ccaa.name cpro ine.prov.name cmun      name LAU_CODE\n382      01     Andalucía   04       Almería  001      Abla    04001\n379      01     Andalucía   04       Almería  002  Abrucena    04002\n374      01     Andalucía   04       Almería  003      Adra    04003\n375      01     Andalucía   04       Almería  004 Albánchez    04004\n358      01     Andalucía   04       Almería  005 Alboloduy    04005\n373      01     Andalucía   04       Almería  006     Albox    04006\n                          geometry\n382 POLYGON ((-2.77744 37.23836...\n379 POLYGON ((-2.88984 37.09213...\n374 POLYGON ((-2.93161 36.75079...\n375 POLYGON ((-2.13138 37.29959...\n358 POLYGON ((-2.70077 37.09674...\n373 POLYGON ((-2.15335 37.54576...\n\n\nWe see that the data frame spain_pop_tbl and the sf spain_sf share 3 variables:\n\ncpro: province code\ncmun: municipality code\nname: name of the municipality\n\nThe next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:\n\n# Join population to sf object\nspain_pop_sf &lt;- right_join(\n  spain_sf,\n  spain_pop_tbl,\n  by = join_by(cpro, cmun)\n)\n\nNote that here I did not include the variable name for joining the dataset. There are two reasons:\n\nThe name and cmun variables express exactly the same.\nThe variable name have some misspellings between datasets creating some NA values.\n\nOnce this is clarified, we can begin with the maps."
+    "text": "2.3 Prepare the data\nThe first step, is to download the world countries map using the ne_countries() function. This will return the map we see in Figure 1.\n\n# World countries\nworld_sf &lt;- ne_countries(\n  scale       = 10,\n  returnclass = \"sf\"\n)\nplot(world_sf[\"region_un\"], main = \"World Map\")\n\n\n\n\n\n\nFigure 1: World map\n\n\n\n\nNext, we can get the Spanish population by municipality in 2019 using the mapSpain package:\n\n# Get Spanish population by municipality in 2019\nspain_pop_tbl &lt;- mapSpain::pobmun19\n\nhead(spain_pop_tbl)\n\n  cpro provincia cmun      name  pob19   men women\n1   02  Albacete  001 Abengibre    790   379   411\n2   02  Albacete  002    Alatoz    519   291   228\n3   02  Albacete  003  Albacete 173329 84687 88642\n4   02  Albacete  004  Albatana    692   356   336\n5   02  Albacete  005   Alborea    658   337   321\n6   02  Albacete  006  Alcadozo    654   363   291\n\n\nThis is a data frame with the data we want to plot. However, we need to assign this data to a spatial object with the municipalities. We can get the sf object using the function esp_get_munic:\n\n# Get Spain boundaries by municipality\nspain_sf &lt;- esp_get_munic()\n\nhead(spain_sf)\n\nSimple feature collection with 6 features and 7 fields\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: -3.14019 ymin: 36.73845 xmax: -2.05701 ymax: 37.54576\nGeodetic CRS:  ETRS89\n    codauto ine.ccaa.name cpro ine.prov.name cmun      name LAU_CODE\n382      01     Andalucía   04       Almería  001      Abla    04001\n379      01     Andalucía   04       Almería  002  Abrucena    04002\n374      01     Andalucía   04       Almería  003      Adra    04003\n375      01     Andalucía   04       Almería  004 Albánchez    04004\n358      01     Andalucía   04       Almería  005 Alboloduy    04005\n373      01     Andalucía   04       Almería  006     Albox    04006\n                          geometry\n382 POLYGON ((-2.77744 37.23836...\n379 POLYGON ((-2.88984 37.09213...\n374 POLYGON ((-2.93161 36.75079...\n375 POLYGON ((-2.13138 37.29959...\n358 POLYGON ((-2.70077 37.09674...\n373 POLYGON ((-2.15335 37.54576...\n\n\nWe see that the data frame spain_pop_tbl and the sf spain_sf share 3 variables:\n\ncpro: province code\ncmun: municipality code\nname: name of the municipality\n\nThe next step is to join both tables together, so we have the data frame attributes in our spatial object. We can achieve this as follows:\n\n# Join population to sf object\nspain_pop_sf &lt;- right_join(\n  spain_sf,\n  spain_pop_tbl,\n  by = join_by(cpro, cmun)\n)\n\nNote that here I did not include the variable name for joining the dataset. There are two reasons:\n\nThe name and cmun variables express exactly the same.\nThe variable name have some misspellings between datasets creating some NA values.\n\nOnce this is clarified, we can begin with the maps."
   },
   {
     "objectID": "posts/001_population_spain_map/index.html#spanish-population",
     "href": "posts/001_population_spain_map/index.html#spanish-population",
     "title": "Choropleth map",
     "section": "\n2.4 Spanish population",
-    "text": "2.4 Spanish population\nWe could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:\n\n# Define the breaks (bin edges) based on percentiles\nbreaks &lt;- quantile(\n  spain_pop_sf$pob19, \n  probs = seq(0, 1, by = 0.1)\n)\n\n# Round to hundred, and keep unique values\nbreaks &lt;- round(breaks, -2) %&gt;% unique()\nbreaks[length(breaks)] &lt;- breaks[length(breaks)] + 100\n\n# Create bins\nspain_pop_ready_sf &lt;- spain_pop_sf %&gt;% \n  mutate(\n    pop_bin = cut(pob19, breaks = breaks, dig.lab = 10)\n  )\n\nprint(levels(spain_pop_ready_sf$pop_bin))\n\n[1] \"(0,100]\"        \"(100,200]\"      \"(200,300]\"      \"(300,500]\"     \n[5] \"(500,900]\"      \"(900,1700]\"     \"(1700,3500]\"    \"(3500,9200]\"   \n[9] \"(9200,3266200]\"\n\n\nWith the previous code we create the new variable called pop_bin which consists in a total of 9 bins representing similar amount of municipalities. Finally, we can represent it graphically with the next code:\n\n# Plot the population\nggplot(spain_pop_ready_sf) + \n  ## Geometries\n  geom_sf(data = world_sf, fill = \"grey90\", color = \"black\") +\n  geom_sf(aes(fill = pop_bin), color = NA) +\n  ## Scales\n  scale_fill_brewer(palette = \"RdBu\", na.translate = FALSE, direction = -1) +\n  ## Labels\n  labs(\n    title   = \"Spanish Population by Municipality\",\n    fill    = \"Population\",\n    caption = \"Author: Adrián Cidre González\"\n  ) +\n  ## Coordinates\n  coord_sf(xlim = st_bbox(spain_pop_ready_sf)[c(1,3)],\n           ylim = st_bbox(spain_pop_ready_sf)[c(2,4)]) +\n  ## Theme\n  theme_bw() +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 16, face = \"bold\"),\n    legend.background = element_rect(color = \"black\")\n  ) +\n  ## Ggspatial\n  annotation_scale(location = \"br\") +\n  annotation_north_arrow(location = \"tr\", which_north = \"true\")\n\n\n\nFigure 2: Population in Spain by Municipality (2019)\n\n\n\nWe see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated."
+    "text": "2.4 Spanish population\nWe could plot the Spanish population as a continuous variable, however, this would not be the best approach since the distribution of the population is quite irregular, and there is a small number of cities with very high population. Therefore, we can create bins based on the quantiles:\n\n# Define the breaks (bin edges) based on percentiles\nbreaks &lt;- quantile(\n  spain_pop_sf$pob19, \n  probs = seq(0, 1, by = 0.1)\n)\n\n# Round to hundred, and keep unique values\nbreaks &lt;- round(breaks, -2) %&gt;% unique()\nbreaks[length(breaks)] &lt;- breaks[length(breaks)] + 100\n\n# Create bins\nspain_pop_ready_sf &lt;- spain_pop_sf %&gt;% \n  mutate(\n    pop_bin = cut(pob19, breaks = breaks, dig.lab = 10)\n  )\n\nprint(levels(spain_pop_ready_sf$pop_bin))\n\n[1] \"(0,100]\"        \"(100,200]\"      \"(200,300]\"      \"(300,500]\"     \n[5] \"(500,900]\"      \"(900,1700]\"     \"(1700,3500]\"    \"(3500,9200]\"   \n[9] \"(9200,3266200]\"\n\n\nWith the previous code we create the new variable called pop_bin which consists in a total of 9 bins representing similar amount of municipalities. Finally, we can represent it graphically with the next code:\n\n# Plot the population\nggplot(spain_pop_ready_sf) + \n  ## Geometries\n  geom_sf(data = world_sf, fill = \"grey90\", color = \"black\") +\n  geom_sf(aes(fill = pop_bin), color = NA) +\n  ## Scales\n  scale_fill_brewer(palette = \"RdBu\", na.translate = FALSE, direction = -1) +\n  ## Labels\n  labs(\n    title   = \"Spanish Population by Municipality\",\n    fill    = \"Population\",\n    caption = \"Author: Adrián Cidre González\"\n  ) +\n  ## Coordinates\n  coord_sf(xlim = st_bbox(spain_pop_ready_sf)[c(1,3)],\n           ylim = st_bbox(spain_pop_ready_sf)[c(2,4)]) +\n  ## Theme\n  theme_bw() +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 16, face = \"bold\"),\n    legend.background = element_rect(color = \"black\")\n  ) +\n  ## Ggspatial\n  annotation_scale(location = \"br\") +\n  annotation_north_arrow(location = \"tr\", which_north = \"true\")\n\n\n\n\n\n\nFigure 2: Population in Spain by Municipality (2019)\n\n\n\n\nWe see some patterns in the distribution of the Spanish population. The central-north area exhibits a clear lower population than others areas., whereas coastal areas and islands area highly populated."
   },
   {
     "objectID": "posts/001_population_spain_map/index.html#ratio-menwomen",
     "href": "posts/001_population_spain_map/index.html#ratio-menwomen",
     "title": "Choropleth map",
     "section": "\n2.5 Ratio Men/Women",
-    "text": "2.5 Ratio Men/Women\nI will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:\n\n# Ratio men-women\nspain_pop_ready_sf &lt;- spain_pop_sf %&gt;% \n  mutate(ratio_mw = men/women)\n\nsummary(spain_pop_ready_sf$ratio_mw)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.3415  1.0003  1.0690     Inf  1.2067     Inf \n\n\nWe can see in the summary before that the values between the minimum and the \\(3^{rd}\\) quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e. division by zero). We can see also the boxplot:\n\nboxplot(spain_pop_ready_sf$ratio_mw)\n\n\n\nFigure 3: Distribution of Men/Women ratio by municipallity\n\n\n\nThis tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (&lt;1), and areas with higher men proportion (&gt;1). Therefore, I apply the same approach creating bins:\n\n# Define the breaks (bin edges) based on percentiles\nbreaks &lt;- quantile(\n  spain_pop_ready_sf$ratio_mw, \n  probs = seq(0, 1, by = 0.1)\n)\n\n# Round to hundred, and keep unique values\nbreaks &lt;- round(breaks, 2) %&gt;% unique()\n\n# Create bins\nspain_pop_ready_sf &lt;- spain_pop_ready_sf %&gt;% \n  mutate(\n    ratio_bin = cut(ratio_mw, breaks = breaks)\n  )\n\n## Print bins\nprint(levels(spain_pop_ready_sf$ratio_bin))\n\n [1] \"(0.34,0.96]\" \"(0.96,0.99]\" \"(0.99,1.01]\" \"(1.01,1.04]\" \"(1.04,1.07]\"\n [6] \"(1.07,1.11]\" \"(1.11,1.17]\" \"(1.17,1.26]\" \"(1.26,1.44]\" \"(1.44,Inf]\" \n\n\nWith this code, a total of 10 bins are generated with the ranges showed above. So let’s proceed to the visualization:\n\n# Plot the population\nggplot(spain_pop_ready_sf) + \n  ## Geometries\n  geom_sf(data = world_sf, fill = \"grey90\", color = \"black\") +\n  geom_sf(aes(fill = ratio_bin), color = NA) +\n  ## Scales\n  scale_fill_brewer(palette = \"RdBu\", na.translate = FALSE, direction = -1) +\n  ## Labels\n  labs(\n    title   = \"Men/Women ratio\",\n    fill    = \"Ratio\",\n    caption = \"Author: Adrián Cidre González\"\n  ) +\n  ## Coordinates\n  coord_sf(xlim = st_bbox(spain_pop_ready_sf)[c(1,3)],\n           ylim = st_bbox(spain_pop_ready_sf)[c(2,4)]) +\n  ## Theme\n  theme_bw() +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 16, face = \"bold\"),\n    legend.background = element_rect(color = \"black\")\n  ) +\n  ## Ggspatial\n  annotation_scale(location = \"br\") +\n  annotation_north_arrow(location = \"tr\", which_north = \"true\")\n\n\n\nFigure 4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)\n\n\n\nCuriously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women."
+    "text": "2.5 Ratio Men/Women\nI will now create a similar visualization, but displaying the ratio between men and women by municipality. First, I create the new column:\n\n# Ratio men-women\nspain_pop_ready_sf &lt;- spain_pop_sf %&gt;% \n  mutate(ratio_mw = men/women)\n\nsummary(spain_pop_ready_sf$ratio_mw)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.3415  1.0003  1.0690     Inf  1.2067     Inf \n\n\nWe can see in the summary before that the values between the minimum and the \\(3^{rd}\\) quantile exhibit normal values, but the maximum value is infinite. This is because in some municipality there are men, but not woman (i.e. division by zero). We can see also the boxplot:\n\nboxplot(spain_pop_ready_sf$ratio_mw)\n\n\n\n\n\n\nFigure 3: Distribution of Men/Women ratio by municipallity\n\n\n\n\nThis tells us that a visualization of the continuous distribution will barely differentiate between area with higher women proportion (&lt;1), and areas with higher men proportion (&gt;1). Therefore, I apply the same approach creating bins:\n\n# Define the breaks (bin edges) based on percentiles\nbreaks &lt;- quantile(\n  spain_pop_ready_sf$ratio_mw, \n  probs = seq(0, 1, by = 0.1)\n)\n\n# Round to hundred, and keep unique values\nbreaks &lt;- round(breaks, 2) %&gt;% unique()\n\n# Create bins\nspain_pop_ready_sf &lt;- spain_pop_ready_sf %&gt;% \n  mutate(\n    ratio_bin = cut(ratio_mw, breaks = breaks)\n  )\n\n## Print bins\nprint(levels(spain_pop_ready_sf$ratio_bin))\n\n [1] \"(0.34,0.96]\" \"(0.96,0.99]\" \"(0.99,1.01]\" \"(1.01,1.04]\" \"(1.04,1.07]\"\n [6] \"(1.07,1.11]\" \"(1.11,1.17]\" \"(1.17,1.26]\" \"(1.26,1.44]\" \"(1.44,Inf]\" \n\n\nWith this code, a total of 10 bins are generated with the ranges showed above. So let’s proceed to the visualization:\n\n# Plot the population\nggplot(spain_pop_ready_sf) + \n  ## Geometries\n  geom_sf(data = world_sf, fill = \"grey90\", color = \"black\") +\n  geom_sf(aes(fill = ratio_bin), color = NA) +\n  ## Scales\n  scale_fill_brewer(palette = \"RdBu\", na.translate = FALSE, direction = -1) +\n  ## Labels\n  labs(\n    title   = \"Men/Women ratio\",\n    fill    = \"Ratio\",\n    caption = \"Author: Adrián Cidre González\"\n  ) +\n  ## Coordinates\n  coord_sf(xlim = st_bbox(spain_pop_ready_sf)[c(1,3)],\n           ylim = st_bbox(spain_pop_ready_sf)[c(2,4)]) +\n  ## Theme\n  theme_bw() +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 16, face = \"bold\"),\n    legend.background = element_rect(color = \"black\")\n  ) +\n  ## Ggspatial\n  annotation_scale(location = \"br\") +\n  annotation_north_arrow(location = \"tr\", which_north = \"true\")\n\n\n\n\n\n\nFigure 4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)\n\n\n\n\nCuriously, we can see that the less populated areas are also populated mostly by men, whereas coastal areas and islands tend to be more balanced, or more populated by women.\n\n\n\nFigure 1: World map\nFigure 2: Population in Spain by Municipality (2019)\nFigure 3: Distribution of Men/Women ratio by municipallity\nFigure 4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)"
   },
   {
     "objectID": "index.html",
@@ -138,76 +138,6 @@
     "title": "About",
     "section": "Curriculum Vitae",
     "text": "Curriculum Vitae"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html",
-    "href": "02_courses/01_data_analysis_es.html",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "",
-    "text": "13 €\n\n\n\nOnline\n\n\n\n30 horas\n\n\n\nSiempre Disponible"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#descripción",
-    "href": "02_courses/01_data_analysis_es.html#descripción",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Descripción",
-    "text": "Descripción"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#requisitos-previos",
-    "href": "02_courses/01_data_analysis_es.html#requisitos-previos",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Requisitos previos",
-    "text": "Requisitos previos"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
-    "href": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Contenidos del Curso",
-    "text": "Contenidos del Curso"
-  },
-  {
-    "objectID": "02_courses/01_data_analysis_es.html#resultados-del-curso",
-    "href": "02_courses/01_data_analysis_es.html#resultados-del-curso",
-    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
-    "section": "Resultados del Curso",
-    "text": "Resultados del Curso"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html",
-    "href": "02_courses/00_quarto_es.html",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "",
-    "text": "13 €\n\n\n\nOnline\n\n\n\n15 horas\n\n\n\nSiempre Disponible"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#descripción",
-    "href": "02_courses/00_quarto_es.html#descripción",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Descripción",
-    "text": "Descripción"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
-    "href": "02_courses/00_quarto_es.html#requisitos-previos",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Requisitos previos",
-    "text": "Requisitos previos"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Contenidos del Curso",
-    "text": "Contenidos del Curso"
-  },
-  {
-    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
-    "title": "Quarto - diseño de documentos profesionales en RStudio",
-    "section": "Resultados del Curso",
-    "text": "Resultados del Curso"
   },
   {
     "objectID": "02_courses/02_spatial_data_es.html",
@@ -259,11 +189,130 @@
     "text": "Resultados del Curso"
   },
   {
+    "objectID": "02_courses/00_quarto_es.html",
+    "href": "02_courses/00_quarto_es.html",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n15 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#descripción",
+    "href": "02_courses/00_quarto_es.html#descripción",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#requisitos-previos",
+    "href": "02_courses/00_quarto_es.html#requisitos-previos",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "href": "02_courses/00_quarto_es.html#contenidos-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "href": "02_courses/00_quarto_es.html#resultados-del-curso",
+    "title": "Quarto - diseño de documentos profesionales en RStudio",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html",
+    "href": "02_courses/01_data_analysis_es.html",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n30 horas\n\n\n\nSiempre Disponible"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#descripción",
+    "href": "02_courses/01_data_analysis_es.html#descripción",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Descripción",
+    "text": "Descripción"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#requisitos-previos",
+    "href": "02_courses/01_data_analysis_es.html#requisitos-previos",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
+    "href": "02_courses/01_data_analysis_es.html#contenidos-del-curso",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Contenidos del Curso",
+    "text": "Contenidos del Curso"
+  },
+  {
+    "objectID": "02_courses/01_data_analysis_es.html#resultados-del-curso",
+    "href": "02_courses/01_data_analysis_es.html#resultados-del-curso",
+    "title": "Introducción a Análisis y Visualización de Datos en R [2023]",
+    "section": "Resultados del Curso",
+    "text": "Resultados del Curso"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html",
+    "href": "02_courses/03_spatial_data_en.html",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "",
+    "text": "13 €\n\n\n\nOnline\n\n\n\n30 hours\n\n\n\nAvailable Anytime"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#introduction-to-the-course",
+    "href": "02_courses/03_spatial_data_en.html#introduction-to-the-course",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Introduction to the Course",
+    "text": "Introduction to the Course"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#description",
+    "href": "02_courses/03_spatial_data_en.html#description",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Description",
+    "text": "Description"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#prerequisites",
+    "href": "02_courses/03_spatial_data_en.html#prerequisites",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Prerequisites",
+    "text": "Prerequisites"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#course-contents",
+    "href": "02_courses/03_spatial_data_en.html#course-contents",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Course Contents",
+    "text": "Course Contents"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#whats-inside-the-course",
+    "href": "02_courses/03_spatial_data_en.html#whats-inside-the-course",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "What’s inside the course",
+    "text": "What’s inside the course"
+  },
+  {
+    "objectID": "02_courses/03_spatial_data_en.html#course-results",
+    "href": "02_courses/03_spatial_data_en.html#course-results",
+    "title": "Introducción a Análisis de Datos Espaciales en R",
+    "section": "Course Results",
+    "text": "Course Results"
+  },
+  {
     "objectID": "courses.html",
     "href": "courses.html",
     "title": "Courses",
     "section": "",
-    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroducción a Análisis de Datos Espaciales en R\nOnline\n\n\n\nAvailable Anytime\n\n\n\n30 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nUpcoming...\n\n\n\n\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n30 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n15 hours\n\n\n\nSpanish\n\n\nLearn more"
+    "text": "Courses\n\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\nCourses\nLearn data analysis and data science with me. In the future, I plan to offer more exciting courses\n\n\n\n\n\n\n\n\n\nIntroducción a Análisis de Datos Espaciales en R\nOnline\n\n\n\nAvailable Anytime\n\n\n\n30 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nIntroduction to Spatial Data Analysis with R\nOnline\n\n\n\nAvailable Anytime\n\n\n\n30 hours\n\n\n\nEnglish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nINTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]\nOnline\n\n\n\nAvailable Anytime\n\n\n\n30 hours\n\n\n\nSpanish\n\n\nLearn more\n\n\n\n\n\n\n\n\n\n\nQuarto - diseño de documentos profesionales en RStudio\nOnline\n\n\n\nAvailable Anytime\n\n\n\n15 hours\n\n\n\nSpanish\n\n\nLearn more"
   },
   {
     "objectID": "posts/000_presentation/index.html",
@@ -347,14 +396,14 @@
     "href": "posts/004_burned_area_muni_spain/index.html#d-visualization",
     "title": "Spanish Burned Area during 2006-2015 by Municipality",
     "section": "\n5 2D visualization",
-    "text": "5 2D visualization\nIn this post we will learn how to turn a basic ggplot2 plot into a basic 3D visualization using rayshader. Therefore, the first step is to create a ggplot2 object:\n\n## Create ggplot2 object\nesp_mun_wildfires_gg &lt;- esp_mun_wildfires_sf %&gt;% \n  ggplot() +\n  # Geometries\n  geom_sf(aes(fill = total_area), color = NA) +\n  # Scales\n  scale_fill_distiller(palette = \"Reds\", direction = 1) +\n  # Labels\n  labs(title    = \"Burned Area in Spain during 2006-2015\",\n       caption  = \"@2023 Adrián Cidre (https://adrian-cidre.com)\\nData: MITECO\",\n       fill     = \"Area (ha)\") +\n  # Theme\n  theme_void(base_family = \"Rockwell\") +\n  theme(\n    plot.title = element_text(\n      size   = 14,\n      face   = \"bold\", \n      hjust  = .95, \n      colour = \"indianred4\",\n      margin = margin(b = 23, t = 5)\n    ),\n    plot.caption      = element_text(\n      size   = 8, \n      colour = \"indianred4\",\n      hjust  = .5\n    ),\n    legend.title      = element_text(size = 8, colour = \"indianred4\"),\n    legend.text       = element_text(size = 8, colour = \"indianred4\"),\n    legend.position   = \"bottom\",\n    legend.key.width  = unit(1, \"cm\"),\n    legend.key.height = unit(0.3, \"cm\"),\n    plot.background   = element_rect(fill = \"#B0C4DE\", colour = NA)\n  )\n\n## Display plot\nesp_mun_wildfires_gg\n\n\n\nFigure 1: Distribution of total burned area in Spain by Municipality during the period 2006-2015"
+    "text": "5 2D visualization\nIn this post we will learn how to turn a basic ggplot2 plot into a basic 3D visualization using rayshader. Therefore, the first step is to create a ggplot2 object:\n\n## Create ggplot2 object\nesp_mun_wildfires_gg &lt;- esp_mun_wildfires_sf %&gt;% \n  ggplot() +\n  # Geometries\n  geom_sf(aes(fill = total_area), color = NA) +\n  # Scales\n  scale_fill_distiller(palette = \"Reds\", direction = 1) +\n  # Labels\n  labs(title    = \"Burned Area in Spain during 2006-2015\",\n       caption  = \"@2023 Adrián Cidre (https://adrian-cidre.com)\\nData: MITECO\",\n       fill     = \"Area (ha)\") +\n  # Theme\n  theme_void(base_family = \"Rockwell\") +\n  theme(\n    plot.title = element_text(\n      size   = 14,\n      face   = \"bold\", \n      hjust  = .95, \n      colour = \"indianred4\",\n      margin = margin(b = 23, t = 5)\n    ),\n    plot.caption      = element_text(\n      size   = 8, \n      colour = \"indianred4\",\n      hjust  = .5\n    ),\n    legend.title      = element_text(size = 8, colour = \"indianred4\"),\n    legend.text       = element_text(size = 8, colour = \"indianred4\"),\n    legend.position   = \"bottom\",\n    legend.key.width  = unit(1, \"cm\"),\n    legend.key.height = unit(0.3, \"cm\"),\n    plot.background   = element_rect(fill = \"#B0C4DE\", colour = NA)\n  )\n\n## Display plot\nesp_mun_wildfires_gg\n\n\n\n\n\n\nFigure 1: Distribution of total burned area in Spain by Municipality during the period 2006-2015"
   },
   {
     "objectID": "posts/004_burned_area_muni_spain/index.html#d-visualization-1",
     "href": "posts/004_burned_area_muni_spain/index.html#d-visualization-1",
     "title": "Spanish Burned Area during 2006-2015 by Municipality",
     "section": "\n6 3D Visualization",
-    "text": "6 3D Visualization\nOnce we have this visualization, we can use the rayshader::plot_gg function. This function has many arguments to control the appearance of our map. In this tutorial I will show you the basic ones:\n\nMulticore = TRUE: it will use multiple cores to compute the shadow matrix. This is computationally demanding, so this can improve the performance.\nWidth and height: they control the size of the ggplot2 object.\nScale: the vertical scaling. The higher this number, the taller the spikes.\nShadow intensity: a number between 0 and 1, representing the intensity of the shadows. When set to 0 the shadows are completely black, while 1 means no shadows.\nSunangle: the angle from where the sun would generate the shadows. The default 315, means that the sun is shining from the North West.\nOffset edges: when TRUE, adds some space between polygons.\nWindow size: the size of the RGL device (preview window) when executing the function.\nZoom: amount of zoom to the plot.\nPhi (\\(\\phi\\)): azimuth angle (Figure 2).\nTheta (\\(\\theta\\)): rotation around z-axis (Figure 2).\n\n\n\nFigure 2: Phi and theta angles\n\nWith all these parameters set, we can execute the function plot_gg() which will open a new window to visualize the rendered plot:\n\nplot_gg(\n  esp_mun_wildfires_gg,\n  multicore        = TRUE,\n  width            = 5,\n  height           = 5,\n  scale            = 150,\n  shadow_intensity = .6,\n  sunangle         = 315,\n  offset_edges     = FALSE,\n  windowsize       = c(600, 600),\n  zoom             = .5, \n  phi              = 35, \n  theta            = -30\n)\n\nAfter we set the parameters that makes us happy, we can export the last rendered object by using the rayshader::render_snapshot() function:\n\nrender_snapshot(filename = \"wildfires_ha_muni.png\", clear = FALSE)\n\nThe result can be seen in Figure 3. As we saw in my previous post, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.\n\n\nFigure 3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area."
+    "text": "6 3D Visualization\nOnce we have this visualization, we can use the rayshader::plot_gg function. This function has many arguments to control the appearance of our map. In this tutorial I will show you the basic ones:\n\nMulticore = TRUE: it will use multiple cores to compute the shadow matrix. This is computationally demanding, so this can improve the performance.\nWidth and height: they control the size of the ggplot2 object.\nScale: the vertical scaling. The higher this number, the taller the spikes.\nShadow intensity: a number between 0 and 1, representing the intensity of the shadows. When set to 0 the shadows are completely black, while 1 means no shadows.\nSunangle: the angle from where the sun would generate the shadows. The default 315, means that the sun is shining from the North West.\nOffset edges: when TRUE, adds some space between polygons.\nWindow size: the size of the RGL device (preview window) when executing the function.\nZoom: amount of zoom to the plot.\nPhi (\\(\\phi\\)): azimuth angle (Figure 2).\nTheta (\\(\\theta\\)): rotation around z-axis (Figure 2).\n\n\n\n\n\n\nFigure 2: Phi and theta angles\n\n\nWith all these parameters set, we can execute the function plot_gg() which will open a new window to visualize the rendered plot:\n\nplot_gg(\n  esp_mun_wildfires_gg,\n  multicore        = TRUE,\n  width            = 5,\n  height           = 5,\n  scale            = 150,\n  shadow_intensity = .6,\n  sunangle         = 315,\n  offset_edges     = FALSE,\n  windowsize       = c(600, 600),\n  zoom             = .5, \n  phi              = 35, \n  theta            = -30\n)\n\nAfter we set the parameters that makes us happy, we can export the last rendered object by using the rayshader::render_snapshot() function:\n\nrender_snapshot(filename = \"wildfires_ha_muni.png\", clear = FALSE)\n\nThe result can be seen in Figure 3. As we saw in my previous post, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.\n\n\n\n\n\nFigure 3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area.\n\n\n\n\n\nFigure 1: Distribution of total burned area in Spain by Municipality during the period 2006-2015\nFigure 2: Phi and theta angles\nFigure 3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area."
   },
   {
     "objectID": "projects.html",

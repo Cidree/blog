@@ -5,7 +5,6 @@ categories: [R, rayshader, spatial]
 image: "image.png"
 execute: 
   warning: false
-  freeze: false
 editor_options: 
   chunk_output_type: console
 ---
