@@ -30,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=E519DBA154370760A8E6",
+  href = "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=FE48D090A42DFD205A3A",
   "Enroll to the course")
 ```
 :::
@@ -269,7 +269,7 @@ course_block(
 ::: course-description--text
 -   150 lessons
 
--   15 hours of video
+-   13 hours of video
 
 -   All the course materials
 
