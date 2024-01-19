@@ -1,5 +1,5 @@
 ---
-title: "Introducción a Análisis de Datos Espaciales en R"
+title: "Introduction to Spatial Data Analysis and GIS in R"
 title-block-banner: true
 execute: 
   echo: false
