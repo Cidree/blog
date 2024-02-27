@@ -11,7 +11,7 @@ editor_options:
 
 ## Introduction
 
-In this post, we will create an amazing spikes population map for the country of Noway using the awesome `rayshader` R package.
+In this post, we will create an amazing spikes population map for the country of Norway using the awesome `rayshader` R package.
 
 I will use data from the [Kontur database](https://www.kontur.io/), which has a [population density dataset](https://www.kontur.io/portfolio/population-dataset/) where the world population is represented by H3 hexagons with a spatial resolution of 400 meters.
 

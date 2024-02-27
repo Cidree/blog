@@ -30,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=92F792B2AFE19B904D18",
+  href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=F67C4A7D38271268928D",
   "Apuntarse al Curso")
 ```
 :::
