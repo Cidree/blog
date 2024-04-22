@@ -84,6 +84,11 @@ body {
 .figure-caption {
   text-align: center; }
 
+h2:not(#toc-title):not(.accordion-header) {
+  border-left: 1rem solid #252525;
+  border-bottom: 0.2rem solid #252525;
+  padding-left: 1rem; }
+
 .btn-primary--big:link, .btn-primary--big:visited {
   text-transform: uppercase;
   text-decoration: none;
@@ -209,6 +214,9 @@ body {
       opacity: 0.25;
       z-index: 0; }
 
+.card-img-top {
+  border-radius: 0.3rem; }
+
 .card-courses {
   text-align: center;
   padding: 1rem; }
@@ -217,17 +225,23 @@ body {
   .card-courses p {
     font-size: 0.8rem; }
 
-.card-course-title {
-  color: #2D4156;
-  font-weight: bold;
-  height: 5rem; }
-
-.card-course-mode {
-  background-color: #F5F5F5; }
-
-.card-course-btn {
-  background-color: #2D4156;
-  font-size: 1rem; }
+.card-course {
+  border: 1px solid #2D4156;
+  border-radius: 0.3rem; }
+  .card-course-title {
+    color: #2D4156;
+    font-weight: bold;
+    height: 5rem;
+    background-color: #A3D1D5;
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    border-radius: 0.3rem; }
+  .card-course-mode {
+    background-color: #F5F5F5; }
+  .card-course-btn {
+    background-color: #2D4156;
+    font-size: 1rem; }
 
 .course-banner {
   background-color: #A3D1D5; }
@@ -295,6 +309,28 @@ body {
     text-transform: uppercase;
     text-decoration: underline; }
 
+.toc-active {
+  background-color: #F5F5F5;
+  color: #252525;
+  position: relative;
+  top: 8rem;
+  font-family: system-ui;
+  text-align: left;
+  padding: .5rem .5rem; }
+  .toc-active ul li .nav-link {
+    background-color: #F5F5F5;
+    text-align: left; }
+    .toc-active ul li .nav-link.active, .toc-active ul li .nav-link:hover {
+      font-weight: 900;
+      font-size: .8rem;
+      background-color: #F5F5F5; }
+
+#toc-title {
+  font-family: system-ui;
+  text-align: left;
+  color: #252525;
+  font-size: 1.2rem; }
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center; }
 
@@ -311,15 +347,22 @@ body {
 .quarto-title .quarto-categories {
   justify-content: center; }
 
-pre.sourceCode {
+div.sourceCode,
+pre > code.sourceCode {
+  background-color: #252525 !important;
+  border: 0px; }
+
+div.sourceCode {
+  padding: .3rem; }
+
+.sourceCode {
   border-radius: 3px;
   padding: 0.5em;
-  overflow: auto;
-  border: 0.1rem solid white; }
+  overflow: auto; }
 
-pre {
-  background-color: #DBEBEA;
-  border: 1px solid; }
+.cell-output.cell-output-stdout {
+  background-color: #DBEBEA !important;
+  border: 2px solid #777; }
 
 .quarto-title {
   display: block;
