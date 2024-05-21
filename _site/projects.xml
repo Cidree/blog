@@ -9,7 +9,7 @@
 <link>https://cidree.github.io/blog/projects.html</link>
 <atom:link href="https://cidree.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.4.550</generator>
+<generator>quarto-1.4.554</generator>
 <lastBuildDate>Sat, 06 Jan 2024 23:00:00 GMT</lastBuildDate>
 <item>
   <title>3D Population Spikes Map - Norway</title>
@@ -782,7 +782,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The result appear in a RGL device and looks like Figure&nbsp;1. Nothing amazing so far. This is just an interactive device where we can explore our plot.</p>
 <div id="fig-pop-plot" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="figs/01_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/01_render.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="figs/01_render.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/01_render.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Result of plot_3d
@@ -819,7 +819,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>After playing for a while with the values I decided to keep these values as my final choice, which correspond to the Figure&nbsp;2.</p>
 <div id="fig-pop-camera" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop-camera-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="figs/02_render.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/02_render.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="figs/02_render.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/02_render.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop-camera-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Result of render_camera
@@ -988,7 +988,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The resulting image (using a size of 6,000 and zscale of 20) is shown in Figure&nbsp;3.</p>
 <div id="fig-spikes-map" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-spikes-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="figs/norway_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_crop.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="figs/norway_crop.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_crop.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spikes-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Spikes population map of Norway
@@ -997,7 +997,7 @@ Figure&nbsp;3: Spikes population map of Norway
 <p>We can see that most of the population of Norway in the half south of the country, specially in Viken region. We can also add some labels to the map, so we get the final result in Figure&nbsp;4.</p>
 <div id="fig-spikes-map-labelled" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-spikes-map-labelled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="figs/norway_complete.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_complete.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="figs/norway_complete.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="https://cidree.github.io/blog/posts/005_population_spikes_norway/figs/norway_complete.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spikes-map-labelled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Population spikes map of Norway with labels of some important cities
@@ -1644,7 +1644,7 @@ font-style: inherit;">esp_mun_wildfires_gg</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-vis2d" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-vis2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a>
+<a href="index_files/figure-html/fig-vis2d-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/index_files/figure-html/fig-vis2d-1.png" class="img-fluid figure-img" width="576"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vis2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Distribution of total burned area in Spain by Municipality during the period 2006-2015
@@ -1669,7 +1669,7 @@ Figure&nbsp;1: Distribution of total burned area in Spain by Municipality during
 </ul>
 <div id="fig-angles" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-angles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="angles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="angles.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/angles.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-angles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Phi and theta angles
@@ -1775,7 +1775,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The result can be seen in Figure&nbsp;3. As we saw in my <a href="https://adrian-cidre.com/posts/003_wildfires_ccaa_spain/">previous post</a>, the area that is most affected by the wildfires is by far the northwestern area of Spain, both in number of fires and burned hectares.</p>
 <div id="fig-vis3d" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-vis3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="wildfires_ha_muni.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+<a href="wildfires_ha_muni.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="https://cidree.github.io/blog/posts/004_burned_area_muni_spain/wildfires_ha_muni.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vis3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Burned area in Spain during 2006-2016 by municipality. The tallest spikes represent higher burned area.
@@ -3494,7 +3494,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-world" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-world-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-world-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-world-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: World map
@@ -4076,7 +4076,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-population" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-population-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></a>
+<a href="index_files/figure-html/fig-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-population-1.png" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Population in Spain by Municipality (2019)
@@ -4153,7 +4153,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-boxpl2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-boxpl2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-boxpl2-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-boxpl2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-boxpl2-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxpl2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Distribution of Men/Women ratio by municipallity
@@ -4561,7 +4561,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div id="fig-sex-ratio" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-sex-ratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-sex-ratio-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-sex-ratio-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="https://cidree.github.io/blog/posts/001_population_spain_map/index_files/figure-html/fig-sex-ratio-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sex-ratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Sex ratio in Spain by Municipality in 2019 (ratio men/women)
