@@ -53,6 +53,8 @@ format:
     code-block-border-left: true
     linkcolor: '#ff0000'
     fontsize: 100%
+    mainfont: "Inter"
+    monofont: "Fira Code"
     highlight-style: nord
 editor: visual
 
