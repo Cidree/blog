@@ -6,7 +6,7 @@ execute:
 
 website:
   title: "Adrián Cidre"
-  site-url: "https://cidree.github.io/blog/"
+  site-url: "https://adrian-cidre.com"
   search: false
   navbar:
     #logo: figures/logo.png
@@ -53,7 +53,7 @@ format:
     code-block-border-left: true
     linkcolor: '#ff0000'
     fontsize: 100%
-    mainfont: "Roboto Condensed"
+    mainfont: "Comic Sans"
     monofont: "Fira Code"
     highlight-style: nord
 editor: visual

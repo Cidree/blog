@@ -1,4 +1,4 @@
 - source: project
   netlify:
-    - id: "865b07da-115f-4fa5-8546-428272c563c5"
-      url: "https://adrian-cidre.com"
+    - id: 865b07da-115f-4fa5-8546-428272c563c5
+      url: 'https://adrian-cidre.com'
