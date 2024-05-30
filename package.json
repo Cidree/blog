@@ -1,4 +1,16 @@
 {
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "My blog",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "node-sass 00_styles/main.scss 00_styles/styles.css -w"
+  },
+  "author": "Adrian Cidre",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^9.0.0"
+  },
   "dependencies": {
     "@quarto/netlify-plugin-quarto": "^0.0.5"
   }

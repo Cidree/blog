@@ -3,7 +3,6 @@ title: "Quarto - diseño de documentos profesionales en RStudio"
 title-block-banner: true
 execute: 
   echo: false
-  freeze: false
 
 # Comments section
 comments: 
