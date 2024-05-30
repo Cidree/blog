@@ -53,8 +53,8 @@ format:
     code-block-border-left: true
     linkcolor: '#ff0000'
     fontsize: 100%
-    mainfont: "Comic Sans MS"
-    monofont: "Fira Code"
+    # mainfont: "Roboto Slab"
+    monofont: "Cascade Mono"
     highlight-style: nord
 editor: visual
 
