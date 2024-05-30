@@ -57,7 +57,7 @@ get_data_httr <- function(url, file_name) {
 }
 ```
 
-Then, we apply the funtion by providing the url to the compressed file, and also the file name with the *gz* extension:
+Then, we apply the function by providing the url to the compressed file, and also the file name with the *gz* extension:
 
 ```{r get_path}
 ## Url
