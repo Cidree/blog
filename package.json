@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.77.4"
+  },
+  "dependencies": {
+    "@quarto/netlify-plugin-quarto": "^0.0.5"
   }
 }
