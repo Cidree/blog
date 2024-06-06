@@ -1,5 +1,6 @@
 ---
 title: "3D Population Spikes Map - Norway"
+description: "Create an amazing spikes population map for the country of Norway using the awesome {rayshader} R package."
 date: "2024-01-07"
 categories: [R, rayshader, spatial]
 image: "image.png"
@@ -11,13 +12,13 @@ editor_options:
 
 ## Introduction
 
-In this post, we will create an amazing spikes population map for the country of Norway using the awesome `rayshader` R package.
+In this post, we will create an amazing spikes population map for the country of Norway using the awesome `{rayshader}` R package.
 
 I will use data from the [Kontur database](https://www.kontur.io/), which has a [population density dataset](https://www.kontur.io/portfolio/population-dataset/) where the world population is represented by H3 hexagons with a spatial resolution of 400 meters.
 
 ## Loading packages
 
-If you followed me in other posts or did any of my [courses](https://adrian-cidre.com/courses), you will notice that I always use the `pacman` package to load the rest of the packages. This is because the `p_load` function will install any missing packages, and then load them into our R session.
+If you followed me in other posts or did any of my [courses](https://adrian-cidre.com/courses), you will notice that I always use the `{pacman}` package to load the rest of the packages. This is because the `p_load` function will install any missing packages, and then load them into our R session.
 
 ```{r load_packages}
 library(pacman)
@@ -91,7 +92,7 @@ file.remove(file_name)
 
 ## Prepare the data
 
-Once we have the population file loaded into R, we need to convert it into a raster. This is because when working with `rayshader` we need to work with a matrix, and in essence, a raster is a matrix of values.
+Once we have the population file loaded into R, we need to convert it into a raster. This is because when working with `{rayshader}` we need to work with a matrix, and in essence, a raster is a matrix of values.
 
 Therefore, to create the hexagons into a raster, first we need to know the dimensions that we want for our raster. The next function will do the work. First, we get the height and width of the bounding box of our population data. Then we create the ratio variables storing the highest one as 1, and the lowest one as the ratio with the highest:
 
@@ -139,7 +140,7 @@ population_stars <- population_sf %>%
 When testing I recommend you to use smaller values of size (e.g. 1,000) than when creating the final map (e.g. \>5,000)
 :::
 
-The last step before starting to work with `rayshader` is to convert the `stars` object into a matrix. We have the convenient `raster_to_matrix()` function, but it expects a `SpatRaster` or `RasterLayer` as input, so I converted it into a `SpatRaster` prior to converting it into a matrix:
+The last step before starting to work with `{rayshader}` is to convert the `stars` object into a matrix. We have the convenient `raster_to_matrix()` function, but it expects a `SpatRaster` or `RasterLayer` as input, so I converted it into a `SpatRaster` prior to converting it into a matrix:
 
 ```{r}
 population_matrix <- 
@@ -150,7 +151,7 @@ population_matrix <-
 
 ## 3D Visualization
 
-We can finally create our amazing visualization! Let's define a colour palette first. I will use one that is already in the `MetBrewer` package:
+We can finally create our amazing visualization! Let's define a colour palette first. I will use one that is already in the `{MetBrewer}` package:
 
 ```{r}
 ## Define palette
@@ -163,7 +164,7 @@ population_texture <- colorRampPalette(
 swatchplot(population_texture)
 ```
 
-To create a 3D visualization with `rayshader`, the process involves three key steps:
+To create a 3D visualization with `{rayshader}`, the process involves three key steps:
 
 -   Create a base 3D plot (moderate time-consuming)
 

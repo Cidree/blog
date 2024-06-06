@@ -13,10 +13,10 @@ website:
     background: "#2D4156"
     collapse-below: lg
     right:
-      - text: Home
+      - text: About
         href: index.qmd
       - text: Posts
-        href: projects.qmd
+        href: posts.qmd
       - text: Courses
         href: courses.qmd
       - icon: github
@@ -52,8 +52,6 @@ format:
     code-block-border-left: true
     linkcolor: '#ff0000'
     fontsize: 100%
-    # mainfont: "Roboto Slab"
-    monofont: "Cascade Mono"
-    highlight-style: nord
+    highlight-style: tango
 editor: visual
 

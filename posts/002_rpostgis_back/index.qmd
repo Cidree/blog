@@ -1,5 +1,6 @@
 ---
 title: "rpostgis is back"
+description: "I recently updated the {rpostgis} R package to fit into the current spatial ecosystem of packages. Here, I show a basic usage of the package"
 date: "2023-10-20"
 categories: [R, spatial, packages, databases]
 image: "image_small.png"
@@ -8,8 +9,6 @@ execute:
   warning: false
   eval: false
 ---
-
-> # **rpostgis package**
 
 ```{r}
 #| eval: true
@@ -22,15 +21,15 @@ knitr::include_graphics("image.png")
 
 ## History
 
-The `rpostgis` package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years ([check this issue](https://r-spatial.org/r/2022/04/12/evolution.html)), including the retirement of the packages `rgeos`, `rgdal`, and `maptools`. These packages as well and `sp` and `raster` are being replaced by the packages `sf` (for vectorial operation), `terra` (for both raster and vectorial data), and `stars` (datacubes).
+The `{rpostgis}` package was born around 2016, and since then, more than 20 versions have been released to CRAN (the official R repository). However, the geospatial ecosystem in R has gone through important changes during the last years ([check this issue](https://r-spatial.org/r/2022/04/12/evolution.html)), including the retirement of the packages `{rgeos}`, `{rgdal}`, and `{maptools}`. These packages as well and `{sp}` and `{raster}` are being replaced by the packages `{sf}` (for vectorial operation), `{terra}` (for both raster and vectorial data), and `{stars}` (datacubes).
 
-These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including `rpostgis`. The authors of the package noted that they lacked time to continue the maintenance of the package, and that's where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October $15^{th}$ the package was published in CRAN.
+These changes in the geospatial ecosystem affected many other packages depending on the retired packages, including `{rpostgis}`. The authors of the package noted that they lacked time to continue the maintenance of the package, and that's where I offered myself to maintain the package. During the last weeks I have been working on the migration of the package to the new geospatial ecosystem, and on October $15^{th}$ the package was published in CRAN.
 
 ## Package updates
 
 The package updates haven't been published in the website of the package ([rpostgis](https://mablab.org/rpostgis/)). This is because I am working in the migration of the package to my GitHub repository, and then I will publish the website again probably through GitHub pages or my website. However, the main new features are:
 
--   Functions `pg*` migrated to packages `sf`/`terra`. Therefore, the inputs/outputs of these functions will be `sf` objects, `SpatVector` and `SpatRaster` objects by default. However, to maintain compatibility with recent versions, a new argument `returnclass` have been added to the `pg*` family of functions.
+-   Functions `pg*` migrated to packages `{sf}`/`{terra}`. Therefore, the inputs/outputs of these functions will be `sf` objects, `SpatVector` and `SpatRaster` objects by default. However, to maintain compatibility with recent versions, a new argument `returnclass` have been added to the `pg*` family of functions.
 
 -   `pgGetRast` and `pgWriteRast` include now a progress bar to inform the user about the estimated remaining time. These progress bars can be disabled through the new function argument `progress = FALSE`.
 
@@ -40,25 +39,19 @@ The package updates haven't been published in the website of the package ([rpost
 
 ## Package notes
 
-As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. That is why right now I recommend to install the GitHub version of the package, which might be ahead of the CRAN version using:
+As many changes have been committed, it is possible that some unexpected errors may arise. I am working to detect these unexpected errors and commit them to the development version. You can submit any issue you find in the [GitHub repository](https://github.com/Cidree/rpostgis/issues). To install the package run the following code:
 
 ```{r}
-remotes::install_github("mablab/rpostgis")
-```
-
-You can also install the development version, which might be unstable:
-
-```{r}
-remotes::install_github("mablab/rpostgis", ref = "dev")
+pak::pak("rpostgis")
 ```
 
 ::: callout-caution
-Note that you need to have installed the package `remotes`
+Note that you need to have installed the package `{pak}`
 :::
 
 ## Write/Read vectorial data
 
-The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function `rpostgis::pgPostGIS()`. First of all, we need to connect to our PostgreSQL server using the `RPostgres` or the `RPostgreSQL` drivers. A basic connection with a local database could be achieved as follows:
+The package is used as an interface between R and PostgreSQL with a PostGIS extension. Actually, the PostGIS extension can be installed using the function `rpostgis::pgPostGIS()`. First of all, we need to connect to our PostgreSQL server using the `{RPostgres}` or the `{RPostgreSQL}` drivers. A basic connection with a local database could be achieved as follows:
 
 ```{r}
 conn <- RPostgres::dbConnect(
@@ -78,7 +71,7 @@ conn <- RPostgres::dbConnect(
   drv      = RPostgres::Postgres(),
   host     = "localhost",
   dbname   = "my_database",
-  port     = 5433,
+  port     = 5432,
   user     = "postgres",
   password = keyring::key_get("postgres", "postgres")
 )
@@ -148,7 +141,7 @@ We have our object back into R! You may have noticed that I used `name = "awesom
 
 ## Conclusion
 
-So you have seen the basic and most typical use of the `rpostgis` package for vectorial data. In future posts, I will share an example reading/writting raster data.
+So you have seen the basic and most typical use of the `rpostgis` package for vectorial data. In future posts, I will share an example reading/writing raster data.
 
 If you liked the package and this tutorial, please feel free to share it with your colleagues.
 

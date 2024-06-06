@@ -1,0 +1,5 @@
+# HTML opts
+format:
+  html:
+    include-after-body:
+      - ../assets/includes/buymeacoffee.qmd

@@ -1,12 +1,12 @@
 ---
-title: "Posts"
+title: "Blog"
 listing:
 
   # Base options
   contents: posts
   page-size: 10
-  type: grid
   sort: "date desc"
+  type: grid
   
   # Grids
   grid-item-border: true
@@ -14,17 +14,17 @@ listing:
 
   # Advanced options
   categories: true
+  max-description-length: 125
   
   # Feeds
-  feed: true
-  
-  # User tools
-  filter-ui: true
-  sort-ui: [default, title, date]
+  feed: 
+    categories: spatial
   
   # Listing fields
   fields: [image, description, date, title, reading-time, categories]
   
-page-layout: full
+page-layout: article
 title-block-banner: true
 ---
+
+Hei! Welcome to my blog.

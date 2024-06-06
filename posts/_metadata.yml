@@ -10,13 +10,10 @@ title-block-banner: true
 # Author
 author: "Adrián Cidre"
 
-# Code options
-backgroundcolor: "#FFFFF4"
-code-link: true
-
 # Layout
+code-link: true
 number-sections: true
-number-offset: 1
+number-offset: 2
 toc: true
 toc-title: "Table of Contents"
 toc-depth: 3
@@ -36,3 +33,9 @@ comments:
 filters: 
   - lightbox
 lightbox: auto
+
+# HTML opts
+format:
+  html:
+    include-after-body:
+      - ../assets/includes/buymeacoffee.qmd

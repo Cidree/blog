@@ -1,5 +1,6 @@
 ---
 title: "Spanish Burned Area during 2006-2015 by Municipality"
+description: "Creating a 3D visualization of the burned area in Spain by municipality during the period 2006-2015 using {rayshader}."
 date: "2023-12-31"
 categories: [R, forestry, wildfires, ggplot2, rayshader]
 image: "image.png"
@@ -11,9 +12,9 @@ editor_options:
 
 ## Introduction
 
-In this post, we will explore the distribution of the burned area in Spain by municipality creating a 3D visualization using the awesome package `rayshader` 😎.
+In this post, we will explore the distribution of the burned area in Spain by municipality creating a 3D visualization using the awesome package `{rayshader}` 😎.
 
-Honestly, I am not fan of 3D plots in general, because they are usually horrible and deceiving when trying to communicate something. However, with `rayshader` we can create spikes maps which can somehow look great and communicating the message properly.
+Honestly, I am not fan of 3D plots in general, because they are usually horrible and deceiving when trying to communicate something. However, with `{rayshader}` we can create spikes maps which can somehow look great and communicating the message properly.
 
 ::: callout-important
 If you can, avoid always to create a 3D plot (3D pie charts (even 2D, please), 3D bar charts...).
@@ -25,7 +26,7 @@ I will use the data for the decade 2006-2015, which is the latest available data
 
 ## Loading packages
 
-As usually, we will start loading all the necessary packages by using the `pacman` package.
+As usually, we will start loading all the necessary packages by using the `{pacman}` package.
 
 ```{r load_packages}
 library(pacman)
@@ -45,7 +46,7 @@ p_load(
 )
 ```
 
-We will use the `tidyverse` for data wrangling and visualization, the `readxl` package for reading our data in *Excel* format, the `sf` package for vectorial data manipulation, the package `mapSpain` for downloading some convenient spatial data, and finally `rayshader` for creating 3D visualizations.
+We will use the `{tidyverse}` for data wrangling and visualization, the `{readxl}` package for reading our data in *Excel* format, the `{sf}` package for vectorial data manipulation, the package `{mapSpain}` for downloading some convenient spatial data, and finally `{rayshader}` for creating 3D visualizations.
 
 ## Load the data
 
@@ -69,7 +70,7 @@ I selected a total of 5 columns: the first two columns corresponds to the name a
 
 ## Prepare data
 
-The data preparation is not very demanding to be honest. We have to download the map of Spain by municipalities, and for doing so, we have the convenient function `esp_get_munic()` from the `mapSpain` package:
+The data preparation is not very demanding to be honest. We have to download the map of Spain by municipalities, and for doing so, we have the convenient function `esp_get_munic()` from the `{mapSpain}` package:
 
 ```{r get_spain_map}
 ## Get data
@@ -104,7 +105,7 @@ esp_mun_wildfires_sf <- esp_mun_wildfires_sf %>%
 
 ## 2D visualization
 
-In this post we will learn how to turn a basic `ggplot2` plot into a basic 3D visualization using `rayshader`. Therefore, the first step is to create a `ggplot2` object:
+In this post we will learn how to turn a basic `{ggplot2}` plot into a basic 3D visualization using `{rayshader}`. Therefore, the first step is to create a `{ggplot2}` object:
 
 ```{r ggplot_vis}
 #| label: fig-vis2d

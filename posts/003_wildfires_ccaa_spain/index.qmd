@@ -1,5 +1,6 @@
 ---
 title: "Spanish Wildfires by CCAA during 2006-2015"
+description: "Exploring the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and ggplot2."
 date: "2023-11-18"
 categories: [R, forestry, wildfires, ggplot2]
 image: "image.png"
@@ -8,11 +9,9 @@ execute:
   warning: false
 ---
 
-> # Spanish Wildfires by Autonomous Communities
-
 ## Introduction
 
-In this post, we will explore the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and `ggplot2`.
+In this post, we will explore the distribution of the forest wildfires in Spain by Autonomous Community, creating some descriptive graphs using R and `{ggplot2}`.
 
 The data was obtained from the MITECO (Ministerio para la Transición Ecológica y el Reto Demográfico), and it can be found in this [link](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/informacion-disponible/incendios-forestales.html).
 
@@ -40,7 +39,7 @@ p_load(
 )
 ```
 
-Here, I will use the `tidyverse` as usual for data analysis and visualization, the package `readxl` since the data is in *Excel* format, and `stringi` for some string manipulation. Then, the package `sf` for vectorial data manipulation, `mapSpain` to download the map of Spain by any NUTS level. Finally, I will use `RColorBrewer` for colour palettes.
+Here, I will use the `{tidyverse}` as usual for data analysis and visualization, the package `{readxl}` since the data is in *Excel* format, and `{stringi}` for some string manipulation. Then, the package `{sf}` for vectorial data manipulation, `{mapSpain}` to download the map of Spain by any NUTS level. Finally, I will use `{RColorBrewer}` for colour palettes.
 
 ## Data exploration
 
@@ -135,7 +134,7 @@ wildfires_ccaa_total_tbl  %>%
         plot.subtitle = element_text(hjust = 0.5))
 ```
 
-Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with `head`. Then, we have a bar plot with the label that we previously created. The `expand_limits` function expands the axis so the label of Galicia can be seen properly. Next, the `annotate` functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases *rect* and *text*). The rest of the arguments are just formatting. Isn't it cool? That's why I love `ggplot2` ❤️.
+Ok, that was quite a bit of code. First, we can see that I filtered the top 10 Autonomous Communities with `head`. Then, we have a bar plot with the label that we previously created. The `expand_limits` function expands the axis so the label of Galicia can be seen properly. Next, the `annotate` functions create the rectangle and the label on the text. Note that we need to specify the geom of the annotation (in these cases *rect* and *text*). The rest of the arguments are just formatting. Isn't it cool? That's why I love `{ggplot2}` ❤️.
 
 ### Analysing the results
 
@@ -160,7 +159,7 @@ esp_ccaa_sf$nuts2.name
 wildfires_ccaa_total_tbl$ccaa
 ```
 
-Do you see it? The names are different, so that might be a problem when we try to join them. In the wildfires dataset, they didn't use acute accent (e.g. á). We could manually change it, but the package `stringi` allows us to this more efficiently:
+Do you see it? The names are different, so that might be a problem when we try to join them. In the wildfires dataset, they didn't use acute accent (e.g. á). We could manually change it, but the package `{stringi}` allows us to this more efficiently:
 
 ```{r}
 esp_ccaa_sf %>% 

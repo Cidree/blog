@@ -1,12 +1,16 @@
 ---
 title: ""
-page-layout: full
-title-block-banner: true
 execute: 
   echo: false
+
 filters: 
   - lightbox
 lightbox: auto
+
+format: 
+  html: 
+    page-layout: full
+    title-block-banner: true
 ---
 
 ::: {.header .container}

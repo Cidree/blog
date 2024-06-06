@@ -500,12 +500,6 @@ h2:not(#toc-title):not(.accordion-header){
   justify-content: center;
 }
 
-div.sourceCode,
-pre > code.sourceCode {
-  background-color: #252525 !important;
-  border: 0px;
-}
-
 div.sourceCode {
   padding: 0.3rem;
 }
