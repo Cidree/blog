@@ -19,3 +19,52 @@ div.sourceCode {
     background-color: $color-lightblue-2 !important;
     border: 2px solid $color-gray-dark;
 }
+
+// Cards
+.quarto-grid-item.card {
+  border: 2px solid $color-gray-dark;
+  border-radius: 3px;
+  
+  &:hover {
+    border: 3px solid $color-lightred;
+    transform: scale(1.02);
+  }
+  
+  & .card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  & .listing-description {
+    font-size: 0.9rem;
+  }
+  
+  & .listing-category {
+    background-color: $color-lightblue;
+    color: $color-darkblue;
+    border: .1px solid $color-darkblue;
+    
+    &:hover {
+      background-color: $color-darkblue;
+      color: $color-lightblue;
+    }
+    
+  }
+  
+}
+
+// Categories list
+.quarto-listing-category-title {
+  color: $color-darkblue;
+}
+
+.quarto-listing-category .category {
+  color: $color-darkblue;
+
+  &:hover {
+    background-color: $color-lightblue;
+    color: $color-darkblue;
+  }
+  
+}

@@ -1,30 +1,25 @@
 ---
 title: "Blog"
 listing:
-
   # Base options
   contents: posts
   page-size: 10
   sort: "date desc"
   type: grid
-  
   # Grids
   grid-item-border: true
   grid-item-align: center
-
   # Advanced options
   categories: true
   max-description-length: 125
-  
   # Feeds
   feed: 
     categories: spatial
-  
   # Listing fields
   fields: [image, description, date, title, reading-time, categories]
   
 page-layout: article
-title-block-banner: true
+title-block-banner: false
 ---
 
-Hei! Welcome to my blog.
+Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. Enjoy! 

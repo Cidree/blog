@@ -17,18 +17,20 @@ $color-lightblue: #A3D1D5;
 $color-lightblue-2: #DBEBEA;
 $color-lightred: #FAA6A6;
 $color-orange: #F05C28;
+$color-brown: #433E3F;
 
 /*-- scss:defaults --*/
 // Inline code
-$code-bg: #A3D1D5;
-$code-color: #2D4156;
+$code-bg: $color-lightblue;
+$code-color: $color-darkblue;
 $font-family-monospace: 'Cascadia Code', Courier, monospace;
 // Colors
 $link-color: $color-orange;
 // Code blocks
 $code-block-border-left-size: 10px;
 $code-block-bg: #CCDDE2;
-$code-block-border-left: #433E3F;
+$code-block-border-left: $color-brown;
+$btn-code-copy-color: $color-brown;
 // Callouts
 $callout-color-note: $color-note;
 $callout-color-tip: $color-tip;

@@ -1,7 +1,5 @@
-# options specified here will apply to all posts in this folder
 
 # freeze computational output
-# (see https://quarto.org/docs/projects/code-execution.html#freeze)
 freeze: auto
 
 # Enable banner style title blocks
@@ -11,13 +9,6 @@ title-block-banner: true
 author: "Adrián Cidre"
 
 # Layout
-code-link: true
-number-sections: true
-number-offset: 2
-toc: true
-toc-title: "Table of Contents"
-toc-depth: 3
-toc-location: right
 grid: 
   sidebar-width: 200px
   body-width: 800px
@@ -37,5 +28,12 @@ lightbox: auto
 # HTML opts
 format:
   html:
+    code-link: true
+    number-sections: true
+    number-offset: 2
+    toc: true
+    toc-title: "Table of Contents"
+    toc-depth: 3
+    toc-location: right
     include-after-body:
       - ../assets/includes/buymeacoffee.qmd
