@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Seymour+One&display=swap");
 @media (max-width: 500px) {
   .card-course-title {
     font-size: 0.9rem;
@@ -68,6 +69,20 @@ body {
   text-align: justify;
 }
 
+h1, h2, h3 {
+  font-weight: 900;
+  font-family: Josefin Sans, serif;
+  color: #2D4156;
+}
+
+h2, h3 {
+  text-transform: none;
+}
+
+h2:not(#toc-title):not(.accordion-header) {
+  border-bottom: 5px solid #DBEBEA;
+}
+
 .heading-primary {
   color: #0C0F1F;
   text-transform: uppercase;
@@ -104,12 +119,12 @@ body {
   text-align: center;
 }
 
-h2:not(#toc-title):not(.accordion-header) {
-  border-left: 1rem solid #252525;
-  border-bottom: 0.2rem solid #252525;
-  padding-left: 1rem;
-}
-
+/* Titles border
+h2:not(#toc-title):not(.accordion-header){
+    border-left: 1rem solid $color-gray-dark-2;
+    border-bottom: .2rem solid $color-gray-dark-2;
+    padding-left: 1rem;
+}*/
 .btn-primary--big:link, .btn-primary--big:visited {
   text-transform: uppercase;
   text-decoration: none;
@@ -372,6 +387,68 @@ h2:not(#toc-title):not(.accordion-header) {
   text-decoration: underline;
 }
 
+.composition {
+  position: relative;
+  margin-top: 2rem;
+}
+.composition__photo {
+  width: 55%;
+  box-shadow: 0 1.5rem 4rem rgba(12, 15, 31, 0.4);
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  transition: all 0.2s;
+  outline-offset: 2rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .composition__photo {
+    float: left;
+    position: relative;
+    width: 33.33333333%;
+    box-shadow: 0 1.5rem 3rem rgba(12, 15, 31, 0.2);
+  }
+}
+.composition__photo--p1 {
+  left: 0;
+  top: -2rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .composition__photo--p1 {
+    top: 0;
+    transform: scale(1.2);
+  }
+}
+.composition__photo--p2 {
+  right: 0;
+  top: 2rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .composition__photo--p2 {
+    top: -1rem;
+    transform: scale(1.3);
+    z-index: 100;
+  }
+}
+.composition__photo--p3 {
+  left: 20%;
+  top: 10rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .composition__photo--p3 {
+    top: 1rem;
+    left: 0;
+    transform: scale(1.1);
+  }
+}
+.composition__photo:hover {
+  transform: scale(1.5) translateY(-0.5rem);
+  box-shadow: 0 2.5rem 4rem rgba(12, 15, 31, 0.5);
+  z-index: 20;
+}
+.composition:hover .composition__photo:not(:hover) {
+  transform: scale(0.95);
+}
+
 .toc-active {
   background-color: #F5F5F5;
   color: #252525;
@@ -396,6 +473,10 @@ h2:not(#toc-title):not(.accordion-header) {
   text-align: left;
   color: #252525;
   font-size: 1.2rem;
+}
+
+.container-lived h3 {
+  text-align: center;
 }
 
 .quarto-grid-item.card-center .listing-description {

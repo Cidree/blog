@@ -4,6 +4,9 @@ page-layout: full
 title-block-banner: true
 execute: 
   echo: false
+filters: 
+  - lightbox
+lightbox: auto
 ---
 
 ::: {.header .container}
@@ -34,7 +37,84 @@ Bridging forests and technology
 :::
 :::
 
-# Introduction
+```{=html}
+<div class="about-links text-center">
+  <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
+  <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank">
+    <i class="bi bi-envelope-at"></i>
+     <span class="about-link-text">Contact me</span>
+  </a>
+</div>
+```
+## ABOUT ME
+
+Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
+
+My passions are cycling, hiking, and travelling. I love to explore new places, cultures, and gastronomy, and I am always looking for new adventures. So far I have been living in:
+
+::: {.container .grid .container-lived}
+::: {.g-col-12 .g-col-md-6}
+### Spain 🏖️
+
+![](assets/figures/lived_spain.jpg){fig-align="center" width="375"}
+:::
+
+::: {.g-col-12 .g-col-md-6}
+### Finland ☃️
+
+![](assets/figures/lived_finland.jpg){fig-align="center" width="375"}
+:::
+
+::: {.g-col-12 .g-col-md-6}
+### Czech Republic 🌉
+
+![](assets/figures/lived_czechia.jpg){fig-align="center" width="375"}
+:::
+
+::: {.g-col-12 .g-col-md-6}
+### Norway 🏔️
+
+![](assets/figures/lived_norway.jpg){fig-align="center" width="667"}
+:::
+:::
+
+## Firefighter
+
+::: columns
+::: {.column width="50%"}
+During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
+
+Due to uncertainty in the job market for firefighting and an unfortunate injury that may limit me in the long-term, I decided to focus on my studies and transition to a GIS specialist role as I already liked it, and it was a smarter choice for my future. I am grateful for the experience and knowledge I gained during my time as a firefighter, as it has shaped my career and my approach to forestry management.
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="40%"}
+::: composition
+![](assets/figures/firefighter_01.jpg){.composition__photo .composition__photo--p1 .nolightbox fig-align="center" width="50"}
+
+![](assets/figures/firefighter_03.jpg){.composition__photo .composition__photo--p2 .nolightbox fig-align="center" width="75"}
+
+![](assets/figures/firefighter_02.jpg){.composition__photo .composition__photo--p3 .nolightbox fig-align="center" width="50"}
+:::
+:::
+:::
+
+## GIS specialist and R
+
+When I started my Master's degree in geomatics, remote sensing, and spatial models applied to forest management, I discovered the power of R. I was amazed by the possibilities of this programming language and its applications in forestry. I decided to specialize in R programming and apply it to forest management, remote sensing, and spatial data science.
+
+Since then, I focused on developing R-based solutions for forestry challenges. I have created several R applications and courses to help forest managers, researchers, and students. I am passionate about teaching and sharing my knowledge with others. The current trend for GIS specialists is to use a GIS software like QGIS or ArcGIS, but I believe that R and Python are tools that not only allow you to perform the same tasks but also provide you with the flexibility to create your own solutions and applications, and all the advantages of a programming language such automation, reproducibility, scalability, creation of data pipelines, and more.
+
+## This Blog
 
 In this blog I will share contents of my life, my work, and also I will create teaching content. Here, I share my experiences and knowledge in diverse subjects, focusing on:
 
@@ -53,3 +133,15 @@ In this blog I will share contents of my life, my work, and also I will create t
 > -   Spatial Data Science
 >
 > -   Teaching
+
+Thank you for visiting, and I look forward to the possibility of learning together.
+
+## Curriculum Vitae
+
+My CV was created using the `{vitae}` R package:
+
+```{=html}
+<iframe
+  width="800" height="800" src="assets/figures/CV_AdrianCidre.pdf">
+</iframe>
+```
