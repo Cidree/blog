@@ -1,6 +1,6 @@
 ---
-title: "About"
-image: 01_figures/Foto_Snelska.jpg
+title: "About me"
+image: assets/figures/Foto_Snelska.jpg
 about:
   template: jolla
   links:
@@ -15,12 +15,14 @@ about:
       href: mailto:adrian.cidre@gmail.com
 ---
 
-I am Forestry Engineer, and currently I am working as researcher at the University of Córdoba in the LIFE FAGESOS Project, and more specifically, I am developing biophysical models for *Phytophthora cinnamomi* in the Mediterranean Basin. Furthermore, I am finishing my Master's Degree in Geomatics, Remote Sensing and Spatial Models applied to Forest Management at the same University.
+I am a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
 
-For over two years, I have been using the programming language R in a daily basis. I try to inspire others to use it, since I believe its potential is unknown by most. I mostly work doing data and spatial data analysis, statistics, modelling, remote sensing, and development of web applications. All of this applied to my field of knowledge which is forestry. Over the time, I honed my skills with R, web development languages (HTML & CSS), deployment tools (Shiny, EC2, Git, Docker), and I try to learn something new every day.
+During my career, I worked as a firefighter for six seasons before transitioning to a GIS specialist role at the University of Córdoba while completing my Master's degree. There, I honed my skills in R, continually improving my proficiency. I strive to create efficient, reproducible, and clear code that automates common tasks in forestry.
+
+Thank you for visiting, and I look forward to the possibility of learning together.
 
 ## Curriculum Vitae
 
-<iframe width="800" height="800" src="01_figures/CV_AdrianCidre.pdf">
+<iframe width="800" height="800" src="assets/figures/CV_AdrianCidre.pdf">
 
 </iframe>

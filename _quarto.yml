@@ -9,7 +9,7 @@ website:
   site-url: "https://adrian-cidre.com"
   search: false
   navbar:
-    #logo: figures/logo.png
+    #logo: assets/figures/logo.png
     background: "#2D4156"
     collapse-below: lg
     right:
@@ -47,8 +47,8 @@ website:
 format:
   html:
     theme: 
-      light: [lux, 00_styles/quarto_theme.scss]
-    css: 00_styles/styles.css
+      light: [lux, assets/styles/quarto_theme.scss]
+    css: assets/styles/styles.css
     code-link: true
     code-block-border-left: true
     linkcolor: '#ff0000'

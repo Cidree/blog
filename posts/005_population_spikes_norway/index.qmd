@@ -83,9 +83,10 @@ The data contains the *h3* column which is the ID of the h3 hexagon, and the tot
 
 ```{r}
 #| echo: false
-#| output: false
+#| message: false
 
 file.remove(file_path)
+file.remove(file_name)
 ```
 
 ## Prepare the data

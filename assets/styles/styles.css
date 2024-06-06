@@ -1,0 +1,455 @@
+@media (max-width: 500px) {
+  .card-course-title {
+    font-size: 0.9rem;
+  }
+}
+@keyframes titleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateX(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+@keyframes subtitleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateX(-1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+@keyframes buttonAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; /*good practice to have box-sizing:border-box in body*/
+}
+
+/*
+html {
+  font-size: 62.5%; // % of default size (16px ~ > 10px
+}*/
+/* Body elements */
+body {
+  box-sizing: border-box;
+}
+
+body {
+  font-weight: 400;
+  /*font-size: 16px;*/
+  line-height: 1.7;
+  color: #777;
+  padding: 3rem;
+  font-family: Atkinson Hyperlegible, Nunito, sans-serif;
+  text-align: justify;
+}
+
+.heading-primary {
+  color: #0C0F1F;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  margin-bottom: 8rem;
+}
+.heading-primary--main {
+  display: block;
+  white-space: nowrap;
+  font-weight: 700;
+  animation: titleAnimation 1s ease-out;
+}
+.heading-primary--main--big {
+  font-size: 3rem;
+  letter-spacing: 1rem;
+}
+.heading-primary--main--small {
+  font-size: 1.2rem;
+}
+.heading-primary--sub {
+  display: block;
+  font-weight: 400;
+  animation: subtitleAnimation 1s ease-out;
+}
+.heading-primary--sub--big {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+}
+.heading-primary--sub--small {
+  font-size: 0.7rem;
+}
+
+.figure-caption {
+  text-align: center;
+}
+
+h2:not(#toc-title):not(.accordion-header) {
+  border-left: 1rem solid #252525;
+  border-bottom: 0.2rem solid #252525;
+  padding-left: 1rem;
+}
+
+.btn-primary--big:link, .btn-primary--big:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  display: inline-table;
+  border-radius: 10rem;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 1.2rem;
+}
+.btn-primary--big:link:hover, .btn-primary--big:visited:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1rem 2rem rgba(245, 245, 245, 0.2);
+}
+.btn-primary--big:link:hover::after, .btn-primary--big:visited:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+.btn-primary--big:link:active, .btn-primary--big:visited:active {
+  transform: translateY(-0.1rem);
+  box-shadow: 0 5rem 1rem rgba(245, 245, 245, 0.2);
+}
+.btn-primary--big:link::after, .btn-primary--big:visited::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 10rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s;
+}
+.btn-primary--big:link--animated, .btn-primary--big:visited--animated {
+  animation: buttonAnimation 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards; /*Apply styles up to 0% before animation starts*/
+}
+.btn-primary--small:link, .btn-primary--small:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-table;
+  border-radius: 1rem;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 0.7rem;
+  padding: 0.2rem;
+}
+
+.header {
+  height: 30rem;
+  background-position: top;
+  background-image: linear-gradient(to right bottom, rgba(197, 248, 201, 0.8), rgba(99, 178, 47, 0.8)), url("../../assets/figures/forest.jpg");
+  background-size: cover;
+  background-position: top;
+  margin-top: 2em;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+.header__text-box {
+  position: absolute;
+  top: 40%; /*40% down from top*/
+  left: 50%; /*50% from left*/
+  transform: translate(-50%, -50%); /*top and left are counted in middle of text*/
+  text-align: center;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar-title {
+  color: white;
+  font-weight: 900;
+}
+
+.menu-text {
+  color: white;
+  font-weight: bold;
+}
+
+.navbar-logo {
+  max-height: 100px;
+}
+
+.nav-link {
+  transition: transform 0.2s;
+  text-align: center;
+}
+.nav-link.active, .nav-link:focus {
+  background-color: #A3D1D5;
+}
+.nav-link.active .menu-text, .nav-link:focus .menu-text {
+  color: #2D4156;
+  font-weight: 900;
+}
+.nav-link:hover {
+  transform: translateY(0.1rem) scale(1.1);
+  background-color: #A3D1D5;
+}
+.nav-link:hover .menu-text, .nav-link:hover .bi {
+  color: #2D4156;
+}
+
+.navbar-nav .bi {
+  font-size: 400;
+  color: white;
+}
+
+.jumbotron {
+  margin-top: 2rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  position: relative;
+  width: 100%;
+}
+.jumbotron-title {
+  position: relative;
+  z-index: 1;
+  font-size: 3rem;
+}
+.jumbotron-text {
+  z-index: 1;
+  color: #0C0F1F;
+  position: relative;
+  width: 50%;
+}
+.jumbotron-courses {
+  height: 50vh;
+  width: 100%;
+}
+.jumbotron-courses::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/figures/jumbo.png");
+  background-size: cover;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+.card-img-top {
+  border-radius: 0.3rem;
+}
+.card-courses {
+  text-align: center;
+  padding: 1rem;
+}
+.card-courses h3 {
+  font-size: 1rem;
+}
+.card-courses p {
+  font-size: 0.8rem;
+}
+
+.card-course {
+  border: 1px solid #2D4156;
+  border-radius: 0.3rem;
+}
+.card-course-title {
+  color: #2D4156;
+  font-weight: bold;
+  height: 5rem;
+  background-color: #A3D1D5;
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+  border-radius: 0.3rem;
+}
+.card-course-mode {
+  background-color: #F5F5F5;
+}
+.card-course-btn {
+  background-color: #2D4156;
+  font-size: 1rem;
+}
+
+.course-banner {
+  background-color: #A3D1D5;
+}
+.course-banner--icon {
+  color: #2D4156;
+  padding-top: 2rem;
+}
+.course-banner--text {
+  color: #0C0F1F;
+}
+.course-banner--image {
+  max-width: 100%;
+}
+
+.course-link {
+  margin-top: 2rem;
+}
+.course-link--button {
+  align-content: center;
+  display: flex;
+  max-width: 60%;
+  margin: auto;
+  justify-content: center;
+  background-color: #FAA6A6;
+  color: #2D4156;
+  font-size: 1.5rem;
+  padding: 1.5rem;
+}
+
+.course-description {
+  margin-top: 2rem;
+}
+.course-description--title {
+  text-align: center;
+}
+.course-description--text {
+  color: #2D4156;
+}
+
+.course-curriculum {
+  margin-top: 2rem;
+}
+
+.accordion-item {
+  background-color: #A3D1D5;
+  border: 0;
+}
+
+.accordion-button,
+.accordion-button:focus,
+.accordion-button:not(.collapsed) {
+  background-color: #2D4156;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 1rem;
+}
+
+.accordion-collapse--course {
+  background-color: #F5F5F5;
+  color: #2D4156;
+}
+
+.accordion-header {
+  margin-top: 0;
+  max-width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.accordion-body {
+  max-width: 60%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.accordion-body strong {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.toc-active {
+  background-color: #F5F5F5;
+  color: #252525;
+  position: relative;
+  top: 8rem;
+  font-family: system-ui;
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+}
+.toc-active ul li .nav-link {
+  background-color: #F5F5F5;
+  text-align: left;
+}
+.toc-active ul li .nav-link.active, .toc-active ul li .nav-link:hover {
+  font-weight: 900;
+  font-size: 0.8rem;
+  background-color: #F5F5F5;
+}
+
+#toc-title {
+  font-family: system-ui;
+  text-align: left;
+  color: #252525;
+  font-size: 1.2rem;
+}
+
+.quarto-grid-item.card-center .listing-description {
+  text-align: center;
+}
+
+.quarto-grid-item .card-attribution.end {
+  justify-content: center;
+}
+
+.listing-actions-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.quarto-listing-filter {
+  margin-left: unset;
+}
+
+.quarto-title .quarto-categories {
+  justify-content: center;
+}
+
+div.sourceCode,
+pre > code.sourceCode {
+  background-color: #252525 !important;
+  border: 0px;
+}
+
+div.sourceCode {
+  padding: 0.3rem;
+}
+
+.sourceCode {
+  border-radius: 3px;
+  padding: 0.5em;
+  overflow: auto;
+}
+
+.cell-output.cell-output-stdout {
+  background-color: #DBEBEA !important;
+  border: 2px solid #777;
+}
+
+.quarto-title {
+  display: block;
+  text-align: center;
+}
+
+.quarto-title-banner {
+  margin-top: 1rem;
+}
+.quarto-title-banner h1.title {
+  color: white;
+}
+
+/*# sourceMappingURL=styles.css.map */

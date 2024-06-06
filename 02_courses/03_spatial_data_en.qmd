@@ -21,7 +21,7 @@ course_banner(
   mode     = "Online",
   time     = "30 hours",
   date     = "Available Anytime",
-  img_file = "../01_figures/00_course_figures/03_intro_spatial_data.png"
+  img_file = "../assets/figures/00_course_figures/03_intro_spatial_data.png"
 )
 ```
 :::
@@ -58,7 +58,7 @@ Here below is an example of what you will learn to perform in this course:
 :::
 
 ```{=html}
-<iframe src="../01_figures/01_html/population_spain.html" width="800" height="600"></iframe>
+<iframe src="../assets/html/population_spain.html" width="800" height="600"></iframe>
 ```
 ::: course-description
 ::: course-description--title

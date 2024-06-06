@@ -22,7 +22,7 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 
 ::: {.row .d-block .d-sm-none}
 ::: {.card .card-courses}
-![](01_figures/jumbo.png){.img-fluid .rounded .mx-auto .d-block}
+![](assets/figures/jumbo.png){.img-fluid .rounded .mx-auto .d-block}
 
 ### Courses
 
@@ -34,7 +34,7 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "01_figures/00_course_figures/03_intro_spatial_data.png",
+  file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introducción a Análisis de Datos Espaciales en R",
   mode         = "Online",
   date         = "Available Anytime",
@@ -48,7 +48,7 @@ course_card(
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "01_figures/00_course_figures/03_intro_spatial_data.png",
+  file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introduction to Spatial Data Analysis with R",
   mode         = "Online",
   date         = "Available Anytime",
@@ -62,7 +62,7 @@ course_card(
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "01_figures/00_course_figures/02_analisis_datos.png",
+  file         = "assets/figures/00_course_figures/02_analisis_datos.png",
   course_title = "INTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]",
   mode         = "Online",
   date         = "Available Anytime",
@@ -76,7 +76,7 @@ course_card(
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "01_figures/00_course_figures/01_quarto.png",
+  file         = "assets/figures/00_course_figures/01_quarto.png",
   course_title = "Quarto - diseño de documentos profesionales en RStudio",
   mode         = "Online",
   date         = "Available Anytime",

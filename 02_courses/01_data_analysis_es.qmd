@@ -21,7 +21,7 @@ course_banner(
   mode     = "Online",
   time     = "30 horas",
   date     = "Siempre Disponible",
-  img_file = "../01_figures/00_course_figures/02_analisis_datos.png"
+  img_file = "../assets/figures/00_course_figures/02_analisis_datos.png"
 )
 ```
 :::
