@@ -3,11 +3,6 @@ title: "Introducción a Análisis de Datos Espaciales y SIG en R"
 title-block-banner: true
 execute: 
   echo: false
-
-# Comments section
-comments: 
-  utterances: 
-    repo:  Cidree/blogComments
 ---
 
 ```{r}

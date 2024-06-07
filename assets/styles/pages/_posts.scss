@@ -68,3 +68,12 @@ div.sourceCode {
   }
   
 }
+
+// INSIDE POSTS ------------------------------
+.quarto-category {
+  color: $color-darkblue;
+  background-color: $color-lightred;
+  border: .1px solid $color-darkblue;
+  font-weight: bold;
+  opacity: 0.8 !important;
+}

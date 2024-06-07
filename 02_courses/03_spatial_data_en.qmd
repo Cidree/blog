@@ -3,11 +3,6 @@ title: "Introduction to Spatial Data Analysis and GIS in R"
 title-block-banner: true
 execute: 
   echo: false
-
-# Comments section
-comments: 
-  utterances: 
-    repo:  Cidree/blogComments
 ---
 
 ```{r}

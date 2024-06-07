@@ -553,6 +553,14 @@ div.sourceCode {
   color: #2D4156;
 }
 
+.quarto-category {
+  color: #2D4156;
+  background-color: #FAA6A6;
+  border: 0.1px solid #2D4156;
+  font-weight: bold;
+  opacity: 0.8 !important;
+}
+
 .quarto-title {
   display: block;
   text-align: center;

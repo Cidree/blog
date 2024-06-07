@@ -1,3 +1,9 @@
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
+    theme: github-dark-orange
+
 # HTML opts
 format:
   html:
