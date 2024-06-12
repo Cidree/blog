@@ -1,6 +1,7 @@
 
 .course-banner {
-  background-color: $color-lightblue;
+  background-color: $color-gray-light;
+  text-align: center;
   
 
   &--icon {
@@ -10,10 +11,18 @@
   
   &--text {
     color: $color-black;
+    text-transform: none;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
   }
   
   &--image {
     max-width: 100%;
+  }
+  
+  &--title {
+    margin-top: 1rem;
   }
 }
 

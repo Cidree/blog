@@ -92,13 +92,13 @@ My passions are cycling, hiking, and travelling. I love to explore new places, c
 ## Firefighter
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="45%"}
 During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
 
 Due to uncertainty in the job market for firefighting and an unfortunate injury that may limit me in the long-term, I decided to focus on my studies and transition to a GIS specialist role as I already liked it, and it was a smarter choice for my future. I am grateful for the experience and knowledge I gained during my time as a firefighter, as it has shaped my career and my approach to forestry management.
 :::
 
-::: {.column width="10%"}
+::: {.column width="15%"}
 :::
 
 ::: {.column width="40%"}

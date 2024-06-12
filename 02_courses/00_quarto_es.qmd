@@ -3,20 +3,25 @@ title: "Quarto - diseño de documentos profesionales en RStudio"
 title-block-banner: true
 execute: 
   echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
 ---
 
 ```{r}
 source("../03_scripts/00_courses.R")
 ```
 
-::: course-banner
+::: {.course-banner .column-screen}
 ```{r}
 course_banner(
-  price    = "13 €",
+  price    = "12.99 €",
   mode     = "Online",
   time     = "15 horas",
   date     = "Siempre Disponible",
-  img_file = "../assets/figures/00_course_figures/01_quarto.png"
+  img_file = "../assets/figures/00_course_figures/01_quarto.png",
+  lang     = "es"
 )
 ```
 :::
@@ -25,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=755DDF5A99728F4FBA4F",
+  href = "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=E0852462B5B0F5523059",
   "Apuntarse al Curso")
 ```
 :::

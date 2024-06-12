@@ -306,7 +306,8 @@ h2:not(#toc-title):not(.accordion-header){
 }
 
 .course-banner {
-  background-color: #A3D1D5;
+  background-color: #F5F5F5;
+  text-align: center;
 }
 .course-banner--icon {
   color: #2D4156;
@@ -314,9 +315,16 @@ h2:not(#toc-title):not(.accordion-header){
 }
 .course-banner--text {
   color: #0C0F1F;
+  text-transform: none;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 .course-banner--image {
   max-width: 100%;
+}
+.course-banner--title {
+  margin-top: 1rem;
 }
 
 .course-link {

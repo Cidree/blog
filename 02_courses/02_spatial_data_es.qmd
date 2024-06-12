@@ -3,20 +3,25 @@ title: "Introducción a Análisis de Datos Espaciales y SIG en R"
 title-block-banner: true
 execute: 
   echo: false
+format:
+  html:
+    grid:
+      body-width: 1000px
 ---
 
 ```{r}
 source("../03_scripts/00_courses.R")
 ```
 
-::: course-banner
+::: {.course-banner .column-screen}
 ```{r}
 course_banner(
-  price    = "13 €",
+  price    = "12.99 €",
   mode     = "Online",
   time     = "30 horas",
   date     = "Siempre Disponible",
-  img_file = "../assets/figures/00_course_figures/03_intro_spatial_data.png"
+  img_file = "../assets/figures/00_course_figures/03_intro_spatial_data.png",
+  lang     = "es"
 )
 ```
 :::
@@ -25,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=1B0CA98323B1D2399598",
+  href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=CE6BDA0F561F95EC42FE",
   "Apuntarse al Curso")
 ```
 :::
@@ -44,7 +49,7 @@ a(class = "text-center btn btn-success course-link--button",
 :::
 
 ::: course-description--text
-¡Bienvenido a mi curso de Análisis de Datos Espaciales en R!
+Bienvenido a mi curso de Análisis de Datos Espaciales en R!
 
 Este curso está diseñado para personas de nivel principiante e intermedio que desean aprender todo lo necesario sobre el análisis de datos espaciales utilizando el lenguaje de programación R. Nos enfocaremos en los paquetes más actuales y prácticas para trabajar con datos espaciales reales. En total utilizaremos 27 paquetes de R distintos, por lo que será un curso intenso, pero muy completo.
 
