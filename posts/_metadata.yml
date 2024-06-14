@@ -31,3 +31,4 @@ format:
     toc-location: right
     include-after-body:
       - ../assets/includes/buymeacoffee.qmd
+    page-layout: article

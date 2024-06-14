@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Seymour+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merienda:wght@300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merienda:wght@300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 @media (max-width: 500px) {
   .card-course-title {
     font-size: 0.9rem;
@@ -69,9 +74,13 @@ body {
   text-align: justify;
 }
 
+.navbar-title, .menu-text {
+  font-family: "Ubuntu", "Libre Baskerville", "Roboto", "Montserrat", serif;
+}
+
 h1, h2, h3 {
-  font-weight: 900;
-  font-family: Josefin Sans, serif;
+  font-weight: 700;
+  font-family: "Ubuntu", "Libre Baskerville", "Roboto", "Montserrat", serif;
   color: #2D4156;
 }
 
@@ -81,6 +90,10 @@ h2, h3 {
 
 h2:not(#toc-title):not(.accordion-header) {
   border-bottom: 5px solid #DBEBEA;
+}
+
+code {
+  font-family: "Cascadia Code", "Source Code Pro", "Fira Code", monspace;
 }
 
 .heading-primary {
@@ -510,6 +523,7 @@ h2:not(#toc-title):not(.accordion-header){
 
 div.sourceCode {
   padding: 0.3rem;
+  margin-bottom: 2rem;
 }
 
 .sourceCode {
@@ -518,9 +532,14 @@ div.sourceCode {
   overflow: auto;
 }
 
+div.sourceCode + .cell-output.cell-output-stdout {
+  margin-top: -1rem;
+}
+
 .cell-output.cell-output-stdout {
   background-color: #DBEBEA !important;
   border: 2px solid #777;
+  margin-bottom: 2rem;
 }
 
 .quarto-grid-item.card {

@@ -7,6 +7,7 @@
 // Code
 div.sourceCode {
   padding: .3rem;
+  margin-bottom: 2rem;
 }
 
 .sourceCode {
@@ -15,9 +16,15 @@ div.sourceCode {
   overflow: auto;
 }
 
+// Apply only 1rem of margin when there is a code output after sourceCode
+div.sourceCode + .cell-output.cell-output-stdout {
+    margin-top: -1rem; 
+}
+
 .cell-output.cell-output-stdout {
     background-color: $color-lightblue-2 !important;
     border: 2px solid $color-gray-dark;
+    margin-bottom: 2rem;
 }
 
 // Cards

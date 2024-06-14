@@ -52,6 +52,6 @@ format:
     code-block-border-left: true
     linkcolor: '#ff0000'
     fontsize: 100%
-    highlight-style: tango
+    highlight-style: arrow
 editor: visual
 
