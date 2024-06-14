@@ -234,11 +234,11 @@ h2:not(#toc-title):not(.accordion-header){
   color: #2D4156;
   font-weight: 900;
 }
-.nav-link:hover {
+.nav-link:hover:not(.toc-active a) {
   transform: translateY(0.1rem) scale(1.1);
   background-color: #A3D1D5;
 }
-.nav-link:hover .menu-text, .nav-link:hover .bi {
+.nav-link:hover:not(.toc-active a) .menu-text, .nav-link:hover:not(.toc-active a) .bi {
   color: #2D4156;
 }
 
@@ -470,6 +470,10 @@ h2:not(#toc-title):not(.accordion-header){
   transform: scale(0.95);
 }
 
+#quarto-margin-sidebar {
+  width: 275px;
+}
+
 .toc-active {
   background-color: #F5F5F5;
   color: #252525;
@@ -477,20 +481,18 @@ h2:not(#toc-title):not(.accordion-header){
   top: 8rem;
   font-family: system-ui;
   text-align: left;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem;
 }
 .toc-active ul li .nav-link {
   background-color: #F5F5F5;
   text-align: left;
 }
 .toc-active ul li .nav-link.active, .toc-active ul li .nav-link:hover {
-  font-weight: 900;
-  font-size: 0.8rem;
-  background-color: #F5F5F5;
+  font-weight: 700;
+  color: #252525;
 }
 
 #toc-title {
-  font-family: system-ui;
   text-align: left;
   color: #252525;
   font-size: 1.2rem;

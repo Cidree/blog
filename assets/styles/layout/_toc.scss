@@ -1,4 +1,8 @@
 
+#quarto-margin-sidebar {
+  width: 275px;
+}
+
 .toc-active {
   background-color: $color-gray-light;
   color: $color-gray-dark-2;
@@ -6,7 +10,7 @@
   top: 8rem;
   font-family: system-ui;
   text-align: left;
-  padding: .5rem .5rem;
+  padding: 1rem;
   
   & ul li .nav-link {
     background-color: $color-gray-light;
@@ -14,16 +18,14 @@
       
     &.active,
     &:hover {
-      font-weight: 900;
-      font-size: .8rem;
-      background-color: $color-gray-light;
+      font-weight: 700;
+      color: $color-gray-dark-2;
     }
     
   }
 }
 
 #toc-title {
-  font-family: system-ui;
   text-align: left;
   color: $color-gray-dark-2;
   font-size: 1.2rem;

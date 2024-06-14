@@ -42,7 +42,7 @@
   }
   
   // Navlink on hover
-  &:hover {
+  &:hover:not(.toc-active a) {
     transform: translateY(0.1rem) scale(1.1);
     background-color: $color-lightblue;
     

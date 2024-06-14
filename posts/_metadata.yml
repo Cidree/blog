@@ -26,9 +26,8 @@ format:
     number-sections: true
     number-offset: 2
     toc: true
-    toc-title: "Table of Contents"
+    toc-title: "Contents"
     toc-depth: 3
     toc-location: right
     include-after-body:
       - ../assets/includes/buymeacoffee.qmd
-    page-layout: article
