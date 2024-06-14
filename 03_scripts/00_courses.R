@@ -5,10 +5,16 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
   
   div(
     class = "card card-course text-center p-1",
-    img(class = "img-circle card-img-top", src = file),
+    div(
+      class = "card-img--container",
+      img(class = "img-circle card-img--text", src = file)
+    ),
     div(
       class = "card-body",
-      h5(course_title, class = "card-course-title"),
+      div(
+        class = "card-course-title--container",
+        h5(course_title, class = "card-course--title")
+      ),
       p(mode, class = "card-course-mode"),
       tags$ul(
         class = "list-group list-group-flush",

@@ -84,6 +84,11 @@ h1, h2, h3 {
   color: #2D4156;
 }
 
+h4, h5, h6 {
+  font-family: "Roboto", "Montserrat", serif;
+  text-transform: none;
+}
+
 h2, h3 {
   text-transform: none;
 }
@@ -282,8 +287,18 @@ h2:not(#toc-title):not(.accordion-header){
   z-index: 0;
 }
 
-.card-img-top {
+.card-img--container {
+  height: 13rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.card-img--text {
   border-radius: 0.3rem;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
 }
 .card-courses {
   text-align: center;
@@ -300,14 +315,17 @@ h2:not(#toc-title):not(.accordion-header){
   border: 1px solid #2D4156;
   border-radius: 0.3rem;
 }
-.card-course-title {
-  color: #2D4156;
-  font-weight: bold;
+.card-course-title--container {
+  background-color: #F0EAEA;
+  padding: 0.1rem 1rem;
+  margin-bottom: 1rem;
   height: 5rem;
-  background-color: #A3D1D5;
   display: flex;
   align-items: center;
-  padding: 3rem;
+}
+.card-course--title {
+  color: #2D4156;
+  font-weight: bold;
   border-radius: 0.3rem;
 }
 .card-course-mode {
@@ -600,6 +618,15 @@ div.sourceCode + .cell-output.cell-output-stdout {
 }
 .quarto-title-banner h1.title {
   color: white;
+}
+
+.course-notavailable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background-color: #FAA6A6;
+  width: 100%;
 }
 
 /*# sourceMappingURL=styles.css.map */

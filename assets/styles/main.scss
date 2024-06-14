@@ -42,3 +42,19 @@
     color: $color-white;
   }
 }
+
+// Course not available
+.course-notavailable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background-color: $color-lightred;
+  width: 100%;
+}
+
+
+
+
+
+

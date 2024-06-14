@@ -1,8 +1,19 @@
 
 .card {
   
-  &-img-top {
+  &-img--container {
+    height: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; // This will ensure the image does not overflow the container 
+  }
+
+  &-img--text {
     border-radius: $img-radius;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover; 
   }
   
   &-courses {
@@ -20,21 +31,24 @@
   
 }
 
-
 // Course cards
 .card-course {
   
   border: 1px solid $color-darkblue;
   border-radius: $img-radius;
-  
-  &-title {
-    color: $color-darkblue;
-    font-weight: bold;
+
+  &-title--container {
+    background-color: #F0EAEA;
+    padding: .1rem 1rem;
+    margin-bottom: 1rem;
     height: 5rem;
-    background-color: $color-lightblue;
     display: flex;
     align-items: center;
-    padding: 3rem;
+  }
+  
+  &--title {
+    color: $color-darkblue;
+    font-weight: bold;
     border-radius: $img-radius;
 
   }

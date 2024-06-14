@@ -1,0 +1,178 @@
+---
+title: "Ecología espacial aplicada a la gestión forestal"
+title-block-banner: true
+execute: 
+  echo: false
+format:
+  html:
+    grid:
+      body-width: 1000px
+---
+
+```{r}
+source("../03_scripts/00_courses.R")
+```
+
+::: {.course-banner .column-screen}
+```{r}
+course_banner(
+  price    = "Gratis",
+  mode     = "Online",
+  time     = "25 horas",
+  date     = "01/Jul - 27/jul",
+  img_file = "../assets/figures/00_course_figures/bosque-digital.jpg",
+  lang     = "es"
+)
+```
+:::
+
+<!-- ::: course-link -->
+
+<!-- ```{r} -->
+
+<!-- a(class = "text-center btn btn-success course-link--button", -->
+
+<!--   target = "_blank", -->
+
+<!--   href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=CE6BDA0F561F95EC42FE", -->
+
+<!--   "Apuntarse al Curso") -->
+
+<!-- ``` -->
+
+<!-- ::: -->
+
+<div>
+
+::: {.course-notavailable .button .button-danger .column-screen}
+Matriculación no disponible. En los próximos días se abrirá.
+:::
+
+</div>
+
+::: course-description
+::: course-description--title
+## Introducción del curso
+:::
+:::
+
+{{< video https://www.youtube.com/watch?v=jfxa-k5ZSNM&t=1913s >}}
+
+::: course-description
+::: course-description--title
+## Bosque Digital
+:::
+
+::: course-description--text
+El Mooc BOSQUE DIGITAL es completamente gratuito y abierto a estudiantes y profesionales de todos los ámbitos de las ciencias e ingenierías interesados en la geoinformática aplicada al territorio forestal. La emisión del certificación de aprovechamiento tendrá un costo de 26.30 € por módulo de 2 ECTS.
+
+Actualmente, Bosque Digital se divide en tres bloques:
+
+-   **Bosque Digital Introduccion**: donde se ofrece el acceso a competencias básicas en el área de geoinformática (SIG, teledetección, bases de datos y modelización). Más información sobre los cursos disponibles en [este enlace](https://ucoonline.uco.es/mooc/cursosofertados/page1.html){target="_blank"}.
+
+-   **Bosque Digital Avanzado**: que incluye formación en técnicas avanzadas de geoinformática, incluyendo sensorización de sistemas agroforestales, LiDAR terrestre, Google Earth Engine, y modelización basada en R. Más información sobre los cursos disponibles en [este enlace](https://ucoonline.uco.es/mooc/cursosofertados/page2.html){target="_blank"},
+
+-   **Bosque Digital Acción**: con un fuerte componente práctico, y que abarca competencias basadas en herramientas de campo aplicadas a la gestión del medio forestal, como OruxMap, QGIS forestal, drones, y emergencias. Más información sobre los cursos disponibles en [este enlace](https://ucoonline.uco.es/mooc/cursosofertados/page3.html){target="_blank"}.
+
+Bosque Digital ha tenido una gran acogida dentro de los profesionales del sector forestal con los siguientes indicadores de calidad:
+
+![](/assets/figures/00_course_figures/clipboard-117702669.png){fig-align="center"}
+
+Puedes visitar los cursos de Bosque Digital en [este enlace](https://ucoonline.uco.es/mooc/){target="_blank"}.
+:::
+:::
+
+::: course-description
+::: course-description--title
+## Requisitos previos
+:::
+
+::: course-description--text
+Conocimientos básico-medio de R
+:::
+:::
+
+::: {.course-curriculum .column-screen}
+::: course-description--title
+## Contenidos del Curso
+:::
+
+```{r}
+# 01. Procesos puntuales -----------------
+course_block(
+  section_name = "Bloque 01 - Procesos puntuales",
+  id_accordion = "acc_bdeces_01",
+  id_heading   = "head_bdeces_01",
+  id_collapse  = "col_bdeces_01",
+  
+  tags$ul(
+    tags$li("Tema 01 - Introducción a procesos puntuales"),
+    tags$li("Tema 02 - Análisis basados en densidad"),
+    tags$li("Tema 03 - Análisis basados en distancias"),
+    tags$li("Tema 04 - Ejercicios propuestos con R")
+  )
+)
+
+# 02. Areal Data ---------------------------
+course_block(
+  section_name = "Bloque 02 - Areal Data",
+  id_accordion = "acc_bdeces_02",
+  id_heading   = "head_bdeces_02",
+  id_collapse  = "col_bdeces_02",
+  
+  tags$ul(
+    tags$li("Tema 05 - Introducción a datos de área"),
+    tags$li("Tema 06 - Autocorrelación espacial"),
+    tags$li("Tema 07 - Ejercicios propuestos con R")
+  )
+)
+
+# 03. Interpolación I ----------------------
+course_block(
+  section_name = "Bloque 03 - Interpolacion espacial I",
+  id_accordion = "acc_bdeces_03",
+  id_heading   = "head_bdeces_03",
+  id_collapse  = "col_bdeces_03",
+
+  tags$ul(
+    tags$li("Tema 08 - Introducción a la interpolación espacial"),
+    tags$li("Tema 09 - Métodos determinísticos"),
+    tags$li("Tema 10 - Principios de la geoestadística")
+  )
+)
+
+# 04, Interpolación II -------------------
+course_block(
+  section_name = "Bloque 04 - Interpolacion espacial II",
+  id_accordion = "acc_bdeces_04",
+  id_heading   = "head_bdeces_04",
+  id_collapse  = "col_bdeces_04",
+  
+  tags$ul(
+    tags$li("Tema 11: Métodos de geoestadística"),
+    tags$li("Tema 12: Ejercicios propuestos con R")
+  )
+)
+
+```
+:::
+
+::: course-description
+::: course-description--title
+## Qué incluye el curso
+:::
+
+::: course-description--text
+-   Clases teóricas
+
+-   Clases prácticas
+
+-   Autoevaluaciones
+
+-   Ejercicios propuestos
+
+-   Todo el material del curso
+
+-   Bibliografía adicional
+:::
+:::

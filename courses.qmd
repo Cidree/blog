@@ -34,6 +34,20 @@ Learn data analysis and data science with me. In the future, I plan to offer mor
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
+  file         = "assets/figures/00_course_figures/bosque-digital.jpg",
+  course_title = "Ecología espacial aplicada a la gestión forestal",
+  mode         = "Online",
+  date         = "01/Jul - 27/Jul",
+  time         = "25 hours",
+  language     = "Spanish",
+  href         = "02_courses/04_spatial_ecology_es.qmd"
+)
+```
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{r}
+course_card(
   file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introducción a Análisis de Datos Espaciales en R",
   mode         = "Online",
@@ -63,7 +77,7 @@ course_card(
 ```{r}
 course_card(
   file         = "assets/figures/00_course_figures/02_analisis_datos.png",
-  course_title = "INTRODUCCIÓN A ANÁLISIS Y VISUALIZACIÓN DE DATOS EN R [2023]",
+  course_title = "Introducción a Análisis y Visualización de datos en R [2024]",
   mode         = "Online",
   date         = "Available Anytime",
   time         = "30 hours",
