@@ -1,0 +1,290 @@
+---
+title: "Pinus sylvestris Distribution in Europe: Climate Scenarios Mapped with R"
+description: "Create a map of the distribution of tree species under climate change scenarios"
+date: "2024-06-17"
+categories: [forestry, ggplot2, R, spatial]
+image: "image.png"
+bibliography: references.bib
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< video https://www.youtube.com/watch?v=xSgVyHjEyWY&feature=youtu.be >}}
+
+## Introduction
+
+In this post, we will create a map of the change of the potential distribution of *Pinus sylvestris* under two climate scenarios (RCP 4.5 and RCP 8.5) in Europe.
+
+We will use the [EU-Trees4F dataset](https://www.nature.com/articles/s41597-022-01128-5) [@eutrees4f], a dataset with the current (2005) and future (2035, 2065, 2095) potential distribution of 67 tree species in Europe at 10 km spatial resolution. The dataset is accessible through an R package that I am developing, and it's accessible through GitHub.
+
+The objective of this exercise is to compare the current (2005) and the future (2095) potential distribution of *Pinus sylvestris*, and determine the areas where it will maintain its distribution or absence, disappear, or expand.
+
+## Loading packages
+
+First of all, I will announce that I am developing a package called `{forestdata}` which gives you access to several sources to easily load forest and land cover data into R.
+
+::: callout-caution
+Note that the package is still in early development and it might be prone to errors.
+:::
+
+In order to install the package, you need to have installed the `{remotes}` package in your system, and then you can use:
+
+```{r}
+#| eval: false
+remotes::install_github("Cidree/forestdata")
+```
+
+After that, we can load the rest of the packages for this exercise:
+
+```{r load_packages}
+library(pacman)
+
+p_load(
+  ## Core
+  tidyverse,
+  
+  ## Donwload data
+  forestdata,
+  
+  ## Spatial data manipulation
+  terra,
+  
+  ## Visualization
+  ggtext, patchwork, tidyterra
+)
+```
+
+We will use the `{terra}` package to manipulate the data that we download with `{forestdata}`, the `{ggtext}` package to use markdown and HTML in our plots, the `{patchwork}` package for assembling the plots, and `{tidyterra}` which makes it easy to plot `SpatRasters` in `{ggplot2}`.
+
+## Load the data
+
+The data that we need to create the maps are:
+
+-   Current *Pinus sylvestris* potential distribution as for 2005
+
+-   Future *Pinus sylvestris* potential distribution as for 2095 under [RCP 4.5](https://en.wikipedia.org/wiki/Representative_Concentration_Pathway), a climate change scenario of intermediate emissions
+
+-   Future *Pinus sylvestris* potential distribution as for 2095 under [RCP 8.5](https://en.wikipedia.org/wiki/Representative_Concentration_Pathway), a climate change scenario o high emissions
+
+To do so, we can use the `fd_forest_eutrees4f` function of the `{forestdata}` package as follows:
+
+```{r}
+## Load Pinus sylvestris data for 2005
+psylvestris_2005_sr <- fd_forest_eutrees4f(
+  species  = "Pinus sylvestris",
+  period   = 2005,
+  type     = "bin",
+  distrib  = "pot"
+)
+
+## Load Pinus sylvestris data for 2095 (RCP 4.5)
+psylvestris_2095_rcp45_sr <- fd_forest_eutrees4f(
+  species  = "Pinus sylvestris",
+  period   = 2095,
+  scenario = "rcp45"
+)
+
+## Load Pinus sylvestris data for 2095 (RCP 8.5)
+psylvestris_2095_rcp85_sr <- fd_forest_eutrees4f(
+  species  = "Pinus sylvestris",
+  period   = 2095,
+  scenario = "rcp85"
+)
+```
+
+The arguments that we used are:
+
+-   `species`: Latin name of the species.
+
+-   `period`: period of the data (2005, 2035, 2065, 2095).
+
+-   `type`: the are three different types of maps. In this case we choose binary maps (1 = presence; 0 = absence). This is the option by default.
+
+-   `distrib`: type of distribution. In this case, we chose the potential distribution which is set by default.
+
+-   `scenario`: one of "rcp45" or "rcp85". When period is 2005, this argument is ignored.
+
+::: callout-tip
+The list of possible species is available through `{forestdata}`:
+
+```{r}
+forestdata::eutrees4f_species
+```
+:::
+
+We can see how one of these rasters look like:
+
+```{r}
+psylvestris_2095_rcp85_sr
+```
+
+## Prepare the data
+
+The three rasters that we downloaded have two values:
+
+-   **1** = presence of *Pinus sylvestris*
+
+-   **0** = absence of *Pinus sylvestris*
+
+We need to combine the current raster with the other two in a way that we can create the four classes:
+
+-   **Absent**: areas where *P. sylvestris* is absent, and it will still be absent
+
+-   **Will disappear**: areas where *P. sylvestris* is present, but it won't be in the future models
+
+-   **Will appear**: areas where *P. sylvestris* is absent, but it will be present in the future models
+
+-   **Present and stable**: areas where *P. sylvestris* is present, and it will still be present
+
+To achieve this, I created the next function:
+
+```{r}
+reclassify_rcp <- function(raster, classes) {
+  
+  ## Reclassify 1 for 2
+  raster_class <- ifel(
+    raster == 1, 2, raster
+  )
+  ## Sum to current (2005) distribution
+  raster_class <- as.factor(raster_class + psylvestris_2005_sr)
+  ## Rename levels
+  levels(raster_class)[[1]][, 2] <- classes
+  raster_class
+}
+```
+
+This function will classify the input rasters (RCP 4.5 and RCP 8.5) into 0 for absence and 2 for presence. Then, we sum up the `psylvestris_2005_sr` so we have the following values:
+
+-   0 + 0: absent
+
+-   0 + 2: will appear
+
+-   1 + 0: will disappear
+
+-   1 + 2: present
+
+Finally, we convert it to a categorical raster and use a vector of classes (also a vector of colors) to rename it. Let's do this:
+
+```{r}
+## Classes and colors for each class
+ps_classes <- c("Absent", "Will disappear", "Will appear",  "Present and stable")
+ps_colors  <- c("#BE92A2", "#96031A", "#6DA34D", "#CEEDDB")
+## Apply function
+psylvestris_rcp45_sr <- reclassify_rcp(psylvestris_2095_rcp45_sr, ps_classes)
+psylvestris_rcp85_sr <- reclassify_rcp(psylvestris_2095_rcp85_sr, ps_classes)
+```
+
+To verify that it worked correctly, let's create a quick plot:
+
+```{r}
+with(
+  par(mfrow = c(2, 1)), {
+    plot(psylvestris_rcp45_sr, main = "RCP 4.5", col = ps_colors)
+    plot(psylvestris_rcp85_sr, main = "RCP 8.5", col = ps_colors)
+  }
+)
+```
+
+The distribution of *Pinus sylvestris* seems correct to me, so let's go to the next step.
+
+::: callout-note
+Take into account that the spatial resolution is 10 km, and we are mapping the potential distribution.
+:::
+
+## Final map
+
+To create the final map, I will create a function, since we need to apply it to two different objects:
+
+```{r}
+map_rcp <- function(data, title = "(a) RCP 4.5") {
+  
+  ggplot() +
+    geom_spatraster(
+      data = data,
+      show.legend = FALSE
+    ) +
+    scale_fill_manual(
+      values       = ps_colors,
+      labels       = ps_classes,
+      na.value     = NA,
+      na.translate = FALSE
+    ) +
+    labs(
+      title = title
+    ) +
+    theme_void(base_family = "Roboto") +
+    theme(
+      plot.title = element_text(
+        face = "bold", hjust = .5, color = "snow"
+      )
+    )
+  
+}
+```
+
+Next, we apply the function to both rasters:
+
+```{r}
+rcp45_gg <- map_rcp(psylvestris_rcp45_sr)
+rcp85_gg <- map_rcp(psylvestris_rcp85_sr, title = "(b) RCP 8.5")
+```
+
+We will assemble both maps using `{patchwork}`, but first I will create an appealing title for it. Instead of using a legend, we can use colors in our title to identify the different classes. There's a new R package called `{marquee}` which makes it easier without using HTML, but I found some limitations for long titles when creating line breaks and modifying the line height, so for the moment I will stick with `{ggtext}`:
+
+```{r}
+## Wrappers for ggtext
+absent_txt   <- str_glue("<b style = 'color: {ps_colors[1]};'>almost absent</b>")
+decrease_txt <- str_glue("<b style = 'color: {ps_colors[2]};'>decrease</b>")
+increase_txt <- str_glue("<b style = 'color: {ps_colors[3]};'>shift</b>")
+present_txt  <- str_glue("<b style = 'color: {ps_colors[4]};'>present</b>")
+
+## Plot title
+title_txt <- str_glue(
+  "*Pinus sylvestris*, {absent_txt} in southern Europe and {present_txt} in Northern and Central Europe, is<br>
+  projected to {increase_txt} its potential distribution northward and {decrease_txt} in Central Europe under two<br>
+  climatic scenarios by 2095"
+)
+```
+
+There, I create one label or each class using each of the colors defined before, and put the together in the title. Finally, we can assemble every piece of out plot with `{patchwork}`:
+
+```{r}
+#| fig-width: 9.4
+#| fig-height: 6
+rcp45_gg + 
+  rcp85_gg +
+  plot_annotation(
+    title   = title_txt,
+    caption = "Author: Adrián Cidre | https://adrian-cidre.com | Data source: EU-Trees4F",
+    theme   = theme(
+      text       = element_text(colour = "snow"),
+      plot.title = element_markdown(
+        family     = "Merriweather",
+        face       = "bold",
+        lineheight = 1.2,
+        margin     = margin(t = 5, l = 5)
+      ),
+      plot.caption = element_text(
+        hjust  = .5,
+        family = "Roboto"
+      ),
+      plot.background = element_rect(
+        fill = "gray10",
+        colour = "gray10"
+      )
+    )
+  ) 
+```
+
+## Conclusions
+
+Creating a map of the future distribution of European tree species in R is very easy thanks to the EU-Trees4F dataset, and the `{forestdata}` package.
+
+If you found this post interesting and helpful, please share it with others or create your own, share it and tag me in [linkedin](https://www.linkedin.com/in/adrian-cidre/).
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
