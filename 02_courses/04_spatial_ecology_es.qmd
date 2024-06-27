@@ -26,29 +26,21 @@ course_banner(
 ```
 :::
 
-<!-- ::: course-link -->
+::: course-link
+```{r}
 
-<!-- ```{r} -->
+a(class = "text-center btn btn-success course-link--button",
 
-<!-- a(class = "text-center btn btn-success course-link--button", -->
+  target = "_blank",
 
-<!--   target = "_blank", -->
+  href = "https://ucoonline.uco.es/mooc/cursosofertados/page27.html",
 
-<!--   href = "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=CE6BDA0F561F95EC42FE", -->
+  "Apuntarse al Curso")
 
-<!--   "Apuntarse al Curso") -->
-
-<!-- ``` -->
-
-<!-- ::: -->
-
-<div>
-
-::: {.course-notavailable .button .button-danger .column-screen}
-Matriculación no disponible. En los próximos días se abrirá.
+```
 :::
 
-</div>
+Para apuntarse al curso, pulse en el enlace anterior que le redirigirá a la plataforma de [MOOC de la Universidad de Córdoba](https://ucoonline.uco.es/mooc/). Una vez dentro, debe registrarse y finalmente matricularse en el curso.
 
 ::: course-description
 ::: course-description--title
