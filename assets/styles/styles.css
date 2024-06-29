@@ -314,6 +314,7 @@ h2:not(#toc-title):not(.accordion-header){
 .card-course {
   border: 1px solid #2D4156;
   border-radius: 0.3rem;
+  margin-left: 0;
 }
 .card-course-title--container {
   background-color: #F0EAEA;
@@ -371,6 +372,7 @@ h2:not(#toc-title):not(.accordion-header){
   color: #2D4156;
   font-size: 1.5rem;
   padding: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .course-description {
@@ -396,7 +398,7 @@ h2:not(#toc-title):not(.accordion-header){
 .accordion-button:focus,
 .accordion-button:not(.collapsed) {
   background-color: #2D4156;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: white;
   border-radius: 1rem;
 }
@@ -408,7 +410,7 @@ h2:not(#toc-title):not(.accordion-header){
 
 .accordion-header {
   margin-top: 0;
-  max-width: 50%;
+  max-width: 60%;
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -520,6 +522,12 @@ h2:not(#toc-title):not(.accordion-header){
   text-align: center;
 }
 
+.about-link-small {
+  width: 50vw;
+  font-size: 0.6rem;
+  margin-bottom: 1rem;
+}
+
 .quarto-grid-item.card-center .listing-description {
   text-align: center;
 }
@@ -535,6 +543,10 @@ h2:not(#toc-title):not(.accordion-header){
 
 .quarto-listing-filter {
   margin-left: unset;
+}
+
+body.nav-fixed {
+  padding: 0;
 }
 
 .quarto-title .quarto-categories {

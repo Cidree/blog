@@ -49,7 +49,7 @@
 .accordion-button:focus,
 .accordion-button:not(.collapsed) {
   background-color: $color-darkblue;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: $color-white;
   border-radius: 1rem;
 }
@@ -61,7 +61,7 @@
 
 .accordion-header {
   margin-top: 0;
-  max-width: 50%;
+  max-width: 60%;
   position: relative;
   left: 50%;
   transform: translate(-50%);

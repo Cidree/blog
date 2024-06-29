@@ -16,17 +16,15 @@ source("03_scripts/00_courses.R")
 </div>
 
 ::: jumbotron-text
-Learn data analysis and data science with me. In the future, I plan to offer more exciting courses
+Learn data analysis and data science with me.
 :::
 :::
 
 ::: {.row .d-block .d-sm-none}
 ::: {.card .card-courses}
-![](assets/figures/jumbo.png){.img-fluid .rounded .mx-auto .d-block}
-
 ### Courses
 
-Learn data analysis and data science with me. In the future, I plan to offer more exciting courses
+Learn data analysis and data science with me.
 :::
 :::
 

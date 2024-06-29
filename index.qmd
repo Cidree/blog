@@ -41,6 +41,7 @@ Bridging forests and technology
 :::
 :::
 
+
 ```{=html}
 <div class="about-links text-center">
   <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
@@ -57,6 +58,7 @@ Bridging forests and technology
   </a>
 </div>
 ```
+
 ## ABOUT ME
 
 Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
@@ -64,34 +66,45 @@ Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree i
 My passions are cycling, hiking, and travelling. I love to explore new places, cultures, and gastronomy, and I am always looking for new adventures. So far I have been living in:
 
 ::: {.container .grid .container-lived}
-::: {.g-col-12 .g-col-md-6}
+::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
 ### Spain 🏖️
 
 ![](assets/figures/lived_spain.jpg){fig-align="center" width="375"}
 :::
 
-::: {.g-col-12 .g-col-md-6}
+::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
 ### Finland ☃️
 
 ![](assets/figures/lived_finland.jpg){fig-align="center" width="375"}
 :::
 
-::: {.g-col-12 .g-col-md-6}
+::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
 ### Czech Republic 🌉
 
 ![](assets/figures/lived_czechia.jpg){fig-align="center" width="375"}
 :::
 
-::: {.g-col-12 .g-col-md-6}
+::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
 ### Norway 🏔️
 
 ![](assets/figures/lived_norway.jpg){fig-align="center" width="667"}
 :::
+
+:::
+
+::: {.d-block .d-sm-none}
+- Spain 🏖️
+
+- Finland ☃️
+
+- Czech Republic 🌉
+
+- Norway 🏔️
 :::
 
 ## Firefighter
 
-::: columns
+::: {.columns .d-none .d-sm-block}
 ::: {.column width="45%"}
 During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
 
@@ -110,6 +123,12 @@ Due to uncertainty in the job market for firefighting and an unfortunate injury 
 ![](assets/figures/firefighter_02.jpg){.composition__photo .composition__photo--p3 .nolightbox fig-align="center" width="50"}
 :::
 :::
+:::
+
+::: {.d-block .d-sm-none}
+During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
+
+Due to uncertainty in the job market for firefighting and an unfortunate injury that may limit me in the long-term, I decided to focus on my studies and transition to a GIS specialist role as I already liked it, and it was a smarter choice for my future. I am grateful for the experience and knowledge I gained during my time as a firefighter, as it has shaped my career and my approach to forestry management.
 :::
 
 ## GIS specialist and R
@@ -142,10 +161,4 @@ Thank you for visiting, and I look forward to the possibility of learning togeth
 
 ## Curriculum Vitae
 
-My CV was created using the `{vitae}` R package:
-
-```{=html}
-<iframe
-  width="800" height="800" src="assets/figures/CV_AdrianCidre.pdf">
-</iframe>
-```
+My CV was created using the `{vitae}` R package, and you can find with the source code in [this repository](https://github.com/Cidree/Curriculum_ACG).
