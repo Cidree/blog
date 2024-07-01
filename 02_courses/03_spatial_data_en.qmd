@@ -32,7 +32,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=C8EFF240EFC591768EB1",
+  href = "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=C3EC18DD1BDB5256E290",
   "Enroll to the course")
 ```
 :::
