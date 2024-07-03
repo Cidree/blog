@@ -32,6 +32,20 @@ Learn data analysis and data science with me.
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
+  file         = "assets/figures/00_course_figures/04_best_r_practices.png",
+  course_title = "Mastering R: Best Practices and Essential Tools",
+  mode         = "Online",
+  date         = "Available Anytime",
+  time         = "15 hours",
+  language     = "English",
+  href         = "02_courses/05_best_r_practices.qmd"
+)
+```
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{r}
+course_card(
   file         = "assets/figures/00_course_figures/bosque-digital.jpg",
   course_title = "Ecología espacial aplicada a la gestión forestal",
   mode         = "Online",
