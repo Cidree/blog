@@ -109,3 +109,8 @@ h2:not(#toc-title):not(.accordion-header){
     border-bottom: .2rem solid $color-gray-dark-2;
     padding-left: 1rem;
 }*/
+
+// Links
+a {
+  color: $color-note;
+}

@@ -9,6 +9,7 @@
     font-size: 0.9rem;
   }
 }
+/*-- scss:variables --*/
 @keyframes titleAnimation {
   0% {
     opacity: 0;
@@ -143,6 +144,10 @@ h2:not(#toc-title):not(.accordion-header){
     border-bottom: .2rem solid $color-gray-dark-2;
     padding-left: 1rem;
 }*/
+a {
+  color: #0F5257;
+}
+
 .btn-primary--big:link, .btn-primary--big:visited {
   text-transform: uppercase;
   text-decoration: none;
