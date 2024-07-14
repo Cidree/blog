@@ -1,0 +1,373 @@
+---
+title: "Density map of wolf in the Iberian Peninsula"
+description: "Create a density map of any species using GBIF data and ggplot2"
+date: "2024-07-14"
+categories: [ggplot2, R, spatial]
+image: "image.png"
+bibliography: references.bib
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< video https://www.youtube.com/watch?v=GCyhbrzowtM >}}
+
+## Introduction
+
+Today we will see how to create a map of the density of wolves' observations in the Iberian Peninsula during the last decade (2014-2023).
+
+We will use data from the Global Biodiversity Information Facility (GBIF) through the `{geodata}` package, and we will create a map of the Kernel Density of the observations using `{ggplot2}`.
+
+## Loading packages
+
+We will use the following packages:
+
+```{r load_packages}
+## Load pacman
+library(pacman)
+
+## Load rest of the packages
+p_load(
+  geodata, ggnewscale, giscoR, rayshader, sf, terra, tidyterra, tidyverse
+)
+```
+
+-   `{geodata}` [@geodata]: we will use it to download data from the GBIF database, and the Digital Elevation Model (DEM).
+
+-   `{ggnewscale}` [@ggnewscale]: to create a new scale in {ggplot2} of the same aesthetic.
+
+-   `{giscoR}` [@giscoR]: to download the boundaries of the study area.
+
+-   `{rayshader}` [@rayshader]: to create a 3D map.
+
+-   `{sf}` [@sf]: to manipulate vectorial data.
+
+-   `{terra}` [@terra]: to manipulate raster data.
+
+-   `{tidyterra}` [@tidyterra]: to use a nice colour palette for the DEM.
+
+-   `{tidyverse}` [@tidyverse]: to manipulate data in general.
+
+## Load the data
+
+In this exercise we need to download three sources of data:
+
+-   Study area
+
+-   Wolf data
+
+-   Digital Elevation Model
+
+### Study area
+
+The study area for this exercise is the Iberian Peninsula, which includes the main land of Spain and Portugal without islands. To extract this area, we need first to get the boundaries of Spain and Portugal, eliminate the islands, and combine both countries. So, one step at a time. We start downloading the country of Portugal, and casting the MULTIPOLYGON to POLYGON:
+
+```{r}
+#| fig-cap: "Country of Portugal"
+#| label: fig-portugal
+## Get Portugal
+portugal_sf <- gisco_get_countries(
+  resolution = "01",
+  country    = "Portugal"
+) |> 
+  st_cast("POLYGON")
+
+## Visualize
+plot(st_geometry(portugal_sf))
+```
+
+To filter the main land, we can calculate the area of each polygon, and slice the polygon with the maximum value of area:
+
+```{r}
+#| fig-cap: "Main land of Portugal"
+#| label: fig-portugal-mainland
+## Get main land
+portugal_sf <- portugal_sf |> 
+  mutate(
+    area = st_area(portugal_sf)
+  ) |> 
+  slice_max(area)
+
+## Visualize
+plot(st_geometry(portugal_sf))
+```
+
+Now, we can do the same for Spain:
+
+```{r}
+#| fig-cap: "Main land of Spain"
+#| label: fig-spain
+## Get Spain
+spain_sf <- gisco_get_countries(
+  resolution = "01",
+  country    = "Spain"
+) |> 
+  st_cast("POLYGON")
+
+## Get main land
+spain_sf <- spain_sf |> 
+  mutate(
+    area = st_area(spain_sf)
+  ) |> 
+  slice_max(area)
+
+## Visualize
+plot(st_geometry(spain_sf))
+```
+
+Up to this point, we have two different {sf} objects with the main land of Portugal [@fig-portugal-mainland] and Spain [@fig-spain]. The final step, is to combine them to form only one polygon:
+
+```{r}
+#| fig-cap: "Study area"
+#| label: fig-iberia
+## Make union
+iberia_sf <- st_union(
+  spain_sf,
+  portugal_sf
+) |> 
+  st_transform(25830)
+
+## Visualize
+plot(st_geometry(iberia_sf))
+```
+
+Note that we also transformed the Coordinates Reference System to a projected system (EPSG 25830).
+
+### Wolf data
+
+In this exercise, we will study the distribution of the gray wolf (*Canis lupus*; @fig-wolf) in the Iberian Peninsula:
+
+![Gray wolf (Source: wikipedia)](figs/wolf-picture.jpg){#fig-wolf fig-align="center"}
+
+As a proxy of the distribution, we will use data from GBIF for the period 2013-2024. This database contains information about observations of any species in the world. We will use the `sp_occurrence()` function from the `{geodata}` package, and we will add two arguments to specify the countries (ES for Spain, PT for Portugal) and the period (2014-2023).
+
+::: callout-tip
+To specify a period, separate two years by a comma.
+:::
+
+```{r}
+## Download wolf data
+## - Years: 2014-2023
+wolf_lst <- map(
+  .x = c("ES", "PT"),
+  .f = \(x) sp_occurrence(
+    genus   = "Canis",
+    species = "lupus",
+    args    = c(
+      paste0("country=", x),
+      "year=2014,2023"
+    )
+  )
+)
+```
+
+Note that we use the `purrr::map()` function to iterate over two elements (ES and PO) which are used in the *country* argument.
+
+### Elevation
+
+The elevation data can be downloaded using the `{geodata}` package. We use the `elevation_global()` function to download the DEM for all the world at 0.5 minutes of a degree spatial resolution. Immediately, we use the `terra::crop()` function to crop and mask only the Iberian Peninsula (note that the data must be transformed before cropping to the same CRS), and then we transform the CRS to the same projected CRS as the Iberian Peninsula.
+
+```{r}
+## Download global DEM, crop it to Iberia, and project it
+dem_sr <- elevation_global(res = .5, path = tempdir()) |> 
+  crop(
+    st_transform(iberia_sf, 4326),
+    mask = TRUE
+  ) |> 
+  project("EPSG:25830")
+## Print DEM
+print(dem_sr)
+```
+
+## Prepare the data
+
+We did already most of the data preparation steps previously, but there are a couple of things that I wanted to leave for this section.
+
+### Wolf data
+
+We are using a projected CRS, but the coordinates data that we have in `wolf_lst` are in the WGS 84. Therefore, we need to transform this list to a `sf` object, transform the coordinates, and convert it back to a `tibble` with the coordinates in two columns. We could use the `geom_sf()`, but it might give us some issues with `rayshader` so we will use `geom_point()`.
+
+Another thing to note is that we have data from the entire countries, but we want only from the Iberian Peninsula. In this sense, we can use `st_intersection()` to filter only the observations in the Iberian Peninsula.
+
+```{r}
+#| fig-cap: "Gray wolf observations in the Iberian Peninsula"
+#| label: fig-wolf-iberia
+## Bind data, convert to sf, transform and select points within Iberia
+wolf_sf <- list_rbind(wolf_lst) |> 
+  st_as_sf(
+    coords = c("lon", "lat"),
+    crs    = 4326
+  ) |> 
+  st_transform(25830) |> 
+  st_intersection(iberia_sf) |> 
+  select(country) 
+
+## Visualize
+plot(st_geometry(wolf_sf))
+plot(st_geometry(iberia_sf), add = TRUE)
+```
+
+```{r}
+## Get data as tibble with coordinates
+wolf_tbl <- wolf_sf |> 
+  mutate(
+    x = st_coordinates(wolf_sf)[, 1],
+    y = st_coordinates(wolf_sf)[, 2]
+  ) |> 
+  as_tibble()
+
+## Data head
+head(wolf_tbl)
+```
+
+### Elevation
+
+We can use the `{tidyterra}` package to add the DEM to a {ggplot2} object. However, this would give us some problems when translating to the `{rayshader}` package. Because of this, we will use the `geom_raster()` function instead, and for that, we need a `tibble` with the coordinates and the values:
+
+```{r}
+## Convert to tibble 
+dem_tbl <- dem_sr |>   
+  as_tibble(xy = TRUE) |>   
+  na.omit() |>    
+  rename(elevation = wc2.1_30s_elev)
+## Print head 
+head(dem_tbl)
+```
+
+In the previous code, we eliminated the NA values (pixels in the bounding box outside the boundaries of the Iberian Peninsula), and renamed the elevation value to a more intuitive name.
+
+## Visualization
+
+### 2D visualization
+
+We will start creating a 2D visualization using `{ggplot2}`. You can see a better explanation of the code in the video, but one thing to note is that I am using the `new_scale_fill()` function because we have two different geometries (geom_raster and stat_density_2d) using the *fill* aesthetic. Therefore, if we want to modify them differently, we need to treat them in different `scale_fill_*` functions. The `{ggnewscale}` package help us to do this very easily, which is basically creating the first layer and its scale, then adding the `new_scale_*` function, and then adding the next geometry and its scale.
+
+```{r}
+#| fig-cap: "Density map of the distribution of the gray wolf"
+#| label: fig-density2d
+## Create ggplot2 map
+map <- wolf_tbl |> 
+  ggplot() +
+  geom_raster(
+    data = dem_tbl,
+    aes(x, y, fill = elevation)
+  ) +
+  scale_fill_gradientn(
+    colours = whitebox.colors(20),
+    guide   = guide_colourbar(
+      title          = "Elevation (m)",
+      title.hjust    = .5,
+      position       = "inside",
+      barwidth       = unit(4, "mm"),
+      barheight      = unit(4, "cm")
+    )
+  ) +
+  new_scale_fill() +
+  stat_density_2d(
+    aes(x = x, y = y, fill = after_stat(level)), 
+    geom = "polygon", 
+    alpha = .1,
+    bins = 25,
+    show.legend = FALSE
+  ) +
+  geom_point(
+    aes(x, y),
+    alpha = .3
+  ) +
+  scale_fill_gradientn(
+    colours = c("darkblue", "blue", "green", "yellow", "red"),
+    # colours = pal
+  ) +
+  labs(
+    title   = "Where are wolves seen the most in the Iberian Peninsula?",
+    caption = "Author: Adrián Cidre | Data source: GBIF (2013-2024)"
+  ) +
+  theme_void(
+    base_size = 10
+  ) +
+  theme(
+    text = element_text(color = "snow"),
+    plot.title = element_text(
+      family = "Merriweather",
+      face   = "bold",
+      size   = 12,
+      hjust  = .5
+    ),
+    plot.caption = element_text(
+      hjust = .5
+    ),
+    legend.position.inside = c(.85, .3)
+  )
+## Visualize
+map
+```
+
+### 3D visualization
+
+The `{rayshader}` package has a convenient function to transform a `{ggplot2}` object to a 3D graph. To maintain the dimensions of the Iberian Peninsula, we create two variables with the number of rows and columns of the DEM.
+
+```{r}
+## Dimensions of the DEM
+h <- nrow(dem_sr) 
+w <- ncol(dem_sr) 
+## Print
+print(h)
+print(w)
+```
+
+Now, we are ready to transform our map to 3D:
+
+```{r}
+#| eval: false
+plot_gg(
+  ggobj  = map,
+  width  = w / 200,
+  height = h / 200,
+  scale  = 50,
+  solid  = FALSE,
+  zoom   = .8,
+  phi    = 85,
+  theta  = 0,
+  shadow = FALSE
+)
+```
+
+What this function does is to create a map with the specified with and height in inches, and the scale factor to create the 3D effect. It will open an `rgl` window that looks like @fig-plotgg.
+
+![Result of plot_gg function](figs/plot3d.png){#fig-plotgg fig-align="center"}
+
+The final step is to render and export the map in high quality:
+
+```{r}
+#| eval: false
+render_highquality(
+  filename          = "07_wolf_density/wolf_density.png",
+  width             = w,
+  height            = h,
+  preview           = TRUE,
+  light             = TRUE,
+  environment_light = "data/env_lights/misty_farm_road_4k.hdr",
+  intensity_env     = 1,
+  interactive       = FALSE
+)
+```
+
+During the rendering you will see @fig-renderhighquality. At the top of the figure there's a red loading bar that shows you how the rendering process is going.
+
+![Rendering window of render_highquality](figs/render_highquality.png){#fig-renderhighquality fig-align="center"}
+
+::: callout-caution
+Sometimes this rendering function will give weird rendering results. This might be happening because we are using more than 1 fill aesthetic, and it might produce some errors.
+
+It is not recommended to create 3D maps with more than 1 fill aesthetic, although I can also work as we can see in this example.
+:::
+
+After some minutes, we can see the final result:
+
+![Wolf density map in Iberia](figs/wolf_density.png){#fig-final-map fig-align="center"}
+
+## References {.unnumbered}
+
+::: {#refs}
+:::

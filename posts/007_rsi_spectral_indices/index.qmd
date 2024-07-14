@@ -1,5 +1,5 @@
 ---
-title: "NDVI and NDVI in Tenerife before huge wildire"
+title: "NDVI and NDMI in Tenerife before huge wildire"
 description: "Download satellite images from Sentinel-2, calculate the NDVI and NDMI indices, and generate a couple of maps."
 date: "2024-06-30"
 categories: [remote sensing, ggplot2, R, spatial]
