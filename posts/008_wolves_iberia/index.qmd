@@ -140,7 +140,7 @@ In this exercise, we will study the distribution of the gray wolf (*Canis lupus*
 
 ![Gray wolf (Source: wikipedia)](figs/wolf-picture.jpg){#fig-wolf fig-align="center"}
 
-As a proxy of the distribution, we will use data from GBIF for the period 2013-2024. This database contains information about observations of any species in the world. We will use the `sp_occurrence()` function from the `{geodata}` package, and we will add two arguments to specify the countries (ES for Spain, PT for Portugal) and the period (2014-2023).
+As a proxy of the distribution, we will use data from GBIF for the period 2014-2023. This database contains information about observations of any species in the world. We will use the `sp_occurrence()` function from the `{geodata}` package, and we will add two arguments to specify the countries (ES for Spain, PT for Portugal) and the period (2014-2023).
 
 ::: callout-tip
 To specify a period, separate two years by a comma.
