@@ -7,6 +7,7 @@ execute:
 website:
   title: "Adrián Cidre"
   site-url: "https://adrian-cidre.com"
+  description: "A blog with R content"
   search: false
   navbar:
     #logo: assets/figures/logo.png

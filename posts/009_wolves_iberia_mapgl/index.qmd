@@ -5,6 +5,8 @@ date: "2024-07-21"
 categories: [ggplot2, interactive, R, spatial]
 image: "image.png"
 bibliography: references.bib
+listing: 
+  feed: true
 execute: 
   warning: false
 editor_options: 
