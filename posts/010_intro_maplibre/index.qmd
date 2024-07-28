@@ -34,7 +34,7 @@ You will learn:
 📊 Create a legend
 
 ::: callout-note
-Remember that you can find all the code in [this repository](https://github.com/Cidree/blog_scripts/tree/main/009_intro_maplibre_maptiler).
+Remember that you can find all the code in [this repository](https://github.com/Cidree/blog_scripts/tree/main/009_intro_maplibre_maptiler){target="_blank"}.
 :::
 
 ## Loading packages
@@ -296,7 +296,7 @@ map <- maplibre(
   add_fullscreen_control()
 ```
 
-{{< video figs/01_webmap.mp4 >}}
+{{< video video/01_webmap.mp4 >}}
 
 Next, we can add the polygon layer with transparent fill color, and red outline. Note that the current version of `{mapl}` doesn't support outline width.
 
@@ -312,7 +312,7 @@ map <- map |>
   )
 ```
 
-{{< video figs/02_webmap.mp4 >}}
+{{< video video/02_webmap.mp4 >}}
 
 Now we will add the cycling routes on top of the previous layer. We add the `tooltip` argument where we can specify a column name to show when we hover the geometries. The argument `hover_options` takes a list where we can specify specific options to the state of `hover`:
 
@@ -332,7 +332,7 @@ map <- map |>
   )
 ```
 
-{{< video figs/03_webmap.mp4 >}}
+{{< video video/03_webmap.mp4 >}}
 
 Finally, we can add the landmarks with a legend based on the `type` column. In this case, for the `circle_color` we use a `match_expr()` to specify the column, the unique values of the column, and a vector of stops (colors).
 
@@ -369,7 +369,7 @@ map <- map |>
     ) 
 ```
 
-{{< video figs/04_webmap.mp4 >}}
+{{< video video/04_webmap.mp4 >}}
 
 ## Conclusions
 
