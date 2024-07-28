@@ -1,0 +1,376 @@
+---
+title: "Using MapLibre and MapTiles in R with mapgl"
+description: "Create an interactive map showing the cycling routes and landmarks in Picos de Europa National Park"
+date: "2024-07-28"
+categories: [interactive, R, spatial]
+image: "image.png"
+bibliography: references.bib
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< video https://youtu.be/xHEwO8MY60c >}}
+
+## Introduction
+
+Creating interactive maps in R is pretty easy with `{mapview}` or `{leaflet}`. However, other external libraries such as MapBox or MapLibre have shown a great power for creating web applications. Thanks to [Kyle Walker](https://www.linkedin.com/in/walkerke/) we have access to these powerful libraries using the `{mapgl}` package that has been released to CRAN this week. Although the package is in its early stages, we can already do a lot with it.
+
+In this tutorial, we will create a map that shows the cycling routes and landmarks in Picos de Europa National Park (Spain):
+
+![Picos de Europa National Park (Source: Turismo de Asturias)](figs/picos_europa.jpg){#fig-picos-europa fig-align="center"}
+
+You will learn:
+
+🗂️ How to unrar files in R
+
+🌐 Download data from Open Street Maps directly into R
+
+🗺️ Use MapLibre and MapTiler in R
+
+🔍 Add vectorial layers to MapLibre and MapTiler (points, lines, and polygons), and customize them adding hover and tooltip effects
+
+📊 Create a legend
+
+::: callout-note
+Remember that you can find all the code in [this repository](https://github.com/Cidree/blog_scripts/tree/main/009_intro_maplibre_maptiler).
+:::
+
+## Loading packages
+
+We will use the following packages:
+
+```{r load_packages}
+## Load pacman
+library(pacman)
+
+## Load rest of the packages
+p_load(archive, fs, mapgl, mapview, osmdata, sf, tidyverse)
+```
+
+-   `{archive}` [@archive]: we will use it to unrar files.
+
+-   `{fs}` [@fs]: used to create a directory tree.
+
+-   `{mapgl}` [@mapgl]: interface to MapBox GL JS and MapLibre.
+
+-   `{mapview}` [@mapview]: quickly interactive maps for exploration.
+
+-   `{osmdata}` [@osmdata]: to import Open Street Map features.
+
+-   `{sf}` [@sf]: to manipulate vectorial data.
+
+-   `{tidyverse}` [@tidyverse]: to manipulate data in general.
+
+## Mapbox, MapLibre and MapTiler {#sec-setup}
+
+We covered Mapbox in the [previous week's post](https://adrian-cidre.com/posts/009_wolves_iberia_mapgl/){target="_blank"}. Mapbox is a commercial platform that was open source from 2010 to 2020. It's a JavaScript library for displaying maps using WebGL.
+
+MapLibre was born in December 2020 by a group of contributors who wanted to continue the work of Mapbox as an open source library.
+
+MapTiler is another library that extends the functionality of MapLibre. It has commercial and open source capabilities, and it's mostly focused on tiles and hosting. We will use it to access the variety of tiles that it has available. Note that you need to create an account in [https://www.maptiler.com/](https://www.maptiler.com/){target="_blank"}.
+
+![MapTiler cloud](figs/maptiler_cloud.png){#fig-maptiler-cloud fig-align="center"}
+
+In @fig-maptiler-cloud you can see the tiles that are available to use with the `{mapgl}` package. On the left, you can go to API keys to set your environment variable and be able to access your MapTiler cloud. You can follow the next instructions to set the environment variable:
+
+![Instructions to set the environment variable](figs/env_var.png){#fig-maptiler-envvar fig-align="center"}
+
+## Load the data
+
+In this exercise we need to download three sources of data:
+
+-   Study area (Picos de Europa National Park)
+
+-   Cycling routes
+
+-   Landmarks
+
+### Study area
+
+The study area for this exercise is Picos de Europa National Park in Spain. We can download all the data directly [from here](https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/sig/parques-nacionales.html){target="_blank"}, and unrar it manually. However, I always prefer to maintain the reproducibility of my scripts as higher as possible maintaining also the source of the data. That's why we will download the data using R:
+
+```{r download_data}
+## Url to national parks file
+url <- "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/sig/limites_red_tcm30-452281.rar"
+
+## Define paths for download and unrar 
+rar_file <- str_glue("{tempdir()}/{basename(url)}")
+dest_dir <- str_remove(rar_file, ".rar")
+
+## Download file
+download.file(
+  url      = url,
+  destfile = rar_file,
+  mode     = "wb"
+)
+
+## unrar file
+try(
+  archive_extract(rar_file, dest_dir),
+  silent = TRUE
+)
+```
+
+There, we are defining two paths. One for downloading the rar file, and another for the extracting. We use the `archive_extract()` function to extract `.rar` files in R. Note that I need to wrap it within the `try()` function because it throws an error. However, the function works without problem, as we can wee in the directory tree:
+
+```{r}
+fs::dir_tree(dest_dir)
+```
+
+Now, we need to extract `desc_Red_PN_LIM_Enero2023.rar` because the spatial data in located inside that folder:
+
+```{r}
+## Extract spatial data
+try(
+  archive_extract(
+    paste0(dest_dir, "/limites_red/desc_Red_PN_LIM_Enero2023.rar"), 
+    dest_dir
+  ), 
+  silent = TRUE
+)
+
+## See directory tree
+fs::dir_tree(dest_dir)
+```
+
+Now we can finally read the data into R using the `{sf}` package:
+
+```{r}
+## Read national parks
+national_parks_sf <- 
+  paste0(dest_dir, "/desc_Red_PN_LIM_Enero2023/Limite_PN_p_b.shp") |> 
+  read_sf()
+
+## Glimpse the data
+national_parks_sf |> glimpse()
+```
+
+Now we need to filter only one National Park, and transform the data to WGS 84, since it's needed to retrieve data from Open Street Map (OSM):
+
+```{r}
+picos_europa_sf <- national_parks_sf |> 
+  filter(
+    str_detect(d_Nom_Parq, "Picos de Europa")
+  ) |> 
+  st_transform(4326)
+```
+
+### Cycling routes
+
+Now we need to somehow download the cycling routes into R. We have those features in the OSM dataset that we can access through the `{osmdata}` package. We can see all the features available using the next function:
+
+```{r}
+available_features()
+```
+
+We can also see the tags that are available for each of the features:
+
+```{r}
+available_tags("route")
+```
+
+In this case, we are interested in the feature *route* and the tag *bicycle*. To retrieve the data from the API, we need to construct a query defining a bounding box, and the feature we want. After that, we specify the format that we want for the data (`sf`):
+
+```{r}
+## Cycling routes in the bounding box of the National Park
+cycling_routes_osm <- opq(
+  bbox = st_bbox(picos_europa_sf)
+) |> 
+  add_osm_feature(
+    key   = "route",
+    value = "bicycle"
+  ) |> 
+  osmdata_sf()
+## Print
+cycling_routes_osm
+```
+
+By default, we have a special list with different elements. We are interested in the *multilines*:
+
+```{r}
+## Extract routes
+cycling_routes_sf <- cycling_routes_osm$osm_multilines
+## Print
+cycling_routes_sf
+```
+
+We can see that some names are repeated because some routes have forward and backward path. We will dissolve those elements into one depending on the name attribute:
+
+```{r}
+## Dissolve by name
+cycling_routes_united_sf <- cycling_routes_sf |> 
+  group_by(name) |> 
+  summarise(
+    geometry = st_union(geometry)
+  ) 
+## Print
+cycling_routes_united_sf
+```
+
+So now we can see that we have a total of `r nrow(cycling_routes_united_sf)` different paths. We can calculate the length of each route, and create some labels using HTML tags for better display on the map:
+
+```{r}
+## Calculate path length, and create labels for the map
+cycling_routes_united_sf <- cycling_routes_united_sf |> 
+  mutate(
+    length = st_length(cycling_routes_united_sf) |> units::set_units(km)
+  ) |> 
+  mutate(
+    label = str_glue("{name} <br> <b>{round(length, 2)} km</b>")
+  )
+```
+
+### Landmarks
+
+We will retrieve the landmarks labelled as *viewpoint* or *attraction*. The feature that we are interested in is the *tourism*:
+
+```{r}
+## OSM tags for tourism
+available_tags("tourism") |> pull(Value)
+```
+
+As before, we need to build an OSM query and retrieve the data:
+
+```{r}
+## Get the viewpoints and attractions
+landmarks_osm <- opq(
+  bbox = st_bbox(picos_europa_sf)
+) |> 
+  add_osm_feature(
+    key   = "tourism",
+    value = c("viewpoint", "attraction")
+  ) |> 
+  osmdata_sf()
+## Print the points
+landmarks_osm$osm_points
+```
+
+We are interested in the points. We will classify them as *Viewpoint* or *Other*. To do so, we need first to populate all the NA values on the *name column* as *Unidenfied.* After that, we can classify them in a new column called *type*:
+
+```{r}
+## Extract points, and create a "type" column
+landmarks_sf <- landmarks_osm$osm_points |> 
+  mutate(
+    name = ifelse(
+      is.na(name), "Unidentified", name
+    ),
+    type = if_else(
+      str_detect(name, "Mirador"), "Viewpoint", "Other"
+    )
+  ) |> 
+  select(name, type)
+## Print
+landmarks_sf
+```
+
+## Map
+
+Finally, we can create the final map using MapLibre and MapTiler. Remember that this will only work if you followed the instructions of @fig-maptiler-envvar. We have vectorial data representing the three main geometry types:
+
+-   Study area: represented by a polygon. It will be mapped using `add_fill_layer()`.
+
+-   Cycling routes: represented by lines. It will be mapped using `add_line_layer()`.
+
+-   Landmarks: represented by points. It will be mapped using `add_circle_layer()`.
+
+All of these functions have two mandatory arguments:
+
+-   id: an unique identifier for the layer
+
+-   source: the data source. In this case, an `sf` object.
+
+There are other optional arguments that are specific to the geometry type. First, we will create a base map using the *satellite* tile from MapTiler, fit the bounds to the national park with an animation, and adding some navigation and fullscreen control widgets:
+
+```{r}
+#| eval: false
+map <- maplibre(
+  style  = maptiler_style("satellite"),
+)  |> 
+  fit_bounds(
+    picos_europa_sf,
+    animate = TRUE
+  ) |>
+  add_navigation_control() |> 
+  add_fullscreen_control()
+```
+
+{{< video figs/01_webmap.mp4 >}}
+
+Next, we can add the polygon layer with transparent fill color, and red outline. Note that the current version of `{mapl}` doesn't support outline width.
+
+```{r}
+#| eval: false
+map <- map |> 
+  add_fill_layer(
+    id                 = "picos_europa",
+    source             = picos_europa_sf,
+    fill_color         = "transparent",
+    fill_opacity       = 1,
+    fill_outline_color = "red"
+  )
+```
+
+{{< video figs/02_webmap.mp4 >}}
+
+Now we will add the cycling routes on top of the previous layer. We add the `tooltip` argument where we can specify a column name to show when we hover the geometries. The argument `hover_options` takes a list where we can specify specific options to the state of `hover`:
+
+```{r}
+#| eval: false
+map <- map |> 
+  add_line_layer(
+    id            = "routes",
+    source        = cycling_routes_united_sf,
+    line_color    = "wheat",
+    line_width    = 2,
+    tooltip       = "label",
+    hover_options = list(
+      line_color = "red",
+      line_width = 5
+    )
+  )
+```
+
+{{< video figs/03_webmap.mp4 >}}
+
+Finally, we can add the landmarks with a legend based on the `type` column. In this case, for the `circle_color` we use a `match_expr()` to specify the column, the unique values of the column, and a vector of stops (colors).
+
+We can add a categorical legend specifying the values and colors again. Note that the legend is independent from the data, so we have a lot of flexibility to create it.
+
+```{r}
+#| eval: false
+## Colours for points
+point_col <- c("lightcoral", "lavender")
+
+## Map
+map <- map |> 
+  add_circle_layer(
+      id                    = "landmarks",
+      source                = landmarks_sf,
+      popup                 = "name",
+      circle_opacity        = 1,
+      circle_radius         = 6,
+      circle_stroke_color   = "black",
+      circle_stroke_opacity = 1,
+      circle_stroke_width   = 1,
+      circle_color          = match_expr(
+        column = "type",
+        values = landmarks_sf$type |> unique(),
+        stops  = point_col
+      ),
+    ) |> 
+    add_categorical_legend(
+      legend_title     = "Landmark",
+      values           = landmarks_sf$type |> unique(),
+      colors           = point_col,
+      unique_id        = "landmark_legend",
+      circular_patches = TRUE
+    ) 
+```
+
+{{< video figs/04_webmap.mp4 >}}
+
+## Conclusions
+
+`mapgl` is an awesome package that allows us to access the Mapbox and MapLibre libraries. This package has been released to CRAN very recently, and although it's features are already awesome, there are some features that haven't been added yet. For instance, if you try to add another independent legend, it will overwrite the previous one. We also saw that the polygon's outline width cannot be adjusted. However, the package it's in its very early stages and as you could saw in this tutorial you can map all the main vectorial geometries using `mapgl`. This package is a great achievement for the R community, and you can support the project of Kyle Walker in the [GitHub repository](https://github.com/walkerke/mapgl){target="_blank"}.

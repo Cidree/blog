@@ -2,7 +2,8 @@
 title: ""
 execute: 
   echo: false
-
+listing: 
+  feed: true
 filters: 
   - lightbox
 lightbox: auto
@@ -41,7 +42,6 @@ Bridging forests and technology
 :::
 :::
 
-
 ```{=html}
 <div class="about-links text-center">
   <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
@@ -58,7 +58,6 @@ Bridging forests and technology
   </a>
 </div>
 ```
-
 ## ABOUT ME
 
 Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
@@ -89,17 +88,16 @@ My passions are cycling, hiking, and travelling. I love to explore new places, c
 
 ![](assets/figures/lived_norway.jpg){fig-align="center" width="667"}
 :::
-
 :::
 
 ::: {.d-block .d-sm-none}
-- Spain 🏖️
+-   Spain 🏖️
 
-- Finland ☃️
+-   Finland ☃️
 
-- Czech Republic 🌉
+-   Czech Republic 🌉
 
-- Norway 🏔️
+-   Norway 🏔️
 :::
 
 ## Firefighter
