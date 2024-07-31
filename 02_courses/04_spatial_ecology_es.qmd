@@ -26,19 +26,23 @@ course_banner(
 ```
 :::
 
-::: course-link
-```{r}
-
-a(class = "text-center btn btn-success course-link--button",
-
-  target = "_blank",
-
-  href = "https://ucoonline.uco.es/mooc/cursosofertados/page27.html",
-
-  "Apuntarse al Curso")
-
-```
+:::{.column-screen .course-notavailable}
+MATRICULACIÓN NO DISPONIBLE
 :::
+
+<!-- ::: course-link -->
+<!-- ```{r} -->
+
+<!-- a(class = "text-center btn btn-success course-link--button", -->
+
+<!--   target = "_blank", -->
+
+<!--   href = "https://ucoonline.uco.es/mooc/cursosofertados/page27.html", -->
+
+<!--   "Apuntarse al Curso") -->
+
+<!-- ``` -->
+<!-- ::: -->
 
 Para apuntarse al curso, pulse en el enlace anterior que le redirigirá a la plataforma de [MOOC de la Universidad de Córdoba](https://ucoonline.uco.es/mooc/). Una vez dentro, debe registrarse y finalmente matricularse en el curso.
 

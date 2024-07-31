@@ -49,7 +49,7 @@ course_card(
   file         = "assets/figures/00_course_figures/bosque-digital.jpg",
   course_title = "Ecología espacial aplicada a la gestión forestal",
   mode         = "Online",
-  date         = "01/Jul - 27/Jul",
+  date         = "Not available",
   time         = "25 hours",
   language     = "Spanish",
   href         = "02_courses/04_spatial_ecology_es.qmd"
