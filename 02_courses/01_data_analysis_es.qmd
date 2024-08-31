@@ -30,7 +30,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=1655955E320D42120FEB",
+  href = data_analysis_coupon,
   "Apuntarse al Curso")
 ```
 :::

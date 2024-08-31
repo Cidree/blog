@@ -32,7 +32,7 @@ course_banner(
 ```{r}
 a(class = "text-center btn btn-success course-link--button",
   target = "_blank",
-  href = "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=7F609688EA907615F173",
+  href = mastering_r_coupon,
   "Enroll to the course")
 ```
 :::

@@ -1,5 +1,13 @@
 library(shiny)
 
+## Coupons
+mastering_r_coupon <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=75A8C47C111DDA050334"
+gis_spanish_coupon <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=04CBEDEDD8DFE1749EAA"
+gis_english_coupon <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=461C3D8BC05686F8A1FF"
+quarto_coupon <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=0FA1D2A866316F4DDB29"
+data_analysis_coupon <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=54862D77258EBB90397F"
+
+
 ## Card for courses.qmd -------------------------------------------------
 course_card <- function(file, course_title, mode, date, time, language, href) {
   
