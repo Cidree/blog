@@ -1,0 +1,35 @@
+---
+title: "Frequency of wildfires in an European province using EFFIS data and R"
+description: "Create an awesome map of the frequency of wildfires in an European province in the last century using data from EFFIS in R"
+date: "2024-08-04"
+categories: [R, spatial, wildfires]
+image: "image.png"
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< video https://youtu.be/SUburDc012g >}}
+
+## Introduction
+
+Spain might be thought of as a Mediterranean country as a whole. However, the north of Spain exhibits an Oceanic climate. Particularly, in the northwest, we find the region of Galicia, which experiences common precipitation throughout the year but also has a warm, dry summer. The province of Ourense is typically classified between Oceanic and Mediterranean climate zones. Throughout the year, this province receives high precipitation, but during the summer, it experiences a dry season where temperatures can easily exceed 35ºC and there can be weeks without rain. These conditions are favorable for vegetation growth throughout the year but also very conducive to the spread of wildfires.
+
+Indeed, Ourense province is the 3rd province in total burned area in Europe from 2000 to 2024 with approximately 290,000 ha affected, and the 5th in number of wildfires with roughly 1,300 (data source: [EFFIS](https://forest-fire.emergency.copernicus.eu/)). After working five fire seasons in this province as firefighter, I can recall myself going repeteadly to the same places to combat fuel models 4 and 5 of Rothermel (bush fires).
+
+Today, you will learn how to download data from [EFFIS](https://forest-fire.emergency.copernicus.eu/){target="_blank"} in R, unzip the data directly in R, and then do a slightly complex spatial data wrangling to count the frequency of wildfires in the province of Ourense (Spain).
+
+## Code
+
+You can find the code of this tutorial [here](https://github.com/Cidree/blog_scripts/tree/main/010_wildfires){target="_blank"}.
+
+## Results
+
+At the end of this tutorial, you will be able to create the following map:
+
+![Frequency of wildfires in Ourense (Spain) during the last century](wildfires_ourense.png){#fig-wildfires-ourense-frequency fig-align="center"}
+
+You can find all the explanations in the [video](https://youtu.be/LSWiv4BpDZA){target="_blank"}, and if you like it, don't forget to hit the like button, subscribe, and share it with others.
+
+I also invite you to take my [code](https://github.com/Cidree/blog_scripts/tree/main/010_wildfires){target="_blank"}, adapt it to another specific area, and share your results in [linkedin](https://www.linkedin.com/in/adrian-cidre/){target="_blank"} tagging me.
