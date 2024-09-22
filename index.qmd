@@ -159,4 +159,4 @@ Thank you for visiting, and I look forward to the possibility of learning togeth
 
 ## Curriculum Vitae
 
-My CV was created using the `{vitae}` R package, and you can find with the source code in [this repository](https://github.com/Cidree/Curriculum_ACG).
+My CV was created using the `{vitae}` R package, and you can find with the source code as well the CV in [this repository](https://github.com/Cidree/Curriculum_ACG).

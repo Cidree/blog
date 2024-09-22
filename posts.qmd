@@ -3,7 +3,7 @@ title: "Blog"
 listing:
   # Base options
   contents: posts
-  page-size: 10
+  page-size: 12
   sort: "date desc"
   type: grid
   # Grids
@@ -29,4 +29,4 @@ grid:
   gutter-width: 4rem
 ---
 
-Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. Enjoy! 
+Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. Enjoy!
