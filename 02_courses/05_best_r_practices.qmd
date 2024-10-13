@@ -37,15 +37,15 @@ a(class = "text-center btn btn-success course-link--button",
 ```
 :::
 
-::: course-description
+:::: course-description
 ::: course-description--title
 ## Introduction to the Course
 :::
-:::
+::::
 
 {{< video https://youtu.be/gc3PFF51Z7w >}}
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Description
 :::
@@ -57,9 +57,9 @@ In this course, we aim to address a significant gap in the market by equipping R
 
 Our focus will be on providing you with practical, everyday techniques that streamline your workflow and make your code robust and shareable. By the end of this course, you'll be able to avoid the common pitfall of "this script works only on my machine" and ensure your projects are reproducible and portable.
 :::
-:::
+:::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Prerequisites
 :::
@@ -67,9 +67,9 @@ Our focus will be on providing you with practical, everyday techniques that stre
 ::: course-description--text
 -   Basic/intermediate knowledge of R
 :::
-:::
+:::::
 
-::: {.course-curriculum .column-screen}
+:::: {.course-curriculum .column-screen}
 ::: course-description--title
 ## Course Contents
 :::
@@ -203,9 +203,9 @@ course_block(
 
 
 ```
-:::
+::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## What's inside the course
 :::
@@ -219,9 +219,9 @@ course_block(
 
 -   Fast answer to any student's question
 :::
-:::
+:::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Course Results
 :::
@@ -237,4 +237,4 @@ course_block(
 
 -   Create reproducible environments with renv
 :::
-:::
+:::::

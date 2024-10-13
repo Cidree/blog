@@ -14,8 +14,8 @@ format:
     title-block-banner: true
 ---
 
-::: {.header .container}
-::: header__text-box
+:::::::: {.header .container}
+::::::: header__text-box
 <h1 class="heading-primary">
 
 ::: {.heading-primary--main .heading-primary--main--big .d-none .d-sm-block}
@@ -39,10 +39,9 @@ Bridging forests and technology
 <a href="courses.qmd" class="btn btn-primary btn-primary--big btn--animated d-none d-sm-block">Discover my courses</a>
 
 <a href="courses.qmd" class="btn btn-primary btn-primary--small btn--animated d-block d-sm-none">Discover my courses</a>
-:::
-:::
+:::::::
+::::::::
 
-```{=html}
 <div class="about-links text-center">
   <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
     <i class="bi bi-linkedin"></i>
@@ -57,14 +56,14 @@ Bridging forests and technology
      <span class="about-link-text">Contact me</span>
   </a>
 </div>
-```
+
 ## ABOUT ME
 
 Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
 
 My passions are cycling, hiking, and travelling. I love to explore new places, cultures, and gastronomy, and I am always looking for new adventures. So far I have been living in:
 
-::: {.container .grid .container-lived}
+::::::: {.container .grid .container-lived}
 ::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
 ### Spain 🏖️
 
@@ -88,7 +87,7 @@ My passions are cycling, hiking, and travelling. I love to explore new places, c
 
 ![](assets/figures/lived_norway.jpg){fig-align="center" width="667"}
 :::
-:::
+:::::::
 
 ::: {.d-block .d-sm-none}
 -   Spain 🏖️
@@ -102,7 +101,7 @@ My passions are cycling, hiking, and travelling. I love to explore new places, c
 
 ## Firefighter
 
-::: {.columns .d-none .d-sm-block}
+::::::: {.columns .d-none .d-sm-block}
 ::: {.column width="45%"}
 During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
 
@@ -112,7 +111,7 @@ Due to uncertainty in the job market for firefighting and an unfortunate injury 
 ::: {.column width="15%"}
 :::
 
-::: {.column width="40%"}
+:::: {.column width="40%"}
 ::: composition
 ![](assets/figures/firefighter_01.jpg){.composition__photo .composition__photo--p1 .nolightbox fig-align="center" width="50"}
 
@@ -120,8 +119,8 @@ Due to uncertainty in the job market for firefighting and an unfortunate injury 
 
 ![](assets/figures/firefighter_02.jpg){.composition__photo .composition__photo--p3 .nolightbox fig-align="center" width="50"}
 :::
-:::
-:::
+::::
+:::::::
 
 ::: {.d-block .d-sm-none}
 During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.

@@ -35,7 +35,7 @@ a(class = "text-center btn btn-success course-link--button",
 ```
 :::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Descripción
 :::
@@ -51,9 +51,9 @@ Además, aprenderemos a personalizar nuestros documentos utilizando plantillas, 
 
 Ya seas un científico de datos, un estudiante, un investigador o simplemente alguien interesado en presentar información de manera efectiva, este curso de Quarto te proporcionará las habilidades necesarias para crear documentos profesionales con RStudio.
 :::
-:::
+:::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Requisitos previos
 :::
@@ -61,9 +61,9 @@ Ya seas un científico de datos, un estudiante, un investigador o simplemente al
 ::: course-description--text
 Se requiere un nivel básico de programación en R, aunque para sacarle mayor provecho se recomienda nivel intermedio.
 :::
-:::
+:::::
 
-::: {.course-curriculum .column-screen}
+:::: {.course-curriculum .column-screen}
 ::: course-description--title
 ## Contenidos del Curso
 :::
@@ -170,9 +170,9 @@ course_block(
 )
 
 ```
-:::
+::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Resultados del Curso
 :::
@@ -192,4 +192,4 @@ course_block(
 
 -   Aprender a utilizar Git y GitHub
 :::
-:::
+:::::
