@@ -8,7 +8,7 @@ execute:
 source("03_scripts/00_courses.R")
 ```
 
-::: {.column-screen .jumbotron .jumbotron-courses .container .d-none .d-sm-block}
+::::: {.column-screen .jumbotron .jumbotron-courses .container .d-none .d-sm-block}
 <div>
 
 # Courses {.text-black .jumbotron-title}
@@ -18,17 +18,17 @@ source("03_scripts/00_courses.R")
 ::: jumbotron-text
 Learn data analysis and data science with me.
 :::
-:::
+:::::
 
-::: {.row .d-block .d-sm-none}
+:::: {.row .d-block .d-sm-none}
 ::: {.card .card-courses}
 ### Courses
 
 Learn data analysis and data science with me.
 :::
-:::
+::::
 
-::: {.container .grid .mt-5}
+::::::::: {.container .grid .mt-5}
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
@@ -49,7 +49,7 @@ course_card(
   file         = "assets/figures/00_course_figures/bosque-digital.jpg",
   course_title = "Ecología espacial aplicada a la gestión forestal",
   mode         = "Online",
-  date         = "Not available",
+  date         = "16/Feb - 21/Mar",
   time         = "25 hours",
   language     = "Spanish",
   href         = "02_courses/04_spatial_ecology_es.qmd"
@@ -112,4 +112,4 @@ course_card(
 )
 ```
 :::
-:::
+:::::::::

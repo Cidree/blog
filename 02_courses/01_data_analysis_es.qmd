@@ -35,7 +35,7 @@ a(class = "text-center btn btn-success course-link--button",
 ```
 :::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Descripción
 :::
@@ -49,9 +49,9 @@ En este curso aprenderéis a utilizar el lenguaje de programación R utilizando 
 
 En este curso aprenderéis a programar en R programando. En los más de 100 vídeos de este curso, apenas 10 vídeos serán clases teóricas para explicar ciertos conceptos que lo merecen, mientras que el resto serán vídeos de código. Aprenderéis técnicas que se utilizan en 2023, con las últimas actualizaciones de los paquetes utilizados.
 :::
-:::
+:::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Requisitos previos
 :::
@@ -59,9 +59,9 @@ En este curso aprenderéis a programar en R programando. En los más de 100 víd
 ::: course-description--text
 No se necesitan requisitos previos.
 :::
-:::
+:::::
 
-::: {.course-curriculum .column-screen}
+:::: {.course-curriculum .column-screen}
 ::: course-description--title
 ## Contenidos del Curso
 :::
@@ -218,9 +218,9 @@ course_block(
   
 )
 ```
-:::
+::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Resultados del Curso
 :::
@@ -258,4 +258,4 @@ course_block(
 
 -   Compartir resultados a través de Quarto
 :::
-:::
+:::::

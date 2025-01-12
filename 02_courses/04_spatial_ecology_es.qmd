@@ -19,44 +19,44 @@ course_banner(
   price    = "Gratis",
   mode     = "Online",
   time     = "25 horas",
-  date     = "01/Jul - 27/jul",
+  date     = "16/Feb - 21/Mar",
   img_file = "../assets/figures/00_course_figures/bosque-digital.jpg",
   lang     = "es"
 )
 ```
 :::
 
-::: {.column-screen .course-notavailable}
+::: {.column-screen .course-notavailable .hidden}
 MATRICULACIÓN NO DISPONIBLE
 :::
 
-<!-- ::: course-link -->
+::: course-link
 
-<!-- ```{r} -->
+```{r}
 
-<!-- a(class = "text-center btn btn-success course-link--button", -->
+a(class = "text-center btn btn-success course-link--button",
 
-<!--   target = "_blank", -->
+  target = "_blank",
 
-<!--   href = "https://ucoonline.uco.es/mooc/cursosofertados/page27.html", -->
+  href = "https://ucoonline.uco.es/mooc/info/cursosofertados/page35.html",
 
-<!--   "Apuntarse al Curso") -->
+  "Apuntarse al Curso")
 
-<!-- ``` -->
+```
 
-<!-- ::: -->
+:::
 
 Para apuntarse al curso, pulse en el enlace anterior que le redirigirá a la plataforma de [MOOC de la Universidad de Córdoba](https://ucoonline.uco.es/mooc/). Una vez dentro, debe registrarse y finalmente matricularse en el curso.
 
-::: course-description
+:::: course-description
 ::: course-description--title
 ## Introducción del curso
 :::
-:::
+::::
 
 {{< video https://www.youtube.com/watch?v=jfxa-k5ZSNM&t=1913s >}}
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Bosque Digital
 :::
@@ -78,9 +78,9 @@ Bosque Digital ha tenido una gran acogida dentro de los profesionales del sector
 
 Puedes visitar los cursos de Bosque Digital en [este enlace](https://ucoonline.uco.es/mooc/){target="_blank"}.
 :::
-:::
+:::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Requisitos previos
 :::
@@ -88,9 +88,9 @@ Puedes visitar los cursos de Bosque Digital en [este enlace](https://ucoonline.u
 ::: course-description--text
 Conocimientos básico-medio de R
 :::
-:::
+:::::
 
-::: {.course-curriculum .column-screen}
+:::: {.course-curriculum .column-screen}
 ::: course-description--title
 ## Contenidos del Curso
 :::
@@ -153,9 +153,9 @@ course_block(
 )
 
 ```
-:::
+::::
 
-::: course-description
+::::: course-description
 ::: course-description--title
 ## Qué incluye el curso
 :::
@@ -173,4 +173,4 @@ course_block(
 
 -   Bibliografía adicional
 :::
-:::
+:::::

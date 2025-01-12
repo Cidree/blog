@@ -42,20 +42,9 @@ Bridging forests and technology
 :::::::
 ::::::::
 
-<div class="about-links text-center">
-  <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-  <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank">
-    <i class="bi bi-envelope-at"></i>
-     <span class="about-link-text">Contact me</span>
-  </a>
-</div>
+::: {.about-links .text-center}
+<a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank"> <i class="bi bi-linkedin"></i> [LinkedIn]{.about-link-text} </a> <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank"> <i class="bi bi-github"></i> [Github]{.about-link-text} </a> <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank"> <i class="bi bi-envelope-at"></i> [Contact me]{.about-link-text} </a>
+:::
 
 ## ABOUT ME
 
