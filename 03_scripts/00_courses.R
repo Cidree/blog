@@ -1,11 +1,11 @@
 library(shiny)
 
 ## Coupons
-mastering_r_coupon   <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=D23AC2FA4FA1C762F041"
-gis_spanish_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=3978A4878092E9723658"
-gis_english_coupon   <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=2042024F46EAE0761F20"
-quarto_coupon        <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=80D4D817F9BD9B3A98CD"
-data_analysis_coupon <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=9013727884F9B4AE7627"
+mastering_r_coupon   <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=D7D94B9742FAC5BBF1C7"
+gis_spanish_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=D35DA710E87F6F8EF9AD"
+gis_english_coupon   <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=29A66525851F66D2083E"
+quarto_coupon        <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=93DAB807C927A70295C1"
+data_analysis_coupon <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=0649B743DB3CE53B71BD"
 
 
 ## Card for courses.qmd -------------------------------------------------

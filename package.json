@@ -1,17 +1,25 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "My personal blog",
   "main": "index.js",
   "scripts": {
     "compile:sass": "sass assets/styles/main.scss assets/styles/styles.css -w"
   },
-  "author": "",
+  "author": "Adrian Cidre",
   "license": "ISC",
   "devDependencies": {
-    "sass": "^1.77.4"
+    "sass": "^1.86.1"
   },
   "dependencies": {
     "@quarto/netlify-plugin-quarto": "^0.0.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cidree/cidre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cidree/cidre/issues"
+  },
+  "homepage": "https://github.com/Cidree/cidre#readme"
 }

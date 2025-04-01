@@ -2,8 +2,6 @@
 title: ""
 execute: 
   echo: false
-listing: 
-  feed: true
 filters: 
   - lightbox
 lightbox: auto
@@ -11,11 +9,10 @@ lightbox: auto
 format: 
   html: 
     page-layout: full
-    title-block-banner: true
 ---
 
-:::::::: {.header .container}
-::::::: header__text-box
+::: {.header .container}
+::: header__text-box
 <h1 class="heading-primary">
 
 ::: {.heading-primary--main .heading-primary--main--big .d-none .d-sm-block}
@@ -39,12 +36,25 @@ Bridging forests and technology
 <a href="courses.qmd" class="btn btn-primary btn-primary--big btn--animated d-none d-sm-block">Discover my courses</a>
 
 <a href="courses.qmd" class="btn btn-primary btn-primary--small btn--animated d-block d-sm-none">Discover my courses</a>
-:::::::
-::::::::
-
-::: {.about-links .text-center}
-<a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank"> <i class="bi bi-linkedin"></i> [LinkedIn]{.about-link-text} </a> <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank"> <i class="bi bi-github"></i> [Github]{.about-link-text} </a> <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank"> <i class="bi bi-envelope-at"></i> [Contact me]{.about-link-text} </a>
 :::
+:::
+
+```{=html}
+<div class="about-links text-center">
+  <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
+  <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank">
+    <i class="bi bi-envelope-at"></i>
+     <span class="about-link-text">Contact me</span>
+  </a>
+</div>
+```
 
 ## ABOUT ME
 
@@ -147,4 +157,4 @@ Thank you for visiting, and I look forward to the possibility of learning togeth
 
 ## Curriculum Vitae
 
-My CV was created using the `{vitae}` R package, and you can find with the source code as well the CV in [this repository](https://github.com/Cidree/Curriculum_ACG).
+My CV was created using the `{vitae}` R package, and you can find with the source code in [this repository](https://github.com/Cidree/Curriculum_ACG).
