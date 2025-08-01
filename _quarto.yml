@@ -13,13 +13,16 @@ website:
     #logo: assets/figures/logo.png
     background: "#2D4156"
     collapse-below: lg
-    right:
+    left:
       - text: About
+        icon: person-circle
         href: index.qmd
-      - text: Posts
-        href: posts.qmd
+      # - text: Posts
+      #   href: posts.qmd
       - text: Courses
+        icon: mortarboard-fill
         href: courses.qmd
+    right:
       - icon: github
         href: https://github.com/Cidree
       - icon: linkedin
@@ -47,8 +50,8 @@ website:
 format:
   html:
     theme: 
-      light: [lux, assets/styles/quarto_theme.scss]
-    css: assets/styles/styles.css
+      light: [sandstone, assets/styles/custom_theme.scss, assets/styles/courses.scss]
+    # css: assets/styles/styles.css
     code-link: true
     code-block-border-left: true
     linkcolor: '#ff0000'

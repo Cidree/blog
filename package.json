@@ -9,7 +9,7 @@
   "author": "Adrian Cidre",
   "license": "ISC",
   "devDependencies": {
-    "sass": "^1.86.1"
+    "sass": "^1.89.2"
   },
   "dependencies": {
     "@quarto/netlify-plugin-quarto": "^0.0.5"

@@ -1,159 +1,116 @@
 ---
-title: ""
-execute: 
-  echo: false
-filters: 
-  - lightbox
-lightbox: auto
+pagetitle: "Adrián Cidre | About"
+title: "Adrián Cidre"
+subtitle: "Forest Engineer & R programmer 🌲"
+image: assets/img/JR-logo-circle.webp
+image-alt: "Myself"
 
-format: 
-  html: 
-    page-layout: full
+about:
+  id: hero-heading
+  template: jolla
+  image: assets/figures/pino_vilaflor_crop.JPG
+  image-width: 15em
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/Cidree
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/adrian-cidre/
+    # - icon: briefcase-fill
+    #   text: Work
+    #   href: 
+    - text: "{{< iconify simple-icons kofi >}} Support me"
+      href: https://buymeacoffee.com/adriancidre
+toc: false
+anchor-sections: false
 ---
 
-::: {.header .container}
-::: header__text-box
-<h1 class="heading-primary">
-
-::: {.heading-primary--main .heading-primary--main--big .d-none .d-sm-block}
-R-FOREST
+::: {#hero-heading}
 :::
 
-::: {.heading-primary--main .heading-primary--main--small .d-block .d-sm-none}
-R-FOREST
+## Background
+
+Hei! I am Adrián Cidre, a passionate Forestry Engineer with a Master's degree in Geomatics, Remote Sensing, and Spatial Models Applied to Forest Management, from the University of Santiago de Compostela and University of Córdoba respectively.
+
+My passions are cycling, hiking, and traveling. I love to explore new places, cultures, and gastronomy, so I try to always look for new adventures 🚵🏖️.
+
+During my career, I had the opportunity to learn and work in a wide range of environments. I started my forest career in 2016 studying a two-year forestry course in Mondoñedo (Galicia, Spain). After that, I started working in a company mostly helping with forest inventory.
+
+::::: columns
+::: {.column width="50%"}
+Just after these studies, I started my first summer season as firefighter in 2018. I loved that job, and I wanted to continue working as a firefighter for more seasons. However, because of the precariousness of this job (and because my friend convinced me), I enrolled in Forestry Engineering at the University of Santiago de Compostela. During the four years of the bachelor (yes, in Spain the bachelors last 4 years), I learned from many different professionals of the forest sector. But my best decision came the third year when I decided to go to Joensuu (Finland) for an Erasmus experience. The six months I stayed in Finland changed me a lot, I think in the good way. I knew people from almost every country of Europe, and every region of Spain. It was a very enriching experience.
 :::
 
-::: {.heading-primary--sub .heading-primary--sub--big .d-none .d-sm-block}
-Bridging forests and technology
+::: {.column width="50%"}
+![](assets/figures/lived_finland.jpg){fig-align="center" width="300"}
+:::
+:::::
+
+::::: columns
+::: {.column width="60%"}
+![](assets/figures/cordoba_patios.jpg){fig-align="center" width="300"}
 :::
 
-::: {.heading-primary--sub .heading-primary--sub--small .d-block .d-sm-none}
-Bridging forests and technology
+::: {.column width="40%"}
+The fourth year of my forestry engineering studies, I took another decision that opened me a lot of doors. The first semester I went as an exchange student to the University of Córdoba where I defended my bachelor thesis. A very warm but scenic city.
+
+In my bachelor thesis I studied framentation and connectivity patterns associated to *Cerambyx* spp. in Sierra Morena (Spain) using a graph theory approach. The bachelor thesis was published afterwards in [forests](https://www.mdpi.com/1999-4907/15/4/648){target="_blank"}.
+:::
+:::::
+
+::::: columns
+::: {.column width="40%"}
+The next semester, I went to the Mendel University of Brno (Czech Republic) to do an Erasmus+ internship with a company associated with the university. I helped with forest inventory and nursery tasks during 3-4 months, and I explored most of the country.
 :::
 
-</h1>
-
-<a href="courses.qmd" class="btn btn-primary btn-primary--big btn--animated d-none d-sm-block">Discover my courses</a>
-
-<a href="courses.qmd" class="btn btn-primary btn-primary--small btn--animated d-block d-sm-none">Discover my courses</a>
+::: {.column width="60%"}
+![](assets/figures/lived_czechia.jpg){fig-align="center" width="300"}
 :::
-:::
+:::::
 
-```{=html}
-<div class="about-links text-center">
-  <a href="https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/" class="about-link btn btn-info" rel="" target="_blank">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/Cidree" class="about-link btn btn-dark" rel="" target="_blank">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-  <a href="mailto:adrian.cidre@gmail.com" class="about-link btn btn-info" rel="" target="_blank">
-    <i class="bi bi-envelope-at"></i>
-     <span class="about-link-text">Contact me</span>
-  </a>
-</div>
-```
-
-## ABOUT ME
-
-Hei! I am Adrián Cidre, a passionate forestry engineer with a Master's degree in geomatics, remote sensing, and spatial models applied to forest management. Currently, I am contributing my expertise as a member of the Department of Forest Engineering at the University of Córdoba. My goal is to create R-based solutions for forestry challenges. I specialize in applying Data Science and Geospatial technologies to enhance forestry management.
-
-My passions are cycling, hiking, and travelling. I love to explore new places, cultures, and gastronomy, and I am always looking for new adventures. So far I have been living in:
-
-::::::: {.container .grid .container-lived}
-::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
-### Spain 🏖️
-
-![](assets/figures/lived_spain.jpg){fig-align="center" width="375"}
+::::: columns
+::: {.column width="50%"}
+![](assets/figures/firefighter_03.jpg){fig-align="center" width="300"}
 :::
 
-::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
-### Finland ☃️
+::: {.column width="50%"}
+Then we get to the summer of 2022, my last summer as firefighter. In total I served as firefighter during 5 summer seasons. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
+:::
+:::::
 
-![](assets/figures/lived_finland.jpg){fig-align="center" width="375"}
+In September 2022 I started to study the Master in Geomatics, Remote Sensing, and Spatial Models applied to Forest Management at the University of Córdoba. My previous stay in Córdoba brought me there with a job offer in the LIFE FAGESOS project, in which I was working for about 1.5 years. This project (still running) focuses on finding solutions to the decay of dehesas and other forest systems because of *Phytopthora* species, specially *P. cinnamomi* which provokes the oak decline and the chestnut ink. My contribution to the project was developing models to project the distribution of this species in Mediterranean countries, and that was in the end my awarded master thesis and an article that is now published. The master thesis received an award and it was published in [Helvia](https://helvia.uco.es/handle/10396/33245){target="_blank"}, and also as a scientific article in [Ecological Modelling](https://www.sciencedirect.com/science/article/pii/S0304380025001012){target="_blank"}.
+
+::::: columns
+::: {.column width="30%"}
+When I finished the Master, I asked for an Erasmus+ internship at the Norwegian University of Life Sciences in Ås. I stayed in Norway four months, and it was another enriching experience with a lot of snow, lakes, and northern lights!
 :::
 
-::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
-### Czech Republic 🌉
-
-![](assets/figures/lived_czechia.jpg){fig-align="center" width="375"}
+::: {.column width="70%"}
+![](assets/figures/lived_norway.jpg){fig-align="center" width="400"}
 :::
+:::::
 
-::: {.g-col-12 .g-col-md-6 .d-none .d-sm-block}
-### Norway 🏔️
-
-![](assets/figures/lived_norway.jpg){fig-align="center" width="667"}
-:::
-:::::::
-
-::: {.d-block .d-sm-none}
--   Spain 🏖️
-
--   Finland ☃️
-
--   Czech Republic 🌉
-
--   Norway 🏔️
-:::
-
-## Firefighter
-
-::::::: {.columns .d-none .d-sm-block}
+::::: columns
 ::: {.column width="45%"}
-During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
-
-Due to uncertainty in the job market for firefighting and an unfortunate injury that may limit me in the long-term, I decided to focus on my studies and transition to a GIS specialist role as I already liked it, and it was a smarter choice for my future. I am grateful for the experience and knowledge I gained during my time as a firefighter, as it has shaped my career and my approach to forestry management.
+![](assets/figures/tenerife_anaga.jpg){fig-align="center" width="398"}
 :::
 
-::: {.column width="15%"}
+::: {.column width="5%"}
 :::
 
-:::: {.column width="40%"}
-::: composition
-![](assets/figures/firefighter_01.jpg){.composition__photo .composition__photo--p1 .nolightbox fig-align="center" width="50"}
-
-![](assets/figures/firefighter_03.jpg){.composition__photo .composition__photo--p2 .nolightbox fig-align="center" width="75"}
-
-![](assets/figures/firefighter_02.jpg){.composition__photo .composition__photo--p3 .nolightbox fig-align="center" width="50"}
+::: {.column width="50%"}
+Finally, in 2025 I started working in a project of adaptive silviculture of the Canary pine in Tenerife. I lived in Tenerife for some months, and I developed some models to describe forest types in the island. I also worked creating a system of permanent plots continuing a work that started in 1989 to assess the dynamics, and performance of different thinning schemes, both for production and wildfire resistance. For different circumstances I had to leave the job in August 2025, and that's a quick description of my life since my first steps in the forest sector.
 :::
-::::
-:::::::
-
-::: {.d-block .d-sm-none}
-During my career, I worked as a firefighter for six seasons while studying forestry engineering. This experience allowed me to develop a deep understanding of wildfires and their impact on forests. I learned how to manage and prevent wildfires, as well as how to analyse their effects on the environment. Being part of a crew teaches you the importance of teamwork, leadership, and decision-making under pressure. These skills have been invaluable in my professional life.
-
-Due to uncertainty in the job market for firefighting and an unfortunate injury that may limit me in the long-term, I decided to focus on my studies and transition to a GIS specialist role as I already liked it, and it was a smarter choice for my future. I am grateful for the experience and knowledge I gained during my time as a firefighter, as it has shaped my career and my approach to forestry management.
-:::
+:::::
 
 ## GIS specialist and R
 
-When I started my Master's degree in geomatics, remote sensing, and spatial models applied to forest management, I discovered the power of R. I was amazed by the possibilities of this programming language and its applications in forestry. I decided to specialize in R programming and apply it to forest management, remote sensing, and spatial data science.
+My first experience with R was during my first year of university (2018), in a statistics course. However, it wasn't until my bachelor thesis in 2022 that I began to appreciate its potential. At first, it was frustrating—there were many moments when I wanted to give up. But persistence paid off: over time, I started delivering my work more efficiently and with better quality, learning new techniques along the way.
 
-Since then, I focused on developing R-based solutions for forestry challenges. I have created several R applications and courses to help forest managers, researchers, and students. I am passionate about teaching and sharing my knowledge with others. The current trend for GIS specialists is to use a GIS software like QGIS or ArcGIS, but I believe that R and Python are tools that not only allow you to perform the same tasks but also provide you with the flexibility to create your own solutions and applications, and all the advantages of a programming language such automation, reproducibility, scalability, creation of data pipelines, and more.
+Today, I use R primarily for data analysis, data science, GIS, remote sensing, forest inventory, and much more. I've developed several R applications and courses aimed at supporting forest managers, researchers, and students. I'm passionate about teaching and sharing knowledge, and in my courses, I focus not only on how to use R effectively but also on helping others avoid the common mistakes I made when I was starting out.
 
-## This Blog
-
-In this blog I will share contents of my life, my work, and also I will create teaching content. Here, I share my experiences and knowledge in diverse subjects, focusing on:
-
-> -   R programming
->
-> -   Statistics
->
-> -   Forest pathology
->
-> -   Wildfires
->
-> -   Forest modelling
->
-> -   Remote Sensing
->
-> -   Spatial Data Science
->
-> -   Teaching
-
-Thank you for visiting, and I look forward to the possibility of learning together.
+Thank you for visiting, and I hope we can learn together! Just a quick note — I'm not an expert in any particular field, just a curious person who enjoys sharing what I learn along the way!
 
 ## Curriculum Vitae
 
