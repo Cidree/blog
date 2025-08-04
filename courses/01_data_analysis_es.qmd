@@ -13,6 +13,7 @@ editor_options:
 
 ```{r}
 #| include: false
+use("readr", "read_csv")
 use("dplyr", c("filter", "mutate"))
 ```
 
