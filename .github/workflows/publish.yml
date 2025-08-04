@@ -22,7 +22,7 @@ jobs:
       
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dplyr", "shiny", "downlit", "xml2", "rmarkdown"), repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("dplyr", "purrr", "shiny", "downlit", "xml2", "rmarkdown"), repos = "https://cloud.r-project.org")'
       
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
