@@ -1,0 +1,264 @@
+---
+pagetitle: "Coures | GIS R"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+course_title <- "Introduction to Spatial Data Analysis and GIS in R"
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = gis_english_coupon,
+  trigger_height  = 400,
+  button_text     = "Enroll"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = course_title,
+  text  = "Introductory course on spatial data analysis with R. You will learn to analyze, transform, and map spatial data, both vector and raster, using packages such as `sf` and `terra`.",
+  background_image = "../assets/figures/00_course_figures/banner-gis.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "30h", 
+  date  = "Always available",
+  lang  = "en"
+)
+```
+:::
+
+## Course introduction {.course-description}
+
+{{< video https://www.youtube.com/watch?v=FSE_VnJuTFw height="300" aspect-ratio="16x9" >}}
+
+## Description {.course-description}
+
+This course is a hands-on introduction to spatial data analysis and visualization in R. Through a combination of theory, practical exercises, and applied challenges, you will learn to work with both vector and raster data, understand coordinate reference systems (CRS), perform spatial operations, and create both static and interactive maps. The course uses key packages from the R ecosystem such as `sf`, `terra`, `ggplot2`, and `mapview`. It is structured into theoretical lessons with quizzes, practical lessons, and exercises for students to apply what they’ve learned.
+
+You will start by understanding what spatial data is and how it differs from non-spatial data. Throughout the course, you will develop skills to transform geometries, analyze raster layers, calculate indices such as NDVI, and represent geographic phenomena on maps. By the end, you will be able to carry out your own spatial data analyses and share results through dynamic web maps.
+
+## Prerequisites {.course-description}
+
+-   Basic knowledge of R
+
+-   Familiarity with `tidyverse` functions, including basic plots with `ggplot2` and the pipeline is recommended.
+
+## Course contents {.course-description}
+
+In this section, you can see a non-exhaustive summary of what you will cover in this course.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Unit 1 - Course Introduction",
+    topics = c(
+      "Course overview",
+      "Environment setup",
+      "Course materials"
+    )
+  ),
+  list(
+    title = "Unit 2a - Spatial Data (Theory)",
+    topics = c(
+      "Spatial vs Non-spatial data",
+      "Geometries",
+      "Simple features",
+      "Vector formats"
+    )
+  ),
+  list(
+    title = "Unit 2b - Spatial Data (Practice)",
+    topics = c(
+      "Downloading spatial data",
+      "Exploratory analysis",
+      "Import/Export",
+      "Properties",
+      "CHALLENGE 01 - proposed exercises"
+    )
+  ),
+  list(
+    title = "Unit 3a - Coordinate Reference Systems (Theory)",
+    topics = c(
+      "Importance of CRS",
+      "CRS, coordinates, georeferencing",
+      "Geographic vs Projected CRS",
+      "Projections",
+      "EPSG codes, proj4, WKT..."
+    )
+  ),
+  list(
+    title = "Unit 3b - Coordinate Reference Systems (Practice)",
+    topics = c(
+      "Exploring CRS",
+      "CRS transformation",
+      "CRS assignment",
+      "On-the-fly transformations",
+      "Web maps",
+      "CHALLENGE 02 - proposed exercises"
+    )
+  ),
+  list(
+    title = "Unit 4a - Geometry Operations (Theory)",
+    topics = c(
+      "Spatial predicates",
+      "Geometry measurements",
+      "Unary transformations",
+      "Binary transformations",
+      "Other operations"
+    )
+  ),
+  list(
+    title = "Unit 4b - Geometry Operations (Practice)",
+    topics = c(
+      "Predicate functions",
+      "Spatial filters",
+      "Spatial joins",
+      "Spatial measurements",
+      "Transformations (centroid, buffer..)",
+      "CHALLENGE 03 - proposed exercises"
+    )
+  ),
+  list(
+    title = "Unit 5a - Raster Data (Theory)",
+    topics = c(
+      "Definition of raster data",
+      "Types of resolution",
+      "Brief introduction to remote sensing",
+      "Common raster operations",
+      "Vegetation indices"
+    )
+  ),
+  list(
+    title = "Unit 5b - Raster Data (Practice)",
+    topics = c(
+      "Raster data exploration",
+      "Download Digital Elevation Model (DEM)",
+      "DEM derivatives",
+      "Crop, reclassify...",
+      "Arithmetic operations",
+      "Vegetation index calculation",
+      "RGB and false color compositions",
+      "CHALLENGE 04 - proposed exercises"
+    )
+  ),
+  list(
+    title = "Unit 6 - Static Maps",
+    topics = c(
+      "Map 01 - Population of Spain by municipality",
+      "Map 02a - Brown bear in Picos de Europa I",
+      "Map 02b - Brown bear in Picos de Europa II",
+      "Map 03 - Rivers of Galicia",
+      "Map 04 - Andean bear in Peru",
+      "Map 05 - Wildfire severity in Tenerife (2023)"
+    )
+  ),
+  list(
+    title = "Unit 7 - Web Maps",
+    topics = c(
+      "Map 01 - Population of Spain by municipality",
+      "Map 02 - Brown bear in Picos de Europa",
+      "Map 03 - Rivers of Galicia",
+      "Map 04 - Andean bear in Peru",
+      "Map 05a - Wildfire severity in Tenerife (synchronized)",
+      "Map 05b - Wildfire severity in Tenerife (side by side)"
+    )
+  )
+)
+
+
+## create the course structure
+create_course_structure(
+  course_title, 
+  course_data
+)
+
+```
+
+## What's inside the course {.course-description}
+
+-   150 lessons
+
+-   13 hours of video
+
+-   All the course materials
+
+-   Theoretical classes, practical sessions, quizzes, and proposed exercises
+
+-   Additional bibliography
+
+-   Quick answer to any student’s question
+
+## What will you learn {.course-description}
+
+You will learn to analyze spatial data in R, with RStudio becoming your new Geographic Information System (GIS). Specifically, you will learn to:
+
+-   Use the most important packages for GIS in R
+
+-   Analyze vector and raster data
+
+-   Download spatial data in R
+
+-   Perform common operations on vector and raster data
+
+-   Georeference data
+
+-   Transform coordinate reference systems (CRS)
+
+-   Create maps and web maps like the one below:
+
+```{=html}
+<iframe src="../assets/html/population_spain.html" width="700" height="500"></iframe>
+```
+
+## Student testimonials {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Introduction to Spatial Data Analysis and GIS")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Here you can find all the testimonials left by students of this course (both positive and negative).
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Overall Rating",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+create_reviews_section(reviews_with_comment_tbl)
+```

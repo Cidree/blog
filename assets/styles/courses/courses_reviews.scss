@@ -1,0 +1,257 @@
+
+
+.reviews-section {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.reviews-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: $color-darkblue;
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+.reviews-carousel-container {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.reviews-carousel {
+  display: flex;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #e9ecef;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-nav:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-nav.prev {
+  left: -25px;
+}
+
+.carousel-nav.next {
+  right: -25px;
+}
+
+.carousel-nav svg {
+  width: 20px;
+  height: 20px;
+  color: #667eea;
+}
+
+.carousel-nav.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.review-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+  position: relative;
+  overflow: hidden;
+  min-width: 350px;
+  flex: 0 0 350px;
+}
+
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.student-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: $color-darkblue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.student-details {
+  flex-grow: 1;
+}
+
+.student-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $color-darkblue;
+  line-height: 1.2;
+}
+
+.course-name {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.review-meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.star-rating {
+  color: #ffc107;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.25rem;
+  letter-spacing: 1px;
+}
+
+.course-stars {
+  color: #ffc107;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 1px;
+}
+
+.review-date {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.review-content {
+  margin-top: 1rem;
+}
+
+.review-text {
+  margin: 0;
+  line-height: 1.6;
+  color: #495057;
+  font-size: 0.95rem;
+  padding-top: 1rem;
+  position: relative;
+}
+
+.review-text::before {
+  content: '"';
+  font-size: 3rem;
+  color: #dee2e6;
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .reviews-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .review-card {
+    min-width: 300px;
+    flex: 0 0 300px;
+  }
+  
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-nav.prev {
+    left: -20px;
+  }
+  
+  .carousel-nav.next {
+    right: -20px;
+  }
+  
+  .carousel-nav svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .review-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .review-meta {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .review-card {
+    min-width: 280px;
+    flex: 0 0 280px;
+  }
+  
+  .carousel-nav.prev {
+    left: -15px;
+  }
+  
+  .carousel-nav.next {
+    right: -15px;
+  }
+}
+
+.cell-output-display:not(.no-overflow-x), .knitsql-table:not(.no-overflow-x) {
+    overflow-x: unset;
+}

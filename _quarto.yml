@@ -8,7 +8,10 @@ website:
   title: "Adrián Cidre"
   site-url: "https://adrian-cidre.com"
   description: "A blog with R content"
-  search: false
+  search:
+    location: navbar
+    type: overlay
+    show-item-context: tree
   navbar:
     #logo: assets/figures/logo.png
     background: "#2D4156"
@@ -27,9 +30,12 @@ website:
         href: https://github.com/Cidree
       - icon: linkedin
         href: https://www.linkedin.com/in/adrian-cidre-gonz%C3%A1lez-8a50371b0/
+      - icon: youtube
+        href: https://www.youtube.com/@CidreRForest
       - icon: envelope-at
         href: mailto:adrian.cidre@gmail.com
-        
+      - text: "{{< iconify simple-icons kofi >}}"
+        href: https://buymeacoffee.com/adriancidre
   page-footer:
     center: |
       [Contact Adrián Cidre](mailto:adrian.cidre@gmail.com)
@@ -39,6 +45,12 @@ website:
       [Github Code Repo](https://github.com/Cidree/blog)
     background: "#2D4156"
     foreground: white
+  announcement: 
+    icon: info-circle
+    dismissable: true
+    content: "**Warning** - This site is under development. Some features may not work as expected."
+    type: warning
+    position: below-navbar
   
   google-analytics:
     tracking-id: "G-J58431JK0F"
@@ -50,12 +62,10 @@ website:
 format:
   html:
     theme: 
-      light: [sandstone, assets/styles/custom_theme.scss, assets/styles/courses.scss]
+      light: [sandstone, assets/styles/custom_theme.scss]
     # css: assets/styles/styles.css
     code-link: true
     code-block-border-left: true
-    linkcolor: '#ff0000'
     fontsize: 100%
     highlight-style: arrow
-editor: visual
 

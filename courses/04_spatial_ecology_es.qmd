@@ -1,0 +1,177 @@
+---
+pagetitle: "Cursos | Ecología R"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+course_title <- "Ecología espacial aplicada en R"
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = spatial_ecology_coupon,
+  trigger_height  = 400,
+  button_text     = "Matricúlate"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = course_title,
+  text  = "Análisis espacial en ecología con R: procesos puntuales, autocorrelación, interpolación y geoestadística para tus datos ecológicos. Teoría, práctica y ejercicios propuestos.",
+  background_image = "../assets/figures/00_course_figures/banner-gis.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "30h", 
+  date  = "Siempre disponible",
+  lang  = "es"
+)
+```
+:::
+
+## Descripción {.course-description}
+
+Este curso está diseñado para quienes desean aplicar técnicas de análisis espacial en ecología usando el lenguaje de programación R. A lo largo de cuatro bloques temáticos, aprenderás a analizar patrones espaciales de puntos, evaluar la autocorrelación espacial y aplicar métodos de interpolación determinísticos y geoestadísticos, como IDW y kriging, para modelar datos ecológicos.
+
+Con un enfoque práctico, cada tema incluye clases teóricas y ejercicios con R para afianzar los conceptos. Es recomendable contar con conocimientos básicos de R para aprovechar al máximo el contenido. Para quienes estén empezando, recomiendo revisar previamente mis cursos introductorios sobre [análisis y visualización de datos en R](https://adrian-cidre.com/courses/01_data_analysis_es.html){target="_blank"}) o [introduccion al análsisis GIS en R](https://adrian-cidre.com/courses/02_spatial_data_es.html){target="_blank"}).
+
+::: callout-note
+## Nota
+
+La ecología espacial es un campo muy amplio. En este curso veremos tres temas principales que son los análisis de patrones puntuales, autocorrelación espacial e interpolación. No obstante, si el curso tiene éxito y es de agrado de los estudiantes se podrá extender en el futuro.
+:::
+
+## Requisitos previos {.course-description}
+
+Conocimientos básicos del lenguaje de programación R.
+
+## Contenidos del Curso {.course-description}
+
+En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Bloque 01 - Procesos puntuales",
+    topics = c(
+      "Tema 01 - Introducción a procesos puntuales",
+      "Tema 02 - Análisis basados en densidad",
+      "Tema 03 - Análisis basados en distancias",
+      "Tema 04 - Ejercicios propuestos con R"
+    )
+  ),
+  list(
+    title = "Bloque 02 - Areal data",
+    topics = c(
+      "Tema 05 - Introducción a datos de área",
+      "Tema 06 - Autocorrelación espacial",
+      "Tema 07 - Ejercicios propuestos con R"
+    )
+  ),
+  list(
+    title = "Bloque 03 - Interpolacion espacial I",
+    topics = c(
+      "Tema 08 - Introducción a la interpolación espacial",
+      "Tema 09 - Métodos determinísticos",
+      "Tema 10 - Principios de la geoestadística"
+    )
+  ),
+  list(
+    title = "Bloque 04 - Interpolacion espacial II",
+    topics = c(
+      "Tema 11 - Métodos de geoestadística",
+      "Tema 12 - Ejercicios propuestos con R"
+    )
+  )
+)
+
+
+create_course_structure(
+  course_title, 
+  course_data
+)
+
+```
+
+## Qúe incluye el curso {.course-description}
+
+-   28 lecciones
+
+-   8 horas de vídeo
+
+-   Todo el material del curso
+
+-   Clases teóricas, prácticas y ejercicios propuestos
+
+-   Bibliografía adicional
+
+-   Respuesta rápida a las dudas de los alumnos
+
+## Qué aprenderás {.course-description}
+
+Aprenderás a aplicar técnicas de análisis espacial en ecología utilizando R como herramienta principal para manejar, analizar e interpretar datos espaciales. Concretamente aprenderás a:
+
+-   Manejar y analizar procesos puntuales y patrones espaciales en datos ecológicos
+
+-   Calcular y entender índices de autocorrelación espacial como el test de Moran
+
+-   Trabajar con datos de área (areal data)
+
+-   Aplicar métodos de interpolación espacial determinísticos (IDW) y geoestadísticos (kriging - ordinario y universal)
+
+-   Poner en práctica los aprende mediante ejercicios propuestos
+
+## Testimonios {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Ecología")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso (positivos y negativos).
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Valoración Promedio",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+reviews_tbl |> 
+  mutate(review_text = ifelse(
+    is.na(review_text), "", NA
+  )) |> 
+  create_reviews_section()
+```

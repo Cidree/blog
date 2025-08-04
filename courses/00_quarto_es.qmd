@@ -1,0 +1,217 @@
+---
+pagetitle: "Cursos | Quarto"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = quarto_coupon,
+  trigger_height  = 400,
+  button_text     = "Matricúlate"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = "Quarto - Diseño de documentos profesionales en RStudio",
+  text  = "Aprende a crear documentos con Quarto y R: domina Markdown, explora LaTeX y CSS, y genera automáticamente documentos en PDF y formato web",
+  background_image = "../assets/figures/00_course_figures/banner_quarto.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "20h", 
+  date  = "Siempre disponible",
+  lang  = "es"
+)
+```
+:::
+
+## Descripción {.course-description}
+
+Bienvenidos al curso de Quarto. En este curso, aprenderemos a utilizar la herramienta innovadora llamada Quarto dentro de RStudio para generar documentos profesionales en formatos como PDF y HTML.
+
+Quarto es una poderosa plataforma que combina la flexibilidad y la facilidad de uso de RMarkdown con la capacidad de crear documentos dinámicos y personalizados. Con Quarto, podrás aprovechar al máximo el lenguaje de programación R y todas sus capacidades estadísticas y gráficas para producir documentos de alta calidad.
+
+A lo largo de este curso, exploraremos las distintas características de Quarto y aprenderemos a generar informes, informes de investigación, y mucho más. Descubriremos cómo combinar texto, código, gráficos y resultados en un solo documento, permitiéndote comunicar tus resultados de manera clara y efectiva.
+
+Además, aprenderemos a personalizar nuestros documentos utilizando plantillas, estilos y opciones de formato para adaptarlos a nuestras necesidades y preferencias. Quarto también nos brinda la posibilidad de colaborar con otros usuarios, facilitando así el trabajo en equipo y la revisión conjunta de documentos, por lo que veremos también una introducción a GitHub, además de la posibilidad de crear una página web a través de este.
+
+Ya seas un científico de datos, un estudiante, un investigador o simplemente alguien interesado en presentar información de manera efectiva, este curso de Quarto te proporcionará las habilidades necesarias para crear documentos profesionales con RStudio.
+
+## Requisitos previos {.course-description}
+
+Se requiere un nivel básico de programación en R, aunque para sacarle mayor provecho se recomienda nivel intermedio.
+
+## Contenidos del Curso {.course-description}
+
+En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Tema 1 - Introducción al curso",
+    topics = c(
+      "Introducción al curso",
+      "Configuración del entorno",
+      "Primeros pasos en Quarto",
+      "Material del curso"
+    )
+  ),
+  list(
+    title = "Tema 2 - Conceptos básicos de Markdown",
+    topics = c(
+      "Introducción al lenguaje Markdown",
+      "Uso del editor visual",
+      "Sintaxis Markdown",
+      "Ecuaciones mediante LaTeX"
+    )
+  ),
+  list(
+    title = "Tema 3 - Configuración del documento",
+    topics = c(
+      "Configuración YAML",
+      "Diseño del documento",
+      "Configuración local",
+      "Plantillas",
+      "Figuras y tablas",
+      "Bibliografía y referencias cruzadas"
+    )
+  ),
+  list(
+    title = "Tema 4 - Markdown Avanzado",
+    topics = c(
+      "Notas al pie",
+      "Shortcode",
+      "Diagramas con Mermaid",
+      "Introducción a HTML y CSS",
+      "Selectores HTML",
+      "Inspector de Google"
+    )
+  ),
+  list(
+    title = "Tema 5 - Portadas y LaTeX",
+    topics = c(
+      "Generar portadas",
+      "Introducción a LaTeX",
+      "Extensiones de Quarto para portadas"
+    )
+  ),
+  list(
+    title = "Tema 6 - Compartir",
+    topics = c(
+      "Plataformas para compartir",
+      "Quarto Pub",
+      "Introducción a Git y GitHub",
+      "Comandos básicos con Git",
+      "Compartir con GitHub Pages"
+    )
+  ),
+  list(
+    title = "Tema 7 - Proyectos",
+    topics = c(
+      "Proyectos de Quarto",
+      "Ejemplo práctico - Tesis"
+    )
+  ),
+  list(
+    title = "Tema 8 - Automatización de reportes",
+    topics = c(
+      "Automatizar reportes",
+      "Crear múltiples reportes en una línea de código"
+    )
+  )
+)
+
+create_course_structure(
+  "Quarto - Diseño de documentos profesionales en RStudio", 
+  course_data
+)
+
+```
+
+## Qúe incluye el curso {.course-description}
+
+-   78 lecciones
+
+-   10 horas de vídeo
+
+-   Todo el material del curso
+
+-   Clases teóricas y prácticas
+
+-   Bibliografía adicional
+
+## Qué aprenderás {.course-description}
+
+Aprenderás en qué consiste la programación literaria, combinando el lenguaje de programación R y el software Quarto, una evolución del ecosistema RMarkdown. Concretamente aprenderás a:
+
+-   Utilizar Quarto a través del editor visual
+
+-   Crear documentos PDF y HTML
+
+-   Conceptos básicos y avanzados del lenguaje Markdown
+
+-   Aspectos básicos de los lenguajes CSS, HTML y LaTeX
+
+-   Generar documentos con imágenes, tablas, bibliografía, referencias cruzadas...
+
+-   Compartir resultados a través de Quarto Pub y GitHub Pages
+
+-   Aprender a utilizar Git y GitHub de forma básica
+
+-   Automatizar la generación de múltiples reportes
+
+-   Respuesta rápida a las dudas de los alumnos
+
+## Testimonios {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Quarto")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso.
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Valoración Promedio",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+create_reviews_section(reviews_with_comment_tbl)
+```

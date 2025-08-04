@@ -1,0 +1,71 @@
+/*-- scss:rules --*/
+.jumbotron {
+  padding: 1rem;
+  width: 100%;
+  
+  &-title {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: -2rem;
+  }
+  
+  &-text {
+    z-index: 1;
+    color: $color-black;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto; // Center the text block 
+  }
+  
+  &-courses {
+    height: 65vh;
+    width: 100%;
+    //position: relative; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Vertically center content 
+    align-items: center; // Horizontally center content 
+    
+    // Create an overlay pseudo-element
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 75%; 
+      background-image: url("assets/figures/teide.JPG");
+      background-size: cover;
+      background-position: center; 
+      opacity: 0.6;
+      z-index: 0;
+    }
+  }
+}
+
+// Responsive adjustments 
+@media (max-width: 768px) {
+  .jumbotron {
+    &-title {
+      font-size: 2rem; // Smaller title on mobile 
+    }
+    
+    &-text {
+      width: 80%; // Wider text on mobile
+    }
+    
+    &-courses {
+      height: 50vh; // Shorter height on mobile 
+      padding: 2rem 1rem; // Add padding for mobile
+    }
+    
+    &::after {
+      height: 50%;
+    }
+  }
+}
+

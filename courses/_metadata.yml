@@ -1,0 +1,12 @@
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
+    theme: github-light
+
+# HTML opts
+format: html
+    # include-after-body:
+    #   - ../assets/includes/buymeacoffee.qmd
+execute:
+  freeze: false

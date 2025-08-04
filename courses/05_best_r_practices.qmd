@@ -1,0 +1,205 @@
+---
+pagetitle: "Coures | Mastering R"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+course_title <- "Mastering R: Best Practices and Essential Tools"
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = mastering_r_coupon,
+  trigger_height  = 400,
+  button_text     = "Enroll"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = course_title,
+  text  = "Master RStudio, Git and GitHub, best practices, and functional programming while building real-world, reproducible R projects step by step.",
+  background_image = "../assets/figures/00_course_figures/04_best_r_practices.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "20h", 
+  date  = "Always available",
+  lang  = "en"
+)
+```
+:::
+
+## Course introduction {.course-description}
+
+{{< video https://www.youtube.com/watch?v=gc3PFF51Z7w height="300" aspect-ratio="16x9" >}}
+
+## Description {.course-description}
+
+This course is designed to guide you through the foundations of professional R programming with an emphasis on best practices, version control, and reproducibility. You'll start by setting up your development environment in RStudio and learning essential shortcuts and tips. From there, you'll explore how to write clean, efficient code using the tidyverse style guide and apply functional programming principles to streamline and scale your workflows.
+
+A key focus of the course is version control with Git and GitHub. You'll learn how to configure your environment, manage repositories, and collaborate effectively with others. Practical, hands-on exercises will reinforce these skills as you build and refactor a real-world project, transitioning it into a reproducible, function-based pipeline. By the end, you'll be equipped to develop R projects that are robust, maintainable, and easy to share.
+
+## Prerequisites {.course-description}
+
+Basic/intermediate knowledge of R is required.
+
+## Course contents {.course-description}
+
+In this section, you can see a non-exhaustive summary of what you will cover in this course.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Unit 1 - Course Introduction",
+    topics = c(
+      "Course overview and objectives",
+      "Installing and configuring RStudio",
+      "How to access and use course materials"
+    )
+  ),
+  list(
+    title = "Unit 2 - RStudio and Good Practices",
+    topics = c(
+      "Optimizing your RStudio setup",
+      "Working with RStudio Projects",
+      "Essential shortcuts and workflow tips",
+      "Writing clean and readable R code",
+      "Adopting the tidyverse style guide"
+    )
+  ),
+  list(
+    title = "Unit 3a - Version Control with Git and GitHub (Configuration)",
+    topics = c(
+      "Installing Git and connecting with GitHub",
+      "Authenticating with GitHub (2FA and tokens)",
+      "Configuring Git for your local projects"
+    )
+  ),
+  list(
+    title = "Unit 3b - Version Control with Git and GitHub (Workflows)",
+    topics = c(
+      "Creating and cloning repositories",
+      "Understanding repository privacy",
+      "Standard Git workflow (commit, push, pull)",
+      "Undoing changes: reset, revert, restore",
+      "Branching strategies and collaboration",
+      "Working with others using GitHub"
+    )
+  ),
+  list(
+    title = "Unit 4 - Building a Real Project",
+    topics = c(
+      "Applying Git, RStudio, and coding practices in a real-world scenario",
+      "Creating a reproducible and collaborative R project"
+    )
+  ),
+  list(
+    title = "Unit 5a - Functional Programming (Theory)",
+    topics = c(
+      "Principles of functional programming in R",
+      "Writing functions: from basic to advanced",
+      "Introduction to tidy evaluation",
+      "Using iteration with `purrr`"
+    )
+  ),
+  list(
+    title = "Unit 5b - Functional Programming (Practice)",
+    topics = c(
+      "Refactoring the real-world project using functions",
+      "Implementing modular and reusable code"
+    )
+  ),
+  list(
+    title = "Unit 6 - Reproducible Environments",
+    topics = c(
+      "Understanding packages, libraries, and repositories",
+      "Creating reproducible setups using `renv`",
+      "Managing R versions and environments",
+      "Best practices for project portability and consistency"
+    )
+  )
+)
+
+create_course_structure(
+  course_title, 
+  course_data
+)
+
+```
+
+## What's inside the course {.course-description}
+
+-   100 lessons
+
+-   9 hours of video
+
+-   All the course materials
+
+-   Theoretical classes and practical sessions
+
+-   Quick answer to any student’s question
+
+## What will you learn {.course-description}
+
+In this course, you'll gain the essential skills to develop high-quality R projects with professional tools and workflows. From clean coding practices and version control to functional programming and reproducible environments. Specifically, you will learn to:
+
+-   Configure RStudio for efficient development
+
+-   Write clean and modular R code
+
+-   Use Git and GitHub for version control and collaboration
+
+-   Apply functional programming principles in real projects
+
+-   Create reproducible environments using `renv` and project-based workflows
+
+## Student testimonials {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Mastering R")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Here you can find all the testimonials left by students of this course (both positive and negative).
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Overall Rating",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+create_reviews_section(reviews_with_comment_tbl)
+```

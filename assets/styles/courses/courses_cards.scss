@@ -1,0 +1,211 @@
+
+// Courses Cards -------------------
+.card {
+  transition: all 0.3s ease;
+  
+  &-img--container {
+    height: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    
+    /* Add subtle overlay */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: opacity 0.3s ease;
+    }
+  }
+  
+  &-img--text {
+    border-radius: $img-radius;
+    max-height: 90%;
+    max-width: 90%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  &-courses {
+    text-align: center;
+    padding: 1rem;
+    
+    & h3 {
+      font-size: 1rem;
+    }
+    
+    & p {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+/* Enhanced Course Cards */
+.card-course {
+  border: none;
+  border-radius: 16px;
+  margin-left: 0;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: $color-gray-light;
+  
+  /* Hover effects */
+  &:hover {
+    transform: translateY(-8px);
+    
+    .card-img--container::before {
+      opacity: 0;
+    }
+    
+
+  }
+  
+  &-title--container {
+    background: #EBEBEB;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    /* Add subtle pattern */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: 20px 20px;
+    }
+  }
+  
+  &--title {
+    color: $color-darkblue;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+  }
+  
+  &-mode {
+    background: $color-lightblue;
+    color: $color-darkblue;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: .1rem;
+  }
+  
+  &-btn {
+    background: $color-darkblue;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(45, 55, 72, 0.3);
+    
+    &:hover {
+      color: $color-black;
+      background: $color-lightblue;
+      text-decoration: none;
+    }
+  }
+}
+
+/* Enhanced List Group */
+.list-group {
+  border: none;
+  margin-bottom: 1.5rem;
+  
+  &-item {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+    color: $color-darkblue;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    /* Icon styling */
+    svg, i {
+      margin-right: 0.5rem;
+      color: $color-note;
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-course {
+    margin-bottom: 2rem;
+    
+    &-title--container {
+      height: auto;
+      min-height: 4rem;
+      padding: 1rem;
+    }
+    
+    &--title {
+      font-size: 1rem;
+    }
+    
+    &-btn {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  .card-img--container {
+    height: 10rem;
+  }
+}
+
+/* Additional enhancements */
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Loading state (optional) */
+.card-course.loading {
+  .card-img--text {
+    opacity: 0.5;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

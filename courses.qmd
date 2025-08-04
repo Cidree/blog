@@ -1,32 +1,65 @@
 ---
+pagetitle: "Adrián Cidre | Courses"
 title: ""
 execute: 
   echo: false
 ---
 
 ```{r functions}
-source("03_scripts/00_courses.R")
+source("assets/scripts/00_courses.R")
 ```
 
-::::: {.column-screen .jumbotron .jumbotron-courses .container .d-none .d-sm-block}
+::::: {.column-screen .jumbotron .jumbotron-courses .d-none .d-sm-block}
 <div>
 
-# Courses {.text-black .jumbotron-title}
+## Courses of R and GIS {.text-black .jumbotron-title}
 
 </div>
 
 ::: jumbotron-text
-Learn data analysis and data science with me.
+Learn data analysis and geographic information systems (GIS) with R — with me as your guide! Choose from courses available in Spanish or English on the Udemy platform. Once you purchase a course, you’ll have lifetime access, so you can learn at your own pace.
 :::
 :::::
 
 :::: {.row .d-block .d-sm-none}
 ::: {.card .card-courses}
-### Courses
+## Courses
 
-Learn data analysis and data science with me.
+Learn data analysis and geographic information systems (GIS) with R — with me as your guide! Choose from courses available in Spanish or English on the Udemy platform. Once you purchase a course, you’ll have lifetime access, so you can learn at your own pace.
 :::
 ::::
+
+
+## Coupons informacion {.course-description}
+
+My courses are offered through a third party that hosts the material. You have two main options to purchase the course:
+
+-   **If you buy it directly from the links I offer you** **in this webpage**: I get most of the revenue for the sale, and that helps me to continue adding new content, and new courses.
+
+-   **If you buy it through the Udemy site**: you get the exact same course, sometimes for the same price, sometimes for a higher price, and I get only 33% of the money you pay, while Udemy gets 67%.
+
+:::::: {.container .grid .mt-5}
+::: {.g-col-12 .g-col-md-6}
+
+I have to update the coupons manually, therefore, it's very likely that I will forget to update them sometimes. If the coupons don't work, leave me a comment below and I will update them as soon as possible. The duration of the coupons depends on Udemy:
+
+-   Price 9.99€: the coupons will last for 5 days
+
+-   Price 12.99€: the coupons will last for 30 days
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+```{r}
+offer_card
+```
+
+:::
+
+::::::
+
+## Courses {.course-description}
 
 ::::::::: {.container .grid .mt-5}
 ::: {.g-col-12 .g-col-md-6}
@@ -35,10 +68,10 @@ course_card(
   file         = "assets/figures/00_course_figures/04_best_r_practices.png",
   course_title = "Mastering R: Best Practices and Essential Tools",
   mode         = "Online",
-  date         = "Available Anytime",
-  time         = "15 hours",
+  # date         = "Available Anytime",
+  time         = "20 hours",
   language     = "English",
-  href         = "02_courses/05_best_r_practices.qmd"
+  href         = "courses/05_best_r_practices.qmd"
 )
 ```
 :::
@@ -46,13 +79,13 @@ course_card(
 ::: {.g-col-12 .g-col-md-6}
 ```{r}
 course_card(
-  file         = "assets/figures/00_course_figures/bosque-digital.jpg",
-  course_title = "Ecología espacial aplicada a la gestión forestal",
+  file         = "assets/figures/00_course_figures/05_spatial_ecology.png",
+  course_title = "Ecología espacial aplicada en R",
   mode         = "Online",
-  date         = "16/Feb - 21/Mar",
-  time         = "25 hours",
-  language     = "Spanish",
-  href         = "02_courses/04_spatial_ecology_es.qmd"
+  # date         = "16/Feb - 21/Mar",
+  time         = "30 horas",
+  language     = "Español",
+  href         = "courses/04_spatial_ecology_es.qmd"
 )
 ```
 :::
@@ -63,10 +96,10 @@ course_card(
   file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introducción a Análisis de Datos Espaciales en R",
   mode         = "Online",
-  date         = "Available Anytime",
-  time         = "30 hours",
-  language     = "Spanish",
-  href         = "02_courses/02_spatial_data_es.qmd"
+  # date         = "Available Anytime",
+  time         = "40 horas",
+  language     = "Español",
+  href         = "courses/02_spatial_data_es.qmd"
 )
 ```
 :::
@@ -77,10 +110,10 @@ course_card(
   file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
   course_title = "Introduction to Spatial Data Analysis with R",
   mode         = "Online",
-  date         = "Available Anytime",
-  time         = "30 hours",
+  # date         = "Available Anytime",
+  time         = "40 hours",
   language     = "English",
-  href         = "02_courses/03_spatial_data_en.qmd"
+  href         = "courses/03_spatial_data_en.qmd"
 )
 ```
 :::
@@ -89,12 +122,11 @@ course_card(
 ```{r}
 course_card(
   file         = "assets/figures/00_course_figures/02_analisis_datos.png",
-  course_title = "Introducción a Análisis y Visualización de datos en R [2024]",
+  course_title = "Introducción a Análisis y Visualización de datos en R",
   mode         = "Online",
-  date         = "Available Anytime",
-  time         = "30 hours",
-  language     = "Spanish",
-  href         = "02_courses/01_data_analysis_es.qmd"
+  time         = "30 horas",
+  language     = "Español",
+  href         = "courses/01_data_analysis_es.qmd"
 )
 ```
 :::
@@ -105,10 +137,9 @@ course_card(
   file         = "assets/figures/00_course_figures/01_quarto.png",
   course_title = "Quarto - diseño de documentos profesionales en RStudio",
   mode         = "Online",
-  date         = "Available Anytime",
-  time         = "15 hours",
-  language     = "Spanish",
-  href         = "02_courses/00_quarto_es.qmd"
+  time         = "20 horas",
+  language     = "Español",
+  href         = "courses/00_quarto_es.qmd"
 )
 ```
 :::

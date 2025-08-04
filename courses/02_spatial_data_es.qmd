@@ -1,0 +1,262 @@
+---
+pagetitle: "Cursos | GIS R"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+course_title <- "Introducción a Análisis de Datos Espaciales y SIG en R"
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = gis_spanish_coupon,
+  trigger_height  = 400,
+  button_text     = "Matricúlate"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = course_title,
+  text  = "Curso de iniciación al análisis de datos espaciales con R. Aprenderás a analizar, transformar y mapear datos espaciales, tanto vectoriales como raster utilizando paquetes como `sf` y `terra`.",
+  background_image = "../assets/figures/00_course_figures/banner-gis.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "30h", 
+  date  = "Siempre disponible",
+  lang  = "es"
+)
+```
+:::
+
+## Introducción al curso {.course-description}
+
+{{< video https://www.youtube.com/watch?v=bB67ycZE4kE height="300" aspect-ratio="16x9" >}}
+
+## Descripción {.course-description}
+
+Este curso es una introducción práctica al análisis y visualización de datos espaciales en R. A través de una combinación de teoría, ejercicios prácticos y retos aplicados, aprenderás a trabajar con datos vectoriales y raster, entender sistemas de referencia de coordenadas (CRS), realizar operaciones espaciales y crear mapas tanto estáticos como interactivos. El curso utiliza paquetes clave del ecosistema R como `sf`, `terra`, `ggplot2` y `mapview`. Está estructurado en clases teóricas con cuestionarios, clases prácticas, y ejercicios prácticos propuestos al alumno para poner en práctica lo aprendido.
+
+Comenzarás comprendiendo qué son los datos espaciales y cómo se diferencian de los datos no espaciales. A lo largo del curso, desarrollarás habilidades para transformar geometrías, analizar capas raster, calcular índices como el NDVI, y representar fenómenos geográficos en mapas. Al finalizar, serás capaz de realizar tus propios análisis de datos espaciales y compartir resultados a través de mapas web dinámicos.
+
+## Requisitos previos {.course-description}
+
+-   Conocimientos básicos de R
+
+-   Estar familiarizado con funciones del `tidyverse`, incluyendo gráficos básicos con `ggplot2` y pipeline (ver curso [introducción a análisis y visualización de datos en R](https://adrian-cidre.com/courses/01_data_analysis_es.html){target="_blank"})
+
+## Contenidos del Curso {.course-description}
+
+En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Tema 1 - Introducción al curso",
+    topics = c(
+      "Introducción al curso",
+      "Configuración del entorno",
+      "Material del curso"
+    )
+  ),
+  list(
+    title = "Tema 2a - Datos espaciales (teoría)",
+    topics = c(
+      "Datos espaciales vs Datos no espaciales",
+      "Geometrías",
+      "Simple features",
+      "Formatos vectoriales"
+    )
+  ),
+  list(
+    title = "Tema 2b - Datos espaciales (práctica)",
+    topics = c(
+      "Descarga de datos espaciales",
+      "Análisis exploratorio",
+      "Importar/Exportar",
+      "Propiedades",
+      "CHALLENGE 01 - ejericicos propuestos"
+    )
+  ),
+  list(
+    title = "Tema 3a - Sistemas de Referencia de Coordenadas (teoría)",
+    topics = c(
+      "Importancia CRS",
+      "CRS, coordenadas, georreferenciación",
+      "CRS geográficos vs CRS proyectados",
+      "Proyecciones",
+      "Códigos EPSG, proj4, WKT..."
+    )
+  ),
+  list(
+    title = "Tema 3b - Sistemas de Referencia de Coordenadas (práctica)",
+    topics = c(
+      "Explorar CRS",
+      "Transformación de CRS",
+      "Asignación de CRS",
+      "Transformaciones al vuelo",
+      "Mapas web",
+      "CHALLENGE 02 - ejericicos propuestos"
+    )
+  ),
+  list(
+    title = "Tema 4a - Operaciones con geometrías (teoría)",
+    topics = c(
+      "Predicados espaciales",
+      "Medidas de geometrías",
+      "Transformaciones unarias",
+      "Transformaciones binarias",
+      "Otras operaciones"
+    )
+  ),
+  list(
+    title = "Tema 4b - Operaciones con geometrías (práctica)",
+    topics = c(
+      "Funciones predicado",
+      "Filtros espaciales",
+      "Uniones espaciales",
+      "Mediciones espaciales",
+      "Transformaciones (centroide, buffer..)",
+      "CHALLENGE 03 - ejericicos propuestos"
+    )
+  ),
+  list(
+    title = "Tema 5a - Datos Raster (teoría)",
+    topics = c(
+      "Definición datos raster",
+      "Tipos de resolución",
+      "Breve introducción a teledetección",
+      "Operaciones comunes con datos raster",
+      "Índices de vegetación"
+    )
+  ),
+  list(
+    title = "Tema 5b - Datos Raster (práctica)",
+    topics = c(
+      "Exploración de datos raster",
+      "Descarga Modelo Digital de Elevaciones (DEM)",
+      "Derivados del DEM",
+      "Cortar, reclasificar...",
+      "Operaciones aritméticas",
+      "Cálculo de índices de vegetación",
+      "Composiciones RGB y falso color",
+      "CHALLENGE 04 - ejericicos propuestos"
+    )
+  ),
+  list(
+    title = "Tema 6 - Mapas estáticos",
+    topics = c(
+      "Mapa 01 - Población de España por municipios",
+      "Mapa 02a - Oso pardo en Picos de Europa I",
+      "Mapa 02b - Oso pardo en Picos de Europa II",
+      "Mapa 03 - Ríos de Galicia",
+      "Mapa 04 - Oso andino en Perú",
+      "Mapa 05 - Severidad incendio de Tenerife (2023)"
+    )
+  ),
+  list(
+    title = "Tema 7 - Mapas Web",
+    topics = c(
+      "Mapa 01 - Población de España por municipios",
+      "Mapa 02 - Oso pardo en Picos de Europa",
+      "Mapa 03 - Ríos de Galicia",
+      "Mapa 04 - Oso andino en Perú",
+      "Mapa 05a - Severidad incendio de Tenerife (sincronizado)",
+      "Mapa 05b - Severidad incendio de Tenerife (side by side)"
+    )
+  )
+)
+
+create_course_structure(
+  course_title, 
+  course_data
+)
+
+```
+
+## Qúe incluye el curso {.course-description}
+
+-   150 lecciones
+
+-   15 horas de vídeo
+
+-   Todo el material del curso
+
+-   Clases teóricas, prácticas, cuestionarios y ejercicios propuestos
+
+-   Bibliografía adicional
+
+-   Respuesta rápida a las dudas de los alumnos
+
+## Qué aprenderás {.course-description}
+
+Aprenderás a analizar datos espaciales en R, siendo RStudio tu nuevo Sistema de Información Geográfica. Concretamente aprenderás a:
+
+-   Paquetes más importantes en el entorno SIG en R
+
+-   Analizar datos vectoriales y datos raster
+
+-   Descarga de datos espaciales en R
+
+-   Operaciones comunes sobre datos vectoriales y sobre datos raster
+
+-   Georreferenciar datos
+
+-   Transformaciones de CRS
+
+-   Generar mapas y mapas web como el siguiente:
+
+```{=html}
+<iframe src="../assets/html/poblacion_spain.html" width="700" height="500"></iframe>
+```
+
+## Testimonios {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Introducción a Análisis de Datos Espaciales y SIG en R")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso (positivos y negativos).
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Valoración Promedio",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+create_reviews_section(reviews_with_comment_tbl)
+```

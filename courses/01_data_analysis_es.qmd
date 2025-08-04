@@ -1,0 +1,258 @@
+---
+pagetitle: "Cursos | Intro R"
+title-block-banner: false
+execute: 
+  echo: false
+format: 
+  html:
+    grid: 
+      body-width: 1000px
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("readr", "read_csv")
+use("dplyr", c("filter", "mutate"))
+use("stringr", "str_detect")
+```
+
+```{r}
+source("../assets/scripts/00_courses.R")
+course_title <- "Introducción a Análisis y Visualización de Datos en R"
+```
+
+```{r}
+create_course_button(
+  enrollment_url  = data_analysis_coupon,
+  trigger_height  = 400,
+  button_text     = "Matricúlate"
+)
+```
+
+::: {.column-screen .mb-3}
+```{r}
+create_banner(
+  title = course_title,
+  text  = "Curso de iniciación al análisis de datos con R en RStudio. Aprenderás a utilizar R desde 0, con énfasis en los paquetes del ecosistema tidyverse.",
+  background_image = "../assets/figures/00_course_figures/02_analisis_datos.png",
+  price = coupon_price, 
+  mode  = "Online", 
+  time  = "30h", 
+  date  = "Siempre disponible",
+  lang  = "es"
+)
+```
+:::
+
+## Descripción {.course-description}
+
+Este curso es una introducción práctica al análisis y visualización de datos utilizando R, una de las herramientas más potentes y versátiles en el ámbito de la ciencia de datos. A lo largo del curso, aprenderás desde los aspectos más básicos —como el uso de RStudio, la instalación de paquetes y la manipulación de archivos— hasta técnicas más avanzadas que permiten transformar, explorar y visualizar conjuntos de datos de forma eficiente.
+
+El curso se estructura en cinco secciones principales. Comenzarás familiarizándote con el entorno de trabajo y los tipos de datos en R. Luego, mediante el ecosistema `tidyverse`, aprenderás a manipular datos con `dplyr`, `tidyr`, `stringr`, `forcats` y `lubridate`, adquiriendo habilidades clave para preparar y transformar datos. Posteriormente, explorarás el paquete `ggplot2` para construir gráficos que comuniquen información de manera clara. También se incluye una introducción a la programación funcional con `purrr`, para automatizar tareas y crear funciones reutilizables. Finalmente, aprenderás a documentar y compartir resultados con Quarto, generando informes dinámicos y reproducibles.
+
+## Requisitos previos {.course-description}
+
+Este curso está diseñado tanto para personas sin experiencia previa en R como para quienes buscan mejorar dominio en el análisis de datos.
+
+## Contenidos del Curso {.course-description}
+
+En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+
+```{r}
+course_data <- list(
+  list(
+    title = "Tema 1 - Introducción al curso",
+    topics = c(
+      "Introducción al curso",
+      "Configuración del entorno",
+      "Material del curso"
+    )
+  ),
+  list(
+    title = "Tema 2 - Comenzando",
+    topics = c(
+      "Interfaz de RStudio",
+      "Instalar y cargar paquetes",
+      "Datos y estructuras de datos",
+      "Indexar con base R",
+      "Ficheros",
+      "Leer/Exportar"
+    )
+  ),
+  list(
+    title = "Tema 3 - Manipulación de datos",
+    topics = c(
+      "Paquete dplyr",
+      "Manejo básico de datos (select, filter, mutate..)",
+      "Verbos predicado",
+      "Transformación de datos",
+      "Uniones (joins)",
+      "Case when",
+      "Formatos largo y ancho",
+      "Manejo avanzado de datos"
+    )
+  ),
+  list(
+    title = "Tema 4 - Cadenas de texto",
+    topics = c(
+      "Paquete stringr",
+      "Manejo básico de datos tipo string",
+      "Funciones vectorizadas",
+      "Separar/unir columnas con tidyr"
+    )
+  ),
+  list(
+    title = "Tema 5 - Variables categóricas",
+    topics = c(
+      "Paquete forcats",
+      "Factor vs Character",
+      "Reordenar factores",
+      "Valores ausentes"
+    )
+  ),
+  list(
+    title = "Tema 6 - Fechas",
+    topics = c(
+      "Paquete lubridate",
+      "Componentes de una fecha",
+      "Análisis de fechas"
+    )
+  ),
+  list(
+    title = "Tema 7 - Visualización",
+    topics = c(
+      "Paquete ggplot",
+      "Gramática de gráficos",
+      "Estructura de gráficos",
+      "Gráficos múltiples (facetas)",
+      "Gráficos interactivos",
+      "Geometrías: histogramas, líneas, boxplot..",
+      "Extensiones de ggplot2"
+    )
+  ),
+  list(
+    title = "Tema 8 - Funciones",
+    topics = c(
+      "Creas funciones simples y avanzadas",
+      "Tipos de argumentos de una función",
+      "Exportar funciones"
+    )
+  ),
+  list(
+    title = "Tema 9 - Programación funcional",
+    topics = c(
+      "Paquete purrr",
+      "Iteraciones sobre funciones",
+      "Map vs For loop",
+      "Funciones anónimas",
+      "Funciones de reducción"
+    )
+  ),
+  list(
+    title = "Tema 10 - Funciones avanzadas",
+    topics = c(
+      "Función que genera un heatmap dinámico",
+      "Función para correlation funnel"
+    )
+  ),
+  list(
+    title = "Tema 11 - Compartir con Quarto",
+    topics = c(
+      "Breve introducción a Quarto",
+      "Generación de reporte"
+    )
+  )
+)
+
+create_course_structure(
+  course_title, 
+  course_data
+)
+
+```
+
+## Qúe incluye el curso {.course-description}
+
+-   120 lecciones
+
+-   15 horas de vídeo
+
+-   Todo el material del curso
+
+-   Clases teóricas y prácticas
+
+-   Bibliografía adicional
+
+-   Respuesta rápida a las dudas de los alumnos
+
+## Qué aprenderás {.course-description}
+
+Aprenderás a utilizar el lenguaje de programación R para análisis y visualización de datos. Comenzarás manejando datos sencillos, y terminarás realizando transformaciones cada vez más complejas utilizando ejemplos reales. Concretamente aprenderás a:
+
+-   Principios básicos de programación en R
+
+-   Tipos de dato y estructuras de datos en R
+
+-   Manipular ficheros desde R
+
+-   Organización del directorio de trabajo y de los scripts
+
+-   Aprender a utilizar los paquetes de R más importantes (dplyr, ggplot2, tidyr, fs, ...)
+
+-   Manejar datos de tipo cadena de texto con stringr
+
+-   Introducción a expresiones regulares
+
+-   Manejar datos de tipo categórico con forcats
+
+-   Generar gráficos a través de ggplot2
+
+-   Generar gráficos interactivos
+
+-   Entender la gramática de gráficos
+
+-   Utilizar extensiones de ggplot2
+
+-   Generar y exportar funciones
+
+-   Programación funcional con purrr
+
+-   Iteraciones
+
+-   Compartir resultados a través de Quarto
+
+## Testimonios {.course-description}
+
+```{r}
+## read reviews and rename columns
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
+names(reviews_tbl) <- 
+  c("course_title", "student_name", "date_created", "rating", "review_text")
+
+## filter current course
+reviews_tbl <- reviews_tbl |> 
+  filter(str_detect(course_title, "Introducción a Análisis y Visualización de Datos en R")) |>
+  mutate(date_created = as.Date(date_created))
+```
+
+Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso (positivos y negativos).
+
+```{r}
+create_star_rating(
+  rating       = round(mean(reviews_tbl$rating), 1),
+  title        = "Valoración Promedio",
+  num_reviews  = nrow(reviews_tbl)
+)
+```
+
+```{r}
+## prepare for current course
+reviews_with_comment_tbl <- reviews_tbl |> 
+  filter(!is.na(review_text)) 
+```
+
+```{r}
+create_reviews_section(reviews_with_comment_tbl)
+```

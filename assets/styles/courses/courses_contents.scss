@@ -1,0 +1,137 @@
+
+// Course curriculum -----------------------------------------------
+.course-structure {
+  max-width: 800px;
+  margin: 20px auto;
+  background: $color-gray-light;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.course-title {
+  background: $color-lightblue;
+  color: $color-darkblue;
+  margin: 0;
+  padding: 24px 30px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lessons-container {
+  padding: 20px;
+}
+
+.lesson-container {
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.lesson-container:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.lesson-header {
+  background: $color-darkblue;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.lesson-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $color-white;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: $color-lightblue;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: #e2e8f0;
+}
+
+.topics-container {
+  background: $color-white;
+  max-height: 300px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.topics-container.collapsed {
+  max-height: 0;
+}
+
+.topic-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-item {
+  padding: 12px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  color: $color-darkblue;
+  position: relative;
+  padding-left: 40px;
+  transition: background-color 0.2s ease;
+  text-align: justify;
+}
+
+.topic-item:before {
+  content: '•';
+  color: $color-darkblue;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 20px;
+  top: 12px;
+}
+
+.topic-item:hover {
+  background: #f8fafc;
+}
+
+.topic-item:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 640px) {
+  .course-structure {
+    margin: 10px;
+    border-radius: 8px;
+  }
+  
+  .course-title {
+    padding: 20px;
+    font-size: 1.3rem;
+  }
+  
+  .lessons-container {
+    padding: 15px;
+  }
+  
+  .lesson-header {
+    padding: 14px 16px;
+  }
+  
+  .topic-item {
+    padding: 10px 16px;
+    padding-left: 36px;
+  }
+}
