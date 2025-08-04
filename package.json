@@ -3,14 +3,8 @@
   "version": "1.0.0",
   "description": "My personal blog",
   "main": "index.js",
-  "scripts": {
-    "compile:sass": "sass assets/styles/main.scss assets/styles/styles.css -w"
-  },
   "author": "Adrian Cidre",
   "license": "ISC",
-  "devDependencies": {
-    "sass": "^1.89.2"
-  },
   "dependencies": {
     "@quarto/netlify-plugin-quarto": "^0.0.5"
   },

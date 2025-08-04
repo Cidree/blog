@@ -1,6 +1,7 @@
 project:
   type: website
 
+## needed for netlify -it doesn't execute R code.
 execute:
   freeze: auto
 
