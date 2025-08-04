@@ -1,5 +1,5 @@
 
-library(shiny)
+library(htmltools)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Coupons
@@ -412,41 +412,6 @@ create_reviews_section <- function(reviews_df) {
 create_star_rating <- function(rating, max_stars = 5, show_numeric = TRUE, 
                                title = "Course Rating", size = "1.5em", num_reviews = NULL) {
   
-
-  # Calculate full stars, half stars, and empty stars
-  # full_stars <- floor(rating)
-  # has_half_star <- (rating - full_stars) >= 0.5
-  # empty_stars <- max_stars - full_stars - as.numeric(has_half_star)
-  # 
-  # # Create star elements
-  # stars <- list()
-  # 
-  # # Add full stars
-  # if (full_stars > 0) {
-  #   for (i in 1:full_stars) {
-  #     stars <- append(stars, list(
-  #       span("★", style = paste0("color: #ffd700; font-size: ", size, ";"))
-  #     ))
-  #   }
-  # }
-  # 
-  # # Add half star if needed
-  # if (has_half_star) {
-  #   stars <- append(stars, list(
-  #     span("☆", style = paste0("color: #ffd700; font-size: ", size, "; position: relative;"),
-  #          span("★", style = paste0("color: #ffd700; font-size: ", size, 
-  #                                   "; position: absolute; left: 0; width: 50%; overflow: hidden;")))
-  #   ))
-  # }
-  # 
-  # # Add empty stars
-  # if (empty_stars > 0) {
-  #   for (i in 1:empty_stars) {
-  #     stars <- append(stars, list(
-  #       span("☆", style = paste0("color: #ddd; font-size: ", size, ";"))
-  #     ))
-  #   }
-  # }
   stars <- generate_stars(rating, max_stars, class = "course-stars")
   
   # Create the rating section
