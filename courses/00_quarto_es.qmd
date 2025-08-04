@@ -13,6 +13,7 @@ editor_options:
 
 ```{r}
 #| include: false
+use("readr", "read_csv")
 use("dplyr", c("filter", "mutate"))
 ```
 
@@ -184,7 +185,7 @@ Aprenderás en qué consiste la programación literaria, combinando el lenguaje 
 
 ```{r}
 ## read reviews and rename columns
-reviews_tbl <- read.csv("../assets/data/udemy_reviews_202508.csv")
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
 names(reviews_tbl) <- 
   c("course_title", "student_name", "date_created", "rating", "review_text")
 

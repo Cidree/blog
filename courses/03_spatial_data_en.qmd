@@ -231,7 +231,7 @@ You will learn to analyze spatial data in R, with RStudio becoming your new Geog
 
 ```{r}
 ## read reviews and rename columns
-reviews_tbl <- read.csv("../assets/data/udemy_reviews_202508.csv")
+reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
 names(reviews_tbl) <- 
   c("course_title", "student_name", "date_created", "rating", "review_text")
 
