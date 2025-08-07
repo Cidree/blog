@@ -23,6 +23,10 @@ jobs:
       - name: Install R packages
         run: |
           Rscript -e 'install.packages(c("dplyr", "purrr", "readr", "shiny", "downlit", "xml2", "rmarkdown", "pak"), repos = "https://cloud.r-project.org")'
+          
+      
+      - name: Install problematic cranlong
+        run: |
           Rscript -e 'pak::pak("cranlogs")'
       
       - name: Render and Publish
