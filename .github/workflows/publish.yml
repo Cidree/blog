@@ -20,14 +20,18 @@ jobs:
         with:
           r-version: '4.5.1'
       
-      - name: Install R packages
-        run: |
-          Rscript -e 'install.packages(c("dplyr", "purrr", "readr", "shiny", "downlit", "xml2", "rmarkdown", "pak"), repos = "https://cloud.r-project.org")'
-          
-      
-      - name: Install problematic cranlong
-        run: |
-          Rscript -e 'pak::pak("cranlogs")'
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            cranlogs
+            dplyr
+            purrr
+            readr
+            shiny
+            downlit
+            xml2
+            rmarkdown
       
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
