@@ -10,7 +10,9 @@ editor_options:
 
 ```{r}
 #| include: false
+#| label: packages_load
 use("dplyr", "mutate")
+library(cranlogs)
 source("assets/scripts/packages.R")
 ```
 
@@ -61,8 +63,6 @@ packages_tbl <- data.frame(
 ```
 
 ```{r}
-
-
 packages_html <- create_packages_page_from_df(packages_tbl)
 packages_html
 ```
