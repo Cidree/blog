@@ -26,6 +26,9 @@ website:
       - text: Courses
         icon: mortarboard-fill
         href: courses.qmd
+      - text: Packages
+        icon: box-fill
+        href: packages.qmd
     right:
       - icon: github
         href: https://github.com/Cidree

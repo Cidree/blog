@@ -1,0 +1,68 @@
+---
+pagetitle: "Adrián Cidre | Packages"
+title: ""
+execute: 
+  echo: false
+  freeze: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+use("dplyr", "mutate")
+source("assets/scripts/packages.R")
+```
+
+## R packages {.course-description}
+
+
+```{r}
+packages_tbl <- data.frame(
+  ## r package names
+  package = c(
+    "duckspatial",
+    "forestdata",
+    "OTBsegm",
+    "rpostgis",
+    "silviculture"
+  )
+) |> 
+  mutate(
+    ## hexticker path
+    hexticker = paste0("assets/figures/r_packages/", package, ".png"),
+    ## URL to github repo
+    github_url = paste0("https://github.com/Cidree/", package),
+    ## CRAN url
+    cran_url = paste0("https://cran.r-project.org/package=", package),
+    ## CRAN Version
+    version = get_cran_version(package),
+    ## Downloads
+    release = c(
+      "2025-04-18",
+      "2024-10-10",
+      "2025-05-01",
+      "2016-08-19",
+      "2025-06-04"
+    ),
+    ## package description
+    description = c(
+      "Simplify the process of reading and writing vector spatial data (e.g., `sf` objects) in a DuckDB database. This package is designed for users working with geospatial data who want to leverage DuckDB’s fast analytical capabilities while maintaining compatibility with R’s spatial data ecosystem.",
+      
+      "Download forestry and land use data. This package aims to provide users with easy access to various datasets related to forestry and land use.",
+      
+      "A user-friendly interface to the unsupervised image segmentation algorithms available in Orfeo ToolBox (OTB), a powerful open-source library for remote sensing image processing. `OTBsegm` is built on top of `link2GI` R package, providing easy access to image segmentation algorithms.",
+      
+      "Provides an interface between R and PostGIS-enabled PostgreSQL databases to transparently transfer spatial data. Both vector (points, lines, polygons) and raster data are supported in read and write modes. Also provides convenience functions to execute common procedures in PostgreSQL/PostGIS.",
+      
+      "Simplifies the analysis of forest inventory data, offering a range of functions for common silvicultural analysis. It aims to support forest management and research by providing a flexible toolkit for data manipulation and summary."
+    )
+  )
+```
+
+```{r}
+
+
+packages_html <- create_packages_page_from_df(packages_tbl)
+packages_html
+```
