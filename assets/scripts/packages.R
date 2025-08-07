@@ -1,5 +1,6 @@
 
 ## lod packages
+library(cranlogs)
 library(shiny)
 
 ## function to fetch CRAN version
