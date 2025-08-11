@@ -1,0 +1,29 @@
+
+# freeze computational output
+freeze: true
+
+# Enable banner style title blocks
+title-block-banner: false
+
+# Author
+author: "Adrián Cidre"
+
+# Comments section
+comments: 
+  utterances: 
+    repo:  Cidree/blogComments
+    theme: github-light
+
+# Filters
+lightbox: auto
+
+# HTML opts
+format:
+  html:
+    code-link: true
+    number-sections: true
+    number-offset: 2
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 3
+    toc-location: right
