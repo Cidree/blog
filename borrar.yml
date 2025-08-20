@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   push:
     branches: main
-
+    
 name: Quarto Publish
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4 
-
+        
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         
@@ -22,13 +22,12 @@ jobs:
       
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dplyr", "purrr", "readr", "shiny", "downlit", "xml2", "rmarkdown"), repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("dplyr", "purrr", "readr", "shiny", "downlit", "xml2", "rmarkdown", "pak"), repos = "https://cloud.r-project.org")'
       
-      - name: Install problematic cranlogs
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            cranlogs
+      
+      - name: Install cranlogs
+        run: |
+          Rscript -e 'pak::pak("cranlogs")'
       
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2

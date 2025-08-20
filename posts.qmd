@@ -1,5 +1,6 @@
 ---
-title: "Blog"
+pagetitle: "Adrián Cidre | Posts"
+title: "Blog Posts"
 listing:
   # Base options
   contents: posts
@@ -11,7 +12,7 @@ listing:
   grid-item-align: center
   # Advanced options
   categories: true
-  max-description-length: 125
+  max-description-length: 200
   # Feeds
   feed: 
     categories: spatial
@@ -29,4 +30,4 @@ grid:
   gutter-width: 4rem
 ---
 
-Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. Enjoy!
+Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. I hope you'll enjoy it!

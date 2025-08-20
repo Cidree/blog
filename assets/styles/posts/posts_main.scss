@@ -1,0 +1,38 @@
+
+.listing-title {
+  color: $color-black;
+  font-weight: 600;
+}
+
+.listing-category {
+  
+  color: $color-darkblue;
+  
+  &:hover {
+    background: $color-darkblue;
+    color: $color-white;
+    font-weight: 700;
+  }
+  
+}
+
+.listing-date {
+  color: $color-gray-dark;
+  opacity: .7;
+  font-style: italic;
+  font-size: .7rem;
+}
+
+
+.listing-reading-time {
+  color: $color-gray-dark;
+  opacity: .7;
+  font-size: .7rem;
+}
+
+
+.listing-description {
+  font-size: .4rem;
+  opacity: .9;
+  font-family: Libre Baskerville;
+}

@@ -21,8 +21,9 @@ website:
       - text: About
         icon: person-circle
         href: index.qmd
-      # - text: Posts
-      #   href: posts.qmd
+      - text: Posts
+        icon: card-text
+        href: posts.qmd
       - text: Courses
         icon: mortarboard-fill
         href: courses.qmd

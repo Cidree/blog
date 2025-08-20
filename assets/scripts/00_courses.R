@@ -3,13 +3,13 @@ library(shiny)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Coupons
-mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=E026A294A25B050FC039"
-gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=D0EAC8368C59BA36AD6D"
-gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=3880866D58F8BB19DE6C"
-quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=FA7AA441C74DA7FD0945"
-data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=0739CCE02E9E111DFE61"
-spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=BF36F7D92F735B9053C2"
-coupon_price           <- "9.99€"
+mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=3BF552BE3AF7A3423265"
+gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=A2EFDCDB663BEFC09C7B"
+gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=9908CC313C86CC84485C"
+quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=7D5D936B47C18F6142EB"
+data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=28F503E16B4CDE0E3768"
+spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=50D03E24E4FBF8C8C017"
+coupon_price           <- "12.99€"
 
 ## Card for courses.qmd -------------------------------------------------
 course_card <- function(file, course_title, mode, date, time, language, href) {
