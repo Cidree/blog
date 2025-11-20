@@ -32,7 +32,7 @@ create_course_button(
 ::: {.column-screen .mb-3}
 ```{r}
 create_banner(
-  title = "Quarto - Diseño de documentos profesionales en RStudio",
+  title = "Literate Programming y Automatización con Quarto en R",
   text  = "Aprende a crear documentos con Quarto y R: domina Markdown, explora LaTeX y CSS, y genera automáticamente documentos en PDF y formato web",
   background_image = "../assets/figures/00_course_figures/banner_quarto.png",
   price = coupon_price, 

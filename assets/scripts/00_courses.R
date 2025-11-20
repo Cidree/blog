@@ -3,13 +3,13 @@ library(shiny)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Coupons
-mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=3BF552BE3AF7A3423265"
-gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=A2EFDCDB663BEFC09C7B"
-gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=9908CC313C86CC84485C"
-quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=7D5D936B47C18F6142EB"
-data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=28F503E16B4CDE0E3768"
-spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=50D03E24E4FBF8C8C017"
-coupon_price           <- "12.99€"
+mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=D59AF71E4C06BC1C82E4"
+gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=955D6EEF76DCFB7F2C1A"
+gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=892BE8E5E06A73435D39"
+quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=0CF1A99578DE538C9EC5"
+data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=9BAC97E4DA743F9970B3"
+spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=98E2C67754EB80D85029"
+coupon_price           <- "9.99€"
 
 ## Card for courses.qmd -------------------------------------------------
 course_card <- function(file, course_title, mode, date, time, language, href) {
@@ -482,9 +482,9 @@ offer_card <- div(
     p(
       class = "date-range",
       tags$i(class = "fas fa-play text-success"),
-      tags$span("August 4th"),
+      tags$span("November 20th"),
       tags$i(class = "fas fa-arrow-right text-muted"),
-      tags$span("August 9th"),
+      tags$span("November 24th"),
       tags$i(class = "fas fa-stop text-danger")
     )
   )

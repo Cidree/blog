@@ -1,0 +1,31 @@
+---
+title: "Mapping wildfires in R with mapsf"
+description: "Today we will learn how to use the `mapsf` package to create incredible maps"
+date: "2024-09-22"
+categories: [R, spatial, wildfires]
+image: "image.png"
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< video https://youtu.be/_BN7xOtbVAc >}}
+
+## Introduction
+
+Today we will learn how to use the `mapsf` R package to create choropleth maps showing the number of wildfires and the burned area combined in the province of Ourense, Spain. By combining two complementary visualization types we can easily identify those areas where both the number of wildfires and the burned areas are very high.
+
+The `mapsf` package deprecates the well-known `cartography` package which was around for a while.
+
+## Code
+
+You can find the code of this tutorial [here](https://github.com/Cidree/blog_scripts/tree/main/011_mapsf_intro){target="_blank"}.
+
+## Results
+
+At the end of this tutorial, you will be able to create the following map:
+
+![Map created at the end of the tutorial](mapsf_ourense_wildfires.png){fig-align="center"}
+
+You can find all the explanations in the [video](https://youtu.be/LSWiv4BpDZA){target="_blank"}, and if you like it, don't forget to hit the like button, subscribe, and share it with others.

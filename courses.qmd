@@ -37,26 +37,26 @@ My courses are offered through a third party that hosts the material. You have t
 
 -   **If you buy it through the Udemy site**: you get the exact same course, sometimes for the same price, sometimes for a higher price, and I get only 33% of the money you pay, while Udemy gets 67%.
 
-I have to update the coupons manually, therefore, it's very likely that I will forget to update them sometimes. If the coupons don't work, leave me a comment below and I will update them as soon as possible. The duration of the coupons depends on Udemy:
-
--   Price 9.99€: the coupons will last for 5 days
-
--   Price 12.99€: the coupons will last for 30 days
-
-<!-- ::::: {.container .grid .mt-5} -->
-<!-- ::: {.g-col-12 .g-col-md-6} -->
 <!-- I have to update the coupons manually, therefore, it's very likely that I will forget to update them sometimes. If the coupons don't work, leave me a comment below and I will update them as soon as possible. The duration of the coupons depends on Udemy: -->
 
 <!-- -   Price 9.99€: the coupons will last for 5 days -->
 
 <!-- -   Price 12.99€: the coupons will last for 30 days -->
-<!-- ::: -->
 
-<!-- ::: {.g-col-12 .g-col-md-6} -->
-<!-- # ```{r} -->
-<!-- # offer_card -->
-<!-- # ``` -->
-<!-- ::: -->
+::::: {.container .grid .mt-5}
+::: {.g-col-12 .g-col-md-6}
+I have to update the coupons manually, therefore, it's very likely that I will forget to update them sometimes. If the coupons don't work, leave me a comment below and I will update them as soon as possible. The duration of the coupons depends on Udemy:
+
+-   Price 9.99€: the coupons will last for 5 days
+
+-   Price 12.99€: the coupons will last for 30 days
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{r}
+offer_card
+```
+:::
 :::::
 
 ## Courses {.course-description}
@@ -135,7 +135,7 @@ course_card(
 ```{r}
 course_card(
   file         = "assets/figures/00_course_figures/01_quarto.png",
-  course_title = "Quarto - diseño de documentos profesionales en RStudio",
+  course_title = "Literate programming y Automatización con Quarto en R",
   mode         = "Online",
   time         = "20 horas",
   language     = "Español",
@@ -144,3 +144,8 @@ course_card(
 ```
 :::
 :::::::::
+
+<br>
+
+
+{{< include assets/includes/buymeacoffee.qmd >}}
