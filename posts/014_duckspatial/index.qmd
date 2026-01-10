@@ -6,6 +6,7 @@ categories: [R, spatial, duckspatial]
 image: "image.png"
 execute: 
   warning: false
+  freeze: false
 editor_options: 
   chunk_output_type: console
 bibliography: references.bib
@@ -125,7 +126,7 @@ Two key optimizations make this release significantly faster:
 
 -   **Faster table creation**: `ddbs_write_vector()` now supports `temp = TRUE` to create temporary views, which is much faster than creating permanent tables.
 
--   **Faster data retrieval**: `ddbs_read_vector()` uses internal {geoarrow} [@geoarrow] optimizations for substantially improved performance.
+-   **Faster data retrieval**: `ddbs_read_vector()` uses internal optimizations with {wk} [@wk] and {geoarrow} [@geoarrow] for substantially improved performance.
 
 ### CRS Deprecation
 
@@ -138,21 +139,9 @@ This release adds a substantial number of new spatial functions, greatly expandi
 ### Geometric Operations
 
 -   **Hulls**: `ddbs_convex_hull()` and `ddbs_concave_hull()` for creating geometric envelopes
-
-<!-- -->
-
 -   **Boundaries**: `ddbs_bbox()`, `ddbs_boundary()` and `ddbs_envelope()` for extracting geometry boundaries
-
-<!-- -->
-
 -   **Transformations**: Complete suite of affine transformations including `ddbs_rotate()`, `ddbs_shift()`, `ddbs_scale()`, `ddbs_flip()`, and `ddbs_shear()`
-
-<!-- -->
-
 -   **Geometry creation**: `ddbs_make_polygon()` to create polygons from linestrings, `ddbs_generate_points()` for random point generation
-
-<!-- -->
-
 -   **Geometry manipulation**: `ddbs_exterior_ring()`, `ddbs_union()`, `ddbs_combine()`, `ddbs_make_valid()`, and `ddbs_simplify()`
 
 ### Spatial Analysis
@@ -182,17 +171,8 @@ This release adds a substantial number of new spatial functions, greatly expandi
 ## Minor improvements
 
 -   All functions now have a `quiet` parameter to suppress messages
-
-<!-- -->
-
 -   Fixed issue where columns with dots in their names would cause failures
-
-<!-- -->
-
 -   Improved `ddbs_filter()` to avoid duplicates when geometries match multiple predicates
-
-<!-- -->
-
 -   Added comprehensive vignettes for getting started
 
 ## Looking Ahead to 1.0.0
