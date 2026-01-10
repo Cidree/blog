@@ -3,6 +3,7 @@ pagetitle: "Adrián Cidre | Courses"
 title: ""
 execute: 
   echo: false
+  freeze: false
 ---
 
 ```{r functions}

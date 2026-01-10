@@ -3,12 +3,12 @@ library(shiny)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Coupons
-mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=D59AF71E4C06BC1C82E4"
-gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=955D6EEF76DCFB7F2C1A"
-gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=892BE8E5E06A73435D39"
-quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=0CF1A99578DE538C9EC5"
-data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=9BAC97E4DA743F9970B3"
-spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=98E2C67754EB80D85029"
+spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=A5620BC5865AF6414B27"
+mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=1C82E941E35819AFB0DF"
+gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=7CE57D1FFF0660228FA6"
+gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=2C0B676C40C45F70342E"
+quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=86E0E38EC769ABF8060C"
+data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=79ACECAF3FB9DB70B599"
 coupon_price           <- "9.99€"
 
 ## Card for courses.qmd -------------------------------------------------
@@ -467,7 +467,7 @@ offer_card <- div(
   # Price section
   div(
     class = "price-section",
-    div("9.99€", class = "price"),
+    div("12.99€", class = "price"),
     div("Special Price", class = "price-label")
   ),
   
@@ -482,9 +482,9 @@ offer_card <- div(
     p(
       class = "date-range",
       tags$i(class = "fas fa-play text-success"),
-      tags$span("November 20th"),
+      tags$span("Jan 10th"),
       tags$i(class = "fas fa-arrow-right text-muted"),
-      tags$span("November 24th"),
+      tags$span("Feb 9th"),
       tags$i(class = "fas fa-stop text-danger")
     )
   )
