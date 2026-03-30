@@ -1,0 +1,294 @@
+---
+title: "duckspatial v1.0.0"
+description: "New duckspatial API, and presentation of duckspatial_df"
+date: "2026-03-30"
+categories: [R, spatial, duckspatial]
+image: "image.png"
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+---
+
+## Introduction
+
+A couple of months ago, I presented {duckspatial} v0.9.0 [@duckspatial] as a major step towards the v1.0.0. Today, I am exited to say that the v1.0.0 is finally here!!
+
+{duckspatial} is an R package that brings the power of [DuckDB's spatial extension](https://duckdb.org/docs/stable/core_extensions/spatial/overview) to R. It provides fast and memory-efficient functions to analyze and manipulate large spatial vector datasets while maintaining full compatibility with R's spatial ecosystem, especially the {sf} package [@sf].
+
+The highlights of this version are:
+
+-   Implementation of a native S3 class named `duckspatial_df`.
+
+-   All functions work seamlessly with `sf` and `duckspatial_df` objects.
+
+-   Implementing two operating modes: `duckspatial` and `sf`.
+
+-   The geospatial operations are kept within DuckDB, and no data is materialized into R until explicitly collected. That powers the engine of DuckDB and avoids materializing the data unnecessarily.
+
+-   About 20 new geospatial operations (e.g. `ddbs_perimeter()`, `ddbs_as_points()`).
+
+```{r}
+#| label: load-packages
+#| code-fold: true
+#| code-summary: "Load packages"
+
+library(duckdb)
+library(duckspatial)
+library(sf)
+```
+
+## duckspatial_df class
+
+The `duckspatial_df` class is an S3 class that it's just a pointer to the data stored in a temporary table in a DuckDB connection. If no connection is provided, the package will use internally a default connection that will be used in the functions that do not have a `conn` argument defined. We have several ways to define a `duckspatial_df` class:
+
+-   `ddbs_open_dataset()`: this function will open a local file with a valid extension as `duckspatial_df` that is stored as a temporary view.
+
+-   `as_duckspatial_df()`: transforms other classes into a `duckspatial_df`. For example, we can transform an `sf` object, or a table that is stored in a DuckDB connection.
+
+-   `ddbs_as_points()`: converts a data frame with X and Y coordinates into `duckspatial_df` points.
+
+::: panel-tabset
+## Read a file
+
+Here we are reading the file. Note that "reading" actually means to register the data as a temporary view in a default's DuckDB connection, and open the data lazily. You can see that the print method is very informative and inspired in the {sf} package. It shows the coordinates reference system in the AUTH:CODE format, the name of the geometry colum, the different geometry types that are found in the geometry column, and the bounding box.
+
+```{r}
+## Path to a local file to be reused later
+countries_path <- system.file("spatial/countries.geojson", package = "duckspatial")
+
+## Read as duckspatial_df
+countries_ddbs <- ddbs_open_dataset(countries_path)
+
+countries_ddbs
+```
+
+## Convert sf
+
+To convert an `sf`, we simply use `as_duckspatial_df()`:
+
+```{r}
+## Read as sf
+countries_sf <- read_sf(countries_path)
+
+## Convert to duckspatial_df
+countries_ddbs <- as_duckspatial_df(countries_sf)
+
+class(countries_ddbs)
+```
+
+However, if we already have an `sf` object, and what we want to do is to apply some geospatial operation with {duckspatial}, we can just apply the geospatial operation, and the output will be by default a `duckspatial_df`.
+
+```{r}
+## Apply geospatial operation to sf
+centroids_ddbs <- ddbs_centroid(countries_sf)
+
+class(centroids_ddbs)
+```
+
+## Convert table
+
+We might have an existing DuckDB table with spatial data in it, and we want to work with it in R. Let's create a connection imagining this scenario:
+
+```{r}
+## Create a duckdb in-memory connection with spatial extension
+conn <- ddbs_create_conn()
+
+## Write data to the database
+ddbs_write_table(conn, countries_path, "countries")
+```
+
+Now, if we wanted to create a `duckspatial_df` from that countries table, we can just use `as_duckspatial_df()` again:
+
+```{r}
+## Open lazily as duckspatial_df
+countries_db_ddbs <- as_duckspatial_df("countries", conn)
+
+countries_db_ddbs
+```
+
+## Convert points
+
+The function `ddbs_as_points()` works in a similar way as `st_as_sf()` for creating points from a data frame, and that's the main use case of this function. Let's see it with an example:
+
+```{r}
+## Create sample data
+cities_df <- data.frame(
+  city = c("Buenos Aires", "Córdoba", "Rosario"),
+  lon = c(-58.3816, -64.1811, -60.6393),
+  lat = c(-34.6037, -31.4201, -32.9468),
+  population = c(3075000, 1391000, 1193605)
+)
+
+# Convert to duckspatial_df
+cities_ddbs <- ddbs_as_points(cities_df)
+
+## If the columns were named differently, we would need to explicitly specify them
+## and the same with the CRS
+cities_ddbs <- ddbs_as_points(
+  cities_df, 
+  coords = c("lon", "lat"),
+  crs = "EPSG:4326"
+)
+
+cities_ddbs
+```
+
+
+:::
+
+## Operating modes
+
+This version brings two operating modes for the geospatial operations:
+
+* `mode = 'duckspatial'`: the output will be typically a `duckspatial_df`, so the workflow will be kept within DuckDB.
+
+* `mode = 'sf'`: the output will be the same or similar as the `sf` package would return for the function. For example, the function `ddbs_centroid()` would return an `sf` object, while the function `ddbs_area()` would return an `units` vector.
+
+We can check what's the current's mode with `ddbs_sitrep()`:
+
+```{r}
+ddbs_sitrep()
+```
+
+Let's picture it with a couple of examples.
+
+::: panel-tabset
+
+## Centroid - duckspatial
+
+The default mode will be `duckspatial`, so we don't need to modify the `mode` argument:
+
+```{r}
+centroids_ddbs <- ddbs_centroid(countries_ddbs)
+class(centroids_ddbs)
+```
+
+## Centroid - sf
+
+If we use mode `sf`, the output will be an `sf` object:
+
+```{r}
+centroids_sf <- ddbs_centroid(countries_ddbs, mode = "sf")
+class(centroids_sf)
+```
+
+## Area - duckspatial
+
+Using the `duckspatial` mode, the function will add a new column to the data:
+
+```{r}
+area_ddbs <- ddbs_area(countries_ddbs)
+area_ddbs
+```
+
+## Area - sf
+
+In this case, the output will be an units vector, which is the expected behaviour if we were using the `sf` package:
+
+```{r}
+area_sf <- ddbs_area(countries_ddbs, mode = "sf")
+area_sf[1:5]
+```
+
+:::
+
+We can also change the default mode to `sf` as follows:
+
+```{r}
+ddbs_options(mode = "sf")
+```
+
+Now, if we apply a geospatial operation without using the `mode` argument, the output will be from the `sf` package:
+
+```{r}
+area_sf <- ddbs_area(countries_ddbs)
+area_sf[1:5]
+```
+
+Let's get back the `duckspatial` mode:
+
+```{r}
+ddbs_options(mode = "duckspatial")
+```
+
+## Data materialization
+
+If we operate with the `duckspatial` mode, no data is loaded into R's memory, and everything is kept within the DuckDB engine. If we have finished all our operations in DuckDB and we want to materialize our data in R, we can do it with `ddbs_collect()`, `collect()` (which mirrors the previous), or `st_as_sf()`. If we use the first one, we have an `as` argument that allows to materialize to four different output types:
+
+::: panel-tabset
+
+## sf
+
+This is the default's output type.
+
+```{r}
+ddbs_collect(centroids_ddbs)
+```
+
+## Tibble
+
+This output removes the spatial component.
+
+```{r}
+ddbs_collect(centroids_ddbs, as = "tibble")
+```
+
+## Raw
+
+It keeps the geometry column as a raw WKB list.
+
+```{r}
+ddbs_collect(centroids_ddbs, as = "raw")
+```
+
+## Geoarrow
+
+Converts the geometry to a geoarrow vector.
+
+```{r}
+ddbs_collect(centroids_ddbs, as = "geoarrow")
+```
+
+:::
+
+
+## Performance Improvements
+
+The output of a `ddbs_*()` function is kept within DuckDB. So chaining more geospatial operations won't materialize the data until explicitly collected.
+
+
+## crs_column and crs removed
+
+When `duckspatial` was created, there wasn't a way of storing CRS metadata of spatial data in DuckDB. Therefore, we overcame this issue by internally creating a column called `crs_duckspatial` storing the CRS of the data. However, this was not efficient, nor interoperally with other tools. This changed with the DuckDB's version 1.5.0. Now, the CRS is stored as metadata with the geometry column. Let's explore the structure of the "countries" table we created earlier:
+
+```{r}
+countries_desc <- dbGetQuery(conn, "DESCRIBE countries;")
+countries_desc
+```
+
+As you can see, the CRS is stored with the column type. This allowed us to remote the `crs_column` and `crs` arguments from every geospatial operation, and manage the CRS naturally.
+
+
+## New Features
+
+This release brings about 20 new geospatial functions, another set of functions to work with `duckspatial_df`, as well as `dplyr` methods for this class. You can explore all the new functions in the [news of the package](https://cidree.github.io/duckspatial/news/index.html#new-features-1-0-0).
+
+
+## Acknowledgments
+
+This release wouldn't be possible without the incredible work of many people.
+
+First and foremost, my deepest thanks to the **DuckDB team** for building such a powerful and elegant analytical engine. Their commitment to performance, correctness, and developer experience has created a foundation that makes tools like {duckspatial} possible. This includes the developers and maintainers of the `duckdb` R package, which makes possible to operate with this awesome tool from R, and it makes possible to create packages such as {duckspatial}.
+
+Special recognition goes to the developers of the **DuckDB Spatial Extension,** the engine that powers everything in {duckspatial}. Their unvaluable work on spatial operations, format support, and performance optimization is what makes this package capable of handling large-scale spatial analysis efficiently.
+
+Most importantly, this release represents a true collaborative effort. **Rafael Pereira** and **Egor Kotov** have been fundamental in shaping duckspatial's new design and implementation. Their ideas, code contributions, and thoughtful feedback have shaped this package far beyond what I could have achieved alone. This is a shared accomplishment.
+
+Finally, thank you to the broader R spatial community for building the ecosystem that {duckspatial} integrates with, and to everyone who has tested early versions, reported issues, or provided feedback.
+
+## References
+
+::: {#refs}
+:::

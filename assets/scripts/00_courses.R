@@ -3,13 +3,13 @@ library(shiny)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Coupons
-spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=A5620BC5865AF6414B27"
-mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=1C82E941E35819AFB0DF"
-gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=7CE57D1FFF0660228FA6"
-gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=2C0B676C40C45F70342E"
-quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=86E0E38EC769ABF8060C"
-data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=79ACECAF3FB9DB70B599"
-coupon_price           <- "9.99€"
+spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=B7BDA6A70A6F2E3172FD"
+mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=FACCB973BF5A29D4F151"
+gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=9AD6666576BA0C77E969"
+gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=8EBCFF6A3D95237652CF"
+quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=6A96BBB51A7737E1CD3A"
+data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=84D9F587611D923EDA7C"
+coupon_price           <- "12.99€"
 
 ## Card for courses.qmd -------------------------------------------------
 course_card <- function(file, course_title, mode, date, time, language, href) {

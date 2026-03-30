@@ -50,12 +50,12 @@ website:
       [Github Code Repo](https://github.com/Cidree/blog)
     background: "#2D4156"
     foreground: white
-  announcement: 
-    icon: info-circle
-    dismissable: true
-    content: "**Warning** - This site is under development. Some features may not work as expected."
-    type: warning
-    position: below-navbar
+  # announcement: 
+  #   icon: info-circle
+  #   dismissable: true
+  #   content: "**Warning** - This site is under development. Some features may not work as expected."
+  #   type: warning
+  #   position: below-navbar
   
   google-analytics:
     tracking-id: "G-J58431JK0F"

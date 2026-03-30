@@ -6,7 +6,7 @@ categories: [R, spatial, duckspatial]
 image: "image.png"
 execute: 
   warning: false
-  freeze: false
+  eval: false
 editor_options: 
   chunk_output_type: console
 bibliography: references.bib
