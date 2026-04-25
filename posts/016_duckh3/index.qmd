@@ -6,7 +6,6 @@ categories: [R, spatial, duckspatial, duckh3]
 image: "image.png"
 execute: 
   warning: false
-  freeze: false
 editor_options: 
   chunk_output_type: console
 bibliography: references.bib
@@ -101,7 +100,7 @@ For the moment this will be a mandatory step at the beginning of the script befo
 
 ## Example data
 
-For the examples below, I will use the [Burnt Area database](https://forest-fire.emergency.copernicus.eu/applications/data-and-services) from the EFFIS, which is a database that contains data about the wildfires that happened in Europe from 2016 until the current date (April 2026). I have prepared the data previously, and simplified it for the examples. The data contains six columns:
+For the examples below, I will use the [Burnt Area database](https://forest-fire.emergency.copernicus.eu/applications/data-and-services){target="_blank"} from the EFFIS, which is a database that contains data about the wildfires that happened in Europe from 2016 until the current date (April 2026). I have prepared the data previously, and simplified it for the examples. The data contains six columns:
 
 - year: the year of the wildfire
 
@@ -255,7 +254,7 @@ You can support this project by:
 
 - Trying the package, and staring the project in [GitHub](https://github.com/Cidree/duckh3){target="_blank"} if you find it useful.
 
-- Buying me a [coffee](buymeacoffee.com/adriancidre){target="_blank"}.
+- Buying me a [coffee](https://buymeacoffee.com/adriancidre){target="_blank"}.
 
 ## Acknowledgments
 
