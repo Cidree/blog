@@ -75,7 +75,7 @@ p {
 
 
 // Headings
-h1, h2, h3 {
+h1, h2:not(.mapboxgl-legend), h3 {
   font-weight: 700;
   font-family: Merriweather, Montserrat, serif;
   color: $color-darkblue;
@@ -94,6 +94,11 @@ h2:not(#toc-title):not(.accordion-header) {
 .jumbotron h2 {
   border-bottom: none !important;
 }
+
+.mapboxgl-legend h2 {
+  border-bottom: none !important;
+}
+
 
 
 // Figures

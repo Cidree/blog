@@ -11,3 +11,4 @@ assets/videos/
 posts/data/
 **/video/*
 **/*.quarto_ipynb
+.positai

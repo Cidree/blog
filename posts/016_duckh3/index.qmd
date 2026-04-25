@@ -1,0 +1,279 @@
+---
+title: "A new duck in the pond"
+description: "Presenting duckh3 v0.1.0"
+date: "2026-04-25"
+categories: [R, spatial, duckspatial, duckh3]
+image: "image.png"
+execute: 
+  warning: false
+  freeze: false
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+---
+
+## Introduction
+
+There's a new duck in the R pond! The first one I raised was {duckspatial}, and the newest to join him goes by {duckh3}.
+
+What does this one bring? {duckh3} wraps the H3 community extension for DuckDB and follows the same design principles as {duckspatial} — but before diving in, let's talk about what H3 actually is.
+
+H3 is a hierarchical hexagonal grid system developed by Uber and released as open source in 2018. It divides the entire surface of the Earth into hexagonal cells at multiple resolutions: from coarse (resolution 0, \~4,250 km² per cell) to fine (resolution 15, \~0.9 m² per cell). Each cell is identified by a unique 64-bit integer index, which makes spatial operations extremely fast and storage-efficient.
+
+![Screenshot of the H3 grid system (source: [h3geo](https://h3geo.org/){target="_blank"}).](images/clipboard-788003021.png){#fig-h3uber fig-align="center"}
+
+Why hexagons? Unlike squares or triangles, hexagons have a unique geometric property: every neighbor is equidistant from the center, which eliminates the diagonal-vs-cardinal distance bias that plagues square grids. This makes them ideal for spatial aggregation, movement modeling, and proximity analysis. The H3 system is particularly useful when you need to:
+
+- Aggregate point data (e.g., GPS pings, sensor readings) into uniform spatial units
+
+- Join datasets from different sources without complex polygon overlaps
+
+- Analyze spatial patterns at multiple scales by moving between resolutions
+
+**{duckh3}** provides fast, memory-efficient functions for analysing and manipulating large spatial and non-spatial datasets using the [H3 hierarchical indexing system](https://h3geo.org/){target="_blank"} in R. It bridges [DuckDB’s H3 extension](https://duckdb.org/community_extensions/extensions/h3){target="_blank"} with R’s data and spatial ecosystems — in particular **{duckspatial}**, **{dplyr}**, and **{sf}** — so you can leverage DuckDB’s analytical power without leaving your familiar R workflow. You can find the [package's repository here](https://github.com/Cidree/duckh3){target="_blank"}.
+
+Let's load some packages to introduce this {duckh3}.
+
+```{r}
+#| label: load-packages
+#| code-fold: true
+#| code-summary: "Load packages"
+
+library(arrow)       # parquet format
+library(dplyr)       # data wrangling
+library(duckdb)      # interface with duckdb
+library(duckh3)      # duckdb h3 extension
+library(duckspatial) # duckdb spatial extension
+library(mapgl)       # interactive maps
+library(sf)          # vector data
+```
+
+## Naming conventions
+
+All functions follow the `ddbh3_*()` prefix (*DuckDB H3*), structured around the expected input data, and what they will be converted to:
+
+- `ddbh3_lonlat_to_*()` — from longitude/latitude coordinates to H3 representations
+- `ddbh3_points_to_*()` — from spatial point geometries to H3 representations
+- `ddbh3_h3_to_*()` — convert H3 cells to other representations
+- `ddbh3_vertex_to_*()` — convert H3 vertexes to other representations
+
+With the following available transformations:
+
+| Function family  | Output                             |
+|------------------|------------------------------------|
+| `*_to_h3()`      | H3 index as string or `UBIGINT`    |
+| `*_to_spatial()` | H3 cell as spatial hexagon polygon |
+| `*_to_lon()`     | Longitude of H3 cell centroid      |
+| `*_to_lat()`     | Latitude of H3 cell centroid       |
+
+And there are also a set of function to retrieve or check properties of the data:
+
+- `ddbh3_get_*()` — retrieve H3 cell properties (resolution, parent, children, vertices...)
+- `ddbh3_is_*()` — check properties of H3 indexes (valid, pentagon, Class III...)
+
+The functions might be slightly verbose, but we sacrificed that in order to make them very intuitive and descriptive.
+
+## First steps
+
+There are several options to work with {duckh3}, but the main two options are:
+
+- Interacting with a DuckDB connection: we won't explain this, but if you want more details you can explore [this post](https://cidree.github.io/duckspatial/articles/duckspatial.html#working-in-a-database){target="_blank"} about {duckspatial}, as the framework is the same). There's a convenient function to create a connection with all the setup (`ddbh3_create_conn()`).
+
+- Working entirely in R: the functions of this package work with lazy-tables (i.e. tables that live in a DuckDB database, and they are not materialized into R until explicitly called). This makes the processing of the data more efficient, as the data doesn't need to be in the R's memory until all the processing within DuckDB is done. We will focus on this workflow.
+
+So after we have loaded the package into the R session, we need to setup the environment with the `ddbh3_default_conn()` function. This will:
+
+- Create a default in-memory DuckDB's connection that will be used internally by the package.
+
+- Install and load the [spatial](https://github.com/duckdb/duckdb-spatial){target="_blank"} extension
+
+- Install and load the [h3](https://github.com/isaacbrodsky/h3-duckdb){target="_blank"} extension
+
+- Optionally set the maximum number of threads and RAM allowed to use by {duckh3}. By default, DuckDB will use all the available cores and 80% of RAM.
+
+```{r}
+#| label: setup-duckh3
+
+ddbh3_default_conn()
+```
+
+For the moment this will be a mandatory step at the beginning of the script before using any {duckh3} function.
+
+## Example data
+
+For the examples below, I will use the [Burnt Area database](https://forest-fire.emergency.copernicus.eu/applications/data-and-services) from the EFFIS, which is a database that contains data about the wildfires that happened in Europe from 2016 until the current date (April 2026). I have prepared the data previously, and simplified it for the examples. The data contains six columns:
+
+- year: the year of the wildfire
+
+- country: the 2-letter ISO code of the country
+
+- area_ha: the amount of hectares the wildfire burned
+
+- lon: the geographic longitude of the centroid of the final perimeter
+
+- lat: the geographic latitude of the centroid of the final perimeter
+
+It's not perfect, but it will be do for the examples. Let's start opening the data and exploring it:
+
+```{r}
+## Read data
+wildfires_tbl <- read_parquet("wildfires.parquet")
+wildfires_tbl
+```
+
+We have a total amount of `r nrow(wildfires_tbl)` wildfires during the 10-year period. Let's assign an H3 index to each pair of coordinates. For the sake of the exercise, let's use an H3 resolution of 4, which is about 1,770 km^2^.
+
+```{r}
+## Add H3 as a new column
+wildfires_h3_tbl <- ddbh3_lonlat_to_h3(wildfires_tbl, resolution = 4)
+wildfires_h3_tbl
+```
+
+Note a few things:
+
+- The table is lazy: it was inserted in the default's DuckDB connection, and it's living there.
+
+- A new column with a default's name `h3string` was added.
+
+- If we work with the default names that the package use, we save some writing. For example, the default names for longitude and latitude are `lon` and `lat`, so we don't need to specify those argument. If our columns had a different name we should specify them.
+
+- The object is not spatial. We just added the h3strings, but we didn't convert the data to spatial. We have the functions that end in `_to_spatial()` to do so.
+
+## Analysis with duckh3
+
+One typical analysis that we can do with the H3 grid system, is to aggregate values by the hexagons. Let's calculate the total burned area during the 10-year period in the hexagons that we defined:
+
+```{r}
+## Calculate total area by H3
+wildfires_agg_tbl <- wildfires_h3_tbl |> 
+  summarise(
+    area_ha = sum(area_ha, na.rm = TRUE),
+    .by = h3string
+  )
+wildfires_agg_tbl
+```
+
+Great! Now that we have done our analysis, let's create a map. We need to follow the next steps:
+
+- Convert the `h3string` to spatial polygons (hexagons)
+
+- Materialize the data into R
+
+- Create a map
+
+::: panel-tabset
+## Convert to polygons
+
+Again, using the default name of `h3string` makes the conversion smooth:
+
+```{r}
+wildfires_agg_ddbs <- ddbh3_h3_to_spatial(wildfires_agg_tbl)
+wildfires_agg_ddbs
+```
+
+## Materialize data
+
+This step brings the data from DuckDB into R. We use the `duckspatial::ddbs_collect()` function to collect the data as an `sf` object:
+
+```{r}
+wildfires_agg_sf <- ddbs_collect(wildfires_agg_ddbs)
+wildfires_agg_sf
+```
+
+## Map
+
+Finally, we can create a beautiful map using `mapgl`:
+
+```{r}
+## Define legend breaks and palette
+area_brks <- c(0, 1000, 5000, 20000, 50000, 100000, 200000)
+pal <- c("#FFEDA0", "#FED976", "#FC4E2A", "#E31A1C", "#BD0026", "#800026", "#3D0010")
+
+## Create a popup
+wildfires_agg_sf <- wildfires_agg_sf |> 
+  mutate(popup = glue::glue("
+    <strong>Total Area: </strong>{wildfires_agg_sf$area_ha} ha<br><strong>
+"))
+
+## Draw the map
+maplibre(style = carto_style("dark-matter")) |>
+  add_fill_layer(
+  id = "wildfires",
+  source = wildfires_agg_sf,
+  fill_color = interpolate(
+    column = "area_ha",
+    values = area_brks,
+    stops = pal,
+    na_color = "lightgrey"
+  ),
+  fill_opacity = 0.8,
+  popup = "popup"
+ ) |>
+  add_legend(
+    "Burned Area (ha) (2016-2026)",
+    values = area_brks,
+    colors = pal,
+    width  = "270px",
+    style = legend_style(
+      background_color = "grey90",
+      title_color = "black",
+      text_color = "black"
+    )
+  ) |> 
+  fit_bounds(wildfires_agg_sf) |> 
+  add_fullscreen_control()
+```
+:::
+
+That's amazing!! There we just saw a couple of functions of the package, but you see the pattern. You have a bunch of more examples in the functions documentation, and hopefully, I will add some vignettes soon to the package.
+
+## Low-level processing
+
+The package also offers low-level processing. For example, let's obtain the resolution of the following two H3 strings:
+
+```{r}
+ddbh3_get_resolution(c("8439205fffffff", "841ed6bffffffff"))
+```
+
+## Other H3 packages
+
+Of course, {duckh3} is not the only choice out there to work with the H3 grid system in R. Other popular options are:
+
+- {**h3**}: it has a very basic integration with {sf}. It's simple and lightweight, but it has several limitations when working with spatial data. It's not in CRAN currently.
+
+- {**h3jsr**}: one of the most popular options nowadays with the higgest number of downloads from CRAN. Its integration is via JavaScript and it's integrated with current's R ecosystem. It's great for smaller datasets, but it's weak when working with millions of observations.
+
+- {**h3r**}: implements the H3 grid system using C through the R package {h3lib}. It provides a low-level API without integration with {sf}.
+
+- {**h3o**}: a new R package written in Rust, that is very fast, it has a strong integration with the current geospatial ecosystem in R and the {tidyverse}, and it's very R-user friendly.
+
+- {**duckh3**}: it uses DuckDB to speed up the workflows, it has a strong integration with the current geospatial ecosystem in R and the {tidyverse}. It provides processing at the table level, and vector level. It's complemented with {duckspatial} for spatial data workflows.
+
+## Supporting duckh3
+
+You can support this project by:
+
+- Trying the package, and staring the project in [GitHub](https://github.com/Cidree/duckh3){target="_blank"} if you find it useful.
+
+- Buying me a [coffee](buymeacoffee.com/adriancidre){target="_blank"}.
+
+## Acknowledgments
+
+This development of this package wouldn't be possible without the incredible work of many people.
+
+First and foremost, my deepest thanks to the **DuckDB team** for building such a powerful and elegant analytical engine. Their commitment to performance, correctness, and developer experience has created a foundation that makes tools like {duckspatial} and {duckh3} possible. This includes the developers and maintainers of the `duckdb` R package, which makes possible to operate with this awesome tool from R, and it makes possible to create packages such as {duckh3}.
+
+Special recognition goes to the developers of the **DuckDB H3 Extension,** the engine that powers everything in {duckh3}. Their invaluable work on spatial operations, format support, and performance optimization is what makes this package capable of handling large-scale spatial analysis efficiently.
+
+Most importantly, this package represents a true collaborative effort. **Rafael Pereira** and **Egor Kotov** have been fundamental in shaping the design of {duckspatial}, and consequently, the design of {duckh3}.
+
+Finally, thank you to the broader R spatial community for building the ecosystem that {duckspatial} and {duckh3} integrates with, and to everyone who has tested early versions, reported issues, or provided feedback.
+
+## Session Information
+
+```{r}
+#| echo: false
+#| results: asis
+report::report(sessionInfo())
+
+```
