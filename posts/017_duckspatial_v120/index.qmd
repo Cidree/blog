@@ -1,0 +1,210 @@
+---
+title: "duckspatial: new geometry functions, MVT/MBTiles export, and more"
+description: "Highlights from duckspatial v1.1.2 and v1.2.0"
+date: "2026-07-04"
+categories: [R, spatial, duckspatial]
+image: "image.png"
+execute: 
+  warning: false
+  eval: false
+editor_options: 
+  chunk_output_type: console
+---
+
+## Introduction
+
+Two versions of {duckspatial} have shipped since the last update: v1.1.2 and v1.2.0. Both are now on CRAN, so let's go through the highlights together.
+
+```{r}
+#| label: load-packages
+#| code-fold: true
+#| code-summary: "Load packages and data"
+
+## Packages setup
+# pak::pak("duckspatial") # upgrade the package to the latest version
+library(dplyr)
+library(duckspatial)
+library(ggplot2)
+library(mapgl)
+library(sf)
+
+## Load some data
+argentina_ddbs <- ddbs_open_dataset(
+  system.file("spatial/argentina.geojson", package = "duckspatial")
+)
+```
+
+## New geometry functions
+
+A batch of new unary functions covers common needs that weren't in the package yet.
+
+::: panel-tabset
+
+## ddbs_reverse
+
+This function flips the vertex order of a geometry.
+
+```{r}
+ddbs_reverse(argentina_ddbs)
+```
+
+## ddbs_normalize
+
+It returns the canonical form of the geometry, sorting the geometry in a deterministic way. This is useful before comparing geometries for equality.
+
+```{r}
+ddbs_normalize(argentina_ddbs)
+```
+
+## ddbs_vertices
+
+Collects every vertex of a geometry into a MULTIPOINT.
+
+```{r}
+argentina_vertices_sf <- ddbs_vertices(argentina_ddbs, mode = "sf")
+maplibre_view(argentina_vertices_sf)
+```
+
+
+## ddbs_reduce precision
+
+Snaps coordinates to a grid to shrink geometry size. The next example reduces the precision of argentina boundary to 1 degree (e.g. 62.4328 degrees would shrink to 62 degrees).
+
+```{r}
+argentina_precision_sf <- ddbs_reduce_precision(argentina_ddbs, precision = 1)
+maplibre_view(ddbs_collect(argentina_precision_sf))
+```
+
+## extent helpers
+
+A full set of extent helpers landed too: `ddbs_xmax()`, `ddbs_xmin()`, `ddbs_ymax()`, `ddbs_ymin()`, plus the Z/M equivalents. By default they work `by_feature = TRUE` adding a new column per feature (useful for maintaining workflows within duckdb, and apply filters):
+
+```{r}
+argentina_ddbs |> 
+  select(NAME_ENGL) |> 
+  ddbs_xmin() |> 
+  ddbs_xmax()
+```
+
+However, we can get the global minimum or maximum:
+
+```{r}
+ddbs_xmax(argentina_ddbs, by_feature = FALSE)
+```
+
+## ddbs_dimension
+
+And `ddbs_dimension()` returns the topological dimension of each geometry (0 = point, 1 = line, 2 = polygon):
+
+```{r}
+ddbs_dimension(argentina_ddbs)
+```
+
+Rounding out the polygon-side additions, `ddbs_get_ninterior_rings()` counts holes in a POLYGON.
+
+:::
+
+## Points, lines, and measurements
+
+`ddbs_point()` creates POINT geometries directly from coordinate vectors, with 2D/3D/4D support and CRS assignment:
+
+```{r}
+cities_ddbs <- ddbs_point(
+  x = c(-58.3816, -64.1811),
+  y = c(-34.6037, -31.4201),
+  another_column = c("A", "B"),
+  crs = 4326
+)
+
+cities_ddbs
+```
+
+For line work, `ddbs_shortest_line()` returns the connecting LINESTRING between the closest points of two geometries, and `ddbs_line_locate_point()` gives the fractional position (0–1) of the closest point on a line to a reference point. `ddbs_line_node()` is the batch version: it nodes a set of lines, splitting them at every crossing into a fully noded MULTILINESTRING.
+
+`ddbs_azimuth()` computes the clockwise bearing between two sets of points, in radians by default or degrees via `unit = "degrees"`.
+
+On the aggregation side, `ddbs_intersection_agg()` joins `ddbs_union_agg()` as the intersection counterpart — computes the common area of a set of geometries, optionally grouped by column.
+
+```{r}
+## create three overlapping polygons
+polys <- sf::st_as_sf(
+  data.frame(grp = c("a", "a", "b", "b")),
+  geometry = sf::st_sfc(
+    sf::st_polygon(list(matrix(c(0,0, 3,0, 3,3, 0,3, 0,0), ncol = 2, byrow = TRUE))),
+    sf::st_polygon(list(matrix(c(1,1, 4,1, 4,4, 1,4, 1,1), ncol = 2, byrow = TRUE))),
+    sf::st_polygon(list(matrix(c(2,2, 5,2, 5,5, 2,5, 2,2), ncol = 2, byrow = TRUE))),
+    sf::st_polygon(list(matrix(c(3,3, 6,3, 6,6, 3,6, 3,3), ncol = 2, byrow = TRUE)))
+  ),
+  crs = 4326
+)
+
+## intersect all geometries into their common area
+polys_inters <- ddbs_intersection_agg(polys, mode = "sf")
+
+## intersect within groups
+polys_inters_grp <- ddbs_intersection_agg(polys, by = "grp", mode = "sf")
+
+## plot them
+ggplot() +
+  geom_sf(data = polys, aes(fill = grp), alpha = 0.3) +
+  geom_sf(data = polys_inters_grp, aes(fill = grp), alpha = 0.95) +
+  geom_sf(data = polys_inters, size = 4) +
+  geom_text(aes(x = 3, y = 3, label = "(3,3)"), nudge_x = 0.2, nudge_y = 0.1) +
+  scale_x_continuous(breaks = 0:6) +
+  scale_y_continuous(breaks = 0:6) +
+  theme_minimal() +
+  labs(fill = "grp")
+```
+
+Note that we have generated:
+
+* `polys_inters` (the black point): intersects all four polygons together (ignoring `grp`). Since each square is shifted diagonally by 1 unit and only 3×3 in size, the only area common to all four is that single point at (3,3).
+
+* `polys_inters_grp`: the intersection computed **within each group** (`by = "grp"`). The two transparent red squares (`grp = "a"`) overlap in the red square; the two transparent teal squares (`grp = "b"`) overlap in the teal square.
+
+## Serialization round-trips
+
+`ddbs_as_geojson()`, `ddbs_as_wkb()`, and friends already let you serialize geometries out. Now there's a matching set of parsers to bring them back in: `ddbs_geom_from_text()`, `ddbs_geom_from_wkb()`, `ddbs_geom_from_hexwkb()`, `ddbs_geom_from_hexewkb()`, and `ddbs_geom_from_geojson()`.
+
+`ddbs_as_geojson()` itself got more useful: it now carries all non-geometry columns as feature `properties` instead of dropping them, and returns a single `FeatureCollection` by default — matching `geojsonsf::sf_geojson()`. Pass `feature_collection = FALSE` if you want one `Feature` per row instead.
+
+## Vector tiles
+
+Two new functions bring Mapbox Vector Tile support into {duckspatial}: `ddbs_as_mvt_geom()` transforms geometries into MVT coordinate space, clipping to a tile's bounding box. `ddbs_write_mbtiles()` goes further and generates a full tile pyramid from a spatial dataset, writing it straight to an MBTiles file — ready to serve or convert to PMTiles.
+
+## Extension management
+
+`ddbs_extension_info()` prints a `glimpse()` of a DuckDB extension's row from `duckdb_extensions()` — installed/loaded status, version, install path — for the spatial extension by default:
+
+```{r}
+conn <- ddbs_create_conn()
+ddbs_extension_info(conn)
+```
+
+This is not restricted to `spatial`, you can use it with any other extensio:
+
+```{r}
+ddbs_extension_info(conn, "h3")
+```
+
+`ddbs_install()` gains a `repos` argument to pull an extension from a specific DuckDB repository (`"core"`, `"core_nightly"`, `"community"`). Leaving it `NULL` keeps the previous fallback behavior (core, then community).
+
+## Bug fixes
+
+* `ddbs_install()` had a broken "already on the latest version" check — it referenced a column DuckDB doesn't provide and compared `install_mode` with the wrong case, so it silently never triggered. Removed.
+* A mistake in the startup message is fixed.
+* `ddbs_union_agg()` gains a `mem` argument: set `mem = TRUE` to use `ST_MemUnion_Agg()` instead of `ST_Union_Agg()` — slower, but lighter on memory for large unions.
+
+## Wrapping up
+
+That's about 20 new functions across the two releases, plus some quality-of-life fixes for extension installation and GeoJSON export. As always, full changelogs are on [GitHub](https://github.com/Cidree/duckspatial/releases), and the package is on [CRAN](https://CRAN.R-project.org/package=duckspatial).
+
+Feedback and issues are very welcome — [open one here](https://github.com/Cidree/duckspatial/issues) if you run into anything.
+
+## Session Information
+
+```{r}
+#| echo: false
+#| results: asis
+report::report(sessionInfo())
+```
