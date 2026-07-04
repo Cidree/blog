@@ -6,7 +6,6 @@ categories: [R, spatial, duckspatial]
 image: "image.png"
 execute: 
   warning: false
-  eval: false
 editor_options: 
   chunk_output_type: console
 ---
