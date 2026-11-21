@@ -12,3 +12,4 @@ posts/data/
 **/video/*
 **/*.quarto_ipynb
 .positai
+/courses_files/
