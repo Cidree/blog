@@ -24,13 +24,17 @@ CI installs only a few R packages (dplyr, purrr, readr, shiny, downlit, xml2, rm
 ## Structure
 
 - `posts/NNN_slug/index.qmd`: one folder per post, numbered in sequence, with `image.png` used as the listing thumbnail. Front matter: `title`, `description`, `date`, `categories`, `image`. Author, TOC, numbered sections, lightbox and utterances comments are inherited from `posts/_metadata.yml`. `posts.qmd` is the grid listing.
-- `courses.qmd` + `courses/*.qmd`: course landing pages built from R helpers in `assets/scripts/00_courses.R` (`course_card()`, `create_course_button()`, the offer card). **Udemy coupon URLs and the coupon price are hardcoded at the top of that script.** "Update coupons" means editing them there. Course pages read reviews from `assets/data/udemy_reviews_*.csv`.
-- `packages.qmd`: package cards built by `assets/scripts/packages.R`. It fetches live CRAN versions and download counts (cranlogs) at render time.
-- Styling: `assets/styles/custom_theme.scss` (Sandstone theme plus SCSS variables) imports partials organized by section (`courses/`, `packages/`, `posts/`).
+- `courses.qmd` + `courses/*.qmd`: course landing pages built from R helpers in `assets/R/courses.R`. Course metadata lives in `assets/data/courses.csv`, one row per course: title, images, hours, language, page, reviews title pattern and **coupon URL**. `courses.qmd` renders every row with `course_cards_grid()`. Each course page calls `course <- course_info("<id>")` and `read_course_reviews(course$reviews_pattern)`, which reads `assets/data/udemy_reviews.csv`.
+  - "Update coupons" means editing `coupon_url` in `courses.csv`. The offer price and validity dates (`coupon_price`, `coupon_start`, `coupon_end`) are at the top of `assets/R/courses.R`.
+  - `site_root` in `courses.R` resolves paths, because course pages run from `courses/` while `courses.qmd` runs from the root.
+- `packages.qmd`: package cards built by `assets/R/packages.R`. It fetches live CRAN versions and download counts (cranlogs) at render time.
+- Images live in `assets/images/{about,banners,courses,packages}/`; the CV is `assets/docs/CV_AdrianCidre.pdf`. Post images stay inside each post folder.
+- Styling: `assets/styles/custom_theme.scss` holds the brand palette and theme tokens (`$site-bg`, `$site-surface`, `$site-text`, `$site-heading`, `$site-link`, …) declared with `!default`, and imports `_base.scss`, `_navbar.scss` and section partials (`courses/`, `packages/`, `posts/`). Dark mode layers `_dark.scss` on top (see `_quarto.yml`) and only overrides the tokens. **Use the tokens rather than hardcoded hex colors** in components, or dark mode breaks.
 - `assets/includes/buymeacoffee.qmd`: shared include added to pages with `{{< include >}}`.
 - `_extensions/`: Quarto extensions (iconify, fontawesome, lightbox). Don't edit them by hand.
 
 ## Conventions
 
 - R code in `.qmd` files declares dependencies with base R `use("pkg", "fn")` (R ≥ 4.4) or `library()`.
-- Large data, videos and `posts/data/` are gitignored. Small per-post data files (for example `.parquet`, `references.bib`) live inside the post folder.
+- Large data, `**/video/*` and `posts/data/` are gitignored, so videos in a `video/` folder never reach the deployed site (post 010 links to such videos). Keep committed media small: resize photos to about 1600 px and re-encode videos with ffmpeg, keeping the filename so frozen posts stay valid.
+- Never rename `posts/NNN_slug/` folders or post media files: they are public URLs and frozen outputs reference them.
