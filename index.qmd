@@ -43,7 +43,7 @@ Just after these studies, I started my first summer season as firefighter in 201
 :::
 
 ::: {.g-col-12 .g-col-md-6}
-![](assets/images/about/lived_finland.jpg){fig-align="center" fig-alt="Winter landscape in Finland"}
+![](assets/images/about/lived_finland.jpg){fig-align="center" fig-alt="Posing in the snow at night next to a sign in Finland"}
 :::
 :::::
 
@@ -65,13 +65,13 @@ The next semester, I went to the Mendel University of Brno (Czech Republic) to d
 :::
 
 ::: {.g-col-12 .g-col-md-6}
-![](assets/images/about/lived_czechia.jpg){fig-align="center" fig-alt="Landscape in the Czech Republic"}
+![](assets/images/about/lived_czechia.jpg){fig-align="center" fig-alt="Sitting on a rock by a lake in the Czech Republic"}
 :::
 :::::
 
 ::::: {.grid .about-row}
 ::: {.g-col-12 .g-col-md-6}
-![](assets/images/about/firefighter_03.jpg){fig-align="center" fig-alt="Working as a forest firefighter"}
+![](assets/images/about/firefighter_03.jpg){fig-align="center" fig-alt="In firefighter gear in front of a wildfire smoke column"}
 :::
 
 ::: {.g-col-12 .g-col-md-6}
@@ -87,13 +87,13 @@ When I finished the Master, I asked for an Erasmus+ internship at the Norwegian 
 :::
 
 ::: {.g-col-12 .g-col-md-6}
-![](assets/images/about/lived_norway.jpg){fig-align="center" fig-alt="Snowy landscape in Norway"}
+![](assets/images/about/lived_norway.jpg){fig-align="center" fig-alt="Sitting on a bench by a forest lake in Norway"}
 :::
 :::::
 
 ::::: {.grid .about-row}
 ::: {.g-col-12 .g-col-md-6}
-![](assets/images/about/tenerife_anaga.jpg){fig-align="center" fig-alt="Anaga forest in Tenerife"}
+![](assets/images/about/tenerife_anaga.jpg){fig-align="center" fig-alt="Overlooking the Anaga coast in Tenerife"}
 :::
 
 ::: {.g-col-12 .g-col-md-6}
