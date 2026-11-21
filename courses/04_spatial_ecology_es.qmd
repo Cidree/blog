@@ -13,18 +13,18 @@ editor_options:
 
 ```{r}
 #| include: false
-use("readr", "read_csv")
 use("dplyr", c("filter", "mutate"))
 ```
 
 ```{r}
-source("../assets/scripts/00_courses.R")
+source("../assets/R/courses.R")
+course <- course_info("spatial_ecology_es")
 course_title <- "Ecología espacial aplicada en R"
 ```
 
 ```{r}
 create_course_button(
-  enrollment_url  = spatial_ecology_coupon,
+  enrollment_url  = course$coupon_url,
   trigger_height  = 400,
   button_text     = "Matricúlate"
 )
@@ -35,7 +35,7 @@ create_course_button(
 create_banner(
   title = course_title,
   text  = "Análisis espacial en ecología con R: procesos puntuales, autocorrelación, interpolación y geoestadística para tus datos ecológicos. Teoría, práctica y ejercicios propuestos.",
-  background_image = "../assets/figures/00_course_figures/banner-gis.png",
+  background_image = file.path(site_root, course$banner_image),
   price = coupon_price, 
   mode  = "Online", 
   time  = "30h", 
@@ -141,14 +141,7 @@ Aprenderás a aplicar técnicas de análisis espacial en ecología utilizando R 
 
 ```{r}
 ## read reviews and rename columns
-reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
-names(reviews_tbl) <- 
-  c("course_title", "student_name", "date_created", "rating", "review_text")
-
-## filter current course
-reviews_tbl <- reviews_tbl |> 
-  filter(grepl("Ecología", course_title)) |>
-  mutate(date_created = as.Date(date_created))
+reviews_tbl <- read_course_reviews(course$reviews_pattern)
 ```
 
 Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso (positivos y negativos).

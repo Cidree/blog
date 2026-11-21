@@ -255,3 +255,27 @@
 .cell-output-display:not(.no-overflow-x), .knitsql-table:not(.no-overflow-x) {
     overflow-x: unset;
 }
+// Overall rating box (create_star_rating() in assets/R/courses.R)
+.course-rating {
+  display: inline-block;
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid $color-gray-light;
+  border-radius: 8px;
+  background-color: $color-gray-light;
+
+  &--title {
+    margin: 0 0 .6rem 0;
+  }
+
+  &--numeric {
+    margin-left: .5rem;
+    font-size: .9em;
+    opacity: .8;
+  }
+
+  .stars-container {
+    align-items: center;
+    gap: 2px;
+  }
+}

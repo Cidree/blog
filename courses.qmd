@@ -7,7 +7,7 @@ execute:
 ---
 
 ```{r functions}
-source("assets/scripts/00_courses.R")
+source("assets/R/courses.R")
 ```
 
 ::::: {.column-screen .jumbotron .jumbotron-courses .d-none .d-sm-block}
@@ -62,89 +62,9 @@ offer_card
 
 ## Courses {.course-description}
 
-::::::::: {.container .grid .mt-5}
-::: {.g-col-12 .g-col-md-6}
 ```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/04_best_r_practices.png",
-  course_title = "Mastering R: Best Practices and Essential Tools",
-  mode         = "Online",
-  # date         = "Available Anytime",
-  time         = "20 hours",
-  language     = "English",
-  href         = "courses/05_best_r_practices.qmd"
-)
+course_cards_grid()
 ```
-:::
-
-::: {.g-col-12 .g-col-md-6}
-```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/05_spatial_ecology.png",
-  course_title = "Ecología espacial aplicada en R",
-  mode         = "Online",
-  # date         = "16/Feb - 21/Mar",
-  time         = "30 horas",
-  language     = "Español",
-  href         = "courses/04_spatial_ecology_es.qmd"
-)
-```
-:::
-
-::: {.g-col-12 .g-col-md-6}
-```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
-  course_title = "Introducción a Análisis de Datos Espaciales en R",
-  mode         = "Online",
-  # date         = "Available Anytime",
-  time         = "40 horas",
-  language     = "Español",
-  href         = "courses/02_spatial_data_es.qmd"
-)
-```
-:::
-
-::: {.g-col-12 .g-col-md-6}
-```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/03_intro_spatial_data.png",
-  course_title = "Introduction to Spatial Data Analysis with R",
-  mode         = "Online",
-  # date         = "Available Anytime",
-  time         = "40 hours",
-  language     = "English",
-  href         = "courses/03_spatial_data_en.qmd"
-)
-```
-:::
-
-::: {.g-col-12 .g-col-md-6}
-```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/02_analisis_datos.png",
-  course_title = "Introducción a Análisis y Visualización de datos en R",
-  mode         = "Online",
-  time         = "30 horas",
-  language     = "Español",
-  href         = "courses/01_data_analysis_es.qmd"
-)
-```
-:::
-
-::: {.g-col-12 .g-col-md-6}
-```{r}
-course_card(
-  file         = "assets/figures/00_course_figures/01_quarto.png",
-  course_title = "Literate programming y Automatización con Quarto en R",
-  mode         = "Online",
-  time         = "20 horas",
-  language     = "Español",
-  href         = "courses/00_quarto_es.qmd"
-)
-```
-:::
-:::::::::
 
 <br>
 

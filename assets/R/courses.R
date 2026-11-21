@@ -2,23 +2,38 @@
 library(shiny)
 suppressPackageStartupMessages(library(dplyr))
 
-## Coupons
-spatial_ecology_coupon <- "https://www.udemy.com/course/ecologia-espacial-aplicada-con-r/?couponCode=768D4BC75BEB6472A15C"
-mastering_r_coupon     <- "https://www.udemy.com/course/mastering-r-best-practices-and-essential-tools/?couponCode=D13F968DF9AF7C6F576B"
-gis_spanish_coupon     <- "https://www.udemy.com/course/introduccion-a-analisis-de-datos-espaciales-en-r/?couponCode=E8766AE19B4175B573E5"
-gis_english_coupon     <- "https://www.udemy.com/course/introduction-to-spatial-data-analysis-and-gis-in-r/?couponCode=BBB198796C9C2AE16A03"
-quarto_coupon          <- "https://www.udemy.com/course/quarto-diseno-de-documentos-profesionales-en-rstudio/?couponCode=FD04FFB0AA0B33C55E2C"
-data_analysis_coupon   <- "https://www.udemy.com/course/introduccion-a-analisis-y-visualizacion-de-datos-en-r-2023/?couponCode=80079DE91780538D2049"
-coupon_price           <- "12.99€"
+## Coupon settings -------------------------------------------------------
+## Coupon URLs live in assets/data/courses.csv (one row per course).
+## Price and validity period of the current offer are set here.
+coupon_price <- "12.99€"
+coupon_start <- "Jan 10th"
+coupon_end   <- "Feb 9th"
+
+## Paths -----------------------------------------------------------------
+## Quarto runs each page from its own folder: the site root is "." for
+## top-level pages (courses.qmd) and ".." for pages in courses/.
+site_root <- if (file.exists("_quarto.yml")) "." else ".."
+
+courses_tbl <- readr::read_csv(
+  file.path(site_root, "assets/data/courses.csv"),
+  show_col_types = FALSE
+)
+
+## Get one course's metadata (a one-row list) by its id
+course_info <- function(id) {
+  course <- courses_tbl[courses_tbl$id == id, ]
+  if (nrow(course) != 1) stop("Unknown course id: ", id)
+  as.list(course)
+}
 
 ## Card for courses.qmd -------------------------------------------------
-course_card <- function(file, course_title, mode, date, time, language, href) {
-  
+course_card <- function(file, course_title, mode, time, language, href) {
+
   div(
     class = "card card-course text-center p-1",
     div(
       class = "card-img--container",
-      img(class = "img-circle card-img--text", src = file)
+      img(class = "img-circle card-img--text", src = file, alt = course_title)
     ),
     div(
       class = "card-body",
@@ -29,7 +44,6 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
       p(mode, class = "card-course-mode"),
       tags$ul(
         class = "list-group list-group-flush",
-        # tags$li(class = "list-group-item", icon("calendar-days"), date),
         tags$li(class = "list-group-item", icon("clock"), time),
         tags$li(class = "list-group-item", icon("language"), language)
       ),
@@ -38,10 +52,28 @@ course_card <- function(file, course_title, mode, date, time, language, href) {
   )
 }
 
+## Grid with one card per course in courses.csv
+course_cards_grid <- function(courses = courses_tbl) {
+  cards <- purrr::pmap(courses, function(title, card_image, hours, language, page, ...) {
+    div(
+      class = "g-col-12 g-col-md-6",
+      course_card(
+        file         = file.path(site_root, card_image),
+        course_title = title,
+        mode         = "Online",
+        time         = hours,
+        language     = language,
+        href         = file.path(site_root, page)
+      )
+    )
+  })
+  div(class = "grid mt-5", cards)
+}
+
 
 
 ## Course banner -----------------------------------------------------------
-create_banner <- function(title, text, background_image = "../assets/figures/teide.JPG",
+create_banner <- function(title, text, background_image = file.path(site_root, "assets/images/banners/teide.jpg"),
                              price, mode, time, date, lang) {
   # Create the banner structure
   div(
@@ -257,6 +289,18 @@ create_course_structure <- function(course_title, lessons) {
 
 ## Reviews -------
 
+## Read the Udemy reviews of one course (matched by a pattern on its title)
+read_course_reviews <- function(pattern) {
+  reviews <- readr::read_csv(
+    file.path(site_root, "assets/data/udemy_reviews.csv"),
+    show_col_types = FALSE
+  )
+  names(reviews) <- c("course_title", "student_name", "date_created", "rating", "review_text")
+  reviews |>
+    filter(grepl(pattern, course_title)) |>
+    mutate(date_created = as.Date(date_created))
+}
+
 ## function to generate star rating HTML
 generate_stars <- function(rating, max_stars = 5, class = "star-rating") {
   stars <- character(max_stars)
@@ -409,36 +453,26 @@ create_reviews_section <- function(reviews_df) {
 
 
 ## Overall rating ----------------------
-create_star_rating <- function(rating, max_stars = 5, show_numeric = TRUE, 
-                               title = "Course Rating", size = "1.5em", num_reviews = NULL) {
-  
+create_star_rating <- function(rating, max_stars = 5, show_numeric = TRUE,
+                               title = "Course Rating", num_reviews = NULL) {
+
   stars <- generate_stars(rating, max_stars, class = "course-stars")
-  
-  # Create the rating section
-  rating_section <- div(
+
+  div(
     class = "course-rating",
-    style = "display: inline-block; margin: 20px 0; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #f9f9f9;",
-    
-    h4(title, style = "margin: 0 0 10px 0; color: #333;"),
-    
+    h4(title, class = "course-rating--title"),
     div(
       class = "stars-container",
-      style = "align-items: center; gap: 2px;",
       stars,
       if (show_numeric) {
         numeric_text <- paste0(" ", format(rating, nsmall = 1), "/", max_stars)
         if (!is.null(num_reviews)) {
           numeric_text <- paste0(numeric_text, " (", num_reviews, " reviews)")
         }
-        span(
-          numeric_text,
-          style = "margin-left: 8px; color: #666; font-size: 0.9em;"
-        )
+        span(numeric_text, class = "course-rating--numeric")
       }
     )
   )
-  
-  return(rating_section)
 }
 
 
@@ -467,7 +501,7 @@ offer_card <- div(
   # Price section
   div(
     class = "price-section",
-    div("12.99€", class = "price"),
+    div(coupon_price, class = "price"),
     div("Special Price", class = "price-label")
   ),
   
@@ -482,9 +516,9 @@ offer_card <- div(
     p(
       class = "date-range",
       tags$i(class = "fas fa-play text-success"),
-      tags$span("Jan 10th"),
+      tags$span(coupon_start),
       tags$i(class = "fas fa-arrow-right text-muted"),
-      tags$span("Feb 9th"),
+      tags$span(coupon_end),
       tags$i(class = "fas fa-stop text-danger")
     )
   )

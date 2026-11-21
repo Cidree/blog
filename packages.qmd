@@ -13,7 +13,7 @@ editor_options:
 #| label: packages_load
 use("dplyr", "mutate")
 library(cranlogs)
-source("assets/scripts/packages.R")
+source("assets/R/packages.R")
 ```
 
 ## R packages {.course-description}
@@ -32,7 +32,7 @@ packages_tbl <- data.frame(
 ) |> 
   mutate(
     ## hexticker path
-    hexticker = paste0("assets/figures/r_packages/", package, ".png"),
+    hexticker = paste0("assets/images/packages/", package, ".png"),
     ## URL to github repo
     github_url = paste0("https://github.com/Cidree/", package),
     ## CRAN url

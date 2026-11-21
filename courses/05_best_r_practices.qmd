@@ -13,18 +13,18 @@ editor_options:
 
 ```{r}
 #| include: false
-use("readr", "read_csv")
 use("dplyr", c("filter", "mutate"))
 ```
 
 ```{r}
-source("../assets/scripts/00_courses.R")
+source("../assets/R/courses.R")
+course <- course_info("best_r_practices")
 course_title <- "Mastering R: Best Practices and Essential Tools"
 ```
 
 ```{r}
 create_course_button(
-  enrollment_url  = mastering_r_coupon,
+  enrollment_url  = course$coupon_url,
   trigger_height  = 400,
   button_text     = "Enroll"
 )
@@ -35,7 +35,7 @@ create_course_button(
 create_banner(
   title = course_title,
   text  = "Master RStudio, Git and GitHub, best practices, and functional programming while building real-world, reproducible R projects step by step.",
-  background_image = "../assets/figures/00_course_figures/04_best_r_practices.png",
+  background_image = file.path(site_root, course$banner_image),
   price = coupon_price, 
   mode  = "Online", 
   time  = "20h", 
@@ -173,14 +173,7 @@ In this course, you'll gain the essential skills to develop high-quality R proje
 
 ```{r}
 ## read reviews and rename columns
-reviews_tbl <- suppressMessages(read_csv("../assets/data/udemy_reviews_202508.csv"))
-names(reviews_tbl) <- 
-  c("course_title", "student_name", "date_created", "rating", "review_text")
-
-## filter current course
-reviews_tbl <- reviews_tbl |> 
-  filter(grepl("Mastering R", course_title)) |>
-  mutate(date_created = as.Date(date_created))
+reviews_tbl <- read_course_reviews(course$reviews_pattern)
 ```
 
 Here you can find all the testimonials left by students of this course (both positive and negative).

@@ -8,7 +8,7 @@ image-alt: "Myself"
 about:
   id: hero-heading
   template: jolla
-  image: assets/figures/foto_uco_crop.JPG
+  image: assets/images/about/profile.jpg
   image-width: 15em
   links:
     - icon: github
@@ -46,13 +46,13 @@ Just after these studies, I started my first summer season as firefighter in 201
 :::
 
 ::: {.column width="50%"}
-![](assets/figures/lived_finland.jpg){fig-align="center" width="300"}
+![](assets/images/about/lived_finland.jpg){fig-align="center" width="300"}
 :::
 ::::::
 
 :::::: columns
 ::: {.column width="55%"}
-![](assets/figures/cordoba_patios.jpg){fig-align="center" width="300"}
+![](assets/images/about/cordoba_patios.jpg){fig-align="center" width="300"}
 :::
 
 ::: {.column width="5%"}
@@ -74,13 +74,13 @@ The next semester, I went to the Mendel University of Brno (Czech Republic) to d
 :::
 
 ::: {.column width="60%"}
-![](assets/figures/lived_czechia.jpg){fig-align="center" width="300"}
+![](assets/images/about/lived_czechia.jpg){fig-align="center" width="300"}
 :::
 ::::::
 
 :::::: columns
 ::: {.column width="50%"}
-![](assets/figures/firefighter_03.jpg){fig-align="center" width="300"}
+![](assets/images/about/firefighter_03.jpg){fig-align="center" width="300"}
 :::
 
 ::: {.column width="5%"}
@@ -102,13 +102,13 @@ When I finished the Master, I asked for an Erasmus+ internship at the Norwegian 
 :::
 
 ::: {.column width="65%"}
-![](assets/figures/lived_norway.jpg){fig-align="center" width="400"}
+![](assets/images/about/lived_norway.jpg){fig-align="center" width="400"}
 :::
 ::::::
 
 :::::: columns
 ::: {.column width="45%"}
-![](assets/figures/tenerife_anaga.jpg){fig-align="center" width="398"}
+![](assets/images/about/tenerife_anaga.jpg){fig-align="center" width="398"}
 :::
 
 ::: {.column width="5%"}
