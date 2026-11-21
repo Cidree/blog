@@ -12,7 +12,7 @@ author: "Adrián Cidre"
 comments: 
   utterances: 
     repo:  Cidree/blogComments
-    theme: github-light
+    theme: preferred-color-scheme
 
 # Filters
 lightbox: auto

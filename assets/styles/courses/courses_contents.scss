@@ -3,7 +3,7 @@
 .course-structure {
   max-width: 800px;
   margin: 20px auto;
-  background: $color-gray-light;
+  background: $site-surface-alt;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -25,7 +25,7 @@
 
 .lesson-container {
   margin-bottom: 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid $site-border;
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.2s ease;
@@ -42,7 +42,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid $site-border;
 }
 
 .lesson-title {
@@ -64,11 +64,11 @@
 }
 
 .toggle-btn:hover {
-  background: #e2e8f0;
+  background: $site-border;
 }
 
 .topics-container {
-  background: $color-white;
+  background: $site-surface;
   max-height: 300px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -86,7 +86,7 @@
 
 .topic-item {
   padding: 12px 20px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid $site-border;
   color: $color-darkblue;
   position: relative;
   padding-left: 40px;
@@ -104,7 +104,7 @@
 }
 
 .topic-item:hover {
-  background: #f8fafc;
+  background: $site-surface-alt;
 }
 
 .topic-item:last-child {

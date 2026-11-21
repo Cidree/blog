@@ -1,23 +1,18 @@
 .offer-card {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  background: $site-surface;
   border-radius: 20px;
-  box-shadow: 
-    20px 20px 60px #bebebe,
-    -20px -20px 60px #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   padding: 2rem;
   max-width: 350px;
   width: 100%;
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .offer-card:hover {
   transform: translateY(-5px);
-  box-shadow: 
-    25px 25px 70px #bebebe,
-    -25px -25px 70px #ffffff;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
 }
 
 .offer-card::before {
@@ -98,11 +93,11 @@
 }
 
 .date-section {
-  background: #f8f9fa;
+  background: $site-surface-alt;
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  border: 2px dashed #dee2e6;
+  border: 2px dashed $site-border;
   margin-top: 1.5rem;
   text-align: center;
 }

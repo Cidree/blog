@@ -1,0 +1,38 @@
+// Navbar --------------------------------------------------------------
+// The navbar background is set in _quarto.yml and is the same in both modes.
+
+.navbar-title,
+.menu-text {
+  font-family: $headings-font-family;
+  font-weight: 700;
+}
+
+.navbar-title,
+.menu-text,
+.navbar-nav .bi {
+  color: $color-white;
+}
+
+.nav-link {
+  text-align: center;
+  transition: color .2s ease;
+
+  &.active,
+  &:focus {
+    color: $color-lightblue;
+
+    .menu-text {
+      color: $color-lightblue;
+      font-weight: 900;
+    }
+  }
+
+  &:hover:not(.toc-active a) {
+    color: $color-lightblue;
+
+    .menu-text,
+    .bi {
+      color: $color-lightblue;
+    }
+  }
+}

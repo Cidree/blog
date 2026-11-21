@@ -225,7 +225,7 @@ You will learn to analyze spatial data in R, with RStudio becoming your new Geog
 -   Create maps and web maps like the one below:
 
 ```{=html}
-<iframe src="../assets/html/population_spain.html" width="700" height="500"></iframe>
+<div class="iframe-wrapper"><iframe src="../assets/html/population_spain.html" title="Interactive population map of Spain" loading="lazy"></iframe></div>
 ```
 
 ## Student testimonials {.course-description}

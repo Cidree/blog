@@ -85,7 +85,7 @@ create_banner <- function(title, text, background_image = file.path(site_root, "
       div(
         class = "banner-container",
         div(
-          h2(title, class = "text-black banner-title")
+          h2(title, class = "banner-title")
         ),
         # Text section
         div(

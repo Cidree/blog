@@ -11,10 +11,11 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: #f8f9fa;
+  background-color: $site-surface-alt;
 }
 
 .banner-title {
+  color: $site-text;
   position: relative;
   z-index: 1;
   text-align: center;
@@ -36,7 +37,7 @@
 }
 
 .banner-text {
-  color: black;
+  color: $site-text;
   font-weight: 500;
   font-size: 1rem;
   text-align: center;
@@ -44,7 +45,7 @@
 }
 
 .course-info-section {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: $site-surface-alt;
   padding: 3rem 2rem;
   width: 100%;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
@@ -58,7 +59,7 @@
   justify-content: flex-start;
   min-height: 120px;
   padding: 1rem;
-  background: $color-white;
+  background: $site-surface;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -92,7 +93,7 @@
 .course-banner--title {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: $site-text;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -100,7 +101,7 @@
 }
 
 .course-banner--text {
-  color: #555;
+  color: $site-text;
   margin: 0;
   font-size: 1.1rem;
   font-weight: 500;

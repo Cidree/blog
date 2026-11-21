@@ -1,38 +1,28 @@
-
 .listing-title {
-  color: $color-black;
+  color: $site-text;
   font-weight: 600;
 }
 
 .listing-category {
-  
-  color: $color-darkblue;
-  
+  color: $site-heading;
+
   &:hover {
     background: $color-darkblue;
     color: $color-white;
-    font-weight: 700;
   }
-  
+}
+
+.listing-date,
+.listing-reading-time {
+  color: $site-muted;
+  font-size: .8rem;
 }
 
 .listing-date {
-  color: $color-gray-dark;
-  opacity: .7;
   font-style: italic;
-  font-size: .7rem;
 }
-
-
-.listing-reading-time {
-  color: $color-gray-dark;
-  opacity: .7;
-  font-size: .7rem;
-}
-
 
 .listing-description {
-  font-size: .4rem;
-  opacity: .9;
-  font-family: Libre Baskerville;
+  font-size: .9rem;
+  color: $site-muted;
 }

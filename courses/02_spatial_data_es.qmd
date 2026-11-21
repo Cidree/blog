@@ -223,7 +223,7 @@ Aprenderás a analizar datos espaciales en R, siendo RStudio tu nuevo Sistema de
 -   Generar mapas y mapas web como el siguiente:
 
 ```{=html}
-<iframe src="../assets/html/poblacion_spain.html" width="700" height="500"></iframe>
+<div class="iframe-wrapper"><iframe src="../assets/html/poblacion_spain.html" title="Interactive population map of Spain" loading="lazy"></iframe></div>
 ```
 
 ## Testimonios {.course-description}

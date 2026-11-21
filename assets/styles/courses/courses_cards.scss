@@ -54,7 +54,7 @@
   margin-left: 0;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background: $color-gray-light;
+  background: $site-surface-alt;
   
   /* Hover effects */
   &:hover {
@@ -68,7 +68,7 @@
   }
   
   &-title--container {
-    background: #EBEBEB;
+    background: $site-surface-alt;
     padding: 1.5rem 1rem;
     margin-bottom: 1rem;
     height: 5rem;
@@ -90,7 +90,7 @@
   }
   
   &--title {
-    color: $color-darkblue;
+    color: $site-heading;
     font-weight: 600;
     font-size: 1.1rem;
     text-align: center;
@@ -101,7 +101,7 @@
   
   &-mode {
     background: $color-lightblue;
-    color: $color-darkblue;
+    color: $site-heading;
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 10px;
@@ -140,9 +140,9 @@
   &-item {
     background: transparent;
     border: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid $site-border;
     padding: 0.75rem 1rem;
-    color: $color-darkblue;
+    color: $site-heading;
     font-size: 0.9rem;
     display: flex;
     align-items: center;

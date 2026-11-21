@@ -2,7 +2,7 @@
 comments: 
   utterances: 
     repo:  Cidree/blogComments
-    theme: github-light
+    theme: preferred-color-scheme
 
 # HTML opts
 format: html

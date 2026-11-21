@@ -1,5 +1,6 @@
-/*-- scss:variables --*/
-$light-main-color: #fff;
+/*-- scss:defaults --*/
+
+// Brand palette ------------------------------------------------------
 $color-note: #0F5257;
 $color-tip: #A0E8AF;
 $color-caution: #EC7505;
@@ -21,22 +22,40 @@ $color-brown: #433E3F;
 
 $img-radius: .3rem;
 
-/*-- scss:defaults --*/
+// Theme tokens -------------------------------------------------------
+// `!default` so that _dark.scss (loaded after this file in the dark theme)
+// can override them. Use these instead of hardcoded colors in components.
+$site-bg: #fff !default;
+$site-surface: #fff !default;          // cards
+$site-surface-alt: #F5F5F5 !default;   // soft panels, code blocks
+$site-border: #e2e8f0 !default;
+$site-text: #343a40 !default;
+$site-muted: #6c757d !default;
+$site-heading: #2D4156 !default;
+$site-link: #A84500 !default;          // darker orange, 6:1 on white
+$site-code-bg: #DBEBEA !default;
+$site-code-color: #2D4156 !default;
 
-// Fonts
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merienda:wght@300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Quicksand:wght@300..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-$monofont: Fira Code;
+// Fonts --------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,300..700;1,300..700&display=swap');
+$font-family-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif;
+$headings-font-family: Merriweather, Georgia, serif;
+$font-family-monospace: "Fira Code", SFMono-Regular, Menlo, monospace;
+$monofont: $font-family-monospace;
+
+// Base colors --------------------------------------------------------
+$body-bg: $site-bg !default;
+$body-color: $site-text !default;
+$link-color: $site-link !default;
+$headings-color: $site-heading !default;
 
 // Inline code
-$code-bg: $color-lightblue-2;
-$code-color: $color-darkblue;
+$code-bg: $site-code-bg !default;
+$code-color: $site-code-color !default;
 
 // Code blocks
 $code-block-border-left-size: 10px;
-$code-block-bg: $color-gray-light;
+$code-block-bg: $site-surface-alt !default;
 $code-block-border-left: $color-brown;
 $btn-code-copy-color: $color-brown;
 
@@ -47,140 +66,12 @@ $callout-color-caution: $color-caution;
 $callout-color-warning: $color-warning;
 $callout-color-important: $color-important;
 
-// Other colors
-$body-color: $color-gray-dark;
-$link-color: $color-caution;
 
 /*-- scss:rules --*/
 
-// Base 
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit; 
-}
+@import "base";
+@import "navbar";
 
-body{
-    box-sizing: border-box;
-    line-height: 1.5;
-    padding: 2rem;
-    font-family: Roboto Condensed, Lora, Roboto, Nunito, sans-serif;
-}
-
-p {
-  text-align: justify;
-}
-
-
-// Headings
-h1, h2:not(.mapboxgl-legend), h3 {
-  font-weight: 700;
-  font-family: Merriweather, Montserrat, serif;
-  color: $color-darkblue;
-  text-transform: none;
-}
-
-h4, h5, h6 {
-  font-family: Merriweather, Montserrat, serif;
-  text-transform: none;
-}
-
-h2:not(#toc-title):not(.accordion-header) {
-  border-bottom: 5px solid $color-lightblue-2;
-}
-
-.jumbotron h2 {
-  border-bottom: none !important;
-}
-
-.mapboxgl-legend h2 {
-  border-bottom: none !important;
-}
-
-
-
-// Figures
-.figure-caption  {
-  text-align: center;
-}
-
-
-// Navbar ----------------------------
-
-.navbar-title, .menu-text {
-  font-family: Merriweather, Lora, Roboto, serif;
-  font-weight: 700;
-}
-
-
-// Title (Adrian Cidre)
-.navbar-title {
-  color: $color-white;
-}
-
-// Text of the nav links
-.menu-text{
-  color: $color-white;
-  font-weight: 700;
-}
-
-// Transition on hover
-.nav-link {
-  
-  transition: transform 0.2s;
-  text-align: center;
-  
-  
-  // Active nav
-  &.active, &:focus {
-    
-    color: $color-lightblue;
-    
-    & .menu-text {
-      color: $color-lightblue;
-      font-weight: 900;
-    }
-    
-  }
-  
-  // Navlink on hover
-  &:hover:not(.toc-active a) {
-    transform: translateY(0.1rem) scale(1.1);
-    color: $color-lightblue;
-    
-    & .menu-text, .bi {
-      color: $color-lightblue;
-      
-    }
-    
-  }
-  
-}
-
-// Navbar icons (github, linkedin..)
-.navbar-nav .bi {
-  font-size: 400;
-  color: $color-white;
-}
-
-// Home Buttons 
-div.quarto-about-jolla .about-link {
-  color: $color-darkblue;
-  font-size: 1em;
-  transition-delay: 0s;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
-}
-
-div.quarto-about-jolla .about-link:hover {
-  background-color: $color-darkblue;
-  color: $color-white;
-}
-
-
-/* Import other files */
 @import "courses/courses_banner";
 @import "courses/courses_cards";
 @import "courses/courses_current_offer";

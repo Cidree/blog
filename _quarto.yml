@@ -9,6 +9,9 @@ website:
   title: "Adrián Cidre"
   site-url: "https://adrian-cidre.com"
   description: "A blog with R content"
+  image: assets/images/about/profile.jpg
+  open-graph: true
+  twitter-card: true
   search:
     location: navbar
     type: overlay
@@ -66,8 +69,10 @@ website:
 
 format:
   html:
-    theme: 
+    theme:
       light: [sandstone, assets/styles/custom_theme.scss]
+      dark: [sandstone, assets/styles/custom_theme.scss, assets/styles/_dark.scss]
+    respect-user-color-scheme: true
     # css: assets/styles/styles.css
     code-link: true
     code-block-border-left: true

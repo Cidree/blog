@@ -1,0 +1,18 @@
+/*-- scss:defaults --*/
+// Dark mode: layered after custom_theme.scss in _quarto.yml.
+// Only the theme tokens change; components read them.
+
+$site-bg: #15202b;
+$site-surface: #1e2a36;
+$site-surface-alt: #243241;
+$site-border: #34485c;
+$site-text: #dde3ea;
+$site-muted: #9aa8b6;
+$site-heading: #A3D1D5;
+$site-link: #F4A261;
+$site-code-bg: #243241;
+$site-code-color: #A3D1D5;
+
+$input-bg: $site-surface;
+$card-bg: $site-surface;
+$list-group-bg: transparent;
