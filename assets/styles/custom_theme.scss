@@ -38,6 +38,8 @@ $site-code-color: #2D4156 !default;
 $site-pill-active: #fff !default;      // active tab in tabsets
 $site-badge-cran: #3F7A1A !default;    // package badges
 $site-badge-github: #A84500 !default;
+$site-btn-bg: #2D4156 !default;        // solid call-to-action buttons
+$site-btn-color: #fff !default;
 
 // Fonts --------------------------------------------------------------
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,300..700;1,300..700&display=swap');
@@ -77,15 +79,13 @@ $callout-color-important: $color-important;
 @import "site-navbar";
 
 @import "courses/courses_banner";
-@import "courses/courses_cards";
-@import "courses/courses_current_offer";
 @import "courses/courses_contents";
 @import "courses/courses_enroll_btn";
-@import "courses/courses_jumbotron";
 @import "courses/courses_reviews";
+@import "courses/courses_overview";
 
 @import "packages/packages_cards";
 
-@import "posts/posts_main";
+@import "posts/posts_listing";
 @import "posts/posts_toc";
 @import "posts/posts_tabsets";

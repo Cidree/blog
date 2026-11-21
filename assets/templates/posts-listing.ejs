@@ -1,0 +1,99 @@
+```{=html}
+<%
+// Posts listing template (used by posts.qmd).
+// NOTE: Quarto uses lodash-style EJS, so the "equals" tag outputs raw HTML and
+// the "dash" tag escapes it (the opposite of standard EJS). Escape text with esc().
+// Quarto's listing JS (filtering, sorting, pagination) needs:
+//  - a `.list` container with one child per item carrying metadataAttrs(item)
+//  - category elements: `.quarto-listing-category .category[data-category=<b64>]`
+//    and a `.quarto-listing-category-title` element to reset the filter.
+
+const esc = (s) => String(s ?? "")
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+// `code` in descriptions -> <code>; strip any HTML Quarto may have added
+const fmtDescription = (s) => esc(String(s ?? "").replace(/<[^>]+>/g, ""))
+  .replace(/`([^`]+)`/g, "<code>$1</code>");
+
+// Category counts for the filter bar (most used first)
+const counts = {};
+for (const item of items) {
+  for (const cat of (item.categories || [])) counts[cat] = (counts[cat] || 0) + 1;
+}
+const categories = Object.keys(counts)
+  .sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+%>
+
+<div class="quarto-listing-category posts-filter" role="toolbar" aria-label="Filter posts by category">
+  <button type="button" class="quarto-listing-category-title posts-filter__pill posts-filter__all active">
+    All <span class="posts-filter__count"><%= items.length %></span>
+  </button>
+  <% for (const cat of categories) { %>
+  <button type="button" class="category posts-filter__pill" data-category="<%= utils.b64encode(cat) %>">
+    <%= esc(cat) %> <span class="posts-filter__count"><%= counts[cat] %></span>
+  </button>
+  <% } %>
+</div>
+
+<div class="list posts-grid">
+<% items.forEach((item, i) => { %>
+<div <%= metadataAttrs(item) %> class="post-item<%= i === 0 ? ' is-featured' : '' %>">
+  <article class="post-card">
+    <div class="post-card__media">
+      <% if (item.image) { %>
+      <img src="<%= item.image %>" alt="<%= esc(item['image-alt'] || item.title) %>" loading="lazy">
+      <% } %>
+    </div>
+    <div class="post-card__body">
+      <div class="post-card__meta">
+        <% if (i === 0) { %><span class="post-card__latest">Latest</span><% } %>
+        <% if (item.date) { %>
+        <span class="listing-date"><i class="bi bi-calendar3" aria-hidden="true"></i><%= item.date %></span>
+        <% } %>
+        <% if (item['reading-time']) { %>
+        <span class="listing-reading-time"><i class="bi bi-clock" aria-hidden="true"></i><%= item['reading-time'] %> read</span>
+        <% } %>
+      </div>
+
+      <h3 class="post-card__title listing-title no-anchor">
+        <a href="<%= item.path %>" class="stretched-link"><%= item.title %></a>
+      </h3>
+
+      <% if (item.description) { %>
+      <p class="post-card__description listing-description"><%= fmtDescription(item.description) %></p>
+      <% } %>
+
+      <% if (item.categories && item.categories.length) { %>
+      <div class="post-card__categories listing-categories">
+        <% for (const cat of item.categories) { %>
+        <button type="button" class="post-card__category"
+          onclick="window.quartoListingCategory('<%= utils.b64encode(cat) %>'); event.stopPropagation(); return false;"><%= esc(cat) %></button>
+        <% } %>
+      </div>
+      <% } %>
+
+      <a href="<%= item.path %>" class="post-card__read">Read post <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </article>
+</div>
+<% }) %>
+</div>
+
+<script>
+// Mark "All" as active whenever no category filter is applied
+(function () {
+  const sync = () => setTimeout(() => {
+    const all = document.querySelector(".posts-filter__all");
+    if (!all) return;
+    all.classList.toggle("active", !document.querySelector(".posts-filter .category.active"));
+  }, 0);
+  document.addEventListener("DOMContentLoaded", sync);
+  window.addEventListener("hashchange", sync);
+  window.addEventListener("popstate", sync);
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".posts-filter, .post-card__category")) sync();
+  });
+})();
+</script>
+```

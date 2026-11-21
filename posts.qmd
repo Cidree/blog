@@ -2,32 +2,22 @@
 pagetitle: "Adrián Cidre | Posts"
 title: "Blog Posts"
 listing:
-  # Base options
   contents: posts
-  page-size: 12
+  template: assets/templates/posts-listing.ejs
   sort: "date desc"
-  type: grid
-  # Grids
-  grid-item-border: true
-  grid-item-align: center
-  # Advanced options
-  categories: true
-  max-description-length: 200
-  # Feeds
-  feed: 
-    categories: spatial
-  # Listing fields
+  # 1 featured card + 12 cards in the 2-column grid
+  page-size: 13
+  # Categories are shown as a pill bar by the template, not in the sidebar
+  categories: false
   fields: [image, description, date, title, reading-time, categories]
-  
+  feed:
+    categories: spatial
+
 page-layout: article
 title-block-banner: false
-# Layout
-grid: 
-  content-mode: standard
-  sidebar-width: 100px
-  body-width: 1000px
-  margin-width: 200px
-  gutter-width: 4rem
+grid:
+  body-width: 1100px
+  margin-width: 0px
 ---
 
-Hei! Welcome to my blog. Here, I share content about different topics. You can use the right sidebar to filter the content by category. I hope you'll enjoy it!
+Hei! Welcome to my blog. Here, I share content about different topics. Use the categories below to filter the posts. I hope you'll enjoy it!
