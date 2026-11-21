@@ -1,85 +1,137 @@
+// Package cards (packages.qmd, built by assets/R/packages.R) ----------
 
-// for all set of cards
 .package-cards {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 3rem;
 }
 
-
-// for each individual card
 .package-card {
-  border: 1px solid $color-gray-light;
-  border-radius: 1rem;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
   background: $site-surface;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
-  // translate on hover
+  border: 1px solid $site-border;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+  text-align: left;
+  transition: transform .2s ease, box-shadow .2s ease;
+
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   }
-  
-  // header (icon + title)
-  &-header {
-    display: inline-flex; 
-    align-items: center; 
-    margin-bottom: 1rem;
-    
-    &__icon {
-      width: 5rem; 
-      height: 5rem; 
-      object-fit: contain;
-    }
-    
-    &__name {
-      margin: 0; 
-      font-size: 1.5rem; 
-      font-weight: 600;
-    }
-    
-    &__version {
-      background: $color-lightblue; 
-      color: $color-darkblue; 
-      padding: 2px 8px; 
-      border-radius: 1rem; 
-      font-size: .7rem; 
-      margin-right: .8rem;
-    }
+
+  // Logo + name + badge
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
-  
-  // package description
-  &-description {
-    border-top: 1px solid $site-border;
-    line-height: 1.6; 
-    padding: 1rem 0 0 0; 
-    font-size: 1rem;
-    text-align: center;
+
+  &__logo {
+    width: 4.5rem;
+    height: 4.5rem;
+    object-fit: contain;
+    flex-shrink: 0;
   }
-  
-  // package links
-  &-links {
-    margin-top: 1rem; 
-    font-size: 1rem;
-    
-    &__link {
-      text-decoration: none; 
-      color: $color-darkblue; 
-      margin-right: 1.5rem;
+
+  &__name {
+    margin: 0 0 .35rem 0;
+    font-size: 1.4rem;
+    border: none !important;
+  }
+
+  // Source + version badge
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .15rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+
+    &.is-cran {
+      background: rgba($color-green-dark, .15);
+      color: $site-badge-cran;
+    }
+
+    &.is-github {
+      background: rgba($color-caution, .15);
+      color: $site-badge-github;
     }
   }
 
+  &__badge-version {
+    font-family: $font-family-monospace;
+    font-weight: 500;
+    opacity: .85;
+  }
 
-  &-badges {
-    margin-top: 1rem;
-    
-    &__badge {
-      margin-right: .5rem;
+  &__description {
+    margin: 0;
+    line-height: 1.6;
+    text-align: left;
+    flex-grow: 1;   // keeps the bottom rows aligned across cards
+  }
+
+  // Download stats
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    font-size: .85rem;
+    color: $site-muted;
+
+    .bi {
+      margin-right: .35rem;
+    }
+
+    strong {
+      color: $site-text;
     }
   }
 
+  // Install command
+  &__install code {
+    display: block;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    background: $site-surface-alt;
+    color: $site-text;
+    font-size: .8rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  // Link buttons
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .35rem .9rem;
+    border: 1px solid $site-border;
+    border-radius: 999px;
+    font-size: .875rem;
+    font-weight: 500;
+    color: $site-heading;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: $color-darkblue;
+      border-color: $color-darkblue;
+      color: $color-white;
+    }
+  }
 }
-

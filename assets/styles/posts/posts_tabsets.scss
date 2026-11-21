@@ -1,0 +1,94 @@
+// Tabsets: segmented pills + content card -----------------------------
+
+.panel-tabset {
+  margin: 1.5rem 0;
+
+  // Tab bar
+  > .nav-tabs {
+    display: inline-flex !important;
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: .25rem;
+    padding: .25rem;
+    margin-bottom: .75rem;
+    background: $site-surface-alt;
+    border: 1px solid $site-border;
+    border-radius: 999px;
+
+    .nav-item {
+      margin: 0;
+    }
+
+    .nav-link {
+      border: none;
+      border-radius: 999px;
+      margin: 0;
+      padding: .4rem 1rem;
+      font-size: .9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      color: $site-muted;
+      background: transparent;
+      transition: color .15s ease, background-color .15s ease, box-shadow .15s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: $site-heading;
+        border: none;
+      }
+
+      &.active {
+        color: $site-heading;
+        font-weight: 600;
+        background: $site-pill-active;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .08);
+      }
+    }
+  }
+
+  // Content card
+  > .tab-content {
+    background: $site-surface;
+    border: 1px solid $site-border;
+    border-radius: .75rem;
+    padding: 1rem 1.25rem;
+
+    > .tab-pane > :first-child {
+      margin-top: 0;
+    }
+
+    > .tab-pane > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// On phones the bar becomes a rounded block instead of a capsule
+@media (max-width: 575.98px) {
+  .panel-tabset > .nav-tabs {
+    display: flex !important;
+    width: 100%;
+    border-radius: .75rem;
+  }
+}
+
+
+// Printed R output (below code chunks) --------------------------------
+
+.cell-output pre,
+.cell-output pre code {
+  color: $site-text;
+  background: transparent;
+}
+
+.cell-output-stdout pre,
+.cell-output-stderr pre {
+  border: none;
+  border-left: 3px solid $site-border;
+  border-radius: 0;
+  padding: .5rem .85rem;
+  margin: .25rem 0 1rem 0;
+  opacity: .92;
+}

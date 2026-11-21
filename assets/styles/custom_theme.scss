@@ -35,6 +35,9 @@ $site-heading: #2D4156 !default;
 $site-link: #A84500 !default;          // darker orange, 6:1 on white
 $site-code-bg: #DBEBEA !default;
 $site-code-color: #2D4156 !default;
+$site-pill-active: #fff !default;      // active tab in tabsets
+$site-badge-cran: #3F7A1A !default;    // package badges
+$site-badge-github: #A84500 !default;
 
 // Fonts --------------------------------------------------------------
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,300..700;1,300..700&display=swap');
@@ -56,6 +59,7 @@ $code-color: $site-code-color !default;
 // Code blocks
 $code-block-border-left-size: 10px;
 $code-block-bg: $site-surface-alt !default;
+$pre-color: $site-text !default;   // printed R output (Sandstone sets this to black)
 $code-block-border-left: $color-brown;
 $btn-code-copy-color: $color-brown;
 
@@ -69,8 +73,8 @@ $callout-color-important: $color-important;
 
 /*-- scss:rules --*/
 
-@import "base";
-@import "navbar";
+@import "site-base";
+@import "site-navbar";
 
 @import "courses/courses_banner";
 @import "courses/courses_cards";
@@ -83,3 +87,5 @@ $callout-color-important: $color-important;
 @import "packages/packages_cards";
 
 @import "posts/posts_main";
+@import "posts/posts_toc";
+@import "posts/posts_tabsets";
