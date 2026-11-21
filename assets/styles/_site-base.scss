@@ -94,3 +94,9 @@ div.quarto-about-jolla .about-link {
     box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .08);
   }
 }
+
+// Let R-generated cards (hover lift, shadows) overflow their cell output
+.cell-output-display:not(.no-overflow-x),
+.knitsql-table:not(.no-overflow-x) {
+  overflow-x: unset;
+}

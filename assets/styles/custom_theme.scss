@@ -78,11 +78,9 @@ $callout-color-important: $color-important;
 @import "site-base";
 @import "site-navbar";
 
-@import "courses/courses_banner";
-@import "courses/courses_contents";
 @import "courses/courses_enroll_btn";
-@import "courses/courses_reviews";
 @import "courses/courses_overview";
+@import "courses/course_page";
 
 @import "packages/packages_cards";
 

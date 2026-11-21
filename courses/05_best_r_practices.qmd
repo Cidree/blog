@@ -1,67 +1,87 @@
 ---
-pagetitle: "Coures | Mastering R"
+pagetitle: "Mastering R: Best Practices and Essential Tools | Adrián Cidre"
+description: "Write professional R code: RStudio workflows, Git and GitHub, the tidyverse style guide, functional programming with purrr and reproducible environments with renv."
 title-block-banner: false
-execute: 
+page-layout: article
+grid:
+  body-width: 1150px
+  margin-width: 0px
+execute:
   echo: false
-format: 
-  html:
-    grid: 
-      body-width: 1000px
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
 ```{r}
 #| include: false
-use("dplyr", c("filter", "mutate"))
-```
-
-```{r}
 source("../assets/R/courses.R")
 course <- course_info("best_r_practices")
-course_title <- "Mastering R: Best Practices and Essential Tools"
 ```
 
 ```{r}
-create_course_button(
-  enrollment_url  = course$coupon_url,
-  trigger_height  = 400,
-  button_text     = "Enroll"
-)
+course_page_hero(course)
 ```
 
-::: {.column-screen .mb-3}
+::::: course-layout
+:::: course-aside
 ```{r}
-create_banner(
-  title = course_title,
-  text  = "Master RStudio, Git and GitHub, best practices, and functional programming while building real-world, reproducible R projects step by step.",
-  background_image = file.path(site_root, course$banner_image),
-  price = coupon_price, 
-  mode  = "Online", 
-  time  = "20h", 
-  date  = "Always available",
-  lang  = "en"
+course_enroll_card(
+  course,
+  includes = course_includes(course, extra = list(
+    list("easel", "Theory and practical sessions")
+  ))
 )
 ```
+::::
+
+:::: course-main
+## About this course
+
+Know some R but your projects are a tangle of scripts? This course teaches you the tools and habits that professional R developers use every day, so your work becomes clean, version-controlled and reproducible.
+
+You'll start by setting up RStudio for efficient work: projects, essential shortcuts and the tidyverse style guide. Then you'll master **version control with Git and GitHub**, from configuring authentication to branching, undoing changes and collaborating with others.
+
+Next comes **functional programming**: writing functions from basic to advanced, tidy evaluation and iteration with `purrr`. You'll apply everything to a real-world project, refactoring it into a modular, function-based pipeline. Finally, you'll make it reproducible with `renv`, so it runs the same on any machine.
+
+::: course-video
+{{< video https://www.youtube.com/watch?v=gc3PFF51Z7w aspect-ratio="16x9" >}}
 :::
 
-## Course introduction {.course-description}
+## What you'll learn
 
-{{< video https://www.youtube.com/watch?v=gc3PFF51Z7w height="300" aspect-ratio="16x9" >}}
+```{r}
+course_checklist(c(
+  "Configure RStudio and use projects, shortcuts and workflow tips",
+  "Write clean, readable code following the tidyverse style guide",
+  "Set up Git and GitHub, including authentication with 2FA and tokens",
+  "Use the Git workflow: commit, push, pull, branches and undoing changes",
+  "Collaborate with others through GitHub",
+  "Write functions from basic to advanced, with tidy evaluation",
+  "Iterate with `purrr` and refactor a real project into reusable functions",
+  "Create reproducible environments with `renv` and portable projects"
+))
+```
 
-## Description {.course-description}
+## Who this course is for
 
-This course is designed to guide you through the foundations of professional R programming with an emphasis on best practices, version control, and reproducibility. You'll start by setting up your development environment in RStudio and learning essential shortcuts and tips. From there, you'll explore how to write clean, efficient code using the tidyverse style guide and apply functional programming principles to streamline and scale your workflows.
+```{r}
+course_checklist(c(
+  "R users who want to move from scripts to professional, maintainable projects",
+  "Researchers who need reproducible analyses they can share and publish",
+  "Data analysts who want to collaborate with Git and GitHub",
+  "Anyone who wants to write cleaner, more efficient R code"
+), columns = 1)
+```
 
-A key focus of the course is version control with Git and GitHub. You'll learn how to configure your environment, manage repositories, and collaborate effectively with others. Practical, hands-on exercises will reinforce these skills as you build and refactor a real-world project, transitioning it into a reproducible, function-based pipeline. By the end, you'll be equipped to develop R projects that are robust, maintainable, and easy to share.
+## Requirements
 
-## Prerequisites {.course-description}
+```{r}
+course_checklist(c(
+  "Basic to intermediate knowledge of R"
+), columns = 1)
+```
 
-Basic/intermediate knowledge of R is required.
-
-## Course contents {.course-description}
-
-In this section, you can see a non-exhaustive summary of what you will cover in this course.
+## Course contents
 
 ```{r}
 course_data <- list(
@@ -136,62 +156,21 @@ course_data <- list(
   )
 )
 
-create_course_structure(
-  course_title, 
-  course_data
+course_curriculum(course, course_data)
+```
+
+## Student reviews {#reviews}
+
+```{r}
+course_reviews(course)
+```
+::::
+:::::
+
+```{r}
+create_course_button(
+  enrollment_url = course$coupon_url,
+  trigger_height = 400,
+  button_text    = "Enroll"
 )
-
-```
-
-## What's inside the course {.course-description}
-
--   100 lessons
-
--   9 hours of video
-
--   All the course materials
-
--   Theoretical classes and practical sessions
-
--   Quick answer to any student’s question
-
-## What will you learn {.course-description}
-
-In this course, you'll gain the essential skills to develop high-quality R projects with professional tools and workflows. From clean coding practices and version control to functional programming and reproducible environments. Specifically, you will learn to:
-
--   Configure RStudio for efficient development
-
--   Write clean and modular R code
-
--   Use Git and GitHub for version control and collaboration
-
--   Apply functional programming principles in real projects
-
--   Create reproducible environments using `renv` and project-based workflows
-
-## Student testimonials {.course-description}
-
-```{r}
-## read reviews and rename columns
-reviews_tbl <- read_course_reviews(course$reviews_pattern)
-```
-
-Here you can find all the testimonials left by students of this course (both positive and negative).
-
-```{r}
-create_star_rating(
-  rating       = round(mean(reviews_tbl$rating), 1),
-  title        = "Overall Rating",
-  num_reviews  = nrow(reviews_tbl)
-)
-```
-
-```{r}
-## prepare for current course
-reviews_with_comment_tbl <- reviews_tbl |> 
-  filter(!is.na(review_text)) 
-```
-
-```{r}
-create_reviews_section(reviews_with_comment_tbl)
 ```

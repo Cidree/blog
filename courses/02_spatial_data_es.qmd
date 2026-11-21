@@ -1,69 +1,92 @@
 ---
-pagetitle: "Cursos | GIS R"
+pagetitle: "Introducción a Análisis de Datos Espaciales y SIG en R | Adrián Cidre"
+description: "Aprende SIG en R: datos vectoriales y ráster, sistemas de referencia de coordenadas, operaciones geométricas, índices de vegetación y mapas estáticos e interactivos con sf y terra."
 title-block-banner: false
-execute: 
+page-layout: article
+grid:
+  body-width: 1150px
+  margin-width: 0px
+execute:
   echo: false
-format: 
-  html:
-    grid: 
-      body-width: 1000px
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
 ```{r}
 #| include: false
-use("dplyr", c("filter", "mutate"))
-```
-
-```{r}
 source("../assets/R/courses.R")
 course <- course_info("spatial_data_es")
-course_title <- "Introducción a Análisis de Datos Espaciales y SIG en R"
 ```
 
 ```{r}
-create_course_button(
-  enrollment_url  = course$coupon_url,
-  trigger_height  = 400,
-  button_text     = "Matricúlate"
-)
+course_page_hero(course)
 ```
 
-::: {.column-screen .mb-3}
+::::: course-layout
+:::: course-aside
 ```{r}
-create_banner(
-  title = course_title,
-  text  = "Curso de iniciación al análisis de datos espaciales con R. Aprenderás a analizar, transformar y mapear datos espaciales, tanto vectoriales como raster utilizando paquetes como `sf` y `terra`.",
-  background_image = file.path(site_root, course$banner_image),
-  price = coupon_price, 
-  mode  = "Online", 
-  time  = "30h", 
-  date  = "Siempre disponible",
-  lang  = "es"
+course_enroll_card(
+  course,
+  includes = course_includes(course, extra = list(
+    list("patch-question", "Clases teóricas con cuestionarios"),
+    list("flag", "4 retos con ejercicios propuestos"),
+    list("book", "Bibliografía adicional")
+  ))
 )
 ```
+::::
+
+:::: course-main
+## Sobre este curso
+
+Convierte RStudio en tu Sistema de Información Geográfica. Este curso práctico te lleva desde "¿qué es un dato espacial?" hasta publicar tus propios mapas web interactivos, usando los paquetes que hoy son el estándar del SIG en R: `sf`, `terra`, `ggplot2` y `mapview`.
+
+Cada tema se aprende en dos pasos. Una clase **teórica** breve (con cuestionario) explica los conceptos, y una clase **práctica** los aplica a datos reales, paso a paso. Cada bloque termina con un **reto**, una serie de ejercicios propuestos para comprobar lo que has aprendido.
+
+Trabajarás con datos vectoriales y ráster, dominarás los sistemas de referencia de coordenadas, harás uniones espaciales y operaciones geométricas, calcularás derivados del terreno e índices de vegetación como el NDVI, y terminarás creando cinco mapas completos, desde la población de España hasta la severidad del incendio de Tenerife, tanto estáticos como en formato web.
+
+::: course-video
+{{< video https://www.youtube.com/watch?v=bB67ycZE4kE aspect-ratio="16x9" >}}
 :::
 
-## Introducción al curso {.course-description}
+## Qué aprenderás
 
-{{< video https://www.youtube.com/watch?v=bB67ycZE4kE height="300" aspect-ratio="16x9" >}}
+```{r}
+course_checklist(c(
+  "Usar los paquetes esenciales del SIG en R: `sf`, `terra`, `ggplot2` y `mapview`",
+  "Descargar, importar y exportar datos vectoriales y ráster desde R",
+  "Entender, asignar y transformar sistemas de referencia de coordenadas (CRS)",
+  "Filtrar, unir y medir entidades con predicados y operaciones espaciales",
+  "Recortar, reclasificar y hacer álgebra de mapas con rásters y modelos de elevación",
+  "Calcular índices de vegetación como el NDVI y crear composiciones en falso color",
+  "Diseñar mapas estáticos listos para publicar con `ggplot2`",
+  "Publicar mapas web interactivos, incluidas vistas sincronizadas y lado a lado"
+))
+```
 
-## Descripción {.course-description}
+## Para quién es este curso
 
-Este curso es una introducción práctica al análisis y visualización de datos espaciales en R. A través de una combinación de teoría, ejercicios prácticos y retos aplicados, aprenderás a trabajar con datos vectoriales y raster, entender sistemas de referencia de coordenadas (CRS), realizar operaciones espaciales y crear mapas tanto estáticos como interactivos. El curso utiliza paquetes clave del ecosistema R como `sf`, `terra`, `ggplot2` y `mapview`. Está estructurado en clases teóricas con cuestionarios, clases prácticas, y ejercicios prácticos propuestos al alumno para poner en práctica lo aprendido.
+```{r}
+course_checklist(c(
+  "Usuarios de SIG (QGIS, ArcGIS) que quieren flujos de trabajo reproducibles en R",
+  "Ecólogos, ingenieros forestales, geógrafos y profesionales del medio ambiente",
+  "Analistas de datos que conocen R y quieren añadir la dimensión espacial",
+  "Estudiantes e investigadores que necesitan analizar y cartografiar datos espaciales"
+), columns = 1)
+```
 
-Comenzarás comprendiendo qué son los datos espaciales y cómo se diferencian de los datos no espaciales. A lo largo del curso, desarrollarás habilidades para transformar geometrías, analizar capas raster, calcular índices como el NDVI, y representar fenómenos geográficos en mapas. Al finalizar, serás capaz de realizar tus propios análisis de datos espaciales y compartir resultados a través de mapas web dinámicos.
+## Requisitos
 
-## Requisitos previos {.course-description}
+```{r}
+course_checklist(c(
+  "Conocimientos básicos de R",
+  "Familiaridad con el `tidyverse` (el pipe y gráficos básicos con `ggplot2`)"
+), columns = 1)
+```
 
--   Conocimientos básicos de R
+No necesitas experiencia previa en SIG: los conceptos espaciales se explican desde cero. Si aún no conoces el `tidyverse`, te recomiendo empezar por el curso [Introducción a Análisis y Visualización de Datos en R](01_data_analysis_es.qmd).
 
--   Estar familiarizado con funciones del `tidyverse`, incluyendo gráficos básicos con `ggplot2` y pipeline (ver curso [introducción a análisis y visualización de datos en R](https://adrian-cidre.com/courses/01_data_analysis_es.html){target="_blank"})
-
-## Contenidos del Curso {.course-description}
-
-En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+## Contenido del curso
 
 ```{r}
 course_data <- list(
@@ -91,7 +114,7 @@ course_data <- list(
       "Análisis exploratorio",
       "Importar/Exportar",
       "Propiedades",
-      "CHALLENGE 01 - ejericicos propuestos"
+      "RETO 01 - ejercicios propuestos"
     )
   ),
   list(
@@ -112,7 +135,7 @@ course_data <- list(
       "Asignación de CRS",
       "Transformaciones al vuelo",
       "Mapas web",
-      "CHALLENGE 02 - ejericicos propuestos"
+      "RETO 02 - ejercicios propuestos"
     )
   ),
   list(
@@ -133,7 +156,7 @@ course_data <- list(
       "Uniones espaciales",
       "Mediciones espaciales",
       "Transformaciones (centroide, buffer..)",
-      "CHALLENGE 03 - ejericicos propuestos"
+      "RETO 03 - ejercicios propuestos"
     )
   ),
   list(
@@ -156,7 +179,7 @@ course_data <- list(
       "Operaciones aritméticas",
       "Cálculo de índices de vegetación",
       "Composiciones RGB y falso color",
-      "CHALLENGE 04 - ejericicos propuestos"
+      "RETO 04 - ejercicios propuestos"
     )
   ),
   list(
@@ -183,72 +206,29 @@ course_data <- list(
   )
 )
 
-create_course_structure(
-  course_title, 
-  course_data
-)
-
+course_curriculum(course, course_data)
 ```
 
-## Qúe incluye el curso {.course-description}
+## Un adelanto de lo que crearás
 
--   150 lecciones
-
--   15 horas de vídeo
-
--   Todo el material del curso
-
--   Clases teóricas, prácticas, cuestionarios y ejercicios propuestos
-
--   Bibliografía adicional
-
--   Respuesta rápida a las dudas de los alumnos
-
-## Qué aprenderás {.course-description}
-
-Aprenderás a analizar datos espaciales en R, siendo RStudio tu nuevo Sistema de Información Geográfica. Concretamente aprenderás a:
-
--   Paquetes más importantes en el entorno SIG en R
-
--   Analizar datos vectoriales y datos raster
-
--   Descarga de datos espaciales en R
-
--   Operaciones comunes sobre datos vectoriales y sobre datos raster
-
--   Georreferenciar datos
-
--   Transformaciones de CRS
-
--   Generar mapas y mapas web como el siguiente:
+Uno de los cinco mapas que crearás en el curso: la población de España por municipios, como mapa web interactivo. Haz zoom y explóralo.
 
 ```{=html}
-<div class="iframe-wrapper"><iframe src="../assets/html/poblacion_spain.html" title="Interactive population map of Spain" loading="lazy"></iframe></div>
+<div class="course-map"><div class="iframe-wrapper"><iframe src="../assets/html/poblacion_spain.html" title="Mapa interactivo de la población de España" loading="lazy"></iframe></div></div>
 ```
 
-## Testimonios {.course-description}
+## Opiniones de los estudiantes {#reviews}
 
 ```{r}
-## read reviews and rename columns
-reviews_tbl <- read_course_reviews(course$reviews_pattern)
+course_reviews(course)
 ```
-
-Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso (positivos y negativos).
+::::
+:::::
 
 ```{r}
-create_star_rating(
-  rating       = round(mean(reviews_tbl$rating), 1),
-  title        = "Valoración Promedio",
-  num_reviews  = nrow(reviews_tbl)
+create_course_button(
+  enrollment_url = course$coupon_url,
+  trigger_height = 400,
+  button_text    = "Inscríbete"
 )
-```
-
-```{r}
-## prepare for current course
-reviews_with_comment_tbl <- reviews_tbl |> 
-  filter(!is.na(review_text)) 
-```
-
-```{r}
-create_reviews_section(reviews_with_comment_tbl)
 ```

@@ -1,68 +1,84 @@
 ---
-pagetitle: "Cursos | Quarto"
+pagetitle: "Literate programming y Automatización con Quarto en R | Adrián Cidre"
+description: "Aprende Quarto y R para crear informes, documentos PDF y HTML y webs profesionales, y automatiza la generación de reportes."
 title-block-banner: false
-execute: 
+page-layout: article
+grid:
+  body-width: 1150px
+  margin-width: 0px
+execute:
   echo: false
-format: 
-  html:
-    grid: 
-      body-width: 1000px
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
 ```{r}
 #| include: false
-use("dplyr", c("filter", "mutate"))
-```
-
-```{r}
 source("../assets/R/courses.R")
 course <- course_info("quarto_es")
 ```
 
 ```{r}
-create_course_button(
-  enrollment_url  = course$coupon_url,
-  trigger_height  = 400,
-  button_text     = "Matricúlate"
-)
+course_page_hero(course)
 ```
 
-::: {.column-screen .mb-3}
+::::: course-layout
+:::: course-aside
 ```{r}
-create_banner(
-  title = "Literate Programming y Automatización con Quarto en R",
-  text  = "Aprende a crear documentos con Quarto y R: domina Markdown, explora LaTeX y CSS, y genera automáticamente documentos en PDF y formato web",
-  background_image = file.path(site_root, course$banner_image),
-  price = coupon_price, 
-  mode  = "Online", 
-  time  = "20h", 
-  date  = "Siempre disponible",
-  lang  = "es"
+course_enroll_card(
+  course,
+  includes = course_includes(course, extra = list(
+    list("easel", "Clases teóricas y prácticas"),
+    list("book", "Bibliografía adicional")
+  ))
 )
 ```
-:::
+::::
 
-## Descripción {.course-description}
+:::: course-main
+## Sobre este curso
 
-Bienvenidos al curso de Quarto. En este curso, aprenderemos a utilizar la herramienta innovadora llamada Quarto dentro de RStudio para generar documentos profesionales en formatos como PDF y HTML.
+Deja de copiar y pegar resultados en Word. Con **Quarto** y R escribes texto, código, gráficos y tablas en un solo documento, y lo conviertes en un informe PDF, una página web o un documento HTML con un solo clic. Es la evolución de RMarkdown y la forma moderna de practicar la *programación literaria*.
 
-Quarto es una poderosa plataforma que combina la flexibilidad y la facilidad de uso de RMarkdown con la capacidad de crear documentos dinámicos y personalizados. Con Quarto, podrás aprovechar al máximo el lenguaje de programación R y todas sus capacidades estadísticas y gráficas para producir documentos de alta calidad.
+Empezarás desde cero con el editor visual y la sintaxis Markdown, y avanzarás hasta personalizar tus documentos con plantillas, estilos CSS, portadas en LaTeX, bibliografía y referencias cruzadas. Aprenderás a organizar proyectos completos (con un ejemplo práctico de tesis) y a compartir tu trabajo en Quarto Pub y GitHub Pages, con una introducción a Git y GitHub.
 
-A lo largo de este curso, exploraremos las distintas características de Quarto y aprenderemos a generar informes, informes de investigación, y mucho más. Descubriremos cómo combinar texto, código, gráficos y resultados en un solo documento, permitiéndote comunicar tus resultados de manera clara y efectiva.
+Para terminar, automatizarás la generación de reportes: crear decenas de informes personalizados con una sola línea de código.
 
-Además, aprenderemos a personalizar nuestros documentos utilizando plantillas, estilos y opciones de formato para adaptarlos a nuestras necesidades y preferencias. Quarto también nos brinda la posibilidad de colaborar con otros usuarios, facilitando así el trabajo en equipo y la revisión conjunta de documentos, por lo que veremos también una introducción a GitHub, además de la posibilidad de crear una página web a través de este.
+## Qué aprenderás
 
-Ya seas un científico de datos, un estudiante, un investigador o simplemente alguien interesado en presentar información de manera efectiva, este curso de Quarto te proporcionará las habilidades necesarias para crear documentos profesionales con RStudio.
+```{r}
+course_checklist(c(
+  "Escribir documentos con el editor visual de Quarto y la sintaxis Markdown",
+  "Generar documentos profesionales en PDF y HTML desde RStudio",
+  "Configurar el documento con YAML, plantillas y estilos",
+  "Añadir figuras, tablas, ecuaciones, bibliografía y referencias cruzadas",
+  "Personalizar el diseño con nociones de HTML, CSS y LaTeX",
+  "Crear portadas profesionales y usar extensiones de Quarto",
+  "Publicar tus resultados en Quarto Pub y GitHub Pages con Git y GitHub",
+  "Automatizar la creación de múltiples reportes con una línea de código"
+))
+```
 
-## Requisitos previos {.course-description}
+## Para quién es este curso
 
-Se requiere un nivel básico de programación en R, aunque para sacarle mayor provecho se recomienda nivel intermedio.
+```{r}
+course_checklist(c(
+  "Científicos de datos y analistas que preparan informes de forma recurrente",
+  "Investigadores y estudiantes que escriben artículos, tesis o memorias",
+  "Usuarios de RMarkdown que quieren dar el salto a Quarto",
+  "Cualquier persona que quiera comunicar resultados de forma clara y reproducible"
+), columns = 1)
+```
 
-## Contenidos del Curso {.course-description}
+## Requisitos
 
-En esta sección puedes ver un resumen no exhaustivo de lo que verás en este curso.
+```{r}
+course_checklist(c(
+  "Nivel básico de programación en R (se recomienda nivel intermedio para sacarle el máximo partido)"
+), columns = 1)
+```
+
+## Contenido del curso
 
 ```{r}
 course_data <- list(
@@ -140,70 +156,21 @@ course_data <- list(
   )
 )
 
-create_course_structure(
-  "Quarto - Diseño de documentos profesionales en RStudio", 
-  course_data
+course_curriculum(course, course_data)
+```
+
+## Opiniones de los estudiantes {#reviews}
+
+```{r}
+course_reviews(course)
+```
+::::
+:::::
+
+```{r}
+create_course_button(
+  enrollment_url = course$coupon_url,
+  trigger_height = 400,
+  button_text    = "Inscríbete"
 )
-
-```
-
-## Qúe incluye el curso {.course-description}
-
--   78 lecciones
-
--   10 horas de vídeo
-
--   Todo el material del curso
-
--   Clases teóricas y prácticas
-
--   Bibliografía adicional
-
-## Qué aprenderás {.course-description}
-
-Aprenderás en qué consiste la programación literaria, combinando el lenguaje de programación R y el software Quarto, una evolución del ecosistema RMarkdown. Concretamente aprenderás a:
-
--   Utilizar Quarto a través del editor visual
-
--   Crear documentos PDF y HTML
-
--   Conceptos básicos y avanzados del lenguaje Markdown
-
--   Aspectos básicos de los lenguajes CSS, HTML y LaTeX
-
--   Generar documentos con imágenes, tablas, bibliografía, referencias cruzadas...
-
--   Compartir resultados a través de Quarto Pub y GitHub Pages
-
--   Aprender a utilizar Git y GitHub de forma básica
-
--   Automatizar la generación de múltiples reportes
-
--   Respuesta rápida a las dudas de los alumnos
-
-## Testimonios {.course-description}
-
-```{r}
-## read reviews and rename columns
-reviews_tbl <- read_course_reviews(course$reviews_pattern)
-```
-
-Aquí se muestran todos los testimonios que han dejado los estudiantes de este curso.
-
-```{r}
-create_star_rating(
-  rating       = round(mean(reviews_tbl$rating), 1),
-  title        = "Valoración Promedio",
-  num_reviews  = nrow(reviews_tbl)
-)
-```
-
-```{r}
-## prepare for current course
-reviews_with_comment_tbl <- reviews_tbl |> 
-  filter(!is.na(review_text)) 
-```
-
-```{r}
-create_reviews_section(reviews_with_comment_tbl)
 ```

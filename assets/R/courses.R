@@ -68,7 +68,7 @@ course_ratings <- function(courses = courses_tbl) {
 ## Hero with headline and stats strip
 courses_hero <- function(courses = courses_tbl) {
   reviews <- all_reviews()
-  hours   <- sum(as.numeric(sub("\\D.*$", "", courses$hours)), na.rm = TRUE)
+  hours   <- sum(courses$video_hours, na.rm = TRUE)
   stat <- function(value, label) {
     div(class = "courses-hero__stat",
         span(class = "courses-hero__stat-value", value),
@@ -154,7 +154,9 @@ course_card <- function(course, n_reviews, rating) {
       p(class = "course-card__tagline", fmt_inline_code(course$tagline)),
       div(
         class = "course-card__meta",
-        span(tags$i(class = "bi bi-clock", `aria-hidden` = "true"), course$hours),
+        span(tags$i(class = "bi bi-play-circle", `aria-hidden` = "true"),
+             sprintf("%d h · %d %s", course$video_hours, course$lessons,
+                     if (es) "lecciones" else "lessons")),
         if (n_reviews > 0) {
           span(class = "course-card__rating",
                generate_stars(round(rating * 2) / 2, class = "course-card__stars"),
@@ -247,81 +249,7 @@ courses_testimonials <- function(names = featured_testimonials) {
   )
 }
 
-## Course banner -----------------------------------------------------------
-create_banner <- function(title, text, background_image = file.path(site_root, "assets/images/banners/teide.jpg"),
-                             price, mode, time, date, lang) {
-  # Create the banner structure
-  div(
-    class = "column-screen banner d-none d-sm-block",
-    
-    # Background image section with text overlay
-    div(
-      class = "banner-hero",
-      div(
-        class = "banner-container",
-        div(
-          h2(title, class = "banner-title")
-        ),
-        # Text section
-        div(
-          class = "banner-text",
-          text
-        )
-      )
-    ),
-    
-    # Course info section (below the image)
-    div(
-      class = "course-info-section",
-      div(
-        class = "grid text-center",
-        div(
-          class = "g-col-3 course-info-item",
-          icon("euro-sign", class = "fa-2xl course-banner--icon"),
-          p(if (lang == "es") "Precio" else "Price", class = "course-banner--title"),
-          p(price, class = "course-banner--text")
-        ),
-        div(
-          class = "g-col-3 course-info-item",
-          icon("chalkboard-user", class = "fa-2xl course-banner--icon"),
-          p(if (lang == "es") "Modalidad" else "Mode", class = "course-banner--title"),
-          p(mode, class = "course-banner--text")
-        ),
-        div(
-          class = "g-col-3 course-info-item",
-          icon("clock", class = "fa-2xl course-banner--icon"),
-          p(if (lang == "es") "Duración" else "Time", class = "course-banner--title"),
-          p(time, class = "course-banner--text")
-        ),
-        div(
-          class = "g-col-3 course-info-item",
-          icon("calendar-days", class = "fa-2xl course-banner--icon"),
-          p(if (lang == "es") "Fecha" else "Date", class = "course-banner--title"),
-          p(date, class = "course-banner--text")
-        )
-      )
-    ),
-    
-    # Add inline CSS styles
-    tags$style(HTML(paste0("
-      .banner-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('", background_image, "');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.2;
-        z-index: 0;
-      }
-    ")))
-  )
-}
-
-
+## Floating Enroll button (shown on narrow screens) ---------------------
 create_course_button <- function(enrollment_url = "#", 
                                  button_text = "Enroll Now", 
                                  trigger_height = 300) {
@@ -385,83 +313,6 @@ create_course_button <- function(enrollment_url = "#",
 
 
 
-## Function to create a course structure block
-create_course_structure <- function(course_title, lessons) {
-  
-  # Create lesson items
-  lesson_items <- purrr::map(lessons, function(lesson) {
-    # Create topic list for each lesson
-    topic_list <- if (length(lesson$topics) > 0) {
-      tags$ul(
-        class = "topic-list",
-        purrr::map(lesson$topics, function(topic) {
-          tags$li(class = "topic-item", topic)
-        })
-      )
-    } else {
-      NULL
-    }
-    
-    # Create lesson container
-    tags$div(
-      class = "lesson-container",
-      tags$div(
-        class = "lesson-header",
-        tags$h3(class = "lesson-title", lesson$title),
-        if (!is.null(topic_list)) {
-          tags$button(
-            class = "toggle-btn",
-            type = "button",
-            onclick = "toggleTopics(this)",
-            "▼"
-          )
-        }
-      ),
-      if (!is.null(topic_list)) {
-        tags$div(class = "topics-container", topic_list)
-      }
-    )
-  })
-  
-  # Main course structure
-  tags$div(
-    class = "course-structure",
-    tags$h2(class = "course-title", course_title),
-    tags$div(class = "lessons-container", lesson_items),
-    
-    # Add JavaScript for toggle functionality
-    tags$script(HTML("
-      function toggleTopics(button) {
-        const container = button.closest('.lesson-container').querySelector('.topics-container');
-        const isCollapsed = container.classList.contains('collapsed');
-        
-        if (isCollapsed) {
-          container.classList.remove('collapsed');
-          button.textContent = '▼';
-        } else {
-          container.classList.add('collapsed');
-          button.textContent = '▶';
-        }
-      }
-      
-      // Initialize all topics as expanded
-      document.addEventListener('DOMContentLoaded', function() {
-        const allContainers = document.querySelectorAll('.topics-container');
-        allContainers.forEach(container => {
-          // Start collapsed for cleaner initial view
-          container.classList.add('collapsed');
-        });
-        
-        const allButtons = document.querySelectorAll('.toggle-btn');
-        allButtons.forEach(button => {
-          button.textContent = '▶';
-        });
-      });
-    "))
-  )
-}
-
-
 ## Reviews -------
 
 ## Read the Udemy reviews of one course (matched by a pattern on its title)
@@ -491,161 +342,264 @@ generate_stars <- function(rating, max_stars = 5, class = "star-rating") {
   span(class = class, paste(stars, collapse = ""))
 }
 
-## function to create a single review card
-create_review_card <- function(student_name, course_title, rating, review_text, date_created) {
+## Course pages (courses/*.qmd) -------------------------------------------
+## Shared design for every course page. Labels follow course$lang.
+
+tr <- function(course, en, es) if (identical(course$lang, "es")) es else en
+
+bi <- function(name) tags$i(class = paste0("bi bi-", name), `aria-hidden` = "true")
+
+## Rating summary of one course (n, rating, reviews table)
+course_review_data <- function(course) {
+  reviews <- all_reviews() |>
+    filter(grepl(course$reviews_pattern, course_title))
+  list(
+    reviews = reviews,
+    n       = nrow(reviews),
+    rating  = if (nrow(reviews)) mean(reviews$rating) else NA_real_
+  )
+}
+
+## Hero: badges, title, tagline, rating, author
+course_page_hero <- function(course) {
+  rv <- course_review_data(course)
   div(
-    class = "review-card",
+    class = "course-hero",
+    img(class = "course-hero__bg", alt = "", `aria-hidden` = "true",
+        src = file.path(site_root, course$banner_image)),
     div(
-      class = "review-header",
+      class = "course-hero__content",
       div(
-        class = "student-info",
-        div(
-          class = "student-avatar",
-          substr(student_name, 1, 1)  # First letter of name
-        ),
-        div(
-          class = "student-details",
-          h4(class = "student-name", student_name),
-          p(class = "course-name", "")
-        )
+        class = "course-card__badges",
+        span(class = paste0("course-card__badge is-", course$lang), bi("translate"),
+             tr(course, "EN · English", "ES · Español")),
+        span(class = "course-card__badge is-level", course$level)
       ),
+      h1(class = "course-hero__title", course$title),
+      p(class = "course-hero__tagline", fmt_inline_code(course$tagline)),
       div(
-        class = "review-meta",
-        generate_stars(rating),
-        p(class = "review-date", format(as.Date(date_created), "%B %Y"))
+        class = "course-hero__meta",
+        if (rv$n > 0) {
+          a(class = "course-hero__rating", href = "#reviews",
+            strong(format(round(rv$rating, 1), nsmall = 1)),
+            generate_stars(round(rv$rating * 2) / 2, class = "course-card__stars"),
+            span(sprintf(tr(course, "(%d reviews)", "(%d reseñas)"), rv$n)))
+        },
+        span(bi("play-circle"),
+             sprintf(tr(course, "%d h of video", "%d h de vídeo"), course$video_hours)),
+        span(bi("person"), tr(course, "Created by ", "Creado por "),
+             a(href = file.path(site_root, "about.qmd"), "Adrián Cidre"))
       )
-    ),
-    div(
-      class = "review-content",
-      p(class = "review-text", review_text)
     )
   )
 }
 
-# Function to create the reviews section with horizontal carousel
-create_reviews_section <- function(reviews_df) {
-  
-  # Create individual review cards
-  review_cards <- purrr::map(1:nrow(reviews_df), function(i) {
-    create_review_card(
-      student_name = reviews_df$student_name[i],
-      course_title = reviews_df$course_title[i],
-      rating = reviews_df$rating[i],
-      review_text = reviews_df$review_text[i],
-      date_created = reviews_df$date_created[i]
+## Sticky enroll card: cover, price, button, what's included
+course_enroll_card <- function(course, includes) {
+  div(
+    class = "course-enroll",
+    img(class = "course-enroll__cover", src = file.path(site_root, course$card_image),
+        alt = course$title),
+    div(
+      class = "course-enroll__body",
+      if (coupon_active) {
+        p(class = "course-enroll__price",
+          span(class = "course-enroll__amount", coupon_price),
+          span(class = "courses-offer__badge",
+               tr(course, "Coupon price", "Precio con cupón")))
+      } else {
+        p(class = "course-enroll__price is-plain",
+          tr(course, "Best price through this link", "El mejor precio con este enlace"))
+      },
+      a(class = "course-enroll__btn", href = course$coupon_url,
+        target = "_blank", rel = "noopener",
+        tr(course, "Enroll on Udemy", "Inscríbete en Udemy"), bi("box-arrow-up-right")),
+      p(class = "course-enroll__note",
+        tr(course, "Lifetime access · learn at your own pace",
+                   "Acceso de por vida · aprende a tu ritmo")),
+      h3(class = "course-enroll__heading no-anchor",
+         tr(course, "This course includes", "Este curso incluye")),
+      tags$ul(
+        class = "course-enroll__includes",
+        purrr::map(includes, function(x) tags$li(bi(x[[1]]), x[[2]]))
+      )
+    )
+  )
+}
+
+## Default "includes" list built from courses.csv; extra items go at the end
+course_includes <- function(course, extra = list()) {
+  c(
+    list(
+      list("play-circle", sprintf(tr(course, "%d hours of video", "%d horas de vídeo"),
+                                  course$video_hours)),
+      list("collection-play", sprintf(tr(course, "%d lessons", "%d lecciones"),
+                                      course$lessons)),
+      list("folder2-open", tr(course, "All the course materials",
+                                      "Todo el material del curso"))
+    ),
+    extra,
+    list(
+      list("infinity", tr(course, "Lifetime access", "Acceso de por vida")),
+      list("chat-dots", tr(course, "Q&A with the instructor",
+                                   "Resolución de dudas con el profesor"))
+    )
+  )
+}
+
+## Checklist ("What you'll learn", "Requirements")
+course_checklist <- function(items, columns = 2) {
+  tags$ul(
+    class = paste0("course-checklist cols-", columns),
+    purrr::map(items, function(x) tags$li(bi("check-circle-fill"), span(fmt_inline_code(x))))
+  )
+}
+
+## Curriculum: one <details> card per unit (same list(title, topics) data
+## the pages always used). "(Theory)/(Practice)" in a title becomes a pill.
+course_curriculum <- function(course, units) {
+  kind_of <- function(title) {
+    if (grepl("\\((Theory|Teoría)\\)", title, ignore.case = TRUE)) "theory"
+    else if (grepl("\\((Practice|Práctica)\\)", title, ignore.case = TRUE)) "practice"
+    else NA_character_
+  }
+  div(
+    class = "course-curriculum",
+    div(
+      class = "course-curriculum__bar",
+      span(sprintf(tr(course, "%d units · %d lessons · %d h of video",
+                              "%d unidades · %d lecciones · %d h de vídeo"),
+                   length(units), course$lessons, course$video_hours)),
+      tags$button(type = "button", class = "course-curriculum__toggle",
+                  `data-open` = tr(course, "Expand all", "Desplegar todo"),
+                  `data-close` = tr(course, "Collapse all", "Plegar todo"),
+                  tr(course, "Expand all", "Desplegar todo"))
+    ),
+    purrr::imap(units, function(unit, i) {
+      kind  <- kind_of(unit$title)
+      title <- trimws(gsub("\\s*\\((Theory|Practice|Teoría|Práctica)\\)", "", unit$title,
+                           ignore.case = TRUE))
+      # "Unit 2a - Spatial Data" -> number chip "2a" + "Spatial Data"
+      prefix <- "^(Unit|Unidad|Tema|Módulo|Bloque)\\s+(\\w+)\\s*[-–:]\\s*"
+      if (grepl(prefix, title)) {
+        num   <- sub("^0+(\\d)", "\\1", sub(paste0(prefix, ".*$"), "\\2", title))
+        title <- sub(prefix, "", title)
+      } else {
+        num <- NULL
+      }
+      tags$details(
+        class = "course-unit", open = if (i == 1) NA,
+        tags$summary(
+          if (!is.null(num)) span(class = "course-unit__num", num),
+          span(class = "course-unit__title", title),
+          if (!is.na(kind)) {
+            span(class = paste0("course-unit__kind is-", kind),
+                 switch(kind,
+                        theory   = tr(course, "Theory", "Teoría"),
+                        practice = tr(course, "Practice", "Práctica")))
+          },
+          span(class = "course-unit__count",
+               sprintf(tr(course, "%d topics", "%d temas"), length(unit$topics))),
+          bi("chevron-down")
+        ),
+        tags$ul(
+          class = "course-unit__topics",
+          purrr::map(unit$topics, function(topic) {
+            challenge <- grepl("^CHALLENGE|^RETO|Ejercicios propuestos|proposed exercises",
+                               topic)
+            tags$li(
+              class = if (challenge) "is-challenge",
+              if (challenge) bi("flag-fill") else bi("dot"),
+              topic
+            )
+          })
+        )
+      )
+    }),
+    tags$script(HTML("
+      document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.course-curriculum__toggle');
+        if (!btn) return;
+        const units = btn.closest('.course-curriculum').querySelectorAll('.course-unit');
+        const open = [...units].some(u => !u.open);
+        units.forEach(u => u.open = open);
+        btn.textContent = open ? btn.dataset.close : btn.dataset.open;
+      });
+    "))
+  )
+}
+
+## Reviews: summary with distribution + review cards (first 6 visible)
+course_reviews <- function(course, visible = 6) {
+  rv <- course_review_data(course)
+  if (rv$n == 0) return(NULL)
+
+  stars_int <- pmin(5, pmax(1, floor(rv$reviews$rating + .5)))
+  dist <- purrr::map(5:1, function(k) {
+    n   <- sum(stars_int == k)
+    pct <- round(100 * n / rv$n)
+    div(class = "review-summary__row",
+        span(class = "review-summary__label", paste0(k, "★")),
+        div(class = "review-summary__bar",
+            span(style = sprintf("width: %d%%;", pct))),
+        span(class = "review-summary__pct", paste0(pct, "%")))
+  })
+
+  with_text <- rv$reviews |>
+    filter(!is.na(review_text), nzchar(trimws(review_text))) |>
+    arrange(desc(date_created))
+
+  cards <- purrr::map(seq_len(nrow(with_text)), function(i) {
+    r <- with_text[i, ]
+    tags$figure(
+      class = "testimonial", hidden = if (i > visible) NA,
+      div(class = "testimonial__top",
+          generate_stars(r$rating, class = "testimonial__stars"),
+          span(class = "testimonial__date", format(r$date_created, "%b %Y"))),
+      tags$blockquote(class = "testimonial__quote", r$review_text),
+      tags$figcaption(
+        class = "testimonial__author",
+        span(class = "testimonial__avatar", substr(r$student_name, 1, 1)),
+        span(class = "testimonial__name", r$student_name)
+      )
     )
   })
-  
-  # JavaScript for carousel functionality
-  js_script <- tags$script(HTML("
-    document.addEventListener('DOMContentLoaded', function() {
-      const carousel = document.querySelector('.reviews-carousel');
-      const prevBtn = document.querySelector('.carousel-nav.prev');
-      const nextBtn = document.querySelector('.carousel-nav.next');
-      
-      if (!carousel || !prevBtn || !nextBtn) return;
-      
-      const cardWidth = 350 + 32; // card width + gap
-      let currentScroll = 0;
-      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-      
-      function updateButtons() {
-        prevBtn.classList.toggle('disabled', currentScroll <= 0);
-        nextBtn.classList.toggle('disabled', currentScroll >= maxScroll);
-      }
-      
-      function scrollToPosition(position) {
-        carousel.scrollTo({
-          left: position,
-          behavior: 'smooth'
-        });
-        currentScroll = position;
-        updateButtons();
-      }
-      
-      prevBtn.addEventListener('click', function() {
-        if (currentScroll > 0) {
-          const newPosition = Math.max(0, currentScroll - cardWidth);
-          scrollToPosition(newPosition);
-        }
-      });
-      
-      nextBtn.addEventListener('click', function() {
-        if (currentScroll < maxScroll) {
-          const newPosition = Math.min(maxScroll, currentScroll + cardWidth);
-          scrollToPosition(newPosition);
-        }
-      });
-      
-      // Initialize button states
-      updateButtons();
-      
-      // Update on window resize
-      window.addEventListener('resize', function() {
-        const newMaxScroll = carousel.scrollWidth - carousel.clientWidth;
-        if (newMaxScroll !== maxScroll) {
-          maxScroll = newMaxScroll;
-          currentScroll = carousel.scrollLeft;
-          updateButtons();
-        }
-      });
-      
-      // Track scroll position when user scrolls manually
-      carousel.addEventListener('scroll', function() {
-        currentScroll = carousel.scrollLeft;
-        updateButtons();
-      });
-    });
-  "))
-  
-  # Complete reviews section with carousel
+
   div(
-    class = "reviews-section",
-    js_script,
+    class = "course-reviews",
     div(
-      class = "reviews-carousel-container",
-      # Previous button
-      div(
-        class = "carousel-nav prev",
-        onclick = "void(0);",
-        HTML('<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>')
-      ),
-      # Next button  
-      div(
-        class = "carousel-nav next",
-        onclick = "void(0);",
-        HTML('<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>')
-      ),
-      # Carousel container
-      div(
-        class = "reviews-carousel",
-        review_cards
+      class = "review-summary",
+      div(class = "review-summary__score",
+          span(class = "review-summary__value", format(round(rv$rating, 1), nsmall = 1)),
+          generate_stars(round(rv$rating * 2) / 2, class = "course-card__stars"),
+          span(class = "review-summary__count",
+               sprintf(tr(course, "%d ratings on Udemy", "%d valoraciones en Udemy"), rv$n))),
+      div(class = "review-summary__dist", dist)
+    ),
+    p(class = "course-reviews__note",
+      if (nrow(with_text) > 0) {
+        tr(course, "Every review with a comment is shown here, positive or negative.",
+                   "Aquí aparecen todas las reseñas con comentario, positivas y negativas.")
+      } else {
+        tr(course, "No written reviews yet: these are the star ratings students gave on Udemy.",
+                   "Aún no hay reseñas escritas: estas son las valoraciones que los estudiantes han dado en Udemy.")
+      }),
+    div(class = "course-reviews__grid", cards),
+    if (nrow(with_text) > visible) {
+      tagList(
+        tags$button(type = "button", class = "course-reviews__more",
+                    sprintf(tr(course, "Show all %d reviews", "Ver las %d reseñas"),
+                            nrow(with_text))),
+        tags$script(HTML("
+          document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.course-reviews__more');
+            if (!btn) return;
+            btn.closest('.course-reviews').querySelectorAll('.testimonial[hidden]')
+              .forEach(c => c.hidden = false);
+            btn.remove();
+          });
+        "))
       )
-    )
-  )
-}
-
-
-
-## Overall rating ----------------------
-create_star_rating <- function(rating, max_stars = 5, show_numeric = TRUE,
-                               title = "Course Rating", num_reviews = NULL) {
-
-  stars <- generate_stars(rating, max_stars, class = "course-stars")
-
-  div(
-    class = "course-rating",
-    h4(title, class = "course-rating--title"),
-    div(
-      class = "stars-container",
-      stars,
-      if (show_numeric) {
-        numeric_text <- paste0(" ", format(rating, nsmall = 1), "/", max_stars)
-        if (!is.null(num_reviews)) {
-          numeric_text <- paste0(numeric_text, " (", num_reviews, " reviews)")
-        }
-        span(numeric_text, class = "course-rating--numeric")
-      }
-    )
+    }
   )
 }
